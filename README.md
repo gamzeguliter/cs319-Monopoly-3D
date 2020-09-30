@@ -4,10 +4,10 @@ CS 319: Object-Oriented Software Engineering
 First Report  
 September 30, 2020  
 
-Öykü Irmak Hatipoğlu - 21802791,
-Cansu Moran - 21803665,
-Yiğit Gürses - 21702746,
-Melisa Taşpınar - 21803668,
+Öykü Irmak Hatipoğlu - 21802791  
+Cansu Moran - 21803665  
+Yiğit Gürses - 21702746  
+Melisa Taşpınar - 21803668  
 Elif Gamze Güliter - 21802870
 
    We will implement Monopoly in our project. The game will be played by 2-8 users, where users will play on one computer, taking turns. 
