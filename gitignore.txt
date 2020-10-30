@@ -3,4 +3,5 @@
 *.vpp.working
 *.vpp.working-journal
 *.lock
+*.lck
 tmp/*
