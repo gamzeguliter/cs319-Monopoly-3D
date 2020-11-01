@@ -10,6 +10,8 @@ Yiğit Gürses - 21702746
 Melisa Taşpınar - 21803668  
 Elif Gamze Güliter - 21802870
 
+PROJECT ANALYSIS REPORT(1st iteration): 
+
    We will implement Monopoly in our project. The game will be played by 2-8 users, where users will play on one computer, taking turns.  
      
 ![PHOTO-2020-10-30-11-59-53](https://user-images.githubusercontent.com/47862669/97731401-1b6f2080-1ae6-11eb-9ff4-eb339c117e08.jpg)
