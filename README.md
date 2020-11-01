@@ -1,8 +1,6 @@
 # cs319-3D
 
 CS 319: Object-Oriented Software Engineering  
-First Report  
-September 30, 2020  
 
 Öykü Irmak Hatipoğlu - 21802791  
 Cansu Moran - 21803665  
