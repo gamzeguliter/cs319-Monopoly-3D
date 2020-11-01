@@ -12,7 +12,7 @@ Elif Gamze Güliter - 21802870
 
 [PROJECT ANALYSIS REPORT(1st iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/Project%20Analysis%20Report.pdf)
 
-   We will implement Monopoly in our project. The game will be played by 2-8 users, where users will play on one computer, taking turns.  
+   We will implement Monopoly in our project. The game will be played by 2-4 users, where users will play on one computer, taking turns.  
      
 ![PHOTO-2020-10-30-11-59-53](https://user-images.githubusercontent.com/47862669/97731401-1b6f2080-1ae6-11eb-9ff4-eb339c117e08.jpg)
 
