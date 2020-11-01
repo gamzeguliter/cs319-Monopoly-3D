@@ -10,7 +10,7 @@ Yiğit Gürses - 21702746
 Melisa Taşpınar - 21803668  
 Elif Gamze Güliter - 21802870
 
-PROJECT ANALYSIS REPORT(1st iteration): 
+[PROJECT ANALYSIS REPORT(1st iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/Project%20Analysis%20Report.pdf)
 
    We will implement Monopoly in our project. The game will be played by 2-8 users, where users will play on one computer, taking turns.  
      
