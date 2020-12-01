@@ -1,17 +1,20 @@
 package sample;
 
+
+import javafx.scene.paint.Color;
+
 public class Player {
     //properties
     String name;
     // TODO: Pawn pawn;
     private int position;
-    private int color;
+    private Color color;
     private int balance;
     private boolean isSuspended;
     private boolean isBankrupt;
 
     //constructors
-    public Player(String name, int color, int balance) {
+    public Player(String name, Color color, int balance) {
         this.name = name;
         this.color = color;
         this.balance = balance;
@@ -35,8 +38,8 @@ public class Player {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public int getColor() { return color; }
-    public void setColor(int color) { this.color = color; }
+    public Color getColor() { return color; }
+    public void setColor(Color color) { this.color = color; }
 
     public int getBalance() { return balance; }
     public void setBalance(int balance) { this.balance = balance; }
