@@ -6,24 +6,18 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-
+import java.util.ArrayList;
 
 public class GameScreen {
 
     // properties
-    private Player[] players;
     private Scene scene;
-    int turn;
-    boolean diceRolled;
-    Board board;
     GridPane boardPane;
 
     Text[] playerTexts;
@@ -34,25 +28,27 @@ public class GameScreen {
     Button btnEndTurn;
     Button btnBuy;
 
+    GameEngine gameEngine;
+    private boolean diceRolled;
+
     // constructors
     public GameScreen() {
-        players = new Player[4];
-        for (int i = 1; i <= 4; i++) {
-            players[i-1] = new Player("player" + i, Color.GRAY, 100);
-        }
-        players[0].setColor(Color.RED);
-        players[1].setColor(Color.GREEN);
-        players[2].setColor(Color.BLUE);
-        players[3].setColor(Color.YELLOW);
-
-        board = new Board();
-        boardPane = getTiles();
-        turn = 0;
-        diceRolled = false;
+        gameEngine = new GameEngine();
+        boardPane = getTiles(); //CHANGE
         setScene();
     }
 
     // private methods
+
+    private Text getPlayerText(Player player) {
+        Text t = new Text();
+        t.setFont(new Font(20));
+        t.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
+        t.setFill(player.getColor());
+        t.setY(50);
+        return t;
+    }
+
     private void setScene() {
         Group group = new Group();
         int width = 600;
@@ -60,15 +56,20 @@ public class GameScreen {
 
         // initialize player texts
         playerTexts = new Text[4];
-        playerTexts[0] = getPlayerText(players[0]);
+        int count = 0;
+        for(Player player : gameEngine.getPlayers()) {
+            playerTexts[count] = getPlayerText(player);
+        }
         playerTexts[0].setX(0);
-        playerTexts[1] = getPlayerText(players[1]);
         playerTexts[1].setX(130);
-        playerTexts[2] = getPlayerText(players[2]);
         playerTexts[2].setX(280);
-        playerTexts[3] = getPlayerText(players[3]);
         playerTexts[3].setX(430);
+
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
+
+        //todo burayı methodlara ayır -- getPlayerInfo falan gibisinden
+        // dice on game engine
+        // anlamak için square adlarını da bastır
 
         // initialize buttons
         btnRollDice = new Button();
@@ -79,14 +80,15 @@ public class GameScreen {
             btnRollDice.setDisable(true);
             diceText.setText("Dice roll: " + roll);
 
-            Player currentPlayer = players[turn];
+            Player currentPlayer = gameEngine.getCurrentPlayer();
             int position = currentPlayer.getPosition();
             position = (position + roll) % 40;
             currentPlayer.setPosition(position);
-            updatePlayerText(playerTexts[turn], currentPlayer);
-            updateTiles();
+            updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
+            updateTiles(); // CHANGE
 
-            Player owner = ((Property) board.tiles[players[turn].getPosition()]).getOwner();
+            if(gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
+            Player owner = ((Property) gameEngine.squares[]).getOwner();
             if (owner == null) {
                 btnBuy.setDisable(false);
             }
@@ -155,24 +157,11 @@ public class GameScreen {
         scene = new Scene(group ,width, height);
     }
 
-    private Text getPlayerText(Player player) {
-        Text t = new Text();
-        t.setFont(new Font(20));
-        t.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
-        t.setFill(player.getColor());
-        t.setY(50);
-        return t;
-    }
-
     private void updatePlayerText(Text text, Player player) {
         text.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
     }
 
-    private void updatePlayerTexts() {
-        for (int i = 0; i < 4; i++) {
-            updatePlayerText(playerTexts[i], players[i]);
-        }
-    }
+
 
     public static int rollDice() {
         int min = 1;
@@ -187,7 +176,7 @@ public class GameScreen {
 
         for (int col = 0; col < 10; col++) {
             for (int row = 0; row < 4; row++) {
-                int pos = 10*row + col;
+                int pos = 10 * row + col;
 
                 StackPane stp= new StackPane();
                 stp.setPadding(new Insets(5,5,5,5));
@@ -196,7 +185,7 @@ public class GameScreen {
                 Rectangle tile = new Rectangle();
                 tile.setHeight(80);
                 tile.setWidth(40);
-                if (board.tiles[pos].type.equals("property")) {
+                if (board.squares[pos].getType() == SquareType.COLORGROUP) {
                     Player owner = ((Property) board.tiles[pos]).owner;
                     if (owner != null)
                         tile.setFill(owner.getColor());
@@ -213,8 +202,9 @@ public class GameScreen {
                     }
                 }
                 Text text = new Text(playersOnTile);
-                stp.getChildren().addAll(tile, text);
 
+                //stp.getChildren().addAll(tile, text);
+                stp.getChildren().add(0, tile);
                 gridPane.add(stp, col, row);
             }
         }

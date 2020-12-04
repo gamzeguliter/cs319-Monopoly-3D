@@ -47,4 +47,11 @@ public class Player {
     public int getPosition() { return position; }
     public void setPosition(int position) { this.position = position; }
 
+    public void pay(int money) {
+        balance -= money;
+    }
+
+    public void gain(int money) {
+        balance += money;
+    }
 }
