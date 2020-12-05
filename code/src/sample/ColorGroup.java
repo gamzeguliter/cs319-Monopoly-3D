@@ -49,6 +49,7 @@ public class ColorGroup extends Square{
     }
 
     public Player propertyOwner(int index) {
+        Property property = findProperty(index);
         return property.getOwner();
     }
 

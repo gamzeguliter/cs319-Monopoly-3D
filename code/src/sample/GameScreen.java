@@ -54,6 +54,7 @@ public class GameScreen {
         int count = 0;
         for(Player player : gameEngine.getPlayers()) {
             playerTexts[count] = getPlayerText(player);
+            count++;
         }
         playerTexts[0].setX(0);
         playerTexts[1].setX(130);
@@ -61,6 +62,10 @@ public class GameScreen {
         playerTexts[3].setX(430);
 
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
+    }
+
+    private void updatePlayerText(Text text, Player player) {
+        text.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
     }
 
     private void setScene() {
@@ -74,6 +79,8 @@ public class GameScreen {
         //todo burayı methodlara ayır -- getPlayerInfo falan gibisinden
         // dice on game engine
         // anlamak için square adlarını da bastır
+
+        // burda board falan yaratmak laızm mı
 
         // initialize buttons
         btnRollDice = new Button();
@@ -91,15 +98,15 @@ public class GameScreen {
             position = (position + roll) % 40;
             currentPlayer.setPosition(position);
             updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
-            updateTiles(); // CHANGE
+            //updateTiles(); // CHANGE
 
-            if(gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
-                Player owner = ((ColorGroup)gameEngine.getCurrentSquare()).propertyOwner(currentPlayer.getPosition());
+            if (gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
+                Player owner = ((ColorGroup) gameEngine.getCurrentSquare()).propertyOwner(currentPlayer.getPosition());
                 if (owner == null) {
                     btnBuy.setDisable(false);
                 } else {
                     gameEngine.rent(currentPlayer.getPosition());
-                    updatePlayerTexts();
+                    //updatePlayerTexts();
                 }
             }
         });
@@ -108,6 +115,7 @@ public class GameScreen {
 
         btnEndTurn = new Button();
         btnEndTurn.setText("End Turn");
+        /*
         btnEndTurn.setOnAction(event -> {
             turn = (turn + 1) % 4;
             turnText.setText("Player Turn: " + (turn + 1));
@@ -119,12 +127,14 @@ public class GameScreen {
                 btnBuy.setDisable(true);
             }
         });
+        */
+
         btnEndTurn.setLayoutX(200);
         btnEndTurn.setLayoutY(120);
 
         btnBuy = new Button();
         btnBuy.setText("Buy");
-        btnBuy.setOnAction(event -> {
+        /*btnBuy.setOnAction(event -> {
             int balance = players[turn].getBalance();
             balance -= ((Property) board.tiles[players[turn].getPosition()]).buyValue;
             players[turn].setBalance(balance);
@@ -135,6 +145,7 @@ public class GameScreen {
 
             btnBuy.setDisable(true);
         });
+        */
         btnBuy.setLayoutX(300);
         btnBuy.setLayoutY(120);
 
@@ -158,14 +169,8 @@ public class GameScreen {
 
         group.getChildren().add(boardPane);
 
-        scene = new Scene(group ,width, height);
+        scene = new Scene(group, width, height);
     }
-    }
-
-    private void updatePlayerText(Text text, Player player) {
-        text.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
-    }
-
 
     private GridPane getTiles() {
         GridPane gridPane = new GridPane();
@@ -209,6 +214,7 @@ public class GameScreen {
         return gridPane;
     }
 
+    /*
     private void updateTiles() {
         boardPane.getChildren().clear();
         for (int col = 0; col < 10; col++) {
@@ -245,6 +251,8 @@ public class GameScreen {
             }
         }
     }
+
+     */
 
 
     // public methods

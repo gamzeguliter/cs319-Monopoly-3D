@@ -17,6 +17,7 @@ public class GameEngine {
     public GameEngine() {
         board = new Board();
         //temporary players to test
+        players = new ArrayList<Player>(); //added
         players.add(new Player("player1", Color.LIMEGREEN, 1000));
         players.add(new Player("player2", Color.TURQUOISE, 1000));
         players.add(new Player("player3", Color.MAROON, 1000));
