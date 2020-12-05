@@ -66,6 +66,14 @@ public class GameEngine {
 
     public ArrayList<Player> getPlayers() {
         return players;
+    } //todo sonra silinecek
+
+    public ArrayList<Integer> getPlayerPositions() {
+        ArrayList<Integer> positions = new ArrayList<Integer>();
+        for(Player player : players) {
+            positions.add(player.getPosition());
+        }
+        return positions;
     }
 
     //todo -- board'dan şu anki oyuncunun bulunduğu kare indexini al
@@ -163,12 +171,19 @@ public class GameEngine {
         }
     }
 
-    public static int rollDice() {
+    public int rollDice() {
         int min = 1;
         int max = 6;
         int roll1 = min + (int)(Math.random() * ((max - min) + 1));
         int roll2 = min + (int)(Math.random() * ((max - min) + 1));
+        int position = currentPlayer.getPosition();
+        position = (position + roll1 + roll2) % 40;
+        currentPlayer.setPosition(position);
         return roll1 + roll2;
+    }
+
+    public int getCurrentPlayerPosition() {
+        return currentPlayer.getPosition();
     }
 
     //TODO rent'i implement et
