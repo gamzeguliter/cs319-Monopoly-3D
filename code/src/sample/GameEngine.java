@@ -91,6 +91,10 @@ public class GameEngine {
         return board.squares[currentPlayer.getPosition()];
     }
 
+    public Square getSquare(int index) {
+        return board.squares[index];
+    }
+
     public boolean buyProperty(Property property, Player player) {
         if(property.isOwned() || player.getBalance() < property.getBuyingPrice()) {
             return false;

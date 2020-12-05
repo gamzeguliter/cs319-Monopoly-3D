@@ -174,7 +174,7 @@ public class GameScreen {
         GridPane gridPane = new GridPane();
 
         for (int col = 0; col < 10; col++) {
-            for (int row = 0; row < 10; row++) {
+            for (int row = 0; row < 4; row++) {
                 int pos = 10 * row + col;
 
                 StackPane stp= new StackPane();
@@ -184,16 +184,24 @@ public class GameScreen {
                 Rectangle tile = new Rectangle();
                 tile.setHeight(40);
                 tile.setWidth(20);
-
-                if (gameEngine.getCurrentSquare().getType()  == SquareType.COLORGROUP) {
-                    Player owner = ((ColorGroup) gameEngine.getCurrentSquare()).propertyOwner(gameEngine.getCurrentPlayer().getPosition());
-                    if (owner != null)
-                        tile.setFill(owner.getColor());
-                    else
-                        tile.setFill(Color.GREY);
+                tile.setFill(Color.ORCHID);
+                if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
+                    tile.setFill(Color.LIMEGREEN);
+                    if(gameEngine.getSquare(pos) == null)
+                    {
+                        System.out.println("AAAAAA SORUN VAR");
+                    }
+                    else {
+                        ColorGroup colors = (ColorGroup)gameEngine.getSquare(pos);
+                        Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
+                        if (owner != null)
+                            tile.setFill(owner.getColor());
+                        else
+                            tile.setFill(Color.GREY);
+                    }
                 }
                 // find players on tile and set text
-                ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
+                /*ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                 String playersOnTile = "";
                 int sum = col + row;
 
@@ -209,8 +217,8 @@ public class GameScreen {
                     }
                 }
 
-                Text text = new Text(playersOnTile);
-
+                //Text text = new Text(playersOnTile); */
+                Text text = new Text("hey");
                 //stp.getChildren().addAll(tile, text);
                 stp.getChildren().add(0, tile);
                 gridPane.add(stp, col, row);
