@@ -49,12 +49,7 @@ public class GameScreen {
         return t;
     }
 
-    private void setScene() {
-        Group group = new Group();
-        int width = 600;
-        int height = 700;
-
-        // initialize player texts
+    private void initializePlayerTexts(Group group) {
         playerTexts = new Text[4];
         int count = 0;
         for(Player player : gameEngine.getPlayers()) {
@@ -66,6 +61,15 @@ public class GameScreen {
         playerTexts[3].setX(430);
 
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
+    }
+
+    private void setScene() {
+        Group group = new Group();
+        int width = 600;
+        int height = 700;
+
+        // initialize player texts
+        initializePlayerTexts(group);
 
         //todo burayı methodlara ayır -- getPlayerInfo falan gibisinden
         // dice on game engine
@@ -73,9 +77,11 @@ public class GameScreen {
 
         // initialize buttons
         btnRollDice = new Button();
+
+        //roll dice
         btnRollDice.setText("Roll Dice");
         btnRollDice.setOnAction(event -> {
-            int roll = rollDice();
+            int roll = gameEngine.rollDice();
             diceRolled = true;
             btnRollDice.setDisable(true);
             diceText.setText("Dice roll: " + roll);
@@ -88,15 +94,13 @@ public class GameScreen {
             updateTiles(); // CHANGE
 
             if(gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
-            Player owner = ((Property) gameEngine.squares[]).getOwner();
-            if (owner == null) {
-                btnBuy.setDisable(false);
-            }
-            else {
-                int rentValue = ((Property) board.tiles[players[turn].getPosition()]).rentValue;
-                players[turn].setBalance(players[turn].getBalance() - rentValue);
-                owner.setBalance(owner.getBalance() + rentValue);
-                updatePlayerTexts();
+                Player owner = ((ColorGroup)gameEngine.getCurrentSquare()).propertyOwner(currentPlayer.getPosition());
+                if (owner == null) {
+                    btnBuy.setDisable(false);
+                } else {
+                    gameEngine.rent(currentPlayer.getPosition());
+                    updatePlayerTexts();
+                }
             }
         });
         btnRollDice.setLayoutX(100);
@@ -156,20 +160,12 @@ public class GameScreen {
 
         scene = new Scene(group ,width, height);
     }
+    }
 
     private void updatePlayerText(Text text, Player player) {
         text.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
     }
 
-
-
-    public static int rollDice() {
-        int min = 1;
-        int max = 6;
-        int roll1 = min + (int)(Math.random() * ((max - min) + 1));
-        int roll2 = min + (int)(Math.random() * ((max - min) + 1));
-        return roll1 + roll2;
-    }
 
     private GridPane getTiles() {
         GridPane gridPane = new GridPane();

@@ -77,7 +77,6 @@ public class GameEngine {
     // TOdo diagramda var ama burada nasıl olacak bilemedik
     public Square getCurrentSquare() {
         return board.squares[currentPlayer.getPosition()];
-
     }
 
     public boolean buyProperty(Property property, Player player) {
@@ -161,5 +160,18 @@ public class GameEngine {
         else {
             return false;
         }
+    }
+
+    public static int rollDice() {
+        int min = 1;
+        int max = 6;
+        int roll1 = min + (int)(Math.random() * ((max - min) + 1));
+        int roll2 = min + (int)(Math.random() * ((max - min) + 1));
+        return roll1 + roll2;
+    }
+
+    //TODO rent'i implement et
+    public void rent (int index) {
+        //find property owner
     }
 }
