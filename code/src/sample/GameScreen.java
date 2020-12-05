@@ -186,8 +186,8 @@ public class GameScreen {
                 Rectangle tile = new Rectangle();
                 tile.setHeight(80);
                 tile.setWidth(40);
-                if (board.squares[pos].getType() == SquareType.COLORGROUP) {
-                    Player owner = ((Property) board.tiles[pos]).owner;
+                if (gameEngine.getCurrentSquare().getType()  == SquareType.COLORGROUP) {
+                    Player owner = ((ColorGroup) gameEngine.getCurrentSquare()).propertyOwner(gameEngine.getCurrentPlayer().getPosition());
                     if (owner != null)
                         tile.setFill(owner.getColor());
                     else
@@ -196,7 +196,7 @@ public class GameScreen {
 
                 // find players on tile and set text
                 String playersOnTile = "";
-                for (Player player : players) {
+                for (Player player : gameEngine.getPlayers()) {
                     if (player.getPosition() == pos) {
                         System.out.println(pos);
                         playersOnTile += player.getName() + "\n";
