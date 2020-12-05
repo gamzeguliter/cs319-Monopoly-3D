@@ -48,6 +48,15 @@ public class GameEngine {
         return playernames;
     }
 
+    public Player getSquareOwner() {
+        if(getCurrentSquare().getType() != SquareType.COLORGROUP)
+            return null;
+        else {
+            return ((ColorGroup)getCurrentSquare()).propertyOwner(getCurrentPlayerPosition());
+        }
+    }
+
+
     /*
     public ArrayList<Integer> getPlayerBalances() {
         ArrayList<Integer> playerbalances = new ArrayList<Integer>();
@@ -75,13 +84,6 @@ public class GameEngine {
             positions.add(player.getPosition());
         }
         return positions;
-    }
-
-    //todo -- board'dan şu anki oyuncunun bulunduğu kare indexini al
-    public int getBoardIndex()
-    {
-        //ağlamasın diye yazdım değiştirilecek
-        return currentPlayer.getPosition();
     }
 
     // TOdo diagramda var ama burada nasıl olacak bilemedik
