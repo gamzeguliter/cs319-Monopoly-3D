@@ -25,11 +25,11 @@ public class Board {
         Square[] squares = new Square[40];
         for (int i = 0; i < 40; i++) {
             if(i % 4 == 0)
-                squares[i] = new Square(SquareType.JOKER);
+                squares[i] = new Joker(9, 10, 0);
             else if(i % 4 == 1)
-                squares[i] = new Square(SquareType.COLORGROUP);
+                squares[i] = new ColorGroup("red");
             else
-                squares[i] = new Square(SquareType.CHANCEANDCOMMUNITYCHEST);
+                squares[i] = new ChanceAndCommunityChest();
         }
         return squares;
     }
