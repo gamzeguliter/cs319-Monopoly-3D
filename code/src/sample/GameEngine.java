@@ -40,7 +40,7 @@ public class GameEngine {
         return turn % 4;
     }
 
-    /*public ArrayList<String> getPlayerNames() {
+    public ArrayList<String> getPlayerNames() {
         ArrayList<String> playernames = new ArrayList<String>();
         for(Player player : players) {
             playernames.add(player.getName());
@@ -48,6 +48,7 @@ public class GameEngine {
         return playernames;
     }
 
+    /*
     public ArrayList<Integer> getPlayerBalances() {
         ArrayList<Integer> playerbalances = new ArrayList<Integer>();
         for(Player player : players) {

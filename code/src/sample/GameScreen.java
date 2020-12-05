@@ -115,19 +115,17 @@ public class GameScreen {
 
         btnEndTurn = new Button();
         btnEndTurn.setText("End Turn");
-        /*
         btnEndTurn.setOnAction(event -> {
-            turn = (turn + 1) % 4;
-            turnText.setText("Player Turn: " + (turn + 1));
+            gameEngine.nextTurn();
+            turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //açılışta 1 sonra player2 ye dönyor
             diceRolled = false;
 
             btnRollDice.setDisable(false);
-            Player owner = ((Property) board.tiles[players[turn].getPosition()]).getOwner();
-            if (owner != null) {
-                btnBuy.setDisable(true);
-            }
+            //Player owner = ((Property) board.tiles[players[turn].getPosition()]).getOwner();
+            //if (owner != null) {
+            //    btnBuy.setDisable(true);
+            //}
         });
-        */
 
         btnEndTurn.setLayoutX(200);
         btnEndTurn.setLayoutY(120);
@@ -154,7 +152,7 @@ public class GameScreen {
         // turn text
         turnText = new Text();
         turnText.setFont(new Font(20));
-        turnText.setText("Player Turn: 1");
+        turnText.setText("Player Turn: ");//edit first player
         turnText.setX(150);
         turnText.setY(200);
         group.getChildren().add(turnText);
@@ -163,8 +161,8 @@ public class GameScreen {
         diceText = new Text();
         diceText.setFont(new Font(20));
         diceText.setText("Dice roll: 0");
-        diceText.setX(300);
-        diceText.setY(200);
+        diceText.setX(150);
+        diceText.setY(250);
         group.getChildren().add(diceText);
 
         group.getChildren().add(boardPane);
@@ -176,7 +174,7 @@ public class GameScreen {
         GridPane gridPane = new GridPane();
 
         for (int col = 0; col < 10; col++) {
-            for (int row = 0; row < 4; row++) {
+            for (int row = 0; row < 10; row++) {
                 int pos = 10 * row + col;
 
                 StackPane stp= new StackPane();
@@ -184,24 +182,33 @@ public class GameScreen {
 
                 // create rectangle of correct color for tile
                 Rectangle tile = new Rectangle();
-                tile.setHeight(80);
-                tile.setWidth(40);
+                tile.setHeight(40);
+                tile.setWidth(20);
+
                 if (gameEngine.getCurrentSquare().getType()  == SquareType.COLORGROUP) {
                     Player owner = ((ColorGroup) gameEngine.getCurrentSquare()).propertyOwner(gameEngine.getCurrentPlayer().getPosition());
                     if (owner != null)
                         tile.setFill(owner.getColor());
                     else
-                        tile.setFill(Color.GRAY);
+                        tile.setFill(Color.GREY);
                 }
-
                 // find players on tile and set text
+                ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                 String playersOnTile = "";
-                for (Player player : gameEngine.getPlayers()) {
-                    if (player.getPosition() == pos) {
-                        System.out.println(pos);
-                        playersOnTile += player.getName() + "\n";
+                int sum = col + row;
+
+                for(int i = 0; i < playerPositions.size(); i++){
+                    int position = playerPositions.get(i);
+                    if(col >= row){
+                        if (sum == position)
+                            playersOnTile += playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                    }
+                    else{
+                        if (40 - sum == position)
+                            playersOnTile += playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
                     }
                 }
+
                 Text text = new Text(playersOnTile);
 
                 //stp.getChildren().addAll(tile, text);
