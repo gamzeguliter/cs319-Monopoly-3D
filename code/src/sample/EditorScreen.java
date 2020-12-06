@@ -32,13 +32,14 @@ public class EditorScreen {
 
     // constructors
     public EditorScreen() {
-        gameEngine = new GameEngine();
+        //editor = new Editor();
         boardPane = getTiles(); //CHANGE
         boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         setScene();
     }
 
     // private methods
+
 
     private Text getPlayerText(Player player) {
         Text t = new Text();
@@ -49,6 +50,7 @@ public class EditorScreen {
         //t.setFont(new Font(20));
         return t;
     }
+
 
     private void initializePlayerTexts(Group group) {
         playerTexts = new Text[4];
@@ -71,8 +73,8 @@ public class EditorScreen {
 
     private void setScene() {
         Group group = new Group();
-        int width = 1000;
-        int height = 1000;
+        int width = 1366;
+        int height = 768;
 
         // initialize player texts
         initializePlayerTexts(group);

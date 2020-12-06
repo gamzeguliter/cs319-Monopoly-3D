@@ -75,8 +75,8 @@ public class GameScreen {
 
     private void setScene() {
         Group group = new Group();
-        int width = 1000;
-        int height = 1000;
+        int width = 1366;
+        int height = 768;
 
         // initialize player texts
         initializePlayerTexts(group);
