@@ -32,10 +32,13 @@ public class GameScreen {
     GameEngine gameEngine;
     private boolean diceRolled;
 
+    Font font = Font.font("Source Sans Pro", 20);
+
     // constructors
     public GameScreen() {
         gameEngine = new GameEngine();
         boardPane = getTiles(); //CHANGE
+        boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         setScene();
     }
 
@@ -43,10 +46,11 @@ public class GameScreen {
 
     private Text getPlayerText(Player player) {
         Text t = new Text();
-        t.setFont(new Font(20));
-        t.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
+        t.setFont(font);
+        t.setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
         t.setFill(player.getColor());
         t.setY(50);
+        //t.setFont(new Font(20));
         return t;
     }
 
@@ -155,7 +159,7 @@ public class GameScreen {
 
         // turn text
         turnText = new Text();
-        turnText.setFont(new Font(20));
+        turnText.setFont(font);
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
         turnText.setX(150);
         turnText.setY(200);
@@ -163,7 +167,7 @@ public class GameScreen {
 
         // dice text
         diceText = new Text();
-        diceText.setFont(new Font(20));
+        diceText.setFont(font);
         diceText.setText("Dice roll: 0");
         diceText.setX(150);
         diceText.setY(250);
@@ -172,7 +176,7 @@ public class GameScreen {
         group.getChildren().add(boardPane);
 
         scene = new Scene(group, width, height);
-    }
+        }
 
     private GridPane getTiles() {
         GridPane gridPane = new GridPane();
@@ -251,7 +255,8 @@ public class GameScreen {
                     }
 
                     Text text = new Text(playersOnTile);
-                    text.setFont(new Font(10)); //size of the player texts
+                    Font font2 = Font.font("Source Sans Pro", 10);
+                    text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         //stp.getChildren().add(0, tile);
@@ -345,7 +350,8 @@ public class GameScreen {
 
                     System.out.println(pos + " " + playersOnTile);
                     Text text = new Text(playersOnTile);
-                    text.setFont(new Font(10)); //size of the player texts
+                    Font font2 = Font.font("Source Sans Pro", 10);
+                    text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         //stp.getChildren().add(0, tile);
