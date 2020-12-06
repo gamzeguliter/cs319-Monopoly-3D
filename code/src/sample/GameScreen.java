@@ -40,7 +40,8 @@ public class GameScreen {
     public GameScreen() {
         gameEngine = new GameEngine();
         boardPane = getTiles(); //CHANGE
-       boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
+      boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
+
         setScene();
     }
 
@@ -64,16 +65,7 @@ public class GameScreen {
             playerTexts[count] = getPlayerText(player);
             count++;
         }
-        //buraya sonra bak
-       /* for(int i =0; i< 4; i++) {
-            rec[i] = new Rectangle();
-            r.setHeight(100);
-            r.setWidth(200);
-            r.setX(800);
-            r.setY(100);
-            r.setFill(Color.TRANSPARENT);
-            r.setStroke(Color.BLACK);
-        }*/
+
         playerTexts[0].setX(800);
         playerTexts[0].setY(100);
         playerTexts[1].setX(800);
@@ -83,20 +75,20 @@ public class GameScreen {
         playerTexts[3].setX(800);
         playerTexts[3].setY(400);
 
-        //StackPane stp= new StackPane();
+
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
 
     }
 
     private void updatePlayerText(Text text, Player player) {
-        text.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
+        text.setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
     }
 
     private void setScene() {
         Group group = new Group();
 
-        int width = 1000;
-        int height = 1000;
+        int width = 1366;
+        int height = 768;
 
         // initialize player texts
         initializePlayerTexts(group);
@@ -109,9 +101,11 @@ public class GameScreen {
 
         // initialize buttons
         btnRollDice = new Button();
+        Font font3 = Font.font("Source Sans Pro", 15);
 
         //roll dice
         btnRollDice.setText("Roll Dice");
+        btnRollDice.setFont(font3);
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
             diceRolled = true;
@@ -148,6 +142,7 @@ public class GameScreen {
 
         btnEndTurn = new Button();
         btnEndTurn.setText("End Turn");
+        btnEndTurn.setFont(font3);
         btnEndTurn.setOnAction(event -> {
             gameEngine.nextTurn();
             turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
@@ -165,6 +160,7 @@ public class GameScreen {
 
         btnBuy = new Button();
         btnBuy.setText("Buy");
+        btnBuy.setFont(font3);
         //disable buy button at the beginning of the game
         if(gameEngine.getCurrentPlayerPosition() == 0) {
             btnBuy.setDisable(true);
@@ -364,7 +360,6 @@ public class GameScreen {
                         }
                     }
 
-                    System.out.println(pos + " " + playersOnTile);
                     Text text = new Text(playersOnTile);
                     Font font2 = Font.font("Source Sans Pro", 10);
                     text.setFont(font2); //size of the player texts
