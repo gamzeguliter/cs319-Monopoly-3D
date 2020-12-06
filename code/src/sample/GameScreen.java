@@ -6,6 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -38,7 +40,7 @@ public class GameScreen {
     public GameScreen() {
         gameEngine = new GameEngine();
         boardPane = getTiles(); //CHANGE
-        boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
+       boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         setScene();
     }
 
@@ -56,17 +58,24 @@ public class GameScreen {
 
     private void initializePlayerTexts(Group group) {
         playerTexts = new Text[4];
+
         int count = 0;
         for(Player player : gameEngine.getPlayers()) {
             playerTexts[count] = getPlayerText(player);
             count++;
         }
-        playerTexts[0].setX(10);
-        playerTexts[1].setX(160);
-        playerTexts[2].setX(310);
-        playerTexts[3].setX(460);
+        playerTexts[0].setX(800);
+        playerTexts[0].setY(100);
+        playerTexts[1].setX(800);
+        playerTexts[1].setY(200);
+        playerTexts[2].setX(800);
+        playerTexts[2].setY(300);
+        playerTexts[3].setX(800);
+        playerTexts[3].setY(400);
 
+        //StackPane stp= new StackPane();
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
+
     }
 
     private void updatePlayerText(Text text, Player player) {
@@ -75,6 +84,7 @@ public class GameScreen {
 
     private void setScene() {
         Group group = new Group();
+
         int width = 1000;
         int height = 1000;
 
