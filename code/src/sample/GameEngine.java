@@ -18,10 +18,10 @@ public class GameEngine {
         board = new Board();
         //temporary players to test
         players = new ArrayList<Player>(); //added
-        players.add(new Player("player1", Color.LIMEGREEN, 1000));
-        players.add(new Player("player2", Color.TURQUOISE, 1000));
-        players.add(new Player("player3", Color.MAROON, 1000));
-        players.add(new Player("player4", Color.SILVER, 1000));
+        players.add(new Player("player1", Color.LIMEGREEN, 1000, 0));
+        players.add(new Player("player2", Color.TURQUOISE, 1000, 1));
+        players.add(new Player("player3", Color.MAROON, 1000, 2));
+        players.add(new Player("player4", Color.SILVER, 1000, 3));
         turn = 0;
         currentPlayer = players.get(0);
 
@@ -95,16 +95,9 @@ public class GameEngine {
         return board.squares[index];
     }
 
-    public boolean buyProperty(Property property, Player player) {
-        if(property.isOwned() || player.getBalance() < property.getBuyingPrice()) {
-            return false;
-        }
-        else {
-            property.setOwner(player);
-            player.pay(property.getBuyingPrice());
-            //TODO UI change color and stuff
-            return true;
-        }
+    public boolean buyProperty() {
+        ColorGroup group = (ColorGroup)getCurrentSquare();
+        return group.buyProperty(getCurrentPlayerPosition(), getCurrentPlayer());
     }
 
     //todo

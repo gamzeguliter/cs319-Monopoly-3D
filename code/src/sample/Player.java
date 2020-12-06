@@ -12,13 +12,14 @@ public class Player {
     private int balance;
     private boolean isSuspended;
     private boolean isBankrupt;
+    int index;
 
     //constructors
-    public Player(String name, Color color, int balance) {
+    public Player(String name, Color color, int balance, int index) {
         this.name = name;
         this.color = color;
         this.balance = balance;
-
+        this.index = index;
         position = 0;
         isSuspended = false;
         isBankrupt = false;
@@ -30,6 +31,9 @@ public class Player {
     boolean isSuspended() { return isSuspended; }
     boolean isBankrupt() { return isBankrupt; }
 
+    public int getIndex() {
+        return index;
+    }
     //getters and setters
     // TODO: implement pawn related methods
     // getPawn()
