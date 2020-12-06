@@ -21,16 +21,19 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         //Creating a Scene by passing the group object, height and width
         GameScreen gameScreen = new GameScreen();
-        Scene scene = gameScreen.getScene();
+        Scene gameScene = gameScreen.getScene();
+
+        //EditorScreen editorScreen = new EditorScreen();
+        //Scene editorScene = editorScreen.getScene();
 
         //setting color to the scene
-        scene.setFill(Color.LIGHTGRAY);
+        gameScene.setFill(Color.rgb(203, 227, 199));
 
         //Setting the title to Stage.
         primaryStage.setTitle("Sample Application");
 
         //Adding the scene to Stage
-        primaryStage.setScene(scene);
+        primaryStage.setScene(gameScene);
 
         //Displaying the contents of the stage
         primaryStage.show();
