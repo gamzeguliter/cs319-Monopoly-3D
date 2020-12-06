@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -56,10 +57,10 @@ public class GameScreen {
             playerTexts[count] = getPlayerText(player);
             count++;
         }
-        playerTexts[0].setX(0);
-        playerTexts[1].setX(130);
-        playerTexts[2].setX(280);
-        playerTexts[3].setX(430);
+        playerTexts[0].setX(10);
+        playerTexts[1].setX(160);
+        playerTexts[2].setX(310);
+        playerTexts[3].setX(460);
 
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
@@ -70,8 +71,8 @@ public class GameScreen {
 
     private void setScene() {
         Group group = new Group();
-        int width = 600;
-        int height = 700;
+        int width = 1000;
+        int height = 1000;
 
         // initialize player texts
         initializePlayerTexts(group);
@@ -190,14 +191,25 @@ public class GameScreen {
 
                 if (pos < 40) {
                     StackPane stp = new StackPane();
-                    stp.setPadding(new Insets(5, 5, 5, 5));
+                    stp.setPadding(new Insets(1, 1, 1, 1));
 
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
-                    tile.setHeight(40);
-                    tile.setWidth(20);
+                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
+                        tile.setHeight(60);
+                        tile.setWidth(60);
+                    }
+                    else if (row == 10 | row == 0){
+                        tile.setHeight(60);
+                        tile.setWidth(40);
+                    }
+                    else{
+                        tile.setHeight(40);
+                        tile.setWidth(60);
+                    }
                     tile.setX(col * 10);
                     tile.setY(row * 10);
+                    tile.setStroke(Color.BLACK);
                     tile.setFill(Color.ORCHID);
 
                     /*
@@ -237,7 +249,7 @@ public class GameScreen {
 
                     System.out.println(pos + " " + playersOnTile);
                     Text text = new Text(playersOnTile);
-                    text.setFont(new Font(5)); //size of the player texts
+                    text.setFont(new Font(10)); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         //stp.getChildren().add(0, tile);
