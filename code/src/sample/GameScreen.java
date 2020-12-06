@@ -60,10 +60,14 @@ public class GameScreen {
             playerTexts[count] = getPlayerText(player);
             count++;
         }
-        playerTexts[0].setX(10);
-        playerTexts[1].setX(160);
-        playerTexts[2].setX(310);
-        playerTexts[3].setX(460);
+        playerTexts[0].setX(800);
+        playerTexts[0].setY(100);
+        playerTexts[1].setX(800);
+        playerTexts[1].setY(200);
+        playerTexts[2].setX(800);
+        playerTexts[2].setY(300);
+        playerTexts[3].setX(800);
+        playerTexts[3].setY(400);
 
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
