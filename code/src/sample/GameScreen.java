@@ -95,9 +95,12 @@ public class GameScreen {
             diceText.setText("Dice roll: " + roll);
 
             Player currentPlayer = gameEngine.getCurrentPlayer();
-            int position = currentPlayer.getPosition();
-            position = (position + roll) % 40;
-            currentPlayer.setPosition(position);
+
+            //already updated in roll dice method
+            //int position = currentPlayer.getPosition();
+            //position = (position + roll) % 40;
+            //currentPlayer.setPosition(position);
+
             updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
             //updateTiles(); // CHANGE
 
@@ -247,7 +250,6 @@ public class GameScreen {
                         }
                     }
 
-                    System.out.println(pos + " " + playersOnTile);
                     Text text = new Text(playersOnTile);
                     text.setFont(new Font(10)); //size of the player texts
 
