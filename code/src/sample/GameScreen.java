@@ -38,7 +38,6 @@ public class GameScreen {
     public GameScreen() {
         gameEngine = new GameEngine();
         boardPane = getTiles(); //CHANGE
-        boardPane.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         setScene();
     }
 
