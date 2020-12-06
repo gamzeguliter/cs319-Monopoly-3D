@@ -19,18 +19,24 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        //Stage gameStage, editStage;
         //Creating a Scene by passing the group object, height and width
         GameScreen gameScreen = new GameScreen();
-        Scene scene = gameScreen.getScene();
+        Scene gameScene = gameScreen.getScene();
+
+        EditorScreen editorScreen = new EditorScreen();
+        Scene editorScene = editorScreen.getScene();
 
         //setting color to the scene
-        scene.setFill(Color.LIGHTGRAY);
+        gameScene.setFill(Color.rgb(203, 227, 199));
+        editorScene.setFill(Color.rgb(203, 227, 199));
 
         //Setting the title to Stage.
-        primaryStage.setTitle("Sample Application");
+        primaryStage.setTitle("Monopoly");
+        //gameStage.setTitle();
 
         //Adding the scene to Stage
-        primaryStage.setScene(scene);
+        primaryStage.setScene(editorScene);//game or editor--burdan değiştirin
 
         //Displaying the contents of the stage
         primaryStage.show();
@@ -39,5 +45,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
     }
 }
