@@ -7,11 +7,11 @@ public class ColorGroup extends Square{
     private String groupName;
     private ArrayList<Property> properties;
     private int[] colors;
-    private ArrayList<Integer> boardIndexes;
+    private ArrayList<Integer> boardIndexes; //array of indexes that correspond to the indexes of properties of this color group
     private int propertyNo;
 
 
-    public ColorGroup(String groupName) {
+    public ColorGroup(String groupName, int index) {
         super(SquareType.COLORGROUP);
         this.groupName = groupName;
         properties = new ArrayList<Property>();
@@ -21,7 +21,7 @@ public class ColorGroup extends Square{
     }
 
     private Property findProperty(int boardIndex) {
-        for (int propertyIndex: boardIndexes) {
+        for (int propertyIndex: boardIndexes) { //todo board indexes şu an null olduğundan bulamıyor error veriyor
             if (propertyIndex == boardIndex) {
                 return properties.get(propertyIndex);
             }
@@ -34,6 +34,14 @@ public class ColorGroup extends Square{
         Property property = findProperty(index);
         if(property != null)
             return property.addHouse();
+        else
+            return false;
+    }
+
+    public boolean propertyHasOwner (int index) {
+        Property property = findProperty(index);
+        if(property != null)
+            return property.hasOwner();
         else
             return false;
     }
@@ -126,5 +134,18 @@ public class ColorGroup extends Square{
             }
         }
         return true;
+    }
+
+    public boolean buyProperty(int index, Player player) {
+        Property property = findProperty(index);
+        if(property.isOwned() || player.getBalance() < property.getBuyingPrice()) {
+            return false;
+        }
+        else {
+            property.setOwner(player);
+            player.pay(property.getBuyingPrice());
+            //TODO UI change color and stuff
+            return true;
+        }
     }
 }

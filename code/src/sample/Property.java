@@ -29,6 +29,10 @@ public class Property {
         owner = null;
     }
 
+    public boolean hasOwner() {
+        return owner != null;
+    }
+
     //TODO buy house, sell house gibi şeyler -- gameengine?
     //TODO sell property make isOwned false set owner to null
     public boolean setOwner(Player newOwner) {

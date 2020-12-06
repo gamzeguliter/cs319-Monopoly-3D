@@ -104,14 +104,19 @@ public class GameScreen {
             updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
             updateTiles(); // CHANGE
 
+            //todo değiştir
             if (gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
-                Player owner = ((ColorGroup) gameEngine.getCurrentSquare()).propertyOwner(currentPlayer.getPosition());
-                if (owner == null) {
+                ColorGroup colors = (ColorGroup) gameEngine.getCurrentSquare();
+                if (colors.propertyHasOwner(currentPlayer.getPosition()) == false) {
                     btnBuy.setDisable(false);
                 } else {
                     gameEngine.rent(currentPlayer.getPosition());
                     //updatePlayerTexts();
                 }
+            }
+            else
+            {
+                btnBuy.setDisable(true);
             }
         });
         btnRollDice.setLayoutX(100);
@@ -136,18 +141,17 @@ public class GameScreen {
 
         btnBuy = new Button();
         btnBuy.setText("Buy");
-        /*btnBuy.setOnAction(event -> {
-            int balance = players[turn].getBalance();
-            balance -= ((Property) board.tiles[players[turn].getPosition()]).buyValue;
-            players[turn].setBalance(balance);
-
-            ((Property) board.tiles[players[turn].getPosition()]).setOwner(players[turn]);
+        //disable buy button at the beginning of the game
+        if(gameEngine.getCurrentPlayerPosition() == 0) {
+            btnBuy.setDisable(true);
+        }
+        btnBuy.setOnAction(event -> {
+            gameEngine.buyProperty();
             updateTiles();
-            updatePlayerText(playerTexts[turn], players[turn]);
-
+            updatePlayerText(playerTexts[gameEngine.getTurn()], gameEngine.getCurrentPlayer());
             btnBuy.setDisable(true);
         });
-        */
+
         btnBuy.setLayoutX(300);
         btnBuy.setLayoutY(120);
 
@@ -213,25 +217,18 @@ public class GameScreen {
                     tile.setX(col * 10);
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
-                    tile.setFill(Color.ORCHID);
+                    //tile.setFill(Color.ORCHID);
 
-                    /*
+                    //set tile colors
                     if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
-                        tile.setFill(Color.LIMEGREEN);
-                        if (gameEngine.getSquare(pos) == null) {
-                            System.out.println("AAAAAA SORUN VAR");
-                        } else {
-                            ColorGroup colors = (ColorGroup) gameEngine.getSquare(pos);
-                            if (colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition()) != null) {
-                                Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
-                                if (owner != null)
-                                    tile.setFill(owner.getColor());
-                                else
-                                    tile.setFill(Color.GREY);
-                            }
-                        }
+                        tile.setFill(Color.MEDIUMSEAGREEN);
                     }
-                    */
+                    else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
+                        tile.setFill(Color.DARKGOLDENROD);
+                    }
+                    else {
+                        tile.setFill(Color.LIME);
+                    }
 
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
@@ -306,25 +303,24 @@ public class GameScreen {
                     tile.setX(col * 10);
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
-                    tile.setFill(Color.ORCHID);
 
-                    /*
+                    //determine square colors
                     if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
-                        tile.setFill(Color.LIMEGREEN);
-                        if (gameEngine.getSquare(pos) == null) {
-                            System.out.println("AAAAAA SORUN VAR");
-                        } else {
-                            ColorGroup colors = (ColorGroup) gameEngine.getSquare(pos);
-                            if (colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition()) != null) {
-                                Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
-                                if (owner != null)
-                                    tile.setFill(owner.getColor());
-                                else
-                                    tile.setFill(Color.GREY);
-                            }
+                        ColorGroup colors = (ColorGroup) gameEngine.getSquare(pos);
+                        if (colors.propertyHasOwner(pos) == true) {
+                            Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
+                            tile.setFill(owner.getColor());
                         }
+                        else
+                            tile.setFill(Color.MEDIUMSEAGREEN);
                     }
-                    */
+                    else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
+                        tile.setFill(Color.DARKGOLDENROD);
+                    }
+
+                    else {
+                        tile.setFill(Color.LIME);
+                    }
 
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();

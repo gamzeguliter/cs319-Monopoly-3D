@@ -4,6 +4,17 @@ public class Board {
 
     // properties
     Square[] squares;
+    ColorGroup[] colorGroups;
+    /*
+    property array -?
+        aynı name'de 2 group a izin verme!
+        property'i colorGroupa koyarken, property içindeki colorgroup ismine bak
+
+        property(name, ...., string colorgroup)
+
+       if(colorgroup yoksa yarat, varsa içindeki property array e bu property 'i ekle
+     */
+
 
     // constructors
     // TODO: implement constructor with filemanager
@@ -27,7 +38,7 @@ public class Board {
             if(i % 4 == 0)
                 squares[i] = new Joker(9, 10, 0);
             else if(i % 4 == 1)
-                squares[i] = new ColorGroup("red");
+                squares[i] = new ColorGroup("red", i);
             else
                 squares[i] = new ChanceAndCommunityChest();
         }
