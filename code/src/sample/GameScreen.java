@@ -102,7 +102,7 @@ public class GameScreen {
             //currentPlayer.setPosition(position);
 
             updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
-            //updateTiles(); // CHANGE
+            updateTiles(); // CHANGE
 
             if (gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
                 Player owner = ((ColorGroup) gameEngine.getCurrentSquare()).propertyOwner(currentPlayer.getPosition());
@@ -287,14 +287,25 @@ public class GameScreen {
 
                 if (pos < 40) {
                     StackPane stp = new StackPane();
-                    stp.setPadding(new Insets(5, 5, 5, 5));
+                    stp.setPadding(new Insets(1, 1, 1, 1));
 
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
-                    tile.setHeight(40);
-                    tile.setWidth(20);
+                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
+                        tile.setHeight(60);
+                        tile.setWidth(60);
+                    }
+                    else if (row == 10 | row == 0){
+                        tile.setHeight(60);
+                        tile.setWidth(40);
+                    }
+                    else{
+                        tile.setHeight(40);
+                        tile.setWidth(60);
+                    }
                     tile.setX(col * 10);
                     tile.setY(row * 10);
+                    tile.setStroke(Color.BLACK);
                     tile.setFill(Color.ORCHID);
 
                     /*
@@ -334,59 +345,17 @@ public class GameScreen {
 
                     System.out.println(pos + " " + playersOnTile);
                     Text text = new Text(playersOnTile);
-                    text.setFont(new Font(5)); //size of the player texts
+                    text.setFont(new Font(10)); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         //stp.getChildren().add(0, tile);
                         stp.getChildren().addAll(tile, text);
                     }
+                    boardPane.add(stp, col, row);
                 }
             }
         }
     }
-
-    //old update tiles
-    /*
-    private void updateTiles() {
-        boardPane.getChildren().clear();
-        for (int col = 0; col < 10; col++) {
-            for (int row = 0; row < 4; row++) {
-                int pos = 10*row + col;
-
-                StackPane stp= new StackPane();
-                stp.setPadding(new Insets(5,5,5,5));
-
-                // create rectangle of correct color for tile
-                Rectangle tile = new Rectangle();
-                tile.setHeight(80);
-                tile.setWidth(40);
-                if (board.tiles[pos].type.equals("property")) {
-                    Player owner = ((Property) board.tiles[pos]).owner;
-                    if (owner != null)
-                        tile.setFill(owner.getColor());
-                    else
-                        tile.setFill(Color.GRAY);
-                }
-
-                // find players on tile and set text
-                String playersOnTile = "";
-                for (Player player : players) {
-                    if (player.getPosition() == pos) {
-                        System.out.println(pos);
-                        playersOnTile += player.getName() + "\n";
-                    }
-                }
-                Text text = new Text(playersOnTile);
-                stp.getChildren().addAll(tile, text);
-
-                boardPane.add(stp, col, row);
-            }
-        }
-    }
-
-     */
-
-
     // public methods
 
     public Scene getScene() { return scene; }
