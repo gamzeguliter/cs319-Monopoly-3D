@@ -70,7 +70,7 @@ public class GameScreen {
     }
 
     private void updatePlayerText(Text text, Player player) {
-        text.setText(player.getName() + "\nbalance: " + player.getBalance() + "\nposition: " + player.getPosition());
+        text.setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
     }
 
     private void setScene() {
@@ -89,9 +89,11 @@ public class GameScreen {
 
         // initialize buttons
         btnRollDice = new Button();
+        Font font3 = Font.font("Source Sans Pro", 15);
 
         //roll dice
         btnRollDice.setText("Roll Dice");
+        btnRollDice.setFont(font3);
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
             diceRolled = true;
@@ -128,6 +130,7 @@ public class GameScreen {
 
         btnEndTurn = new Button();
         btnEndTurn.setText("End Turn");
+        btnEndTurn.setFont(font3);
         btnEndTurn.setOnAction(event -> {
             gameEngine.nextTurn();
             turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
@@ -145,6 +148,7 @@ public class GameScreen {
 
         btnBuy = new Button();
         btnBuy.setText("Buy");
+        btnBuy.setFont(font3);
         //disable buy button at the beginning of the game
         if(gameEngine.getCurrentPlayerPosition() == 0) {
             btnBuy.setDisable(true);
@@ -344,7 +348,6 @@ public class GameScreen {
                         }
                     }
 
-                    System.out.println(pos + " " + playersOnTile);
                     Text text = new Text(playersOnTile);
                     Font font2 = Font.font("Source Sans Pro", 10);
                     text.setFont(font2); //size of the player texts
