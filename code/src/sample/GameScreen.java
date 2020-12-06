@@ -117,7 +117,7 @@ public class GameScreen {
         btnEndTurn.setText("End Turn");
         btnEndTurn.setOnAction(event -> {
             gameEngine.nextTurn();
-            turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //açılışta 1 sonra player2 ye dönyor
+            turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
             diceRolled = false;
 
             btnRollDice.setDisable(false);
@@ -152,7 +152,7 @@ public class GameScreen {
         // turn text
         turnText = new Text();
         turnText.setFont(new Font(20));
-        turnText.setText("Player Turn: ");//edit first player
+        turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
         turnText.setX(150);
         turnText.setY(200);
         group.getChildren().add(turnText);
@@ -173,55 +173,78 @@ public class GameScreen {
     private GridPane getTiles() {
         GridPane gridPane = new GridPane();
 
-        for (int col = 0; col < 10; col++) {
-            for (int row = 0; row < 4; row++) {
-                int pos = 10 * row + col;
+        for (int col = 0; col < 11; col++) {
+            for (int row = 0; row < 11; row++) {
+                int sum = row + col;
+                int pos;
 
-                StackPane stp= new StackPane();
-                stp.setPadding(new Insets(5,5,5,5));
-
-                // create rectangle of correct color for tile
-                Rectangle tile = new Rectangle();
-                tile.setHeight(40);
-                tile.setWidth(20);
-                tile.setFill(Color.ORCHID);
-                if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
-                    tile.setFill(Color.LIMEGREEN);
-                    if(gameEngine.getSquare(pos) == null)
-                    {
-                        System.out.println("AAAAAA SORUN VAR");
-                    }
-                    else {
-                        ColorGroup colors = (ColorGroup)gameEngine.getSquare(pos);
-                        Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
-                        if (owner != null)
-                            tile.setFill(owner.getColor());
-                        else
-                            tile.setFill(Color.GREY);
+                if ( (row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                    if (col >= row) {
+                        pos = sum;
+                    } else {
+                        pos = 40 - sum;
                     }
                 }
-                // find players on tile and set text
-                /*ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
-                String playersOnTile = "";
-                int sum = col + row;
+                else
+                    pos = 40 + row + col;
 
-                for(int i = 0; i < playerPositions.size(); i++){
-                    int position = playerPositions.get(i);
-                    if(col >= row){
-                        if (sum == position)
-                            playersOnTile += playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                if (pos < 40) {
+                    StackPane stp = new StackPane();
+                    stp.setPadding(new Insets(5, 5, 5, 5));
+
+                    // create rectangle of correct color for tile
+                    Rectangle tile = new Rectangle();
+                    tile.setHeight(40);
+                    tile.setWidth(20);
+                    tile.setX(col * 10);
+                    tile.setY(row * 10);
+                    tile.setFill(Color.ORCHID);
+
+                    /*
+                    if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
+                        tile.setFill(Color.LIMEGREEN);
+                        if (gameEngine.getSquare(pos) == null) {
+                            System.out.println("AAAAAA SORUN VAR");
+                        } else {
+                            ColorGroup colors = (ColorGroup) gameEngine.getSquare(pos);
+                            if (colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition()) != null) {
+                                Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
+                                if (owner != null)
+                                    tile.setFill(owner.getColor());
+                                else
+                                    tile.setFill(Color.GREY);
+                            }
+                        }
                     }
-                    else{
-                        if (40 - sum == position)
-                            playersOnTile += playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                    */
+
+                    // find players on tile and set text
+                    ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
+                    String playersOnTile = "";
+
+                    for (int i = 0; i < playerPositions.size(); i++) {
+                        int position = playerPositions.get(i);
+                        if (col >= row) {
+                            if (sum == position) {
+                                playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                            }
+                        } else {
+                            if (40 - sum == position) {
+                                playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                            }
+                        }
+                    }
+
+                    System.out.println(pos + " " + playersOnTile);
+                    Text text = new Text(playersOnTile);
+                    text.setFont(new Font(5)); //size of the player texts
+
+                    if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                        //stp.getChildren().add(0, tile);
+                        stp.getChildren().addAll(tile, text);
+                        gridPane.add(stp, col, row);
                     }
                 }
-
-                //Text text = new Text(playersOnTile); */
-                Text text = new Text("hey");
-                //stp.getChildren().addAll(tile, text);
-                stp.getChildren().add(0, tile);
-                gridPane.add(stp, col, row);
             }
         }
         gridPane.setLayoutX(10);
@@ -229,6 +252,86 @@ public class GameScreen {
         return gridPane;
     }
 
+    //new updateBoard same as getTiles?
+    private void updateTiles() { //board pane vs grid pane?
+        boardPane.getChildren().clear();
+
+        for (int col = 0; col < 11; col++) {
+            for (int row = 0; row < 11; row++) {
+                int sum = row + col;
+                int pos;
+
+                if ( (row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                    if (col >= row) {
+                        pos = sum;
+                    } else {
+                        pos = 40 - sum;
+                    }
+                }
+                else
+                    pos = 40 + row + col;
+
+                if (pos < 40) {
+                    StackPane stp = new StackPane();
+                    stp.setPadding(new Insets(5, 5, 5, 5));
+
+                    // create rectangle of correct color for tile
+                    Rectangle tile = new Rectangle();
+                    tile.setHeight(40);
+                    tile.setWidth(20);
+                    tile.setX(col * 10);
+                    tile.setY(row * 10);
+                    tile.setFill(Color.ORCHID);
+
+                    /*
+                    if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
+                        tile.setFill(Color.LIMEGREEN);
+                        if (gameEngine.getSquare(pos) == null) {
+                            System.out.println("AAAAAA SORUN VAR");
+                        } else {
+                            ColorGroup colors = (ColorGroup) gameEngine.getSquare(pos);
+                            if (colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition()) != null) {
+                                Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
+                                if (owner != null)
+                                    tile.setFill(owner.getColor());
+                                else
+                                    tile.setFill(Color.GREY);
+                            }
+                        }
+                    }
+                    */
+
+                    // find players on tile and set text
+                    ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
+                    String playersOnTile = "";
+
+                    for (int i = 0; i < playerPositions.size(); i++) {
+                        int position = playerPositions.get(i);
+                        if (col >= row) {
+                            if (sum == position) {
+                                playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                            }
+                        } else {
+                            if (40 - sum == position) {
+                                playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                            }
+                        }
+                    }
+
+                    System.out.println(pos + " " + playersOnTile);
+                    Text text = new Text(playersOnTile);
+                    text.setFont(new Font(5)); //size of the player texts
+
+                    if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                        //stp.getChildren().add(0, tile);
+                        stp.getChildren().addAll(tile, text);
+                    }
+                }
+            }
+        }
+    }
+
+    //old update tiles
     /*
     private void updateTiles() {
         boardPane.getChildren().clear();
