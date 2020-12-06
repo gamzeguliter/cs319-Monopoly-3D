@@ -58,12 +58,22 @@ public class GameScreen {
 
     private void initializePlayerTexts(Group group) {
         playerTexts = new Text[4];
-
+        Rectangle[] rec  = new Rectangle[4];
         int count = 0;
         for(Player player : gameEngine.getPlayers()) {
             playerTexts[count] = getPlayerText(player);
             count++;
         }
+        //buraya sonra bak
+       /* for(int i =0; i< 4; i++) {
+            rec[i] = new Rectangle();
+            r.setHeight(100);
+            r.setWidth(200);
+            r.setX(800);
+            r.setY(100);
+            r.setFill(Color.TRANSPARENT);
+            r.setStroke(Color.BLACK);
+        }*/
         playerTexts[0].setX(800);
         playerTexts[0].setY(100);
         playerTexts[1].setX(800);
