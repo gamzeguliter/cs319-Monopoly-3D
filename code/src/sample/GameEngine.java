@@ -84,6 +84,38 @@ public class GameEngine {
         return false;
     }
 
+    public boolean isSellDisabled() {
+        //check if it is owned,
+        //if there is any buildings on the color group
+    }
+
+    public boolean isAddHouseDisabled() {
+        //check if improvable
+
+    }
+
+    public boolean isSellHouseDisabled() {
+
+    }
+
+    public boolean isAddHotelDisabled() {
+
+    }
+
+    public boolean isSellHotelDisabled() {
+
+    }
+
+    public boolean isMortgagePropertyDisabled() {
+
+    }
+
+    public boolean isUnmortgagePropertyDisabled() {
+
+    }
+
+
+
     public void initializeGame() {
 
     }
@@ -149,16 +181,18 @@ public class GameEngine {
         return true;
     }
 
+
     public boolean addHouse() {
         //SORU: player istediği zaman istediği kareye ev kurabiliyor mu - öyleyse current square olmayacak!!!
         Property property = (Property)getCurrentSquare();
-        //find color group
-        for(ColorGroup group : colorGroups) {
+        ColorGroup group = property.getColorGroup();
+        return group.addHouse(property, currentPlayer);
+        /*for(ColorGroup group : colorGroups) {
             if(property.getColorGroup() == group.getGroupName()) { //TEKRAR BAK: string comparison with == ?
                 return group.addHouse(property, currentPlayer);
             }
         }
-        return false;
+        return false;*/
     }
 
     //todo

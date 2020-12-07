@@ -25,7 +25,6 @@ public class Board {
     public Board() {
         colorGroups = createGroups();
         squares = testSquares();
-
     }
 
     private ArrayList<ColorGroup> createGroups() {
@@ -48,7 +47,7 @@ public class Board {
         return squares[squareNo].getType();
     }
 
-    public boolean canBuildHouse(Property property, Player currentPlayer) {
+    /*public boolean canBuildHouse(Property property, Player currentPlayer) {
         for(ColorGroup group : colorGroups) {
             if(property.getColorGroup() == group.getGroupName()) {
                 //check both if all props are owned by player and checks for controlled housing
@@ -57,7 +56,7 @@ public class Board {
         }
         return false;
     }
-
+*/
     String[] propertyNames = {"New York", "Boston", "Paris", "Copenhagen", "Berlin", "İstanbul",
         "Ankara", "Chicago", "Rome", "Milan", "London", "Seul", "Beijing", "Luzern", "Bern", "Oslo",
         "Barcelona", "Madrid", "Amsterdam", "Munich"};
@@ -71,12 +70,12 @@ public class Board {
             else if(i % 4 == 1)
                 squares[i] = new ChanceAndCommunityChest();
             else if (i % 4 == 2) {
-                Property newProp = new Property(propertyNames[i % 20], "Pink", 100, 100, 180, 50, 10);
+                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(0), 100, 100, 180, 50, 10);
                 squares[i] = newProp;
                 colorGroups.get(0).addProperty(newProp);
             }
             else {
-                Property newProp = new Property(propertyNames[i % 20], "Red", 100, 100, 180, 50, 10);
+                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(1), 100, 100, 180, 50, 10);
                 squares[i] = newProp;
                 colorGroups.get(1).addProperty(newProp);
             }

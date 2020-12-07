@@ -14,9 +14,9 @@ public class Property extends Square{
     private Player owner;
     private boolean isOwned;
     private boolean isMortgaged;
-    private String colorGroup;
+    private ColorGroup colorGroup;
 
-    public Property(String name, String colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice, int housePrice, int rent) {
+    public Property(String name, ColorGroup colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice, int housePrice, int rent) {
         super(SquareType.PROPERTY);
         this.name = name;
         this.colorGroup = colorGroup;
@@ -32,7 +32,7 @@ public class Property extends Square{
         owner = null;
     }
 
-    public String getColorGroup() {
+    public ColorGroup getColorGroup() {
         return colorGroup;
     }
 
