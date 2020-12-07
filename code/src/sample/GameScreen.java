@@ -19,7 +19,7 @@ public class GameScreen {
 
     // properties
     private Scene scene;
-    Rectangle[] boardPane;
+    GridPane boardPane;
 
     Text[] playerTexts;
     Text turnText;
@@ -35,7 +35,6 @@ public class GameScreen {
     // constructors
     public GameScreen() {
         gameEngine = new GameEngine();
-        boardPane =  new Rectangle[41];
         boardPane = getSquares();
         setScene();
     }
@@ -150,16 +149,14 @@ public class GameScreen {
         diceText.setY(250);
         group.getChildren().add(diceText);
 
-       // group.getChildren().add(boardPane);
-        for(int i =0; i < 41; i++ )
-            group.getChildren().add(boardPane[i]);
+        group.getChildren().add(boardPane);
 
         scene = new Scene(group, width, height);
     }
 
-    private Rectangle[] getSquares() {
+    private GridPane getSquares() {
         GridPane gridPane = new GridPane();
-       Rectangle [] recs = new Rectangle[41];
+
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
                 int sum = row + col;
@@ -176,51 +173,25 @@ public class GameScreen {
                     pos = 40 + row + col;
 
                 if (pos < 40) {
-                  /*  StackPane stp = new StackPane();
-                    stp.setPadding(new Insets(1, 1, 1, 1));*/
+                    StackPane stp = new StackPane();
+                    stp.setPadding(new Insets(1, 1, 1, 1));
 
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
-                    if ( (row == 0 & col == 10) | (col == 0 & row == 10) | (row == col)){
-                        tile.setHeight(90);
-                        tile.setWidth(90);
-                    }
-                    else if (row == 10 | row == 0){
-                        tile.setHeight(90);
+                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
+                        tile.setHeight(60);
                         tile.setWidth(60);
                     }
-                    else{
+                    else if (row == 10 | row == 0){
                         tile.setHeight(60);
-                        tile.setWidth(90);
-                    }
-
-                    //rect locations
-                    if (pos == 0){
-                        tile.setX(10);
-                        tile.setY(10);
-                    }
-                    else if (pos <= 10){
-                        tile.setX(recs[pos - 1].getX() + recs[pos - 1].getWidth());
-                        tile.setY(recs[pos - 1].getY());
-                    }
-                    else if (pos <= 20){
-                        tile.setX(recs[pos - 1].getX());
-                        tile.setY(recs[pos - 1].getY() + recs[pos - 1].getHeight());
-                    }
-                    else if (pos < 30){
-                        tile.setX(recs[(pos + 1) % 40].getX() + recs[(pos + 1) % 40].getWidth());
-                        tile.setY(recs[(pos + 1) % 40].getY());
-                    }
-                    else if (pos < 40){
-                        tile.setX(recs[(pos + 1) % 40].getX());
-                        tile.setY(recs[(pos + 1) % 40].getY() + recs[(pos + 1) % 40].getHeight());
+                        tile.setWidth(40);
                     }
                     else{
-                        tile.setX(recs[0].getX() + recs[0].getHeight());
-                        tile.setY(recs[0].getY() + recs[0].getWidth());
+                        tile.setHeight(40);
+                        tile.setWidth(60);
                     }
-
-                    //rect colors
+                    tile.setX(col * 10);
+                    tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
                     //tile.setFill(Color.ORCHID);
 
@@ -237,7 +208,7 @@ public class GameScreen {
                     else { //start square
                         tile.setFill(Color.BLUEVIOLET);
                     }
-                   recs[pos]= tile;
+
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                     String playersOnTile = "";
@@ -259,32 +230,22 @@ public class GameScreen {
                     Font font2 = Font.font("Source Sans Pro", 10);
                     text.setFont(font2); //size of the player texts
 
-                   /* if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                    if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         //stp.getChildren().add(0, tile);
                         stp.getChildren().addAll(tile, text);
                         gridPane.add(stp, col, row);
-                    }*/
+                    }
                 }
             }
         }
-        Rectangle middleOne = new Rectangle();
-        middleOne.setX(recs[0].getX() + recs[0].getWidth());
-        middleOne.setY(recs[0].getY() + recs[0].getHeight());
-        middleOne.setStroke(Color.BLACK);
-        middleOne.setFill(Color.WHITE);
-        middleOne.setHeight(10);
-        middleOne.setWidth(10);
-        recs[40]= middleOne;
         gridPane.setLayoutX(10);
         gridPane.setLayoutY(300);
-
-        return recs;
+        return gridPane;
     }
-
 
     //new updateBoard same as getTiles?
     private void updateSquares() { //board pane vs grid pane?
-       // boardPane.getChildren().clear();
+        boardPane.getChildren().clear();
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -302,52 +263,25 @@ public class GameScreen {
                     pos = 40 + row + col;
 
                 if (pos < 40) {
-                  /*  StackPane stp = new StackPane();
-                    stp.setPadding(new Insets(1, 1, 1, 1));*/
+                    StackPane stp = new StackPane();
+                    stp.setPadding(new Insets(1, 1, 1, 1));
 
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
-                    if ( (row == 0 & col == 10) | (col == 0 & row == 10) | (row == col)){
-                        tile.setHeight(90);
-                        tile.setWidth(90);
-                    }
-                    else if (row == 10 | row == 0){
-                        tile.setHeight(90);
+                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
+                        tile.setHeight(60);
                         tile.setWidth(60);
                     }
-                    else{
+                    else if (row == 10 | row == 0){
                         tile.setHeight(60);
-                        tile.setWidth(90);
-                    }
-
-                    //rect locations
-                    if (pos == 0){
-                        tile.setX(10);
-                        tile.setY(10);
-                    }
-                    else if (pos <= 10){
-                        tile.setX(boardPane[pos - 1].getX() + boardPane[pos - 1].getWidth());
-                        tile.setY(boardPane[pos - 1].getY());
-                    }
-                    else if (pos <= 20){
-                        tile.setX(boardPane[pos - 1].getX());
-                        tile.setY(boardPane[pos - 1].getY() + boardPane[pos - 1].getHeight());
-                    }
-                    else if (pos < 30){
-                        tile.setX(boardPane[(pos + 1) % 40].getX() + boardPane[(pos + 1) % 40].getWidth());
-                        tile.setY(boardPane[(pos + 1) % 40].getY());
-                    }
-                    else if (pos < 40){
-                        tile.setX(boardPane[(pos + 1) % 40].getX());
-                        tile.setY(boardPane[(pos + 1) % 40].getY() + boardPane[(pos + 1) % 40].getHeight());
+                        tile.setWidth(40);
                     }
                     else{
-                        tile.setX(boardPane[0].getX() + boardPane[0].getHeight());
-                        tile.setY(boardPane[0].getY() + boardPane[0].getWidth());
+                        tile.setHeight(40);
+                        tile.setWidth(60);
                     }
-
-
-                    //rect colors
+                    tile.setX(col * 10);
+                    tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
 
                     //determine square colors
@@ -368,8 +302,6 @@ public class GameScreen {
                         tile.setFill(Color.LIME);
                     }
 
-                    boardPane[pos] = tile;
-
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                     String playersOnTile = "";
@@ -386,17 +318,16 @@ public class GameScreen {
                             }
                         }
                     }
+
                     Text text = new Text(playersOnTile);
                     Font font2 = Font.font("Source Sans Pro", 10);
                     text.setFont(font2); //size of the player texts
-                    text.setY(tile.getY()+2);
-                    text.setX(tile.getX()+2);
-                   /* if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+
+                    if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         //stp.getChildren().add(0, tile);
                         stp.getChildren().addAll(tile, text);
-                    }*/
-                   // boardPane.add(stp, col, row);
-
+                    }
+                    boardPane.add(stp, col, row);
                 }
             }
         }
