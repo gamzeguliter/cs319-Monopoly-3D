@@ -82,21 +82,27 @@ public class EditorScreen {
 
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
-                    if ( (row == 0 & col == 10) | (col == 0 & row == 10)){
+                    if ( (row == 0 & col == 10) | (col == 0 & row == 10) | (row==10 & col == 10 ) | (row==0 & col == 0)){
                         tile.setHeight(60);
                         tile.setWidth(60);
+
+                        tile.setX(col* 60 + 10);
+                        tile.setY(row*60+10);
                     }
                     else if (row == 10 | row == 0){
                         tile.setHeight(60);
-                        tile.setWidth(60);
+                        tile.setWidth(40);
+
+                        tile.setX(col* 40 + 10);
+                        tile.setY(row*60+10);
                     }
                     else{
-                        tile.setHeight(60);
+                        tile.setHeight(40);
                         tile.setWidth(60);
+                        tile.setX(col* 60 + 10);
+                        tile.setY(row*40+10);
                     }
-                    tile.setX(col * 60+10);
-                    System.out.println(tile.getX());
-                    tile.setY(row * 60+100);
+                   
                     tile.setStroke(Color.BLACK);
                     tile.setFill(Color.WHITE);
                     recs[pos]= tile;
@@ -115,8 +121,8 @@ public class EditorScreen {
         middleOne.setY(recs[0].getY()+60);
         middleOne.setStroke(Color.BLACK);
         middleOne.setFill(Color.WHITE);
-        middleOne.setHeight(540);
-        middleOne.setWidth(540);
+        middleOne.setHeight(360);
+        middleOne.setWidth(360);
 
         Image image = new Image(new FileInputStream("C:\\Users\\User\\Documents\\cs319-Monopoly-3D\\code\\src\\sample\\ask.jpeg"));
 
