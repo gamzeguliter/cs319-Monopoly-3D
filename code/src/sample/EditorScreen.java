@@ -205,6 +205,7 @@ GridPane recs;
         ((Button) d2.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
         ((Button) d2.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
         System.out.println(vbox2.getChildren());
+        d2.getDialogPane().setContent(vbox2);
         d2.show();
     }
 
