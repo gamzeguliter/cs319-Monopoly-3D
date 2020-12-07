@@ -190,8 +190,6 @@ public class GameScreen {
                         tile.setHeight(40);
                         tile.setWidth(60);
                     }
-                    tile.setX(col * 10);
-                    tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
                     //tile.setFill(Color.ORCHID);
 

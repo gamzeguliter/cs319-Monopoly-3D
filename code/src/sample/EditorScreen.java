@@ -2,12 +2,11 @@ package sample;
 
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -20,6 +19,7 @@ import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class EditorScreen {
     // properties
@@ -128,17 +128,55 @@ public class EditorScreen {
                     tile.setFill(Color.WHITE);
                     tile.setOnMouseClicked(event -> {
                         System.out.println(pos);
+                        Font font = new Font("Source Sans Pro", 20);
                         Dialog d = new Dialog();
-                        d.setHeaderText("Select square type:");
-                        ComboBox squareType = new ComboBox();
-                        squareType.getItems().addAll(
-                                "Property",
-                                "Joker",
-                                "Chance",
-                                "Community Chest"
-                        );
-                        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
-                        d.show();
+                        d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+                        Text header = new Text("Select square type:");
+                        header.setFont(font);
+
+                        //group of radio buttons
+                        final ToggleGroup group = new ToggleGroup();
+
+                        RadioButton property = new RadioButton("Property");
+                        property.setToggleGroup(group);
+                        property.setFont(font);
+                        property.setSelected(true);
+
+                        RadioButton joker = new RadioButton("Joker");
+                        joker.setFont(font);
+                        joker.setToggleGroup(group);
+
+                        RadioButton chance = new RadioButton("Chance");
+                        chance.setFont(font);
+                        chance.setToggleGroup(group);
+
+                        RadioButton communityChest = new RadioButton("Community Chest");
+                        communityChest.setFont(font);
+                        communityChest.setToggleGroup(group);
+
+                        VBox vbox = new VBox(10);
+                        vbox.setPadding(new Insets(10));
+
+                        vbox.getChildren().addAll(header, property, joker, chance, communityChest);
+
+                        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
+                        ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
+                        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
+                        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
+
+                        //todo next buttonu bir sonraki dialog pane e geçmeli
+                        d.getDialogPane().lookupButton(ButtonType.NEXT).setOnMouseClicked(event2 -> {
+                            System.out.println("clicked");
+                            openSecondDialog();
+                        });
+                        d.getDialogPane().setContent(vbox);
+
+                        Optional<ButtonType> result = d.showAndWait();
+
+                        if (result.get() == ButtonType.NEXT){
+                            System.out.println("here");
+                            openSecondDialog();
+                        }
                     });
 
                     recs[pos]= tile;
@@ -239,6 +277,46 @@ public class EditorScreen {
         //middleOne.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
         recs[40]= middleOne;
         return recs;
+    }
+
+    private void openSecondDialog() {
+        System.out.println("yes");
+        Font font = new Font("Source Sans Pro", 20);
+        Dialog d2 = new Dialog();
+        d2.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+        Text header = new Text("Joker Square");
+        header.setFont(font);
+
+        //group of radio buttons
+        final ToggleGroup group2 = new ToggleGroup();
+
+        RadioButton property = new RadioButton("Property");
+        property.setToggleGroup(group2);
+        property.setFont(font);
+        property.setSelected(true);
+
+        RadioButton joker = new RadioButton("Joker");
+        joker.setFont(font);
+        joker.setToggleGroup(group2);
+
+        RadioButton chance = new RadioButton("Chance");
+        chance.setFont(font);
+        chance.setToggleGroup(group2);
+
+        RadioButton communityChest = new RadioButton("Community Chest");
+        communityChest.setFont(font);
+        communityChest.setToggleGroup(group2);
+
+        VBox vbox2 = new VBox(10);
+        vbox2.setPadding(new Insets(10));
+
+        vbox2.getChildren().addAll(header, property, joker, chance, communityChest);
+
+        d2.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
+        ((Button) d2.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
+        ((Button) d2.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
+        System.out.println(vbox2.getChildren());
+        d2.show();
     }
 
 
