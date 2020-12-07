@@ -90,7 +90,7 @@ public class GameScreen {
         btnRollDice.setFont(font3);
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
-            gameEngine.updateGame();
+            gameEngine.checkSquare();
             btnRollDice.setDisable(true);
             btnBuy.setDisable(gameEngine.isBuyDisabled());
             diceText.setText("Dice roll: " + roll);

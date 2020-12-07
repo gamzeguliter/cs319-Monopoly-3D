@@ -36,7 +36,7 @@ public class Main extends Application {
         //gameStage.setTitle();
 
         //Adding the scene to Stage
-        primaryStage.setScene(editorScene);//game or editor--burdan değiştirin
+        primaryStage.setScene(gameScene);//game or editor--burdan değiştirin
 
         //Displaying the contents of the stage
         primaryStage.show();
