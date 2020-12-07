@@ -102,7 +102,7 @@ public class EditorScreen {
                         tile.setX(col* 60 + 10);
                         tile.setY(row*40+10);
                     }
-                   
+
                     tile.setStroke(Color.BLACK);
                     tile.setFill(Color.WHITE);
                     recs[pos]= tile;
