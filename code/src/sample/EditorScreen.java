@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,11 +23,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static sample.SquareType.CHANCEANDCOMMUNITYCHEST;
+
 public class EditorScreen {
     // properties
     private Scene scene;
     GridPane boardPane;
-
+     Editor  editor ;
     Text[] playerTexts;
     Text turnText;
     Text diceText;
@@ -39,10 +43,12 @@ GridPane recs;
 
     Font font = Font.font("Source Sans Pro", 20);
 
+
     // constructors
     public EditorScreen() throws FileNotFoundException {
-        //editor = new Editor();
+        editor = new Editor();
 
+        gameEngine = new GameEngine();
         setScene();
     }
 
@@ -101,6 +107,8 @@ GridPane recs;
 
                     tile.setFill(Color.WHITE);
                     tile.setOnMouseClicked(event -> {
+
+
                         System.out.println(pos);
                         Font font = new Font("Source Sans Pro", 20);
                         Dialog d = new Dialog();
@@ -138,9 +146,27 @@ GridPane recs;
                         ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
                         ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
 
+
+                        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
+                        {
+                            public void changed(ObservableValue<? extends Toggle> ob,
+                                                Toggle o, Toggle n)
+                            {
+                                RadioButton rb = (RadioButton)group.getSelectedToggle();
+                             if(rb == chance)
+                                editor.createNewSquare(CHANCEANDCOMMUNITYCHEST,pos);
+                            }
+
+                        });
+
+
+
+
+
                         //todo next buttonu bir sonraki dialog pane e geçmeli
                         d.getDialogPane().lookupButton(ButtonType.NEXT).setOnMouseClicked(event2 -> {
                             System.out.println("clicked");
+
                             openSecondDialog();
                         });
                         d.getDialogPane().setContent(vbox);
@@ -149,6 +175,7 @@ GridPane recs;
 
                         if (result.get() == ButtonType.NEXT){
                             System.out.println("here");
+
                             openSecondDialog();
                         }
                     });
@@ -158,7 +185,12 @@ GridPane recs;
                         stp.getChildren().addAll(tile);
                         gridPane.add(stp, col, row);
                     }
+
                 }
+
+
+
+
             }
         }
         gridPane.setLayoutX(10);
@@ -208,7 +240,9 @@ GridPane recs;
         d2.show();
     }
 
+public void changeTheSquare(Rectangle s){
 
+}
     // public methods
 
     public Scene getScene() { return scene; }
