@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -83,74 +84,104 @@ public class EditorScreen {
 
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
-                    if ( (row == 0 & col == 10) | (col == 0 & row == 10) | (row==10 & col == 10 ) | (row==0 & col == 0)){
-                        tile.setHeight(60);
-                        tile.setWidth(60);
-
-                        tile.setX(col* 60 + 10);
-                        tile.setY(row*60+10);
+                    if ( (row == 0 & col == 10) | (col == 0 & row == 10) | (row == col)){
+                        tile.setHeight(90);
+                        tile.setWidth(90);
                     }
                     else if (row == 10 | row == 0){
-                        tile.setHeight(60);
-                        tile.setWidth(40);
-
-                        tile.setX(col* 40 + 10);
-                        tile.setY(row*60+10);
+                        tile.setHeight(90);
+                        tile.setWidth(60);
                     }
                     else{
-                        tile.setHeight(40);
-                        tile.setWidth(60);
-                        tile.setX(col* 60 + 10);
-                        tile.setY(row*40+10);
+                        tile.setHeight(60);
+                        tile.setWidth(90);
                     }
+
+                    //rect locations
+                    if (pos == 0){
+                        tile.setX(10);
+                        tile.setY(10);
+                    }
+                    else if (pos <= 10){
+                        tile.setX(recs[pos - 1].getX() + recs[pos - 1].getWidth());
+                        tile.setY(recs[pos - 1].getY());
+                    }
+                    else if (pos <= 20){
+                        tile.setX(recs[pos - 1].getX());
+                        tile.setY(recs[pos - 1].getY() + recs[pos - 1].getHeight());
+                    }
+                    else if (pos < 30){
+                        tile.setX(recs[(pos + 1) % 40].getX() + recs[(pos + 1) % 40].getWidth());
+                        tile.setY(recs[(pos + 1) % 40].getY());
+                    }
+                    else if (pos < 40){
+                        tile.setX(recs[(pos + 1) % 40].getX());
+                        tile.setY(recs[(pos + 1) % 40].getY() + recs[(pos + 1) % 40].getHeight());
+                    }
+                    else{
+                        tile.setX(recs[0].getX() + recs[0].getHeight());
+                        tile.setY(recs[0].getY() + recs[0].getWidth());
+                    }
+
+                    //rect colors
                     tile.setStroke(Color.BLACK);
                     tile.setFill(Color.WHITE);
                     tile.setOnMouseClicked(event -> {
                         System.out.println(pos);
                         Dialog d = new Dialog();
-                        d.setContentText(event.getX() + " y- " + event.getY());
+                        d.setHeaderText("Select square type:");
+                        ComboBox squareType = new ComboBox();
+                        squareType.getItems().addAll(
+                                "Property",
+                                "Joker",
+                                "Chance",
+                                "Community Chest"
+                        );
                         d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
                         d.show();
                     });
 
                     recs[pos]= tile;
-                  /*  if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        //stp.getChildren().add(0, tile);
-                        //stp.getChildren().addAll(tile, text);
-                        //gridPane.add(stp, col, row);
+                    /*if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                        stp.getChildren().add(0, tile);
+                        stp.getChildren().addAll(tile, text);
+                        gridPane.add(stp, col, row);
                     }*/
                 }
             }
         }
+
         /*gridPane.setLayoutX(10);
         gridPane.setLayoutY(300);*/
         Rectangle middleOne = new Rectangle();
-        middleOne.setX(recs[0].getX()+60);
-        middleOne.setY(recs[0].getY()+60);
+        middleOne.setX(recs[0].getX() + recs[0].getWidth());
+        middleOne.setY(recs[0].getY() + recs[0].getHeight());
         middleOne.setStroke(Color.BLACK);
         middleOne.setFill(Color.WHITE);
-        middleOne.setHeight(360);
-        middleOne.setWidth(360);
+        middleOne.setHeight(540);
+        middleOne.setWidth(540);
 
+        /* image yok
         Image image = new Image(new FileInputStream("C:\\Users\\User\\Documents\\cs319-Monopoly-3D\\code\\src\\sample\\ask.jpeg"));
 
-        //Setting the image view
         //Setting the image view
         ImagePattern imagePattern = new ImagePattern(image);
 
         EventHandler<MouseEvent> eventHandler =
                 new EventHandler<javafx.scene.input.MouseEvent>() {
-
                     @Override
                     public void handle(javafx.scene.input.MouseEvent e) {
                         middleOne.setFill(imagePattern);
                     }
                 };
-//Adding the event handler
+
+        //Adding the event handler
         middleOne.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
         recs[40]= middleOne;
         return recs;
     }
+    */
+
 
     /*
     //new updateBoard same as getTiles?
@@ -204,10 +235,13 @@ public class EditorScreen {
                     boardPane.add(stp, col, row);
                 }
             }
-        }
+        }*/
+        //middleOne.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, eventHandler);
+        recs[40]= middleOne;
+        return recs;
     }
 
-     */
+
     // public methods
 
     public Scene getScene() { return scene; }
