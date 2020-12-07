@@ -89,6 +89,9 @@ public class EditorScreen {
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
                     tile.setFill(Color.WHITE);
+                    tile.setOnMouseClicked(event -> {
+                        System.out.println(pos);
+                    });
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         stp.getChildren().add(0, tile);
@@ -143,7 +146,9 @@ public class EditorScreen {
                     tile.setX(col * 10);
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
-
+                    tile.setOnMouseClicked(event -> {
+                        System.out.println(pos);
+                    });
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         stp.getChildren().add(0, tile);
