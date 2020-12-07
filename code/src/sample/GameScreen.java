@@ -91,7 +91,7 @@ public class GameScreen {
         btnRollDice.setFont(font3);
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
-            gameEngine.updateGame();
+            gameEngine.checkSquare();
             btnRollDice.setDisable(true);
             btnBuy.setDisable(gameEngine.isBuyDisabled());
             diceText.setText("Dice roll: " + roll);
@@ -151,8 +151,9 @@ public class GameScreen {
         group.getChildren().add(diceText);
 
        // group.getChildren().add(boardPane);
-for(int i =0; i < 41; i++ )
-    group.getChildren().add(boardPane[i]);
+        for(int i =0; i < 41; i++ )
+            group.getChildren().add(boardPane[i]);
+
         scene = new Scene(group, width, height);
     }
 
@@ -280,6 +281,7 @@ for(int i =0; i < 41; i++ )
         return recs;
     }
 
+
     //new updateBoard same as getTiles?
     private void updateSquares() { //board pane vs grid pane?
        // boardPane.getChildren().clear();
@@ -366,6 +368,8 @@ for(int i =0; i < 41; i++ )
                         tile.setFill(Color.LIME);
                     }
 
+                    boardPane[pos] = tile;
+
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                     String playersOnTile = "";
@@ -382,7 +386,6 @@ for(int i =0; i < 41; i++ )
                             }
                         }
                     }
-                    boardPane[pos] = tile;
                     Text text = new Text(playersOnTile);
                     Font font2 = Font.font("Source Sans Pro", 10);
                     text.setFont(font2); //size of the player texts
