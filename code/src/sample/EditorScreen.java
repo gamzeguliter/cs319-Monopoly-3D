@@ -163,12 +163,8 @@ public class EditorScreen {
                         ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
                         ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
                         ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
+                        System.out.println(vbox.getChildren());
 
-                        //todo next buttonu bir sonraki dialog pane e geçmeli
-                        d.getDialogPane().lookupButton(ButtonType.NEXT).setOnMouseClicked(event2 -> {
-                            System.out.println("clicked");
-                            openSecondDialog();
-                        });
                         d.getDialogPane().setContent(vbox);
 
                         Optional<ButtonType> result = d.showAndWait();
@@ -280,7 +276,6 @@ public class EditorScreen {
     }
 
     private void openSecondDialog() {
-        System.out.println("yes");
         Font font = new Font("Source Sans Pro", 20);
         Dialog d2 = new Dialog();
         d2.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -315,7 +310,8 @@ public class EditorScreen {
         d2.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
         ((Button) d2.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
         ((Button) d2.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
-        System.out.println(vbox2.getChildren());
+
+        d2.getDialogPane().setContent(vbox2);
         d2.show();
     }
 
