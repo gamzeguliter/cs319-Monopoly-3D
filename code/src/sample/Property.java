@@ -1,6 +1,6 @@
 package sample;
 
-public class Property {
+public class Property extends Square{
 
     // properties
     private String name;
@@ -14,9 +14,12 @@ public class Property {
     private Player owner;
     private boolean isOwned;
     private boolean isMortgaged;
+    private String colorGroup;
 
-    public Property(String name, int buyingPrice, int sellingPrice, int mortgagePrice, int housePrice, int rent) {
+    public Property(String name, String colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice, int housePrice, int rent) {
+        super(SquareType.PROPERTY);
         this.name = name;
+        this.colorGroup = colorGroup;
         this.buyingPrice = buyingPrice;
         this.sellingPrice = sellingPrice;
         this.mortgagePrice = mortgagePrice;
@@ -29,8 +32,8 @@ public class Property {
         owner = null;
     }
 
-    public boolean hasOwner() {
-        return owner != null;
+    public String getColorGroup() {
+        return colorGroup;
     }
 
     //TODO buy house, sell house gibi şeyler -- gameengine?
@@ -131,13 +134,25 @@ public class Property {
     }
 
     public boolean addHouse() {
-        if(noOfHouses == 4 || hotel)
+        if(noOfHouses == 4 || hotel || owner.getBalance() < housePrice)
         {
             return false;
         }
         else {
             noOfHouses++;
             //TODO update rent
+            return true;
+        }
+    }
+
+    public boolean buyProperty(Player player) {
+        if(this.isOwned() || this.getBuyingPrice() > player.getBalance()) {
+            return false;
+        }
+        else
+        {
+            setOwner(player);
+            player.pay(buyingPrice);
             return true;
         }
     }

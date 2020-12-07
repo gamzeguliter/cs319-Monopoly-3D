@@ -1,7 +1,8 @@
 package sample;
 
 public enum SquareType {
+    START, //todo
     JOKER,
-    COLORGROUP,
-    CHANCEANDCOMMUNITYCHEST
+    CHANCEANDCOMMUNITYCHEST,
+    PROPERTY;
 }
