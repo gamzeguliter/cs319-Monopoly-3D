@@ -4,6 +4,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -73,24 +76,28 @@ public class EditorScreen {
                     // create rectangle of correct color for tile
                     Rectangle tile = new Rectangle();
                     if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
-                        tile.setHeight(60);
-                        tile.setWidth(60);
+                        tile.setHeight(90);
+                        tile.setWidth(90);
                     }
                     else if (row == 10 | row == 0){
-                        tile.setHeight(60);
-                        tile.setWidth(40);
+                        tile.setHeight(90);
+                        tile.setWidth(60);
                     }
                     else{
-                        tile.setHeight(40);
-                        tile.setWidth(60);
+                        tile.setHeight(60);
+                        tile.setWidth(90);
                     }
                     tile.setX(col * 10);
                     System.out.println(tile.getX());
-                    tile.setY(row * 10);
+                    tile.setY((row * 10) - 1000);
                     tile.setStroke(Color.BLACK);
                     tile.setFill(Color.WHITE);
                     tile.setOnMouseClicked(event -> {
                         System.out.println(pos);
+                        Dialog d = new Dialog();
+                        d.setContentText(event.getX() + " y- " + event.getY());
+                        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
+                        d.show();
                     });
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
@@ -102,10 +109,11 @@ public class EditorScreen {
             }
         }
         gridPane.setLayoutX(10);
-        gridPane.setLayoutY(300);
+        gridPane.setLayoutY(10);
         return gridPane;
     }
 
+    /*
     //new updateBoard same as getTiles?
     private void updateTiles() { //board pane vs grid pane?
         boardPane.getChildren().clear();
@@ -148,6 +156,8 @@ public class EditorScreen {
                     tile.setStroke(Color.BLACK);
                     tile.setOnMouseClicked(event -> {
                         System.out.println(pos);
+                        Dialog d = new Dialog();
+                        d.show();
                     });
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
@@ -159,6 +169,8 @@ public class EditorScreen {
             }
         }
     }
+
+     */
     // public methods
 
     public Scene getScene() { return scene; }
