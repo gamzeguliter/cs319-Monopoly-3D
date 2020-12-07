@@ -144,7 +144,6 @@ GridPane recs;
                         Optional<ButtonType> result = d.showAndWait();
 
                         if (result.get() == ButtonType.NEXT){
-                            System.out.println("here");
                             openSecondDialog();
                         }
                     });
@@ -166,41 +165,69 @@ GridPane recs;
 
     private void openSecondDialog() {
         Font font = new Font("Source Sans Pro", 20);
+        Font fonth = new Font("Source Sans Pro", 30);
         Dialog d2 = new Dialog();
         d2.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+
         Text header = new Text("Joker Square");
-        header.setFont(font);
+        header.setFont(fonth);
+        HBox hb1 = new HBox();
+        hb1.getChildren().addAll(header);
+
+        Label label1 = new Label("Name:");
+        label1.setFont(font);
+        TextField name = new TextField();
+        HBox hb2 = new HBox();
+        hb2.getChildren().addAll(label1, name);
+        hb2.setSpacing(10);
+
+        Label header2 = new Label("Movement:");
+        header2.setFont(font);
+        HBox hb3 = new HBox();
+        hb3.getChildren().addAll(header2);
 
         //group of radio buttons
         final ToggleGroup group2 = new ToggleGroup();
 
-        RadioButton property = new RadioButton("Property");
-        property.setToggleGroup(group2);
-        property.setFont(font);
-        property.setSelected(true);
+        RadioButton move = new RadioButton("Move ... squares");
+        move.setToggleGroup(group2);
+        move.setFont(font);
+        move.setSelected(true);
 
-        RadioButton joker = new RadioButton("Joker");
-        joker.setFont(font);
-        joker.setToggleGroup(group2);
+        RadioButton wait = new RadioButton("Wait ... turns");
+        wait.setFont(font);
+        wait.setToggleGroup(group2);
 
-        RadioButton chance = new RadioButton("Chance");
-        chance.setFont(font);
-        chance.setToggleGroup(group2);
-
-        RadioButton communityChest = new RadioButton("Community Chest");
-        communityChest.setFont(font);
-        communityChest.setToggleGroup(group2);
+        RadioButton none = new RadioButton("No movement");
+        none.setFont(font);
+        none.setToggleGroup(group2);
 
         VBox vbox2 = new VBox(10);
         vbox2.setPadding(new Insets(10));
+        vbox2.getChildren().addAll(move, wait, none);
 
-        vbox2.getChildren().addAll(header, property, joker, chance, communityChest);
+        Label label2 = new Label("Amount:");
+        label2.setFont(font);
+        TextField amount = new TextField();
+        HBox hb4 = new HBox();
+        hb4.getChildren().addAll(label2, amount);
+        hb4.setSpacing(10);
+
+        Label label3 = new Label("Money:");
+        label3.setFont(font);
+        TextField money = new TextField();
+        HBox hb5 = new HBox();
+        hb5.getChildren().addAll(label3, money);
+        hb5.setSpacing(10);
+
+        VBox vbox = new VBox();
+        vbox.getChildren().addAll(hb1, hb2, hb3, vbox2, hb4,  hb5);
 
         d2.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
         ((Button) d2.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
         ((Button) d2.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
 
-        d2.getDialogPane().setContent(vbox2);
+        d2.getDialogPane().setContent(vbox);
         d2.show();
     }
 
