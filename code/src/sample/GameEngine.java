@@ -13,6 +13,7 @@ public class GameEngine {
     //filemanager ?
     private int turn;
     private Player currentPlayer;
+    private ArrayList<ColorGroup> colorGroups;
 
     public GameEngine() {
         board = new Board();
@@ -24,11 +25,63 @@ public class GameEngine {
         players.add(new Player("player4", Color.SILVER, 1000, 3));
         turn = 0;
         currentPlayer = players.get(0);
-
+        colorGroups = board.getColorGroups();
     }
 
-    public void update() {
+    public void updateGame() { //TEKRAR BAK -- gereksiz olabilir ya da modify with buton inputs
+        checkSquare();
+    }
 
+    public void checkSquare() {
+        if(currentPlayer.isSuspended()) {
+            //todo
+        }
+        else {
+            //Joker square actions
+            if(getCurrentSquare().getType() == SquareType.JOKER) {
+                Joker joker = (Joker)getCurrentSquare();
+                Player player = getCurrentPlayer();
+                if(joker.isMoneyAction()) {
+                    player.gain(joker.getMoney()); //getMoney return negative if the amount is to be reduced
+                }
+                if(joker.isMovementAction()) {
+                    //todo joker square de position update edilse de ekranda direk moveluyor duraklaması lazım
+                    player.setPosition(player.getPosition() + joker.getMovement());
+                }
+                else if(joker.isSuspended()) {
+                    player.suspend(joker.getSuspendedTourNo());
+                }
+            }
+            //Chance and community chest actions
+            else if(getCurrentSquare().getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
+                //todo - draw card
+            }
+            //Start square -- adds money to players who pass it
+            else if(getCurrentSquare().getType() == SquareType.START) {
+                getCurrentPlayer().gain(((Start)getCurrentSquare()).getMoney());
+                //todo add money
+            }
+            //Property square
+            else {
+                Property property = (Property)getCurrentSquare();
+                if(property.isOwned()) {
+                    takeRent();
+                }
+                //todo else buy button enabled --> buy no enabled if player balance is smaller
+            }
+        }
+    }
+
+    public boolean isBuyDisabled() {
+        if(getCurrentSquare().getType() != SquareType.PROPERTY) {
+            System.out.println("Not property");
+            return true;
+        }
+        else if(((Property)getCurrentSquare()).isOwned() ||
+                ((Property)getCurrentSquare()).getBuyingPrice() > getCurrentPlayer().getBalance()) {
+            return true;
+        }
+        return false;
     }
 
     public void initializeGame() {
@@ -46,14 +99,6 @@ public class GameEngine {
             playernames.add(player.getName());
         }
         return playernames;
-    }
-
-    public Player getSquareOwner() {
-        if(getCurrentSquare().getType() != SquareType.COLORGROUP)
-            return null;
-        else {
-            return ((ColorGroup)getCurrentSquare()).propertyOwner(getCurrentPlayerPosition());
-        }
     }
 
 
@@ -96,8 +141,7 @@ public class GameEngine {
     }
 
     public boolean buyProperty() {
-        ColorGroup group = (ColorGroup)getCurrentSquare();
-        return group.buyProperty(getCurrentPlayerPosition(), getCurrentPlayer());
+        return ((Property)getCurrentSquare()).buyProperty(getCurrentPlayer());
     }
 
     //todo
@@ -105,19 +149,16 @@ public class GameEngine {
         return true;
     }
 
-    public boolean addHouse(int index, ColorGroup group) {
-        if(!group.isComplete(currentPlayer)) {
-            return false;
-        }
-        else {
-
-            if(currentPlayer.getBalance() < group.propertyHousePrice(index)) {
-                return false;
-            }
-            else {
-                return group.addHouse(index);
+    public boolean addHouse() {
+        //SORU: player istediği zaman istediği kareye ev kurabiliyor mu - öyleyse current square olmayacak!!!
+        Property property = (Property)getCurrentSquare();
+        //find color group
+        for(ColorGroup group : colorGroups) {
+            if(property.getColorGroup() == group.getGroupName()) { //TEKRAR BAK: string comparison with == ?
+                return group.addHouse(property, currentPlayer);
             }
         }
+        return false;
     }
 
     //todo
@@ -160,15 +201,13 @@ public class GameEngine {
         return currentPlayer;
     }
 
-    public boolean takeRent(Player owner, Player payer, int rent) {
-        if(payer.getBalance() >= rent) {
-            payer.pay(rent);
-            owner.gain(rent);
-            return true;
-        }
-        else {
-            return false;
-        }
+    //todo rent i kendi check edecek sistem yaratmalı -- check if mortgaged
+    public void takeRent() {
+        Property property = (Property)getCurrentSquare();
+        Player owner = property.getOwner();
+        Player payer = getCurrentPlayer();
+        payer.pay(property.getRent());
+        owner.gain(property.getRent());
     }
 
     public int rollDice() {
@@ -178,7 +217,7 @@ public class GameEngine {
         int roll2 = min + (int)(Math.random() * ((max - min) + 1));
         int position = currentPlayer.getPosition();
         position = (position + roll1 + roll2) % 40;
-        currentPlayer.setPosition(position);
+        currentPlayer.setPosition(position); //todo if the player is suspended condition -- double roll
         return roll1 + roll2;
     }
 
@@ -186,8 +225,4 @@ public class GameEngine {
         return currentPlayer.getPosition();
     }
 
-    //TODO rent'i implement et
-    public void rent (int index) {
-        //find property owner
-    }
 }

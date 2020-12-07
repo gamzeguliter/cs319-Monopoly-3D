@@ -30,18 +30,15 @@ public class GameScreen {
     Button btnBuy;
 
     GameEngine gameEngine;
-    private boolean diceRolled;
-
     Font font = Font.font("Source Sans Pro", 20);
 
     // constructors
     public GameScreen() {
         gameEngine = new GameEngine();
-        boardPane = getTiles(); //CHANGE
+        boardPane = getSquares();
         setScene();
     }
 
-    // private methods
 
     private Text getPlayerText(Player player) {
         Text t = new Text();
@@ -84,81 +81,49 @@ public class GameScreen {
         // initialize player texts
         initializePlayerTexts(group);
 
-        //todo burayı methodlara ayır -- getPlayerInfo falan gibisinden
-        // dice on game engine
-        // anlamak için square adlarını da bastır
-
-        // burda board falan yaratmak laızm mı
-
         // initialize buttons
         btnRollDice = new Button();
         Font font3 = Font.font("Source Sans Pro", 15);
 
-        //roll dice
+        //roll dice button
         btnRollDice.setText("Roll Dice");
         btnRollDice.setFont(font3);
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
-            diceRolled = true;
+            gameEngine.updateGame();
             btnRollDice.setDisable(true);
+            btnBuy.setDisable(gameEngine.isBuyDisabled());
             diceText.setText("Dice roll: " + roll);
-
             Player currentPlayer = gameEngine.getCurrentPlayer();
-
-            //already updated in roll dice method
-            //int position = currentPlayer.getPosition();
-            //position = (position + roll) % 40;
-            //currentPlayer.setPosition(position);
-
             updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
-            updateTiles(); // CHANGE
-
-            //todo değiştir
-            if (gameEngine.getCurrentSquare().getType() == SquareType.COLORGROUP) {
-                ColorGroup colors = (ColorGroup) gameEngine.getCurrentSquare();
-                if (colors.propertyHasOwner(currentPlayer.getPosition()) == false) {
-                    btnBuy.setDisable(false);
-                } else {
-                    gameEngine.rent(currentPlayer.getPosition());
-                    //updatePlayerTexts();
-                }
-            }
-            else
-            {
-                btnBuy.setDisable(true);
-            }
+            updateSquares();
         });
+
         btnRollDice.setLayoutX(100);
         btnRollDice.setLayoutY(120);
 
+        //end turn button
         btnEndTurn = new Button();
         btnEndTurn.setText("End Turn");
         btnEndTurn.setFont(font3);
         btnEndTurn.setOnAction(event -> {
             gameEngine.nextTurn();
             turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
-            diceRolled = false;
-
             btnRollDice.setDisable(false);
-            //Player owner = ((Property) board.tiles[players[turn].getPosition()]).getOwner();
-            //if (owner != null) {
-            //    btnBuy.setDisable(true);
-            //}
         });
 
         btnEndTurn.setLayoutX(200);
         btnEndTurn.setLayoutY(120);
 
+        //buy button
         btnBuy = new Button();
         btnBuy.setText("Buy");
         btnBuy.setFont(font3);
-        //disable buy button at the beginning of the game
-        if(gameEngine.getCurrentPlayerPosition() == 0) {
-            btnBuy.setDisable(true);
-        }
+        System.out.println("isBuyEnabled: " + !gameEngine.isBuyDisabled());
+        btnBuy.setDisable(gameEngine.isBuyDisabled());
         btnBuy.setOnAction(event -> {
             gameEngine.buyProperty();
-            updateTiles();
+            updateSquares();
             updatePlayerText(playerTexts[gameEngine.getTurn()], gameEngine.getCurrentPlayer());
             btnBuy.setDisable(true);
         });
@@ -189,7 +154,7 @@ public class GameScreen {
         scene = new Scene(group, width, height);
         }
 
-    private GridPane getTiles() {
+    private GridPane getSquares() {
         GridPane gridPane = new GridPane();
 
         for (int col = 0; col < 11; col++) {
@@ -231,14 +196,17 @@ public class GameScreen {
                     //tile.setFill(Color.ORCHID);
 
                     //set tile colors
-                    if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
+                    if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
                         tile.setFill(Color.MEDIUMSEAGREEN);
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
                         tile.setFill(Color.DARKGOLDENROD);
                     }
-                    else {
+                    else if(gameEngine.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
                         tile.setFill(Color.LIME);
+                    }
+                    else { //start square
+                        tile.setFill(Color.BLUEVIOLET);
                     }
 
                     // find players on tile and set text
@@ -276,7 +244,7 @@ public class GameScreen {
     }
 
     //new updateBoard same as getTiles?
-    private void updateTiles() { //board pane vs grid pane?
+    private void updateSquares() { //board pane vs grid pane?
         boardPane.getChildren().clear();
 
         for (int col = 0; col < 11; col++) {
@@ -317,10 +285,10 @@ public class GameScreen {
                     tile.setStroke(Color.BLACK);
 
                     //determine square colors
-                    if (gameEngine.getSquare(pos).getType() == SquareType.COLORGROUP) {
-                        ColorGroup colors = (ColorGroup) gameEngine.getSquare(pos);
-                        if (colors.propertyHasOwner(pos) == true) {
-                            Player owner = colors.propertyOwner(gameEngine.getCurrentPlayer().getPosition());
+                    if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
+                        Property property = (Property) gameEngine.getSquare(pos);
+                        if (property.isOwned() == true) {
+                            Player owner = property.getOwner();
                             tile.setFill(owner.getColor());
                         }
                         else

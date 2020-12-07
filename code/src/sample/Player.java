@@ -10,6 +10,7 @@ public class Player {
     private int position;
     private Color color;
     private int balance;
+    private int suspendedTourNo;
     private boolean isSuspended;
     private boolean isBankrupt;
     int index;
@@ -23,11 +24,20 @@ public class Player {
         position = 0;
         isSuspended = false;
         isBankrupt = false;
+        suspendedTourNo = 0;
     }
 
     //private methods
 
     //public methods
+    public void suspend(int tourNo) {
+        isSuspended = true;
+        suspendedTourNo = tourNo;
+    }
+
+    public int getSuspendedTourNo() {
+        return suspendedTourNo;
+    }
     boolean isSuspended() { return isSuspended; }
     boolean isBankrupt() { return isBankrupt; }
 
