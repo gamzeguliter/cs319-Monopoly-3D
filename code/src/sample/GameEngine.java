@@ -83,23 +83,23 @@ public class GameEngine {
         }
         return false;
     }
-
+/*
     public boolean isSellDisabled() {
         //check if it is owned,
         //if there is any buildings on the color group
-    }
+    return true;}
 
     public boolean isAddHouseDisabled() {
         //check if improvable
-
+return true;
     }
 
     public boolean isSellHouseDisabled() {
-
+ return true;
     }
 
     public boolean isAddHotelDisabled() {
-
+return true;
     }
 
     public boolean isSellHotelDisabled() {
@@ -115,7 +115,7 @@ public class GameEngine {
     }
 
 
-
+*/
     public void initializeGame() {
 
     }
