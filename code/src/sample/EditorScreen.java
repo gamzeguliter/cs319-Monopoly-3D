@@ -17,7 +17,9 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
+import javax.security.auth.callback.Callback;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -37,7 +39,6 @@ GridPane recs;
     Button btnRollDice;
     Button btnEndTurn;
     Button btnBuy;
-
     GameEngine gameEngine;
     private boolean diceRolled;
 
@@ -103,7 +104,6 @@ GridPane recs;
                     tile.setX(col * 10);
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
-                    //tile.setFill(Color.ORCHID);
 
                     tile.setFill(Color.WHITE);
                     tile.setOnMouseClicked(event -> {
@@ -181,7 +181,6 @@ GridPane recs;
                     });
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        //stp.getChildren().add(0, tile);
                         stp.getChildren().addAll(tile);
                         gridPane.add(stp, col, row);
                     }
@@ -269,9 +268,11 @@ GridPane recs;
 
                 Label label6 = new Label("Color:");
                 label6.setFont(font);
-                ColorPicker colorPicker = new ColorPicker();
+               ColorPicker colorPicker = new ColorPicker();
                 colorPicker.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
                 colorPicker.setStyle("-fx-font: 'Source Sans Pro';" + "-fx-font-family: 'Source Sans Pro';" + "-fx-font-size: 10;");
+
+
                 HBox hb9 = new HBox();
                 hb9.getChildren().addAll(label6, colorPicker);
                 hb9.setSpacing(10);
@@ -279,12 +280,29 @@ GridPane recs;
                 VBox vbox4 = new VBox();
                 vbox4.getChildren().addAll(hb7, hb8, hb9);
 
-                d4.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
-                ((Button) d4.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
-                ((Button) d4.getDialogPane().lookupButton(ButtonType.OK)).setFont(font);
 
                 d4.getDialogPane().setContent(vbox4);
+                d4.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
+                d4.setResultConverter(button -> {
+                    if (button == ButtonType.OK) {
+
+                        return new Pair<>(name2.getText(), colorPicker.getValue());
+                    }
+                    return null;
+                });
+
+                ///  getting the user inputs for the name and the color of the color group
+                Optional<Pair<String, String>> result = d4.showAndWait();
+                result.ifPresent(pair -> {
+                    System.out.println("name of the color group=" + name2.getText());
+                    Color c = colorPicker.getValue();
+                    System.out.println("New Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
+                });
+
+                // todo ->  processing user input
+
                 d4.show();
+
             });
 
             HBox hb6 = new HBox();
@@ -297,6 +315,7 @@ GridPane recs;
             d3.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.OK);
             ((Button) d3.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
             ((Button) d3.getDialogPane().lookupButton(ButtonType.OK)).setFont(font);
+
 
             d3.getDialogPane().setContent(vbox3);
             d3.show();
@@ -313,7 +332,25 @@ GridPane recs;
         ((Button) d2.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
         ((Button) d2.getDialogPane().lookupButton(ButtonType.OK)).setFont(font);
 
+        // getting user input while editing
+
         d2.getDialogPane().setContent(vbox);
+
+          d2.setResultConverter(button -> {
+            if (button == ButtonType.OK) {
+                return new Pair<>(name.getText(), amount.getText());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = d2.showAndWait();
+
+        result.ifPresent(pair -> {
+            System.out.println("name of the property=" + name.getText() + ", amount of the price=" + amount.getText());
+        });
+        // todo ->  processing user input
+
+
         d2.show();
     }
 
@@ -383,6 +420,21 @@ GridPane recs;
         ((Button) d2.getDialogPane().lookupButton(ButtonType.OK)).setFont(font);
 
         d2.getDialogPane().setContent(vbox);
+
+        /// getting user input
+        d2.setResultConverter((button) -> {
+            if (button == ButtonType.OK) {
+                return new Results(name.getText(), Integer.parseInt(amount.getText()),
+                        Integer.parseInt(money.getText()));
+            }
+            return null;
+        });
+        Optional<Results> optionalResult = d2.showAndWait();
+        optionalResult.ifPresent((Results results) -> {
+            System.out.println(
+                    results.name + " " + results.amount + " " + results.money);
+        });
+        // todo ->  processing user input
         d2.show();
     }
 
@@ -393,3 +445,4 @@ public void changeTheSquare(Rectangle s){
 
     public Scene getScene() { return scene; }
 }
+
