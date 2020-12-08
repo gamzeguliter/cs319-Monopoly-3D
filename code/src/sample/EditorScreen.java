@@ -432,7 +432,7 @@ GridPane recs;
         Optional<Results> optionalResult = d2.showAndWait();
         optionalResult.ifPresent((Results results) -> {
             System.out.println(
-                    results.name + " " + results.amount + " " + results.money);
+                    results.name + " " + results.amount + " " + results.money); // todo -> ratio buttons are left out
         });
         // todo ->  processing user input
         d2.show();
