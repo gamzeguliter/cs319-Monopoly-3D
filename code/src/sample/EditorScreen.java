@@ -23,7 +23,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static sample.SquareType.CHANCEANDCOMMUNITYCHEST;
+import static sample.SquareType.*;
 
 public class EditorScreen {
     // properties
@@ -150,13 +150,19 @@ GridPane recs;
                             {
                                 RadioButton rb = (RadioButton)group.getSelectedToggle();
                                 if(rb == chance) {
-                                    editor.createNewSquare(CHANCEANDCOMMUNITYCHEST, pos);
+                                    editor.createNewChestCommunity(pos);
                                 }
                                 else if (rb == joker){
-                                    //todo create joker
+
+                                    // default values for now , can be changed later by the players
+                                    editor.createNewJoker(pos,0,0,0);
+
                                 }
                                 else if (rb == property){
-                                    //todo create property
+                                    // default values for now , can be changed later by the players
+                                    ColorGroup temp = new ColorGroup("temp"); //might be deleted
+                                    editor.createNewProperty(pos,"ankara",temp,100,100,180,50,50);
+
                                 }
                             }
 
