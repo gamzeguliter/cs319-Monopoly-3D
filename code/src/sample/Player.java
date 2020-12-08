@@ -3,6 +3,8 @@ package sample;
 
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class Player {
     //properties
     String name;
@@ -13,18 +15,20 @@ public class Player {
     private int suspendedTourNo;
     private boolean isSuspended;
     private boolean isBankrupt;
-    int index;
+    private boolean out;
+    private ArrayList<Property> ownedProperties;
 
     //constructors
-    public Player(String name, Color color, int balance, int index) {
+    public Player(String name, Color color, int balance) {
         this.name = name;
         this.color = color;
         this.balance = balance;
-        this.index = index;
         position = 0;
         isSuspended = false;
         isBankrupt = false;
         suspendedTourNo = 0;
+        out = false;
+        ownedProperties = new ArrayList<Property>();
     }
 
     //private methods
@@ -35,15 +39,20 @@ public class Player {
         suspendedTourNo = tourNo;
     }
 
+    public void buyProperty(Property property) {
+        ownedProperties.add(property);
+    }
+
+    public void sellProperty(Property property) {
+        ownedProperties.remove(property);
+    }
+
     public int getSuspendedTourNo() {
         return suspendedTourNo;
     }
     boolean isSuspended() { return isSuspended; }
     boolean isBankrupt() { return isBankrupt; }
 
-    public int getIndex() {
-        return index;
-    }
     //getters and setters
     // TODO: implement pawn related methods
     // getPawn()
@@ -67,5 +76,13 @@ public class Player {
 
     public void gain(int money) {
         balance += money;
+    }
+
+    public boolean isOut() {
+        return out;
+    }
+
+    public void resign() {
+        out = true;
     }
 }

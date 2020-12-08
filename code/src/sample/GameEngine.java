@@ -19,17 +19,17 @@ public class GameEngine {
         board = new Board();
         //temporary players to test
         players = new ArrayList<Player>(); //added
-        players.add(new Player("player1", Color.LIMEGREEN, 1000, 0));
-        players.add(new Player("player2", Color.TURQUOISE, 1000, 1));
-        players.add(new Player("player3", Color.MAROON, 1000, 2));
-        players.add(new Player("player4", Color.SILVER, 1000, 3));
+        players.add(new Player("player1", Color.LIMEGREEN, 1000));
+        players.add(new Player("player2", Color.TURQUOISE, 1000));
+        players.add(new Player("player3", Color.MAROON, 1000));
+        players.add(new Player("player4", Color.SILVER, 1000));
         turn = 0;
         currentPlayer = players.get(0);
         colorGroups = board.getColorGroups();
     }
 
-    public void updateGame() { //TEKRAR BAK -- gereksiz olabilir ya da modify with buton inputs
-        checkSquare();
+    public void updateGame() {
+
     }
 
     public void checkSquare() {
@@ -87,6 +87,7 @@ public class GameEngine {
     public boolean isSellDisabled() {
         //check if it is owned,
         //if there is any buildings on the color group
+<<<<<<< HEAD
     return true;}
 
     public boolean isAddHouseDisabled() {
@@ -100,18 +101,34 @@ return true;
 
     public boolean isAddHotelDisabled() {
 return true;
+=======
+        return false;
+    }
+
+    public boolean isAddHouseDisabled() {
+        //check if improvable
+        return false;
+    }
+
+    public boolean isSellHouseDisabled() {
+        return false;
+    }
+
+    public boolean isAddHotelDisabled() {
+        return false;
+>>>>>>> a6c467dc49d44bb5e8d0e1cd1801b1ea022ceac1
     }
 
     public boolean isSellHotelDisabled() {
-
+        return false;
     }
 
     public boolean isMortgagePropertyDisabled() {
-
+        return false;
     }
 
     public boolean isUnmortgagePropertyDisabled() {
-
+        return false;
     }
 
 
@@ -120,9 +137,19 @@ return true;
 
     }
 
+    public int playerNumber() {
+        int playerNum = 0;
+        for(Player player: players) {
+            if (!player.isOut()){
+                playerNum++;
+            }
+        }
+        return playerNum;
+    }
+
     public int getTurn()
     {
-        return turn % 4;
+        return turn % playerNumber();
     }
 
     public ArrayList<String> getPlayerNames() {
@@ -131,6 +158,11 @@ return true;
             playernames.add(player.getName());
         }
         return playernames;
+    }
+
+    //todo texti durdur -
+    public void resign(Player player) {
+        player.resign();
     }
 
 
