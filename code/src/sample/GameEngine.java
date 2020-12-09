@@ -83,10 +83,25 @@ public class GameEngine {
         }
         return false;
     }
-
+/*
     public boolean isSellDisabled() {
         //check if it is owned,
         //if there is any buildings on the color group
+<<<<<<< HEAD
+    return true;}
+
+    public boolean isAddHouseDisabled() {
+        //check if improvable
+return true;
+    }
+
+    public boolean isSellHouseDisabled() {
+ return true;
+    }
+
+    public boolean isAddHotelDisabled() {
+return true;
+=======
         return false;
     }
 
@@ -101,6 +116,7 @@ public class GameEngine {
 
     public boolean isAddHotelDisabled() {
         return false;
+>>>>>>> a6c467dc49d44bb5e8d0e1cd1801b1ea022ceac1
     }
 
     public boolean isSellHotelDisabled() {
@@ -116,7 +132,7 @@ public class GameEngine {
     }
 
 
-
+*/
     public void initializeGame() {
 
     }

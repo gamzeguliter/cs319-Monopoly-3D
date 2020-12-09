@@ -66,7 +66,7 @@ public class Board {
         squares[0] = new Start(20);
         for (int i = 1; i < 40; i++) {
             if(i % 4 == 0)
-                squares[i] = new Joker(9, 10, 0);
+                squares[i] = new Joker(9, 10, 0,"");
             else if(i % 4 == 1)
                 squares[i] = new ChanceAndCommunityChest();
             else if (i % 4 == 2) {
