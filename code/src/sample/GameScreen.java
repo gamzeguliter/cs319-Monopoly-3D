@@ -6,6 +6,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -91,7 +93,9 @@ public class GameScreen {
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
             gameEngine.checkSquare();
+            openDialog();
             btnRollDice.setDisable(true);
+            openDialog();
             btnBuy.setDisable(gameEngine.isBuyDisabled());
             diceText.setText("Dice roll: " + roll);
             Player currentPlayer = gameEngine.getCurrentPlayer();
@@ -152,6 +156,22 @@ public class GameScreen {
         group.getChildren().add(boardPane);
 
         scene = new Scene(group, width, height);
+    }
+
+    private void openDialog() {
+        Dialog d = new Dialog();
+        d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(10));
+        Text header = new Text("Select square type:");
+        header.setFont(font);
+        vbox.getChildren().addAll(header);
+        d.getDialogPane().setContent(vbox);
+        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
+        ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
+        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
+        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
+        d.show();
     }
 
     private GridPane getSquares() {
@@ -298,8 +318,11 @@ public class GameScreen {
                         tile.setFill(Color.DARKGOLDENROD);
                     }
 
-                    else {
+                    else if(gameEngine.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
                         tile.setFill(Color.LIME);
+                    }
+                    else {
+                        tile.setFill(Color.BLUEVIOLET);
                     }
 
                     // find players on tile and set text
