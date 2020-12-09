@@ -6,13 +6,15 @@ public class Joker extends Square {
     private int movement;
     private int money;
     private int suspendedTourNo;
+    private String name;
 
     //constructor
-    public Joker(int movement, int money, int suspendedTourNo) {
+    public Joker(int movement, int money, int suspendedTourNo,String name) {
         super(SquareType.JOKER);
         this.movement = movement;
         this.money = money;
         this.suspendedTourNo = suspendedTourNo;
+        this.name = name;
     }
 
     //methods
@@ -52,6 +54,14 @@ public class Joker extends Square {
 
     public boolean isMoneyAction() {
         return money != 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

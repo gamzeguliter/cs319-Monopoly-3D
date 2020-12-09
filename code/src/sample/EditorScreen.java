@@ -41,6 +41,7 @@ GridPane recs;
     Button btnBuy;
     GameEngine gameEngine;
     private boolean diceRolled;
+    int position;
 
     Font font = Font.font("Source Sans Pro", 20);
 
@@ -48,7 +49,7 @@ GridPane recs;
     // constructors
     public EditorScreen() throws FileNotFoundException {
         editor = new Editor();
-
+        position =0;
         gameEngine = new GameEngine();
         setScene();
     }
@@ -107,6 +108,7 @@ GridPane recs;
 
                     tile.setFill(Color.WHITE);
                     tile.setOnMouseClicked(event -> {
+                        position = pos;
                         Font font = new Font("Source Sans Pro", 20);
                         Dialog d = new Dialog();
                         d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -154,12 +156,12 @@ GridPane recs;
                                 }
                                 else if (rb == joker){
 
-                                    // default values for now , can be changed later by the players
-                                    editor.createNewJoker(pos,0,0,0);
+                                    // todo - > default values for now , can be changed later by the players
+                                    editor.createNewJoker(pos,0,0,0,"Joker");
 
                                 }
                                 else if (rb == property){
-                                    // default values for now , can be changed later by the players
+                                    //todo ->  default values for now , can be changed later by the players
                                     ColorGroup temp = new ColorGroup("temp"); //might be deleted
                                     editor.createNewProperty(pos,"ankara",temp,100,100,180,50,50);
 
@@ -296,13 +298,16 @@ GridPane recs;
 
                 ///  getting the user inputs for the name and the color of the color group
                 Optional<Pair<String, String>> result = addColorGroupDialog.showAndWait();
+
+                // TODO TODO TODO -> color group !!!!!!!!!!
                 result.ifPresent(pair -> {
                     System.out.println("name of the color group=" + colorGroupName.getText());
                     Color c = colorPicker.getValue();
                     System.out.println("New Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
+
+
                 });
 
-                // todo ->  processing user input
             });
 
             HBox hb6 = new HBox();
@@ -346,8 +351,12 @@ GridPane recs;
 
         result.ifPresent(pair -> {
             System.out.println("name of the property=" + propertyName.getText() + ", amount of the price=" + propertyPrice.getText());
+
+            // todo ->  processing user input : color group is left, checking the corner cases for the unchanged boxes
+            editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
+            editor.setNameForProperty(propertyName.getText() , position);
+
         });
-        // todo ->  processing user input
 
     }
 
@@ -431,8 +440,18 @@ GridPane recs;
         optionalResult.ifPresent((Results results) -> {
             System.out.println(
                     results.name + " " + results.amount + " " + results.money); // todo -> ratio buttons are left out
+
+            // todo ->  processing user input
+            editor.setNameForJoker(results.name,position);
+            editor.setMoneyForJoker(results.money,position);
+            if(move.isSelected()){
+                editor.setMovementForJoker(results.amount,position);
+            }
+            if(wait.isSelected()){
+                editor.setSuspentionForJoker(results.amount,position);
+            }
+
         });
-        // todo ->  processing user input
         //jokerMainDialog.show();
     }
 
