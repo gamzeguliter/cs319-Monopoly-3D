@@ -16,47 +16,64 @@ public class ColorGroup {
         improvable = false;
     }
 
-    public void addProperty(Property prop) {
-        properties.add(prop);
+    public void addProperty(Property property) {
+        properties.add(property);
     }
 
-
-    //todo
-    public void removeProperty(Property prop) {
-
+    public void removeProperty(Property property) {
+        properties.remove(property);
     }
 
     //todo: addHotel, sellHouse/hotel + to sell a property no house should be present on colorgroup etc
 
     //to add a house: the set must be complete,
     // the player should have balance,
-    // there must be equal housing,
-    // none of the properties should be mortgaged
+    // there must be balanced housing,
+    // none of the properties should be mortgaged,
+    // property shouldn't have hotel,
+    // property shouldn't have already 4 houses
     public boolean addHouse(Property property, Player player) {
-        //TODO check for equal housing -- look at the rules
-        if(!isImprovable()
+        if (this.isComplete(player)
+                || isBalancedHousing(property)
                 || property.isHotel()
                 || player.getBalance() < property.getHousePrice()
-                || property.getNoOfHouses() >= 4) {
+                || property.getNoOfHouses() >= 4
+                || !isMortgaged()) {
             return false;
         }
-        else {
-            int houseNo = property.getNoOfHouses();
-            for(Property propertyInGroup: properties) {
-                if(propertyInGroup == property) {
-                    continue;
-                }
-                else {
-                    if(houseNo + 1 > propertyInGroup.getNoOfHouses() + 1)
-                    {
-                        return false;
-                    }
+        return property.addHouse();
+        //todo when a property has a house, the money of all props in color group should be updated?
+    }
+
+    private boolean isComplete(Player player) {
+        for (Property propertyInGroup : properties) {
+            if (!propertyInGroup.isOwned() || propertyInGroup.getOwner() != player)
+                return false;
+        }
+        return true;
+    }
+
+    //this method checks if any of the properties in color group is mortgaged
+    private boolean isMortgaged() {
+        for (Property property : properties) {
+            if (property.isMortgaged())
+                return false;
+        }
+        return true;
+    }
+
+    private boolean isBalancedHousing(Property property) {
+        int houseNo = property.getNoOfHouses();
+        for (Property propertyInGroup : properties) {
+            if (propertyInGroup == property) {
+                continue;
+            } else {
+                if (houseNo + 1 > propertyInGroup.getNoOfHouses() + 1) {
+                    return false;
                 }
             }
-            updateImprovability(player);
-            return property.addHouse();
         }
-        //todo when a property has a house, the money of all props in color group should be updated?
+        return true;
     }
 
     public String getGroupName() {
@@ -75,30 +92,6 @@ public class ColorGroup {
         this.colors = colors;
     }
 
-    //checks if all properties of this color group is owned by the player("owner")
-    // none of the properties should be mortgaged
-    //if all of them have hotel, it is not improvable
-    public void updateImprovability(Player owner) {
-        int hotelNo = 0;
-        for (Property property: properties) {
-            if (!property.isOwned() || property.getOwner() != owner || property.isMortgaged()) {
-                improvable = false;
-                return;
-            }
-            else if(property.isHotel()) {
-                hotelNo++;
-            }
-        }
-        if(hotelNo == properties.size()) {
-            improvable = false;
-        }
-        else {
-            improvable = true;
-        }
-    }
-
-    public boolean isImprovable() {
-        return improvable;
-    }
 }
+
 
