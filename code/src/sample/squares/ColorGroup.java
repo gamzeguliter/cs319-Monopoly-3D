@@ -1,4 +1,7 @@
-package sample;
+package sample.squares;
+
+import sample.Player;
+import sample.squares.Property;
 
 import java.util.ArrayList;
 

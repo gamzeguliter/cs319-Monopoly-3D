@@ -2,6 +2,7 @@ package sample;
 
 
 import javafx.scene.paint.Color;
+import sample.squares.Property;
 
 import java.util.ArrayList;
 

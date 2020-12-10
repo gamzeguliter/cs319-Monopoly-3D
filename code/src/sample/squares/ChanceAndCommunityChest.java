@@ -1,4 +1,8 @@
-package sample;
+package sample.squares;
+
+import org.json.JSONObject;
+import sample.squares.Square;
+import sample.squares.SquareType;
 
 public class ChanceAndCommunityChest extends Square {
 
@@ -16,5 +20,13 @@ public class ChanceAndCommunityChest extends Square {
         this.name = name;
     }
 
+    @Override
+    public JSONObject getJson() {
+        return null;
+    }
 
+    @Override
+    public void extractPropertiesFromJson(JSONObject json) {
+
+    }
 }

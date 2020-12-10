@@ -1,41 +1,34 @@
-package sample;
+package sample.screens;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.squares.ColorGroup;
+import sample.Editor;
+import sample.GameEngine;
+import sample.Results;
 
-import javax.security.auth.callback.Callback;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Optional;
-
-import static sample.SquareType.*;
 
 public class EditorScreen {
     // properties
     private Scene scene;
     GridPane boardPane;
-     Editor  editor ;
+     Editor editor ;
     Text[] playerTexts;
     Text turnText;
     Text diceText;
-GridPane recs;
+    GridPane recs;
     Button btnRollDice;
     Button btnEndTurn;
     Button btnBuy;

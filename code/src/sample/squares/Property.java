@@ -1,6 +1,9 @@
-package sample;
+package sample.squares;
 
-public class Property extends Square{
+import org.json.JSONObject;
+import sample.Player;
+
+public class Property extends Square {
 
     // properties
     private String name;
@@ -25,6 +28,17 @@ public class Property extends Square{
         this.mortgagePrice = mortgagePrice;
         this.housePrice = housePrice;
         this.rent = rent;
+        noOfHouses = 0;
+        hotel = false;
+        isOwned = false;
+        isMortgaged = false;
+        owner = null;
+    }
+
+    public Property(JSONObject jo) {
+        super(SquareType.PROPERTY);
+        extractPropertiesFromJson(jo);
+
         noOfHouses = 0;
         hotel = false;
         isOwned = false;
@@ -155,5 +169,30 @@ public class Property extends Square{
             player.pay(buyingPrice);
             return true;
         }
+    }
+
+    @Override
+    public JSONObject getJson() {
+        return null;
+    }
+
+    @Override
+    public void extractPropertiesFromJson(JSONObject jo) {
+        if (jo == null) {
+            System.out.println("ERROR: JSONObject passed to Property was null");
+        }
+
+        String type = jo.getString("type");
+        if (!type.equals("Property")) {
+            System.out.println("ERROR: Property initialized with wrong type of JSONObject: " + type);
+        }
+
+        this.name = jo.getString("name");
+        this.colorGroup = colorGroup;
+        this.buyingPrice = jo.getInt("buyingPrice");
+        this.sellingPrice = jo.getInt("sellingPrice");
+        this.mortgagePrice = jo.getInt("mortgagePrice");
+        this.housePrice = jo.getInt("housePrice");
+        this.rent = jo.getInt("rent");
     }
 }

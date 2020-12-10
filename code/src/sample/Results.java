@@ -1,9 +1,9 @@
 package sample;
 public class Results {
 
-    String name;
-    int amount;
-    int money;
+    public String name;
+    public int amount;
+    public int money;
 
 
     public Results(String name, int amount,int money) {

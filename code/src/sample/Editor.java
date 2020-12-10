@@ -1,5 +1,6 @@
 package sample;
-import javafx.scene.paint.Color;
+import sample.squares.ChanceAndCommunityChest;
+import sample.squares.*;
 
 public class Editor {
 
@@ -33,8 +34,8 @@ public class Editor {
 
    /// creates a new property square while editing
 
-    public void createNewProperty(int index,String name,ColorGroup colorGroup, int buyingPrice,int sellingPrice, int mortgagePrice,
-                                  int housePrice,int rent) {
+    public void createNewProperty(int index, String name, ColorGroup colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice,
+                                  int housePrice, int rent) {
 
         //todo -> buraya bak geri, name de minor bir sorun olabilir
         board.squares[index] = new Property(name, colorGroup, buyingPrice, sellingPrice, mortgagePrice,

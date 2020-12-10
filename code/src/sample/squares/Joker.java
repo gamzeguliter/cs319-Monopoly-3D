@@ -1,4 +1,8 @@
-package sample;
+package sample.squares;
+
+import org.json.JSONObject;
+import sample.squares.Square;
+import sample.squares.SquareType;
 
 public class Joker extends Square {
 
@@ -15,6 +19,11 @@ public class Joker extends Square {
         this.money = money;
         this.suspendedTourNo = suspendedTourNo;
         this.name = name;
+    }
+
+    public Joker(JSONObject jo) {
+        super(SquareType.JOKER);
+        extractPropertiesFromJson(jo);
     }
 
     //methods
@@ -62,6 +71,34 @@ public class Joker extends Square {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public JSONObject getJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("type", "Joker");
+        jo.put("movement", movement);
+        jo.put("money", money);
+        jo.put("suspendedTourNo", suspendedTourNo);
+        jo.put("name", name);
+        return jo;
+    }
+
+    @Override
+    public void extractPropertiesFromJson(JSONObject jo) {
+        if (jo == null) {
+            System.out.println("ERROR: JSONObject passed to Joker was null");
+        }
+
+        String type = jo.getString("type");
+        if (!type.equals("Joker")) {
+            System.out.println("ERROR: Joker initialized with wrong type of JSONObject: " + type);
+        }
+
+        movement = jo.getInt("movement");
+        money = jo.getInt("money");
+        suspendedTourNo = jo.getInt("suspendedTourNo");
+        name = jo.getString("name");
     }
 
 }

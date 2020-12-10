@@ -1,5 +1,8 @@
 package sample;
 
+import sample.squares.ChanceAndCommunityChest;
+import sample.squares.*;
+
 import java.util.ArrayList;
 
 public class Board {

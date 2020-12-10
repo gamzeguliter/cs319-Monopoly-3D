@@ -1,4 +1,4 @@
-package sample;
+package sample.squares;
 
 public enum SquareType {
     START, //todo

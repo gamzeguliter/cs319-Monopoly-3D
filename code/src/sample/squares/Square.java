@@ -1,6 +1,8 @@
-package sample;
+package sample.squares;
 
-public class Square {
+import org.json.JSONObject;
+
+public abstract class Square {
     private SquareType type;
 
     public Square(SquareType type) {
@@ -12,4 +14,7 @@ public class Square {
     }
 
     public SquareType getType() { return type; }
+
+    public abstract JSONObject getJson();
+    public abstract void extractPropertiesFromJson(JSONObject json);
 }

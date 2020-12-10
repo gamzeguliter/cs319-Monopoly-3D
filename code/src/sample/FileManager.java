@@ -63,10 +63,10 @@ public class FileManager {
         return new Board();
     }
 
-    // must generate folder if it does not exist
     public static void writeBoardToFolder(Board board) {
         String root = getFolderFromName(board.getName());
 
+        // generate the folder if it does not already exist
         if (Files.notExists(Paths.get(root))) {
             File file = new File(root);
             boolean bool = file.mkdir();
@@ -76,6 +76,12 @@ public class FileManager {
                 System.out.println("Couldn’t create specified directory");
             }
         }
+
+        JSONObject jo = new JSONObject();
+        jo.put("name", "jon doe");
+        jo.put("age", "22");
+        jo.put("city", "chicago");
+        String sa = jo.toString();
 
         String boardConfigJsonText = "{ name: \"John\", age: 31, city: \"New York\" }";
         writeTextToFile(root + jsonName, boardConfigJsonText);
