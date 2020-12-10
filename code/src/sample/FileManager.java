@@ -129,7 +129,7 @@ public class FileManager {
             squaresJSON.put(square.getJson());
         }
         jo.put("squares", squares);
-        
+
         writeTextToFile(root + jsonName, jo.toString());
     }
 }

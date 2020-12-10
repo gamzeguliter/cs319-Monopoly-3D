@@ -40,9 +40,9 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        fileManagerTest();
+        //fileManagerTest();
 
-        // launch(args);
+        launch(args);
     }
 
     private static void fileManagerTest() {

@@ -20,20 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63b866f2-4438-4d4e-b875-34cb72a879c0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Joker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Property.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Start.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../diagrams/.Analysis-Diagrams.vpp.lck" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
