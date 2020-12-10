@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Board {
 
     // properties
+    private String name;
     Square[] squares;
     ArrayList<ColorGroup> colorGroups;
     /*
@@ -25,6 +26,13 @@ public class Board {
     public Board() {
         colorGroups = createGroups();
         squares = testSquares();
+        name = "defaultName";
+    }
+
+    public Board(String name) {
+        colorGroups = createGroups();
+        squares = testSquares();
+        this.name = name;
     }
 
     private ArrayList<ColorGroup> createGroups() {
@@ -82,4 +90,8 @@ public class Board {
         }
         return squares;
     }
+
+    // getters and setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 }

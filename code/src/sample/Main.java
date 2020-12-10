@@ -44,7 +44,13 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        launch(args);
+        //fileManagerTest();
 
+        launch(args);
+    }
+
+    private static void fileManagerTest() {
+        Board board = new Board("default2");
+        FileManager.writeBoardToFolder(board);
     }
 }
