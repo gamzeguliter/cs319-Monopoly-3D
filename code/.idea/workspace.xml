@@ -20,47 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63b866f2-4438-4d4e-b875-34cb72a879c0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/ChanceAndCommunityChest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/ColorGroup.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Editor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Editor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/EditorScreen$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/EditorScreen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/GameEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/GameEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/GameScreen.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/GameScreen.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Joker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Property.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Results.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Results.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Square.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/SquareType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Start.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Tile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/ChanceAndCommunityChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/ColorGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Editor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Editor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/EditorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/GameEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/GameScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Joker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Property.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Results.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Results.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Square.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/SquareType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/SquareType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Start.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Tile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Joker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Property.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../diagrams/.Analysis-Diagrams.vpp.lck" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,30 +123,30 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="501" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1607556924856" />
-    <state width="1493" height="198" key="GridCell.Tab.0.bottom" timestamp="1607613694730">
+    <state width="1493" height="198" key="GridCell.Tab.0.bottom" timestamp="1607640600155">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607613694730" />
-    <state width="1493" height="198" key="GridCell.Tab.0.center" timestamp="1607613694730">
+    <state width="1493" height="198" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607640600155" />
+    <state width="1493" height="198" key="GridCell.Tab.0.center" timestamp="1607640600155">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607613694730" />
-    <state width="1493" height="198" key="GridCell.Tab.0.left" timestamp="1607613694730">
+    <state width="1493" height="198" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607640600155" />
+    <state width="1493" height="198" key="GridCell.Tab.0.left" timestamp="1607640600154">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607613694730" />
-    <state width="1493" height="198" key="GridCell.Tab.0.right" timestamp="1607613694730">
+    <state width="1493" height="198" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607640600154" />
+    <state width="1493" height="198" key="GridCell.Tab.0.right" timestamp="1607640600155">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607613694730" />
+    <state width="1493" height="198" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607640600155" />
     <state x="277" y="0" key="SettingsEditor" timestamp="1607556928699">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="0" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1607556928699" />
-    <state x="237" y="66" key="new project wizard" timestamp="1607556832169">
+    <state x="237" y="66" key="new project wizard" timestamp="1607628265110">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="237" y="66" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1607556832169" />
+    <state x="237" y="66" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1607628265110" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1607559275416">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

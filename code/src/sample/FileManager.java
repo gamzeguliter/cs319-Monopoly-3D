@@ -1,11 +1,14 @@
 package sample;
 
 import org.json.*;
+import sample.squares.*;
+import sample.squares.Property;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileManager {
 
@@ -59,7 +62,40 @@ public class FileManager {
     public static Board readBoardFromFolder(String boardName) {
         String root = getFolderFromName(boardName);
         String boardConfigJsonText = readTextFromFile(root + jsonName);
-        System.out.println(boardConfigJsonText);
+
+        // check if folder exists, if not there is error in file system
+        if (Files.notExists(Paths.get(root))) {
+            System.out.println("ERROR: could not find board to read: " + boardName);
+        }
+
+        Board board = new Board(1);
+        board.setName(boardName);
+
+        JSONObject jo = new JSONObject(boardConfigJsonText);
+
+        JSONArray colorGroupsJSON = jo.getJSONArray("colorGroups");
+        ColorGroup[] colorGroups = new ColorGroup[colorGroupsJSON.length()];
+        for (int i = 0; i < colorGroups.length; i++) {
+            colorGroups[i] = new ColorGroup(colorGroupsJSON.getJSONObject(i));
+        }
+        board.setColorGroups(new ArrayList<>(Arrays.asList(colorGroups)));
+
+        JSONArray squaresJSON = jo.getJSONArray("squares");
+        Square[] squares = new Square[squaresJSON.length()];
+        for (int i = 0; i < squares.length; i++) {
+            JSONObject squareJSON = squaresJSON.getJSONObject(i);
+            String type = squareJSON.getString("type");
+
+            switch (type) {
+                case "ChanceAndCommunityChest" -> squares[i] = new ChanceAndCommunityChest(squareJSON);
+                case "Joker" -> squares[i] = new Joker(squareJSON);
+                case "Property" -> squares[i] = new Property(squareJSON, board);
+                case "Start" -> squares[i] = new Start(squareJSON);
+                default -> System.out.println("ERROR: Type of square was invalid: " + type);
+            }
+        }
+        board.setSquares(squares);
+
         return new Board();
     }
 
@@ -78,12 +114,22 @@ public class FileManager {
         }
 
         JSONObject jo = new JSONObject();
-        jo.put("name", "jon doe");
-        jo.put("age", "22");
-        jo.put("city", "chicago");
-        String sa = jo.toString();
+        jo.put("name", board.getName());
 
-        String boardConfigJsonText = "{ name: \"John\", age: 31, city: \"New York\" }";
-        writeTextToFile(root + jsonName, boardConfigJsonText);
+        ArrayList<ColorGroup> colorGroups = board.getColorGroups();
+        JSONArray colorGroupsJSON = new JSONArray();
+        for (ColorGroup colorGroup : colorGroups) {
+            colorGroupsJSON.put(colorGroup.getJson());
+        }
+        jo.put("colorGroups", colorGroupsJSON);
+
+        Square[] squares = board.getSquares();
+        JSONArray squaresJSON = new JSONArray();
+        for (Square square : squares) {
+            squaresJSON.put(square.getJson());
+        }
+        jo.put("squares", squares);
+        
+        writeTextToFile(root + jsonName, jo.toString());
     }
 }

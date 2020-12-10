@@ -10,6 +10,8 @@ public class Board {
     // properties
     private String name;
     Square[] squares;
+
+    // TODO: make this a <String, ColorGroup> map?
     ArrayList<ColorGroup> colorGroups;
     /*
     property array -?
@@ -23,7 +25,10 @@ public class Board {
 
 
     // constructors
-    // TODO: implement constructor with filemanager
+    // TODO: this exists so i can create empty board!!, change later
+    public Board(int empty) {
+
+    }
 
     // default constructor
     public Board() {
@@ -47,11 +52,6 @@ public class Board {
 
 
     //TODO load board constructor
-
-
-    public ArrayList<ColorGroup> getColorGroups() {
-        return colorGroups;
-    }
 
     // private methods
     public SquareType getSquareType(int squareNo) {
@@ -97,4 +97,30 @@ public class Board {
     // getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public ColorGroup getColorGroup(String groupName) {
+        for (ColorGroup colorGroup : colorGroups){
+            if (colorGroup.getGroupName().equals(groupName)) {
+                return colorGroup;
+            }
+        }
+        System.out.println("ERROR: Could not find ColorGroup in colorGroups: " + groupName);
+        return null;
+    }
+
+    public ArrayList<ColorGroup> getColorGroups() {
+        return colorGroups;
+    }
+
+    public void setColorGroups(ArrayList<ColorGroup> colorGroups) {
+        this.colorGroups = colorGroups;
+    }
+
+    public Square[] getSquares() {
+        return squares;
+    }
+
+    public void setSquares(Square[] squares) {
+        this.squares = squares;
+    }
 }
