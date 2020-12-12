@@ -5,3 +5,6 @@
 *.lock
 *.lck
 tmp/*
+
+*.class
+*.idea/workspace.xml  

@@ -1,6 +1,7 @@
 package sample.squares;
 
 import org.json.JSONObject;
+import sample.Board;
 import sample.Player;
 
 public class Property extends Square {
@@ -18,6 +19,7 @@ public class Property extends Square {
     private boolean isOwned;
     private boolean isMortgaged;
     private ColorGroup colorGroup;
+    private Board board;
 
     public Property(String name, ColorGroup colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice, int housePrice, int rent) {
         super(SquareType.PROPERTY);
@@ -35,10 +37,10 @@ public class Property extends Square {
         owner = null;
     }
 
-    public Property(JSONObject jo) {
+    public Property(JSONObject jo, Board board) {
         super(SquareType.PROPERTY);
+        this.board = board;
         extractPropertiesFromJson(jo);
-
         noOfHouses = 0;
         hotel = false;
         isOwned = false;
@@ -173,7 +175,16 @@ public class Property extends Square {
 
     @Override
     public JSONObject getJson() {
-        return null;
+        JSONObject jo = new JSONObject();
+        jo.put("type", "Property");
+        jo.put("name", name);
+        jo.put("groupName", colorGroup.getGroupName());
+        jo.put("buyingPrice", buyingPrice);
+        jo.put("sellingPrice", sellingPrice);
+        jo.put("mortgagePrice", mortgagePrice);
+        jo.put("housePrice", housePrice);
+        jo.put("rent", rent);
+        return jo;
     }
 
     @Override
@@ -188,11 +199,12 @@ public class Property extends Square {
         }
 
         this.name = jo.getString("name");
-        this.colorGroup = colorGroup;
+        this.colorGroup = board.getColorGroup(jo.getString("groupName"));
         this.buyingPrice = jo.getInt("buyingPrice");
         this.sellingPrice = jo.getInt("sellingPrice");
         this.mortgagePrice = jo.getInt("mortgagePrice");
         this.housePrice = jo.getInt("housePrice");
         this.rent = jo.getInt("rent");
     }
+
 }

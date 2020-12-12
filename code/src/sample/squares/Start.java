@@ -13,6 +13,11 @@ public class Start extends Square {
         this.money = money;
     }
 
+    public Start(JSONObject jo) {
+        super(SquareType.START);
+        extractPropertiesFromJson(jo);
+    }
+
     public int getMoney() {
             return money;
         }
@@ -23,11 +28,23 @@ public class Start extends Square {
 
     @Override
     public JSONObject getJson() {
-        return null;
+        JSONObject jo = new JSONObject();
+        jo.put("type", "Start");
+        jo.put("money", money);
+        return jo;
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject json) {
+    public void extractPropertiesFromJson(JSONObject jo) {
+        if (jo == null) {
+            System.out.println("ERROR: JSONObject passed to Start was null");
+        }
 
+        String type = jo.getString("type");
+        if (!type.equals("Start")) {
+            System.out.println("ERROR: Start initialized with wrong type of JSONObject: " + type);
+        }
+
+        money = jo.getInt("money");
     }
 }

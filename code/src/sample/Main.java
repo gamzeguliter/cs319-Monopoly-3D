@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import sample.screens.*;
 
 public class Main extends Application {
 
@@ -62,7 +61,13 @@ public class Main extends Application {
     }
 
     private static void fileManagerTest() {
-        Board board = new Board("default2");
-        FileManager.writeBoardToFolder(board);
+        JSONObject jo = new JSONObject();
+        JSONArray jr = new JSONArray();
+        jr.put(1);
+        jr.put(2);
+        jr.put(3);
+        jo.put("arr", jr);
+
+        System.out.println(((JSONArray) jo.get("arr")).get(1));
     }
 }

@@ -77,10 +77,10 @@ public class Joker extends Square {
     public JSONObject getJson() {
         JSONObject jo = new JSONObject();
         jo.put("type", "Joker");
+        jo.put("name", name);
         jo.put("movement", movement);
         jo.put("money", money);
         jo.put("suspendedTourNo", suspendedTourNo);
-        jo.put("name", name);
         return jo;
     }
 

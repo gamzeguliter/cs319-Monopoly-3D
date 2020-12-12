@@ -1,37 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7cac8149-3ba7-4722-b04e-d1a5fbde854e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/code.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/META-INF/code.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ChanceAndCommunityChest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ChanceAndCommunityChest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Start.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Start.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Joker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Property.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/squares/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../diagrams/.Analysis-Diagrams.vpp.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gitignore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../gitignore.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="master" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="" />
+      <created>1607807319568</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1607807319568</updated>
+    </task>
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state width="664" height="75" key="GridCell.Tab.0.bottom" timestamp="1607807211788">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="664" height="75" key="GridCell.Tab.0.bottom/0.23.1440.821@0.23.1440.821" timestamp="1607807211788" />
-    <state width="664" height="75" key="GridCell.Tab.0.center" timestamp="1607807211788">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="664" height="75" key="GridCell.Tab.0.center/0.23.1440.821@0.23.1440.821" timestamp="1607807211788" />
-    <state width="664" height="75" key="GridCell.Tab.0.left" timestamp="1607807211787">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="664" height="75" key="GridCell.Tab.0.left/0.23.1440.821@0.23.1440.821" timestamp="1607807211787" />
-    <state width="664" height="75" key="GridCell.Tab.0.right" timestamp="1607807211788">
-      <screen x="0" y="23" width="1440" height="821" />
-    </state>
-    <state width="664" height="75" key="GridCell.Tab.0.right/0.23.1440.821@0.23.1440.821" timestamp="1607807211788" />
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

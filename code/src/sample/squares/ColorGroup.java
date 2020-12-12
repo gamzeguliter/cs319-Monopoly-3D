@@ -1,5 +1,7 @@
 package sample.squares;
 
+import javafx.scene.paint.Color;
+import org.json.JSONObject;
 import sample.Player;
 import sample.squares.Property;
 
@@ -9,14 +11,19 @@ public class ColorGroup {
 
     private String groupName;
     private ArrayList<Property> properties;
-    private int[] colors;
+    Color color;
     private boolean improvable;
 
     public ColorGroup(String groupName) {
         this.groupName = groupName;
         properties = new ArrayList<Property>();
-        colors = new int[3];
+        // TODO: add a way to properly initialize color
+        color = Color.rgb(100,100,100);
         improvable = false;
+    }
+
+    public ColorGroup(JSONObject jo) {
+        extractPropertiesFromJson(jo);
     }
 
     public void addProperty(Property property) {
@@ -87,12 +94,33 @@ public class ColorGroup {
         this.groupName = groupName;
     }
 
-    public int[] getColors() {
-        return colors;
+    public Color getColor() {
+        return color;
     }
 
-    public void setColors(int[] colors) {
-        this.colors = colors;
+    public void setColors(Color color) {
+        this.color = color;
+    }
+
+    public JSONObject getJson() {
+        JSONObject jo = new JSONObject();
+        jo.put("groupName", groupName);
+        jo.put("r", color.getRed());
+        jo.put("g", color.getGreen());
+        jo.put("b", color.getBlue());
+        return jo;
+    }
+
+    public void extractPropertiesFromJson(JSONObject jo) {
+        if (jo == null) {
+            System.out.println("ERROR: JSONObject passed to ChanceAndCommunityChest was null");
+        }
+
+        groupName = jo.getString("groupName");
+        double r = jo.getDouble("r");
+        double g = jo.getDouble("g");
+        double b = jo.getDouble("b");
+        color = Color.color(r, g, b);
     }
 
 }

@@ -12,6 +12,11 @@ public class ChanceAndCommunityChest extends Square {
         super(SquareType.CHANCEANDCOMMUNITYCHEST);
     }
 
+    public ChanceAndCommunityChest(JSONObject jo) {
+        super(SquareType.CHANCEANDCOMMUNITYCHEST);
+        extractPropertiesFromJson(jo);
+    }
+
     public String getName() {
         return name;
     }
@@ -22,11 +27,23 @@ public class ChanceAndCommunityChest extends Square {
 
     @Override
     public JSONObject getJson() {
-        return null;
+        JSONObject jo = new JSONObject();
+        jo.put("type", "ChanceAndCommunityChest");
+        jo.put("name", name);
+        return jo;
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject json) {
+    public void extractPropertiesFromJson(JSONObject jo) {
+        if (jo == null) {
+            System.out.println("ERROR: JSONObject passed to ChanceAndCommunityChest was null");
+        }
 
+        String type = jo.getString("type");
+        if (!type.equals("ChanceAndCommunityChest")) {
+            System.out.println("ERROR: ChanceAndCommunityChest initialized with wrong type of JSONObject: " + type);
+        }
+
+        name = jo.getString("name");
     }
 }
