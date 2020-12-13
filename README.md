@@ -8,6 +8,11 @@ Yiğit Gürses - 21702746
 Melisa Taşpınar - 21803668  
 Elif Gamze Güliter - 21802870
 
+REPORTS:  
+
+[PROJECT ANALYSIS REPORT(2nd iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/iteration%202%20reports/Iteration%202%20Analysis%20Report.pdf)  
+[PROJECT DESIGN REPORT(2nd iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/pdfs/Design%20Report.pdf)  
+
 [PROJECT ANALYSIS REPORT(1st iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/pdfs/Project%20Analysis%20Report.pdf)  
 [PROJECT DESIGN REPORT(1st iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/pdfs/Design%20Report.pdf)
 
