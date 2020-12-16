@@ -1,4 +1,5 @@
 package sample;
+import javafx.scene.paint.Color;
 import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 
@@ -58,7 +59,7 @@ public class Editor {
 
     }
     // todo -> this is a little problematic
-    public void createColorGroupForProperty(Color color, String name,int index)
+    public void createColorGroupForProperty(Color color, String name, int index)
     {
         ColorGroup c = new ColorGroup(name);
         c.addProperty(((Property)board.squares[index]));
