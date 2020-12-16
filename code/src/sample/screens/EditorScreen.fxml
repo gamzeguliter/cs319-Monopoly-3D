@@ -298,9 +298,24 @@
          </content></DialogPane>
       <DialogPane>
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+               </children></VBox>
          </content>
       </DialogPane>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+      <TextField />
+      <TextField />
+      <TextField />
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <HBox prefHeight="100.0" prefWidth="200.0" />
 
 
    </children>
