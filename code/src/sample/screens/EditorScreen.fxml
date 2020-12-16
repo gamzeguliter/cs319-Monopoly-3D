@@ -274,23 +274,33 @@
             <ButtonType fx:constant="OK" />
          </buttonTypes>
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
                         <TextField />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                     </children></HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="60.0">
                      <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
                         <TextField />
                      </children></HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" />
-                  <TextField />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="140.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Color Group:" />
+                        <Button mnemonicParsing="false" text="Select" />
+                     </children></HBox>
                </children></VBox>
          </content></DialogPane>
+      <DialogPane>
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+         </content>
+      </DialogPane>
 
 
    </children>

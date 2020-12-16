@@ -20,20 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/META-INF/code.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ChanceAndCommunityChest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ChanceAndCommunityChest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Start.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Start.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +104,28 @@
       <option name="project" value="LOCAL" />
       <updated>1608154673000</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fxml file try">
+      <created>1608158369066</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608158369066</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fxml file try">
+      <created>1608158524867</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608158524867</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fxml file try">
+      <created>1608158641679</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1608158641679</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
