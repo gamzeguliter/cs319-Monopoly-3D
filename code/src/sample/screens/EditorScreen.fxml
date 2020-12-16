@@ -276,13 +276,21 @@
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children></HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextField />
+                     </children></HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" />
+                  <TextField />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children></VBox>
          </content></DialogPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <TextField />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 
 
    </children>
