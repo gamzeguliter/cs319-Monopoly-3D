@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="editorScreenAnchor" prefHeight="768.0" prefWidth="1367.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screens.EditorScreen">
+<AnchorPane fx:id="editorScreenAnchor" prefHeight="768.0" prefWidth="1367.0" style="-fx-background-color: rgb(182, 216, 184);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screens.EditorScreen">
    <children>
 
       <GridPane fx:id="editorScreenGrid" layoutX="1.0" layoutY="1.0" prefHeight="768.0" prefWidth="768.0">
@@ -247,28 +247,43 @@
              </StackPane>
          </children>
       </GridPane>
-       <DialogPane fx:id="toggleSquareType" headerText="Select Square Type:" layoutX="400.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
-           <buttonTypes>
-               <ButtonType fx:constant="CANCEL" />
-               <ButtonType fx:constant="NEXT" />
-           </buttonTypes>
-           <header>
-
-           </header>
-           <content>
-               <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                   <children>
-                       <RadioButton mnemonicParsing="false" selected="true" text="Property" toggleGroup="$squareTypeGroup">
-                           <toggleGroup>
-                               <ToggleGroup fx:id="squareTypeGroup" />
-                           </toggleGroup></RadioButton>
-                       <RadioButton mnemonicParsing="false" text="Joker" toggleGroup="$squareTypeGroup" />
-                       <RadioButton mnemonicParsing="false" text="Chance" toggleGroup="$squareTypeGroup" />
-                       <RadioButton mnemonicParsing="false" text="Community Chest" toggleGroup="$squareTypeGroup" />
-                   </children>
-               </VBox>
-           </content></DialogPane>
-       <DialogPane fx:id="propertySquareEdit" headerText="Property Square" layoutX="400.0" layoutY="200.0" prefHeight="400.0" prefWidth="300.0">
+      <DialogPane fx:id="jokerSquareEdit" headerText="Joker Square" layoutX="400.0" layoutY="200.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Name:" />
+                        <TextField style="-fx-font-size: 15;" />
+                     </children>
+                  </HBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Movement:" />
+                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 25;" text="Move ... squares">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="movementGroup" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 25;" text="Wait ... turns" toggleGroup="$movementGroup" />
+                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 25;" text="No movement" toggleGroup="$movementGroup" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Amount:" />
+                        <TextField style="-fx-font-size: 15;" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Money:" />
+                        <TextField style="-fx-font-size: 15;" />
+                     </children>
+                  </HBox>
+               </children></VBox>
+         </content>
+         <buttonTypes>
+            <ButtonType fx:constant="OK" />
+            <ButtonType fx:constant="CANCEL" />
+         </buttonTypes>
+      </DialogPane>
+       <DialogPane fx:id="propertySquareEdit" headerText="Property Square" layoutX="400.0" layoutY="200.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
          <buttonTypes>
             <ButtonType fx:constant="CANCEL" />
             <ButtonType fx:constant="OK" />
@@ -296,33 +311,28 @@
                      </children></HBox>
                </children></VBox>
          </content></DialogPane>
-      <DialogPane>
-         <content>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <TextField />
-                     </children>
-                  </HBox>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                  <RadioButton mnemonicParsing="false" text="RadioButton" />
-                  <RadioButton mnemonicParsing="false" text="RadioButton" />
-                  <RadioButton mnemonicParsing="false" text="RadioButton" />
-               </children></VBox>
-         </content>
-      </DialogPane>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <TextField />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         </children></HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <TextField />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-         </children></HBox>
+       <DialogPane fx:id="toggleSquareType" headerText="Select Square Type:" layoutX="400.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
+           <buttonTypes>
+               <ButtonType fx:constant="CANCEL" />
+               <ButtonType fx:constant="NEXT" />
+           </buttonTypes>
+           <header>
+
+           </header>
+           <content>
+               <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                   <children>
+                       <RadioButton mnemonicParsing="false" selected="true" text="Property" toggleGroup="$squareTypeGroup">
+                           <toggleGroup>
+                               <ToggleGroup fx:id="squareTypeGroup" />
+                           </toggleGroup></RadioButton>
+                       <RadioButton mnemonicParsing="false" text="Joker" toggleGroup="$squareTypeGroup" />
+                       <RadioButton mnemonicParsing="false" text="Chance" toggleGroup="$squareTypeGroup" />
+                       <RadioButton mnemonicParsing="false" text="Community Chest" toggleGroup="$squareTypeGroup" />
+                   </children>
+               </VBox>
+           </content></DialogPane>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 
 
    </children>
