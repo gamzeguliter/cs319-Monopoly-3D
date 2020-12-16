@@ -16,6 +16,7 @@ import sample.squares.ColorGroup;
 import sample.Editor;
 import sample.GameEngine;
 import sample.Results;
+import sample.squares.Property;
 import sample.squares.Square;
 import sample.squares.SquareType;
 
@@ -150,18 +151,31 @@ public class EditorScreen {
                                 Square[] squares = editor.board.getSquares();
 
                                 if(rb == chance && squares[position].getType() != SquareType.CHANCEANDCOMMUNITYCHEST ) {
+                                    // removing property from its ColorGroup's arraylist
+                                    if( squares[position].getType() == SquareType.PROPERTY )
+                                    {
+                                      ColorGroup temp = ((Property) squares[position]).getColorGroup();
+                                      temp.removeProperty((Property)squares[position]);
+                                    }
+
                                     editor.createNewChestCommunity(pos);
                                 }
                                 else if (rb == joker && squares[position].getType() != SquareType.JOKER ){
                                     // todo - > default values for now , can be changed later by the players
-                                    editor.createNewJoker(pos,0,0,0,"Joker");
+                                    // removing property from its ColorGroup's arraylist
+                                    if( squares[position].getType() == SquareType.PROPERTY )
+                                    {
+                                        ColorGroup temp =  ((Property) squares[position]).getColorGroup();
+                                        temp.removeProperty((Property)squares[position]);
+                                    }
 
-                                }
+                                    editor.createNewJoker(pos,0,0,0,"Joker");
+                               }
+
                                 else if (rb == property && squares[position].getType() != SquareType.PROPERTY ){
                                     //todo ->  default values for now , can be changed later by the players
                                     ColorGroup temp = new ColorGroup("temp"); //might be deleted
                                     editor.createNewProperty(pos,"ankara",temp,100,50,80);
-
                                 }
                             }
 

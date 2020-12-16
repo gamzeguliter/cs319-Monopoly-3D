@@ -31,7 +31,7 @@ public class Editor {
 
     /// creates a new Joker square while editing
     public void createNewJoker(int index,int movement, int money,int suspendedTourNo,String name){
-            // default values for now
+        // default values for now
         //todo -> buraya bak geri, name de minor bir sorun olabilir
         board.squares[index] = new Joker(movement, money,suspendedTourNo,name);
     }
@@ -81,7 +81,6 @@ public class Editor {
     }
     public void setJailTimeForJoker(int suspendedTourNo,int index)
     {
-
         ((Joker)board.squares[index]).setSuspendedTourNo(suspendedTourNo);
 
     }
