@@ -3,6 +3,7 @@ package sample;
 import javafx.scene.paint.Color;
 
 public class PropertyInformation {
+    boolean isOwned;
     String name;
     Color color;
     int buyingPrice;
@@ -17,8 +18,11 @@ public class PropertyInformation {
     int houseNo;
     boolean hotel;
     Player owner;
+    int mortgagePrice;
+    int mortgageLiftingPrice;
 
-    public PropertyInformation(String name,
+    public PropertyInformation(boolean isOwned,
+            String name,
             Color color,
             int buyingPrice,
             int rent,
@@ -31,7 +35,9 @@ public class PropertyInformation {
             int hotelPrice,
             int houseNo,
             boolean hotel,
-            Player owner) {
+            Player owner,
+            int mortgagePrice, int mortgageLiftingPrice) {
+        this.isOwned = isOwned;
         this.name = name;
         this.color = color;
         this.buyingPrice = buyingPrice;
@@ -46,5 +52,7 @@ public class PropertyInformation {
         this.houseNo = houseNo;
         this.hotel = hotel;
         this.owner = owner;
+        this.mortgagePrice = mortgagePrice;
+        this.mortgageLiftingPrice = mortgageLiftingPrice;
     }
 }
