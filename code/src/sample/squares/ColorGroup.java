@@ -115,7 +115,6 @@ public class ColorGroup {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to ChanceAndCommunityChest was null");
         }
-
         groupName = jo.getString("groupName");
         double r = jo.getDouble("r");
         double g = jo.getDouble("g");
