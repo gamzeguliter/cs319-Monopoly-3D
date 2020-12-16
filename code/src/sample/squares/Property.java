@@ -1,17 +1,30 @@
 package sample.squares;
 
+import javafx.scene.paint.Color;
 import org.json.JSONObject;
 import sample.Board;
 import sample.Player;
+import sample.PropertyInformation;
+
+/* TODO IMPORTANT ISSUE:
+When storing property in file system, only store name, colorgroup, buying price
+when reading from file and creating square, give the rent and mortgage rate of the board!!!!!
+ */
 
 public class Property extends Square {
 
     // properties
     private String name;
     private int buyingPrice;
-    private int sellingPrice;
     private int mortgagePrice;
-    private int housePrice;
+    private int mortgageLiftingPrice;
+    int rentOneHouse;
+    int rentTwoHouses;
+    int rentThreeHouses;
+    int rentFourHouses;
+    int rentHotel;
+    int housePrice;
+    int hotelPrice;
     private int rent;
     private int noOfHouses;
     private boolean hotel;
@@ -21,20 +34,20 @@ public class Property extends Square {
     private ColorGroup colorGroup;
     private Board board;
 
-    public Property(String name, ColorGroup colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice, int housePrice, int rent) {
+    public Property(String name, ColorGroup colorGroup, int buyingPrice, int rentRate, int mortgageRate) {
         super(SquareType.PROPERTY);
         this.name = name;
         this.colorGroup = colorGroup;
         this.buyingPrice = buyingPrice;
-        this.sellingPrice = sellingPrice;
-        this.mortgagePrice = mortgagePrice;
-        this.housePrice = housePrice;
-        this.rent = rent;
+        this.mortgagePrice = buyingPrice * mortgageRate / 100;
+        this.mortgageLiftingPrice = mortgagePrice + mortgagePrice * 10 / 100;
+        this.rent = buyingPrice * rentRate / 100;
         noOfHouses = 0;
         hotel = false;
         isOwned = false;
         isMortgaged = false;
         owner = null;
+        setPricesAndRent();
     }
 
     public Property(JSONObject jo, Board board) {
@@ -52,6 +65,11 @@ public class Property extends Square {
         return colorGroup;
     }
 
+    public void setColorGroup(ColorGroup group) {
+        this.colorGroup = group;
+    }
+
+
     //TODO buy house, sell house gibi şeyler -- gameengine?
     //TODO sell property make isOwned false set owner to null
     public boolean setOwner(Player newOwner) {
@@ -65,6 +83,7 @@ public class Property extends Square {
             return true;
         }
     }
+
     public Player getOwner() {
         return owner;
     }
@@ -85,68 +104,28 @@ public class Property extends Square {
         this.buyingPrice = buyingPrice;
     }
 
-    public int getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(int sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public int getMortgagePrice() {
-        return mortgagePrice;
-    }
-
-    public void setMortgagePrice(int mortgagePrice) {
-        this.mortgagePrice = mortgagePrice;
-    }
-
     public int getHousePrice() {
         return housePrice;
-    }
-
-    public void setHousePrice(int housePrice) {
-        this.housePrice = housePrice;
     }
 
     public int getRent() {
         return rent;
     }
 
-    public void setRent(int rent) {
-        this.rent = rent;
-    }
-
     public int getNoOfHouses() {
         return noOfHouses;
-    }
-
-    public void setNoOfHouses(int noOfHouses) {
-        this.noOfHouses = noOfHouses;
     }
 
     public boolean isHotel() {
         return hotel;
     }
 
-    public void setHotel(boolean hotel) {
-        this.hotel = hotel;
-    }
-
     public boolean isOwned() {
         return isOwned;
     }
 
-    public void setOwned(boolean owned) {
-        isOwned = owned;
-    }
-
     public boolean isMortgaged() {
         return isMortgaged;
-    }
-
-    public void setMortgaged(boolean mortgaged) {
-        isMortgaged = mortgaged;
     }
 
     public boolean addHouse() {
@@ -173,6 +152,55 @@ public class Property extends Square {
         }
     }
 
+    private void setPricesAndRent() {
+        int rentOneHouse = rent * 5;
+        int rentTwoHouses = rent * 15;
+        int rentThreeHouses = rent * 40;
+        int rentFourHouses  = rent * 50;
+        int rentHotel = rent * 65;
+        int housePrice = rent * 10;
+        int hotelPrice = 5 * housePrice;
+    }
+
+    public PropertyInformation propertyInformation() {
+        PropertyInformation info = new PropertyInformation(isOwned, name, colorGroup.getColor(),
+                buyingPrice, rent, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses, rentHotel,
+                housePrice, hotelPrice, noOfHouses, hotel, owner, mortgagePrice, mortgageLiftingPrice);
+        return info;
+    }
+
+    public int getMortgagePrice() {
+        return mortgagePrice;
+    }
+
+    public int getMortgageLiftingPrice() {
+        return mortgageLiftingPrice;
+    }
+
+    public int getRentOneHouse() {
+        return rentOneHouse;
+    }
+
+    public int getRentTwoHouses() {
+        return rentTwoHouses;
+    }
+
+    public int getRentThreeHouses() {
+        return rentThreeHouses;
+    }
+
+    public int getRentFourHouses() {
+        return rentFourHouses;
+    }
+
+    public int getRentHotel() {
+        return rentHotel;
+    }
+
+    public int getHotelPrice() {
+        return hotelPrice;
+    }
+
     @Override
     public JSONObject getJson() {
         JSONObject jo = new JSONObject();
@@ -180,7 +208,6 @@ public class Property extends Square {
         jo.put("name", name);
         jo.put("groupName", colorGroup.getGroupName());
         jo.put("buyingPrice", buyingPrice);
-        jo.put("sellingPrice", sellingPrice);
         jo.put("mortgagePrice", mortgagePrice);
         jo.put("housePrice", housePrice);
         jo.put("rent", rent);
@@ -201,7 +228,6 @@ public class Property extends Square {
         this.name = jo.getString("name");
         this.colorGroup = board.getColorGroup(jo.getString("groupName"));
         this.buyingPrice = jo.getInt("buyingPrice");
-        this.sellingPrice = jo.getInt("sellingPrice");
         this.mortgagePrice = jo.getInt("mortgagePrice");
         this.housePrice = jo.getInt("housePrice");
         this.rent = jo.getInt("rent");

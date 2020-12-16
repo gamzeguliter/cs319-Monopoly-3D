@@ -12,14 +12,12 @@ public class ColorGroup {
     private String groupName;
     private ArrayList<Property> properties;
     Color color;
-    private boolean improvable;
 
     public ColorGroup(String groupName) {
         this.groupName = groupName;
         properties = new ArrayList<Property>();
         // TODO: add a way to properly initialize color
         color = Color.rgb(100,100,100);
-        improvable = false;
     }
 
     public ColorGroup(JSONObject jo) {
@@ -27,6 +25,8 @@ public class ColorGroup {
     }
 
     public void addProperty(Property property) {
+        property.getColorGroup().removeProperty(property);
+        property.setColorGroup(this);
         properties.add(property);
     }
 
@@ -115,7 +115,6 @@ public class ColorGroup {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to ChanceAndCommunityChest was null");
         }
-
         groupName = jo.getString("groupName");
         double r = jo.getDouble("r");
         double g = jo.getDouble("g");

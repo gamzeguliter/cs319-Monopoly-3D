@@ -18,20 +18,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         //Stage gameStage, editStage;
         //Creating a Scene by passing the group object, height and width
-
-        //ScreenBehaviour menuScreen = new MenuScreen();
-        //ScreenBehaviour gameScreen = new GameScreen();
+/*
+        ScreenBehaviour menuScreen = new MenuScreen();
+        ScreenBehaviour gameScreen = new GameScreen();
 
         /*ScreenBehaviour menuScreen = new MenuScreen();
         ScreenBehaviour menuScreen = new MenuScreen();*/
-
-        //Screen currentScreen = new Screen(menuScreen);
-        //if(((MenuScreen)menuScreen).clickedPlay()) {
-        //    currentScreen.setBehaviour(gameScreen);
-        //}
+/*
+        Screen currentScreen = new Screen(menuScreen);
+        if(((MenuScreen)menuScreen).clickedPlay()) {
+            currentScreen.setBehaviour(gameScreen);
+        }*/
         //currentScreen.setBehaviour(gameScreen);
-        //primaryStage.setScene(currentScreen.drawScreen());
-
+   /*     primaryStage.setScene(currentScreen.drawScreen());
+*/
 
         GameScreen gameScreen = new GameScreen();
         Scene gameScene = gameScreen.getScene();

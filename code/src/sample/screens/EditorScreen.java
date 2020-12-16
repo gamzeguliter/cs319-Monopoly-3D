@@ -16,6 +16,9 @@ import sample.squares.ColorGroup;
 import sample.Editor;
 import sample.GameEngine;
 import sample.Results;
+import sample.squares.Property;
+import sample.squares.Square;
+import sample.squares.SquareType;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
@@ -25,6 +28,9 @@ public class EditorScreen {
     private Scene scene;
     GridPane boardPane;
     Editor editor;
+    Text[] playerTexts;
+    Text turnText;
+    Text diceText;
     GridPane recs;
     GameEngine gameEngine;
     int position;
@@ -135,20 +141,36 @@ public class EditorScreen {
                             public void changed(ObservableValue<? extends Toggle> ob,
                                                 Toggle o, Toggle n)
                             {
+                                ///  todo -> check the type control codes
                                 RadioButton rb = (RadioButton)group.getSelectedToggle();
-                                if(rb == chance) {
+                                Square[] squares = editor.board.getSquares();
+
+                                if(rb == chance && squares[position].getType() != SquareType.CHANCEANDCOMMUNITYCHEST ) {
+                                    // removing property from its ColorGroup's arraylist
+                                    if( squares[position].getType() == SquareType.PROPERTY )
+                                    {
+                                      ColorGroup temp = ((Property) squares[position]).getColorGroup();
+                                      temp.removeProperty((Property)squares[position]);
+                                    }
+
                                     editor.createNewChestCommunity(pos);
                                 }
-                                else if (rb == joker){
+                                else if (rb == joker && squares[position].getType() != SquareType.JOKER ){
                                     // todo - > default values for now , can be changed later by the players
-                                    editor.createNewJoker(pos,0,0,0,"Joker");
+                                    // removing property from its ColorGroup's arraylist
+                                    if( squares[position].getType() == SquareType.PROPERTY )
+                                    {
+                                        ColorGroup temp =  ((Property) squares[position]).getColorGroup();
+                                        temp.removeProperty((Property)squares[position]);
+                                    }
 
-                                }
-                                else if (rb == property){
+                                    editor.createNewJoker(pos,0,0,0,"Joker");
+                               }
+
+                                else if (rb == property && squares[position].getType() != SquareType.PROPERTY ){
                                     //todo ->  default values for now , can be changed later by the players
                                     ColorGroup temp = new ColorGroup("temp"); //might be deleted
-                                    editor.createNewProperty(pos,"ankara",temp,100,100,180,50,50);
-
+                                    editor.createNewProperty(pos,"ankara",temp,100,50,80);
                                 }
                             }
 
@@ -207,7 +229,7 @@ public class EditorScreen {
 
         Label label2 = new Label("Price:");
         label2.setFont(font);
-        TextField propertyPrice = new TextField();
+        TextField propertyPrice = new TextField("0");
         propertyPrice.setFont(fonts);
         propertyPrice.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         propertyPrice.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(2),BorderStroke.MEDIUM)));
@@ -283,13 +305,14 @@ public class EditorScreen {
                 ///  getting the user inputs for the name and the color of the color group
                 Optional<Pair<String, String>> result = addColorGroupDialog.showAndWait();
 
+
                 // TODO TODO TODO -> color group !!!!!!!!!!
                 result.ifPresent(pair -> {
+
                     System.out.println("name of the color group=" + colorGroupName.getText());
                     Color c = colorPicker.getValue();
-                    System.out.println("New Color's RGB = "+c.getRed()+" "+c.getGreen()+" "+c.getBlue());
-
-
+                    editor.createColorGroupForProperty(c,colorGroupName.getText(),position );
+                    System.out.println("New Color's "+colorPicker.getValue()+"");
                 });
 
             });
@@ -326,12 +349,15 @@ public class EditorScreen {
 
         mainPropertyDialog.setResultConverter(button -> {
             if (button == ButtonType.OK) {
-                return new Pair<>(propertyName.getText(), propertyPrice.getText());
+                Object[] results = new Object[2];
+                results[0]= propertyName.getText();
+                results[1] = propertyPrice.getText();
+                return results;
             }
             return null;
         });
 
-        Optional<Pair<String, String>> result = mainPropertyDialog.showAndWait();
+        Optional<Object> result = mainPropertyDialog.showAndWait();
 
         result.ifPresent(pair -> {
             System.out.println("name of the property=" + propertyName.getText() + ", amount of the price=" + propertyPrice.getText());
@@ -339,6 +365,7 @@ public class EditorScreen {
             // todo ->  processing user input : color group is left, checking the corner cases for the unchanged boxes
             editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
             editor.setNameForProperty(propertyName.getText() , position);
+
 
         });
 
@@ -414,26 +441,31 @@ public class EditorScreen {
         /// getting user input
         jokerMainDialog.setResultConverter((button) -> {
             if (button == ButtonType.OK) {
-                return new Results(jokerSquareName.getText(), Integer.parseInt(actionAmount.getText()),
-                        Integer.parseInt(money.getText()));
+                // todo pairin içine pair
+                Object[] results = new Object[3];
+                results[0]= jokerSquareName.getText();
+                results[1] =Integer.parseInt(actionAmount.getText());
+                results[2]= Integer.parseInt(money.getText());
+                return results;
             }
             return null;
         });
 
-        Optional<Results> optionalResult = jokerMainDialog.showAndWait();
-        optionalResult.ifPresent((Results results) -> {
+        Optional<Object [] > optionalResult = jokerMainDialog.showAndWait();
+        optionalResult.ifPresent(results -> {
             System.out.println(
-                    results.name + " " + results.amount + " " + results.money); // todo -> ratio buttons are left out
+                    results[0] + " " + results[1] + " " + results[2]); // todo -> ratio buttons are left out
 
             // todo ->  processing user input
-            editor.setNameForJoker(results.name,position);
-            editor.setMoneyForJoker(results.money,position);
+            editor.setNameForJoker((String)results[0],position);
+            editor.setMoneyForJoker((Integer)results[2],position);
             if(move.isSelected()){
-                editor.setMovementForJoker(results.amount,position);
+                editor.setMovementForJoker((Integer)results[1],position);
             }
             if(wait.isSelected()){
-                editor.setSuspentionForJoker(results.amount,position);
+                editor.setJailTimeForJoker((Integer)results[1],position);
             }
+
 
         });
         //jokerMainDialog.show();
