@@ -47,11 +47,7 @@ public class Editor {
         return (Property)board.squares[index];
      }
 
-     // todo  rent is not taken in the user input
-   /* public void setRentForProperty(int rent,int index ) {
-        ((Property)board.squares[index]).setRent(rent);
 
-    }*/
     public void setNameForProperty(String name , int index){
         ((Property)board.squares[index]).setName(name);
     }
@@ -65,24 +61,17 @@ public class Editor {
     public void createColorGroupForProperty(Color color, String name,int index)
     {
         ColorGroup c = new ColorGroup(name);
-        board.colorGroups.add(c);
-        ColorGroup temp = ((Property)board.squares[index]).getColorGroup();
-        temp.removeProperty((Property)board.squares[index]);
-        ((Property) board.squares[index]).setColorGroup(c) ;
+        c.addProperty(((Property)board.squares[index]));
         board.colorGroups.add(c);
 
     }
-
-
     public void setNameForJoker(String name , int index){
         ((Joker)board.squares[index]).setName(name);
     }
 
     public void setMovementForJoker(int movement,int index ) {
         ((Joker)board.squares[index]).setMovement(movement);
-
     }
-
     public void setMoneyForJoker(int money,int index)
     {
 
@@ -97,13 +86,6 @@ public class Editor {
     }
 
 
-
-/// todo
-    public void setColorGroupForProperty(String name,int index)
-    {
-
-
-    }
 
 
 }
