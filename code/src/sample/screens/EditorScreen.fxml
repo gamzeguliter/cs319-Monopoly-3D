@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
 <AnchorPane fx:id="editorScreenAnchor" prefHeight="768.0" prefWidth="1367.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.screens.EditorScreen">
    <children>
-      <Group fx:id="editorScreenGroup" />
+
       <GridPane fx:id="editorScreenGrid" layoutX="1.0" layoutY="1.0" prefHeight="768.0" prefWidth="768.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="90.0" />
@@ -247,19 +246,36 @@
              </StackPane>
          </children>
       </GridPane>
-      <DialogPane headerText="Select Square Type:" layoutX="400.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
+       <DialogPane fx:id="toggleSquareType" headerText="Select Square Type:" layoutX="400.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
+           <buttonTypes>
+               <ButtonType fx:constant="CANCEL" />
+               <ButtonType fx:constant="NEXT" />
+           </buttonTypes>
+           <header>
+
+           </header>
+           <content>
+               <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                   <children>
+                       <RadioButton mnemonicParsing="false" selected="true" text="Property" toggleGroup="$squareTypeGroup">
+                           <toggleGroup>
+                               <ToggleGroup fx:id="squareTypeGroup" />
+                           </toggleGroup></RadioButton>
+                       <RadioButton mnemonicParsing="false" text="Joker" toggleGroup="$squareTypeGroup" />
+                       <RadioButton mnemonicParsing="false" text="Chance" toggleGroup="$squareTypeGroup" />
+                       <RadioButton mnemonicParsing="false" text="Community Chest" toggleGroup="$squareTypeGroup" />
+                   </children>
+               </VBox>
+           </content></DialogPane>
+       <DialogPane fx:id="propertySquareEdit" headerText="Property Square" layoutX="400.0" layoutY="200.0" prefHeight="400.0" prefWidth="300.0">
          <buttonTypes>
             <ButtonType fx:constant="CANCEL" />
             <ButtonType fx:constant="OK" />
          </buttonTypes>
-         <header>
-            
-         </header></DialogPane>
-      <Group />
-      <RadioButton mnemonicParsing="false" text="RadioButton" />
-      <RadioButton mnemonicParsing="false" text="RadioButton" />
-      <RadioButton mnemonicParsing="false" text="RadioButton" />
-      <RadioButton mnemonicParsing="false" text="RadioButton" />
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+         </content></DialogPane>
+
 
    </children>
 </AnchorPane>

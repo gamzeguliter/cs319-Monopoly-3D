@@ -19,10 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="">
+    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/code.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/META-INF/code.kotlin_module" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Board.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/FileManager.class" afterDir="false" />
@@ -32,29 +31,53 @@
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Joker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Start.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Start.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ChanceAndCommunityChest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/ColorGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Joker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Property.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Start.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../diagrams/.Analysis-Diagrams.vpp.lck" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gitignore.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../gitignore.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Pull.Settings">
     <option name="BRANCH" value="master" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1lbod6UJKDZAMBTUGwkyrDlaRg9" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <module name="code" />
+      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -65,6 +88,35 @@
       <option name="presentableId" value="Default" />
       <updated>1607807319568</updated>
     </task>
+    <task id="LOCAL-00001" summary="fxml file try">
+      <created>1608121080283</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1608121080283</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fxml file try">
+      <created>1608142629945</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1608142629945</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fxml file try">
+      <created>1608152808617</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1608152808617</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fxml file try">
+      <created>1608154673000</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608154673000</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -77,5 +129,48 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fxml file try" />
+    <option name="LAST_COMMIT_MESSAGE" value="fxml file try" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="384" y="112" key="#Project_Structure" timestamp="1608071284653">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state x="384" y="112" key="#Project_Structure/0.25.1792.1021@0.25.1792.1021" timestamp="1608071284653" />
+    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608071546931">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1021@0.25.1792.1021" timestamp="1608071546931" />
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom" timestamp="1608154676966">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676966" />
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742648" />
+    <state width="1750" height="275" key="GridCell.Tab.0.center" timestamp="1608154676965">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
+    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
+    <state width="1750" height="275" key="GridCell.Tab.0.left" timestamp="1608154676965">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
+    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
+    <state width="1750" height="275" key="GridCell.Tab.0.right" timestamp="1608154676965">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
+    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
+    <state x="384" y="112" key="SettingsEditor" timestamp="1608071357786">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state x="384" y="112" key="SettingsEditor/0.25.1792.1021@0.25.1792.1021" timestamp="1608071357786" />
+    <state x="644" y="250" key="git4idea.branch.GitSmartOperationDialog" timestamp="1608142618337">
+      <screen x="0" y="25" width="1792" height="1023" />
+    </state>
+    <state x="644" y="250" key="git4idea.branch.GitSmartOperationDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608142618337" />
   </component>
 </project>

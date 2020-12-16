@@ -24,16 +24,9 @@ public class EditorScreen {
     // properties
     private Scene scene;
     GridPane boardPane;
-     Editor editor ;
-    Text[] playerTexts;
-    Text turnText;
-    Text diceText;
+    Editor editor;
     GridPane recs;
-    Button btnRollDice;
-    Button btnEndTurn;
-    Button btnBuy;
     GameEngine gameEngine;
-    private boolean diceRolled;
     int position;
 
     Font font = Font.font("Source Sans Pro", 20);
@@ -42,7 +35,7 @@ public class EditorScreen {
     // constructors
     public EditorScreen() throws FileNotFoundException {
         editor = new Editor();
-        position =0;
+        position = 0;
         gameEngine = new GameEngine();
         setScene();
     }
@@ -52,8 +45,7 @@ public class EditorScreen {
         Group group = new Group();
         int width = 1366;
         int height = 768;
-         recs = getTiles();
-
+        recs = getTiles();
 
         group.getChildren().add(recs);
         scene = new Scene(group, width, height);
@@ -148,7 +140,6 @@ public class EditorScreen {
                                     editor.createNewChestCommunity(pos);
                                 }
                                 else if (rb == joker){
-
                                     // todo - > default values for now , can be changed later by the players
                                     editor.createNewJoker(pos,0,0,0,"Joker");
 
