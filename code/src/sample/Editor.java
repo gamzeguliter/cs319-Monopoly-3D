@@ -2,9 +2,14 @@ package sample;
 import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 
+import java.awt.*;
+
 public class Editor {
 
-    private Board board;
+    public Board board;
+    private int rentRate;
+    private int mortgageRent;
+    private String  currency;
 
     public Editor(){
      board = new Board();
@@ -20,9 +25,7 @@ public class Editor {
 
     /// creates a new Chest and Community square while editing
     public void createNewChestCommunity(int index){
-
              board.squares[index] = new ChanceAndCommunityChest();
-
     }
 
     /// creates a new Joker square while editing
@@ -33,40 +36,40 @@ public class Editor {
     }
 
    /// creates a new property square while editing
-
-    public void createNewProperty(int index, String name, ColorGroup colorGroup, int buyingPrice, int sellingPrice, int mortgagePrice,
-                                  int housePrice, int rent) {
+    public void createNewProperty(int index, String name, ColorGroup colorGroup, int buyingPrice,int rentRate, int mortgageRate) {
 
         //todo -> buraya bak geri, name de minor bir sorun olabilir
-        board.squares[index] = new Property(name, colorGroup, buyingPrice, sellingPrice, mortgagePrice,
-                housePrice, rent);
-
+        board.squares[index] = new Property(name, colorGroup, buyingPrice,rentRate,mortgageRate);
         colorGroup.addProperty((Property) board.squares[index]);
-
     }
-
-
     // Below methods are going to be called in the editor screen in order to process user input
      public Property getProperty(int index){
         return (Property)board.squares[index];
      }
 
      // todo  rent is not taken in the user input
-    public void setRentForProperty(int rent,int index ) {
+   /* public void setRentForProperty(int rent,int index ) {
         ((Property)board.squares[index]).setRent(rent);
 
-    }
+    }*/
     public void setNameForProperty(String name , int index){
         ((Property)board.squares[index]).setName(name);
     }
 
     public void setBuyingPriceForProperty(int price,int index ) {
-        ((Property)board.squares[index]).setBuyingPrice(price);
+        if(board.squares[index].getType() == SquareType.PROPERTY)
+            ((Property)(board.squares[index])).setBuyingPrice(price);
 
     }
     // todo -> this is a little problematic
-    public void setColorGroupForProperty()
+    public void createColorGroupForProperty(Color color, String name,int index)
     {
+        ColorGroup c = new ColorGroup(name);
+        board.colorGroups.add(c);
+        ColorGroup temp = ((Property)board.squares[index]).getColorGroup();
+        temp.removeProperty((Property)board.squares[index]);
+        ((Property) board.squares[index]).setColorGroup(c) ;
+        board.colorGroups.add(c);
 
     }
 
@@ -86,7 +89,7 @@ public class Editor {
         ((Joker)board.squares[index]).setMoney(money);
 
     }
-    public void setSuspentionForJoker(int suspendedTourNo,int index)
+    public void setJailTimeForJoker(int suspendedTourNo,int index)
     {
 
         ((Joker)board.squares[index]).setSuspendedTourNo(suspendedTourNo);

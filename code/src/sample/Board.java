@@ -81,12 +81,12 @@ public class Board {
             else if(i % 4 == 1)
                 squares[i] = new ChanceAndCommunityChest();
             else if (i % 4 == 2) {
-                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(0), 100, 100, 180, 50, 10);
+                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(0), 100, 80, 50);
                 squares[i] = newProp;
                 colorGroups.get(0).addProperty(newProp);
             }
             else {
-                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(1), 100, 100, 180, 50, 10);
+                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(1), 100, 80, 50);
                 squares[i] = newProp;
                 colorGroups.get(1).addProperty(newProp);
             }
