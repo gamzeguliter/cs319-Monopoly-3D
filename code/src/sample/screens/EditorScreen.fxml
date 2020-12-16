@@ -247,6 +247,19 @@
              </StackPane>
          </children>
       </GridPane>
-      <DialogPane />
+      <DialogPane headerText="Select Square Type:" layoutX="400.0" layoutY="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0">
+         <buttonTypes>
+            <ButtonType fx:constant="CANCEL" />
+            <ButtonType fx:constant="OK" />
+         </buttonTypes>
+         <header>
+            
+         </header></DialogPane>
+      <Group />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+      <RadioButton mnemonicParsing="false" text="RadioButton" />
+
    </children>
 </AnchorPane>
