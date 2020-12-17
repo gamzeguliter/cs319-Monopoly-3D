@@ -3,88 +3,173 @@ package sample;
 import java.util.ArrayList;
 
 public class CardDeck {
-    //todo
-    /* card array
-    * initialize etmek için chance prompt + action arrays
-    * ve chest prompt + action arrays
-    * */
-
-    //chance action -- [0, 1, 2]
-    //action["money to user, money to all users]
-    /* 0-- para çek oyuncudan
-    1-- para ver
-    2-- her oyuncadan para çek ve şu ankine ver
-    3--
-
-    /*
-    prompt array: "Go back x spaces", --> go back 4 spaces
-    action 1,
-     */
-
-   /* chest action -- [ 0, 1, 3]
-     */
+   
     Card[] cards;
     String[] chanceActions;
-    String[]  chancePrompts;
+    String[] chancePrompts;
+
+    String[] chestPrompts;
+    String[] chestActions;
     String place;
-    int amount ;
+    int amount;
 
     public CardDeck() {
         cards = new Card[16];
-        chanceActions = new String[9];
+        chanceActions = new String[10];
         amount = 0;
-        chanceActions[0] = "go to a place";
-        chanceActions[1] = "go to jail";
-        chanceActions[2] = "get out of jail";
-        chanceActions[3] = "go to nearest";
-        chanceActions[4] = "earn x money";
-        chanceActions[5] = "go back x places";
-        chanceActions[6] = "pay money with house";
-        chanceActions[7] = "pay money";
-        chanceActions[8] = "pay each player";
 
-        chancePrompts = new String[16];
-        chancePrompts[0] = "Advance to Go";
-        chancePrompts[1] = "Advance to Illinois Ave";
-        chancePrompts[2] = "Advance to St. Charles Place";
-        chancePrompts[3] = "Advance token to nearest Utility.";
-        chancePrompts[4] = "Advance token to the nearest  ";
-        chancePrompts[5] = "Bank pays you dividend of $50";
-        chancePrompts[6] = "Get out of Jail Free. ";
-        chancePrompts[7] = "Go Back "+ amount+ "Spaces"; /// will be changed
-        chancePrompts[8] = "Go to Jail. Go directly to Jail.";
-        chancePrompts[9] = "Make general repairs on all your property: For each house pay $25, For each hotel {pay} $100";
-        chancePrompts[10] = "Take a trip to Reading Railroad "; // will be changed
-        chancePrompts[11] = "Take a walk on the Boardwalk. Advance token to Boardwalk."; // will be changed
-        chancePrompts[12] = "You have been elected Chairman of the Board. Pay each player $50.";
-        chancePrompts[13] = "Your building loan matures. Receive" +amount ;
-        chancePrompts[14] = "You have won a crossword competition. Collect "+ amount ;
-        chancePrompts[15] = "pay money";
+        //Initializing Chance Prompts and Actions
+        chanceActions[0] = "Go to a place";
+        chanceActions[1] = "Go to jail";
+        chanceActions[2] = "Get out of jail";
+        chanceActions[3] = "Go to nearest";
+        chanceActions[4] = "Earn money";
+        chanceActions[5] = "Go back places";
+        chanceActions[6] = "Pay money for house and hotel";
+        chanceActions[7] = "Pay money";
+        chanceActions[8] = "Pay each player";
+        chanceActions[9] = "Go to go";
+
+        chancePrompts = new String[10];
+
+        chancePrompts[0] = "Go to a place";
+        chancePrompts[1] = "Go to jail";
+        chancePrompts[2] = "Get out of jail";
+        chancePrompts[3] = "Go to nearest x ";
+        chancePrompts[4] = "Earn x money";
+        chancePrompts[5] = "Go back x places";
+        chancePrompts[6] = "Pay money for house and hotel";
+        chancePrompts[7] = "Pay x money";
+        chancePrompts[8] = "Pay x each player";
+        chancePrompts[9] = "Go to Go";
+
+        //Initializing Chest Prompts and Actions
+
+        chestPrompts = new String[7];
+        chestPrompts[0] = "Advance to Go";
+        chestPrompts[1] = "Pay x ";
+        chestPrompts[2] = "Earn x from each player.";
+        chestPrompts[3] = "Earn x";
+        chestPrompts[4] = "Get out of Jail Free. ";
+        chestPrompts[5] = "For each house pay x, For each hotel y ";
+        chestPrompts[6] = "Go to Jail. Go directly to Jail.";
 
 
-        /*ChancePrompt
-        chestprompt
-        chanceactions
-        promptactions
-         */
+        chestActions = new String[7];
+        chestActions[0] = "Advance to Go";
+        chestActions[1] = "Pay money";
+        chestActions[2] = "Earn money from each player ";
+        chestActions[3] = "Earn money";
+        chestActions[4] = "Get out of jail";
+        chestActions[5] = "Pay money for house and hotel";
+        chestActions[6] = "Go to jail";
 
     }
 
     public void generateChanceCardDeck() {
-        //for loop -- (16)
-        /*
-        random number
-        Card card = new Card(prompt[rand], action[rand], amount sayı)
-        cards[i] = card
-         */
+        for (int i = 0; i < 16; i++) {
+            Card card;
+            if (i == 0) {
+                // go to go
+                amount = ((int) (Math.random() * (4 - 1))) + 1;
+                card = new Card(chancePrompts[9], chanceActions[9], amount);
+                cards[i] = card;
+            }
+            if (i == 1 || i == 2 || i == 11 || i == 12) {
+                // go to  a special place
+                amount = ((int) (Math.random() * (4 - 1))) + 1;
+                card = new Card(chancePrompts[0], chanceActions[0], amount);
+                cards[i] = card;
+            }
+
+            if (i == 3 || i == 4) {
+                //go to nearest x
+                amount = ((int) (Math.random() * (4 - 1))) + 1;
+                card = new Card(chancePrompts[3], chanceActions[3], amount);
+                cards[i] = card;
+            }
+            if (i == 5 || i == 15 || i == 6 || i == 14) { // 6 is jail
+                //earn money
+                amount = ((int) (Math.random() * (100 - 1))) + 1;
+                card = new Card(chancePrompts[4], chanceActions[4], amount);
+                cards[i] = card;
+            }
+
+            if (i == 7) {
+                //go back x spaces
+                amount = ((int) (Math.random() * (4 - 1))) + 1;
+                card = new Card(chancePrompts[5], chanceActions[5], amount);
+                cards[i] = card;
+            }
+
+            if (i == 9) {
+                // fay for houıse and hotel
+                amount = ((int) (Math.random() * (10 - 1))) + 1;
+                card = new Card(chancePrompts[6], chanceActions[6], amount);
+                cards[i] = card;
+            }
+
+            if (i == 10 || i == 8) {
+                //pay money
+                amount = ((int) (Math.random() * (20 - 1))) + 1;
+                card = new Card(chancePrompts[7], chanceActions[7], amount);
+                cards[i] = card;
+            }
+            if (i == 13) {
+                //pay each player
+                amount = ((int) (Math.random() * (10 - 1))) + 1;
+                card = new Card(chancePrompts[8], chanceActions[8], amount);
+                cards[i] = card;
+            }
+
+
+        }
+
+
     }
 
     public void generateChestCardDeck() {
 
-    }
+        for (int i = 0; i < 16; i++) {
+            Card card;
+            if (i == 0) {
+                // go to go
+                amount = ((int) (Math.random() * (4 - 1))) + 1;
+                card = new Card(chestPrompts[0], chestActions[0], amount);
+                cards[i] = card;
+            }
+            if (i == 1 || i == 3 || i == 7 || i == 8 || i == 10 || i == 13 || i == 15 || i == 16 ) {// 5 is the jail can be changed
+                // earn money
+                amount = ((int) (Math.random() * (100 - 1))) + 1;
+                card = new Card(chestPrompts[3], chestActions[3], amount);
+                cards[i] = card;
+            }
 
-    public Card drawCard() {
-        return null;
+            if (i == 2 || i == 11|| i ==12 || i ==4 ) { // 4  is the jail , can be changed
+                // pay money
+                amount = ((int) (Math.random() * (50 - 1))) + 1;
+                card = new Card(chestPrompts[1], chestActions[1], amount);
+                cards[i] = card;
+            }
+            if (i == 6 || i == 9  ) {
+                // earn money from each player
+                amount = ((int) (Math.random() * (20 - 1))) + 1;
+                card = new Card(chestPrompts[2], chestActions[2], amount);
+                cards[i] = card;
+            }
+            if (i == 14 ) {
+                // pay for houses and hotels
+                amount = ((int) (Math.random() * (30 - 1))) + 1;
+                card = new Card(chestPrompts[5], chestActions[5], amount);
+                cards[i] = card;
+            }
+
+
+
+        }}
+
+        public Card drawCard () {
+            return null;
+        }
     }
-}
 
