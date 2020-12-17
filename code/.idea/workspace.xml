@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -215,10 +212,26 @@
     </state>
     <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
     <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
+    <state x="179" y="111" key="MergeDialog" timestamp="1608163193165">
+      <screen x="0" y="25" width="1792" height="1023" />
+    </state>
+    <state x="179" y="111" key="MergeDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608163193165" />
+    <state x="534" y="299" key="MultipleFileMergeDialog" timestamp="1608163193214">
+      <screen x="0" y="25" width="1792" height="1023" />
+    </state>
+    <state x="534" y="299" key="MultipleFileMergeDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608163193214" />
     <state x="384" y="112" key="SettingsEditor" timestamp="1608071357786">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
     <state x="384" y="112" key="SettingsEditor/0.25.1792.1021@0.25.1792.1021" timestamp="1608071357786" />
+    <state x="595" y="296" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1608163126181">
+      <screen x="0" y="25" width="1792" height="1023" />
+    </state>
+    <state x="595" y="296" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.25.1792.1023@0.25.1792.1023" timestamp="1608163126181" />
+    <state x="496" y="270" key="Vcs.Push.Dialog.v2" timestamp="1608163364747">
+      <screen x="0" y="25" width="1792" height="1023" />
+    </state>
+    <state x="496" y="270" key="Vcs.Push.Dialog.v2/0.25.1792.1023@0.25.1792.1023" timestamp="1608163364747" />
     <state x="644" y="250" key="git4idea.branch.GitSmartOperationDialog" timestamp="1608142618337">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
