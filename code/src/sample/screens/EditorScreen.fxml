@@ -346,17 +346,33 @@
             <ButtonType fx:constant="CANCEL" />
             <ButtonType fx:constant="OK" />
          </buttonTypes>
-       </DialogPane>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <ComboBox prefWidth="150.0" />
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button mnemonicParsing="false" text="+" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Color Group" />
+                  <ComboBox prefHeight="33.0" prefWidth="258.0" promptText="Select color..." style="-fx-font-size: 20;" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="+" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Color Group" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-         </children></VBox>
+            </VBox>
+         </content>
+       </DialogPane>
+       <DialogPane fx:id="addColorGroup" layoutX="400.0" layoutY="200.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
+       <header>
+           <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="New Color Groups" />
+       </header>
+       </DialogPane>
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <ColorPicker />
+      <TextField />
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 
    </children>
 </AnchorPane>
