@@ -12,6 +12,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.Player;
 import sample.squares.ColorGroup;
 import sample.Editor;
 import sample.GameEngine;
@@ -21,22 +22,14 @@ import sample.squares.Square;
 import sample.squares.SquareType;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class EditorScreen {
     // properties
     private Scene scene;
-    GridPane boardPane;
     Editor editor ;
-    Text[] playerTexts;
-    Text turnText;
-    Text diceText;
     GridPane recs;
-    Button btnRollDice;
-    Button btnEndTurn;
-    Button btnBuy;
-    GameEngine gameEngine;
-    private boolean diceRolled;
     int position;
 
     Font font = Font.font("Source Sans Pro", 20);
@@ -46,7 +39,6 @@ public class EditorScreen {
     public EditorScreen() throws FileNotFoundException {
         editor = new Editor();
         position = 0;
-        gameEngine = new GameEngine();
         setScene();
     }
 
@@ -55,7 +47,7 @@ public class EditorScreen {
         Group group = new Group();
         int width = 1366;
         int height = 768;
-         recs = getTiles();
+        recs = getTiles();
 
 
         group.getChildren().add(recs);
@@ -63,6 +55,9 @@ public class EditorScreen {
     }
 
     private GridPane getTiles() {
+
+        Square[] squares = editor.board.getSquares();
+
         GridPane gridPane = new GridPane();
 
         for (int col = 0; col < 11; col++) {
@@ -103,95 +98,11 @@ public class EditorScreen {
                     tile.setStroke(Color.BLACK);
 
                     tile.setFill(Color.WHITE);
-                    tile.setOnMouseClicked(event -> {
-                        position = pos;
-                        Font font = new Font("Source Sans Pro", 20);
-                        Dialog d = new Dialog();
-                        d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
-                        Text header = new Text("Select square type:");
-                        header.setFont(font);
+                    fillColors(squares,  tile,  pos);
 
-                        //group of radio buttons
-                        final ToggleGroup group = new ToggleGroup();
+                    // calling the helper method in order to add listeners and call dialogs in the board
+                 listenerHelper(tile,pos);
 
-                        RadioButton property = new RadioButton("Property");
-                        property.setToggleGroup(group);
-                        property.setFont(font);
-                        property.setSelected(true);
-
-                        RadioButton joker = new RadioButton("Joker");
-                        joker.setFont(font);
-                        joker.setToggleGroup(group);
-
-                        RadioButton chance = new RadioButton("Chance");
-                        chance.setFont(font);
-                        chance.setToggleGroup(group);
-
-                        RadioButton communityChest = new RadioButton("Community Chest");
-                        communityChest.setFont(font);
-                        communityChest.setToggleGroup(group);
-
-                        VBox vbox = new VBox(10);
-                        vbox.setPadding(new Insets(10));
-
-                        vbox.getChildren().addAll(header, property, joker, chance, communityChest);
-
-                        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
-                        ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
-                        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
-                        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
-
-                        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
-                        {
-                            public void changed(ObservableValue<? extends Toggle> ob,
-                                                Toggle o, Toggle n)
-                            {
-                                ///  todo -> check the type control codes
-                                RadioButton rb = (RadioButton)group.getSelectedToggle();
-                                Square[] squares = editor.board.getSquares();
-
-                                if(rb == chance && squares[position].getType() != SquareType.CHANCEANDCOMMUNITYCHEST ) {
-                                    // removing property from its ColorGroup's arraylist
-                                    if( squares[position].getType() == SquareType.PROPERTY )
-                                    {
-                                      ColorGroup temp = ((Property) squares[position]).getColorGroup();
-                                      temp.removeProperty((Property)squares[position]);
-                                    }
-
-                                    editor.createNewChestCommunity(pos);
-                                }
-                                else if (rb == joker && squares[position].getType() != SquareType.JOKER ){
-                                    // todo - > default values for now , can be changed later by the players
-                                    // removing property from its ColorGroup's arraylist
-                                    if( squares[position].getType() == SquareType.PROPERTY )
-                                    {
-                                        ColorGroup temp =  ((Property) squares[position]).getColorGroup();
-                                        temp.removeProperty((Property)squares[position]);
-                                    }
-
-                                    editor.createNewJoker(pos,0,0,0,"Joker");
-                               }
-
-                                else if (rb == property && squares[position].getType() != SquareType.PROPERTY ){
-                                    //todo ->  default values for now , can be changed later by the players
-                                    ColorGroup temp = new ColorGroup("temp"); //might be deleted
-                                    editor.createNewProperty(pos,"ankara",temp,100,50,80);
-                                }
-                            }
-
-                        });
-
-                        d.getDialogPane().setContent(vbox);
-                        Optional<ButtonType> result = d.showAndWait();
-
-                        if (result.get() == ButtonType.NEXT & joker.isSelected()){
-                            openJokerDialog();
-                        }
-                        else if (result.get() == ButtonType.NEXT & property.isSelected()){
-                            openPropertyDialog();
-                        }
-
-                    });
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         stp.getChildren().addAll(tile);
@@ -313,11 +224,11 @@ public class EditorScreen {
 
                 // TODO TODO TODO -> color group !!!!!!!!!!
                 result.ifPresent(pair -> {
-
                     System.out.println("name of the color group=" + colorGroupName.getText());
                     Color c = colorPicker.getValue();
                     editor.createColorGroupForProperty(c,colorGroupName.getText(),position );
                     System.out.println("New Color's "+colorPicker.getValue()+"");
+                    updateSquares();
                 });
 
             });
@@ -446,7 +357,7 @@ public class EditorScreen {
         /// getting user input
         jokerMainDialog.setResultConverter((button) -> {
             if (button == ButtonType.OK) {
-                // todo pairin içine pair
+
                 Object[] results = new Object[3];
                 results[0]= jokerSquareName.getText();
                 results[1] =Integer.parseInt(actionAmount.getText());
@@ -483,5 +394,190 @@ public void changeTheSquare(Rectangle s){
     // public methods
 
     public Scene getScene() { return scene; }
+
+
+    private void updateSquares() { //board pane vs grid pane?
+Square [] squares = editor.board.getSquares();
+        for (int col = 0; col < 11; col++) {
+            for (int row = 0; row < 11; row++) {
+                int sum = row + col;
+                int pos;
+
+                if ( (row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                    if (col >= row) {
+                        pos = sum;
+                    } else {
+                        pos = 40 - sum;
+                    }
+                }
+                else
+                    pos = 40 + row + col;
+
+                if (pos < 40) {
+                    StackPane stp = new StackPane();
+                    stp.setPadding(new Insets(1, 1, 1, 1));
+
+                    // create rectangle of correct color for tile
+                    Rectangle tile = new Rectangle();
+                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
+                        tile.setHeight(60);
+                        tile.setWidth(60);
+                    }
+                    else if (row == 10 | row == 0){
+                        tile.setHeight(60);
+                        tile.setWidth(40);
+                    }
+                    else{
+                        tile.setHeight(40);
+                        tile.setWidth(60);
+                    }
+                    tile.setX(col * 10);
+                    tile.setY(row * 10);
+                    tile.setStroke(Color.BLACK);
+
+                    fillColors(squares,  tile,  pos);
+
+                    //determine square colors
+                    if (editor.getSquare(pos).getType() == SquareType.PROPERTY) {
+                        Property property = (Property) editor.getSquare(pos);
+                            tile.setFill(property.getColorGroup().getColor());
+                    }
+                   else{
+
+                        tile.setFill(Color.WHITE);
+                    }
+
+
+                    // calling the helper method in order to add listeners and call dialogs in the board
+                    listenerHelper(tile,pos);
+
+                    if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
+                        //stp.getChildren().add(0, tile);
+                        stp.getChildren().addAll(tile);
+                        recs.add(stp, col, row);
+
+                    }
+
+
+                }
+            }
+        }
+    }
+
+
+
+    /*
+    * This is a helper method that we use in order to call dialogs and add listeners.
+     */
+public void listenerHelper(Rectangle tile, int pos){
+
+    tile.setOnMouseClicked(event -> {
+        position = pos;
+        Font font = new Font("Source Sans Pro", 20);
+        Dialog d = new Dialog();
+        d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+        Text header = new Text("Select square type:");
+        header.setFont(font);
+
+        //group of radio buttons
+        final ToggleGroup group = new ToggleGroup();
+
+        RadioButton property = new RadioButton("Property");
+        property.setToggleGroup(group);
+        property.setFont(font);
+        property.setSelected(true);
+
+        RadioButton joker = new RadioButton("Joker");
+        joker.setFont(font);
+        joker.setToggleGroup(group);
+
+        RadioButton chance = new RadioButton("Chance");
+        chance.setFont(font);
+        chance.setToggleGroup(group);
+
+        RadioButton communityChest = new RadioButton("Community Chest");
+        communityChest.setFont(font);
+        communityChest.setToggleGroup(group);
+
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(10));
+
+        vbox.getChildren().addAll(header, property, joker, chance, communityChest);
+
+        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
+        ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
+        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
+        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
+
+
+        ///  todo -> check the type control codes
+        RadioButton rb = (RadioButton)group.getSelectedToggle();
+        Square[] squares = editor.board.getSquares();
+
+        if(chance.isSelected()) {
+
+            System.out.println("cp c ");
+            // removing property from its ColorGroup's arraylist
+            if( squares[position].getType() == SquareType.PROPERTY )
+            {
+                ColorGroup temp = ((Property) squares[position]).getColorGroup();
+                temp.removeProperty((Property)squares[position]);
+            }
+
+            editor.createNewChestCommunity(pos);
+
+        }
+        else if (joker.isSelected()  ){
+
+            System.out.println("cp j ");
+            // todo - > default values for now , can be changed later by the players
+            // removing property from its ColorGroup's arraylist
+            if( squares[position].getType() == SquareType.PROPERTY )
+            {
+                ColorGroup temp =  ((Property) squares[position]).getColorGroup();
+                temp.removeProperty((Property)squares[position]);
+            }
+
+            editor.createNewJoker(pos,0,0,0,"Joker");
+        }
+
+        else if (property.isSelected()  ){
+            System.out.println("cp p ");
+            //todo ->  default values for now , can be changed later by the players
+            ColorGroup temp = new ColorGroup("temp"); //might be deleted
+            editor.createNewProperty(pos,"ankara",temp,100,50,80);
+        }
+
+
+
+        d.getDialogPane().setContent(vbox);
+        Optional<ButtonType> result = d.showAndWait();
+
+        if (result.get() == ButtonType.NEXT & joker.isSelected()){
+            openJokerDialog();
+        }
+        else if (result.get() == ButtonType.NEXT & property.isSelected()){
+            openPropertyDialog();
+        }
+
+    });
+
+}
+public void fillColors( Square[] squares, Rectangle tile,int pos){
+    if (squares[pos].getType() == SquareType.PROPERTY) {
+        tile.setFill(Color.MEDIUMSEAGREEN);
+    }
+    else if(squares[pos].getType()  == SquareType.JOKER){
+        tile.setFill(Color.DARKGOLDENROD);
+    }
+    else if(squares[pos].getType()  == SquareType.CHANCEANDCOMMUNITYCHEST){
+        tile.setFill(Color.LIME);
+    }
+    else { //start square
+        tile.setFill(Color.BLUEVIOLET);
+    }
+
 }
 
+
+}
