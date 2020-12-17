@@ -300,8 +300,39 @@ public class GameEngine {
     }
 
     //todo
-    public boolean sellProperty(int index, ColorGroup group) {
+    public boolean sellProperty(int index) {
         return true;
+    }
+
+    public boolean sellProperty(int index,String playerName, int amount) {
+        if(index < 0) { //sell current square
+            Property property = (Property)getCurrentSquare();
+            for(Player player:players) {
+                if(player.getName() == playerName){
+                    property.setOwner(player);
+                    player.pay(amount);
+                    player.buyProperty(property);
+                    currentPlayer.gain(amount);
+                    currentPlayer.sellProperty(property);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public boolean auctionProperty(String playerName, int amount) {
+        Property property = (Property)getCurrentSquare();
+        for(Player player:players) {
+            if(player.getName() == playerName){
+                property.setOwner(player);
+                player.pay(amount);
+                player.buyProperty(property);
+                return true;
+            }
+        }
+        return false;
     }
 
 

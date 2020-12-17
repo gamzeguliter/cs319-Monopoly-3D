@@ -7,11 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 import sample.GameEngine;
 import sample.Player;
 import sample.squares.Property;
@@ -19,6 +21,7 @@ import sample.squares.SquareType;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GameScreen extends Screen {
 
@@ -233,6 +236,61 @@ public class GameScreen extends Screen {
         jokerDialog.showAndWait();
     }
 
+    private void createSellDialog() {
+        Dialog sellDialog = new Dialog();
+        VBox vbox = new VBox();
+        Text sellHeader = new Text("Sell Property");
+        Text propertyName = new Text("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
+        TextField player = new TextField("Enter player name: ");
+        TextField amount = new TextField("Enter amount: ");
+        sellDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = sellDialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setOnAction(event -> {
+            gameEngine.sellProperty(-1, player.getText(), Integer.parseInt(amount.getText())); //if index is -1, it is the current square
+            sellDialog.close();
+        });
+        vbox.getChildren().addAll(sellHeader, propertyName, player, amount);
+        sellDialog.getDialogPane().setContent(vbox);
+        sellDialog.showAndWait();
+    }
+
+    private void createAuctionDialog() {
+        Dialog auction = new Dialog();
+        VBox vbox = new VBox();
+        Text auctionHeader = new Text("Auction Property");
+
+        Text propertyName = new Text("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
+        HBox hbox = new HBox();
+        Text playerName = new Text("Enter player: ");
+        TextField player = new TextField();
+        player.setEditable(true);
+        hbox.getChildren().addAll(playerName, player);
+
+        HBox hbox2 = new HBox();
+        Text amountPrompt = new Text("Enter amount: ");
+        TextField amount = new TextField();
+        amount.setEditable(true);
+        hbox2.getChildren().addAll(amountPrompt, amount);
+
+        auction.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        vbox.getChildren().addAll(auctionHeader, propertyName, hbox, hbox2);
+        auction.getDialogPane().setContent(vbox);
+
+        auction.setResultConverter(button -> {
+            if (button == ButtonType.OK) {
+
+                return new Pair<>(player.getText(), amount.getText());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = auction.showAndWait();
+        result.ifPresent(pair -> {
+            gameEngine.auctionProperty(player.getText(), Integer.parseInt(amount.getText())); //if index is -1, it is the current square
+            auction.close();
+        });
+    }
+
     private void createPropertyDialog() {
         Dialog propertyDialog = new Dialog();
         VBox vbox = gameEngine.getPropertyContent();
@@ -260,6 +318,9 @@ public class GameScreen extends Screen {
                 case "sell":
                     Button sellBtn = new Button("Sell");
                     sellBtn.setOnAction(event -> {
+                        propertyDialog.close();
+                        createSellDialog();
+                        updateSquares();
 
                     });
                     vbox.getChildren().add(sellBtn);
@@ -278,7 +339,9 @@ public class GameScreen extends Screen {
                 case "auction":
                     Button auctionBtn = new Button("Auction");
                     auctionBtn.setOnAction(event -> {
-
+                        propertyDialog.close();
+                        createAuctionDialog();
+                        updateSquares();
                     });
                     vbox.getChildren().add(auctionBtn);
                     break;

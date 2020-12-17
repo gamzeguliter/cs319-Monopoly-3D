@@ -73,15 +73,9 @@ public class Property extends Square {
     //TODO buy house, sell house gibi şeyler -- gameengine?
     //TODO sell property make isOwned false set owner to null
     public boolean setOwner(Player newOwner) {
-        if(isOwned) {
-            return false;
-        }
-        else
-        {
-            owner = newOwner;
-            isOwned = true;
-            return true;
-        }
+        owner = newOwner;
+        isOwned = true;
+        return true;
     }
 
     public Player getOwner() {
