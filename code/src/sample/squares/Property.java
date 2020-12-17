@@ -146,6 +146,14 @@ public class Property extends Square {
         }
     }
 
+    public void mortgageProperty() {
+        this.isMortgaged = true;
+    }
+
+    public void unmortgageProperty() {
+        this.isMortgaged = false;
+    }
+
     private void setPricesAndRent() {
         int rentOneHouse = rent * 5;
         int rentTwoHouses = rent * 15;
