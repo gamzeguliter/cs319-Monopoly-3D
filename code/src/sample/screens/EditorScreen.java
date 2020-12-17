@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import org.w3c.dom.css.Rect;
 import sample.squares.ColorGroup;
 import sample.Editor;
 import sample.GameEngine;
@@ -64,8 +65,9 @@ public class EditorScreen{
 
     // private methods
     private void setScene() throws IOException {
-        recs = getTiles();
+        //recs = getTiles();
         scene = new Scene(editorScreen);
+        setControls();
 
         Dialog propertyEditDialog = new Dialog();
         propertyEditDialog.setDialogPane(propertyEditDP);
@@ -83,14 +85,82 @@ public class EditorScreen{
         jokerEditDialog.setDialogPane(jokerEditDP);
         jokerEditDialog.show();
 
-        Dialog squareTypeDialog = new Dialog();
-        squareTypeDialog.setDialogPane(toggleSquareTypeDP);
-        squareTypeDialog.show();
-
-
-
     }
 
+    private void setControls() {
+        Node[] squares = new Node[40];
+
+        for (int i = 0; i < 40; i++) {
+            GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
+            StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
+            squares[i] = stackPane.getChildren().get(0);
+        }
+
+        for (int position = 0; position < 40; position++) {
+            int finalPosition = position;
+            squares[position].setOnMouseClicked(event -> {
+
+                Dialog squareTypeDialog = new Dialog();
+                squareTypeDialog.setDialogPane(toggleSquareTypeDP);
+
+                VBox vbox = (VBox) squareTypeDialog.getDialogPane().getContent();
+                RadioButton property = (RadioButton) vbox.getChildren().get(0);
+                RadioButton joker = (RadioButton) vbox.getChildren().get(1);
+                RadioButton chance = (RadioButton) vbox.getChildren().get(2);
+                RadioButton communityChest = (RadioButton) vbox.getChildren().get(3);
+
+                ToggleGroup group = property.getToggleGroup();
+
+                group.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
+                {
+                    public void changed(ObservableValue<? extends Toggle> ob,
+                                        Toggle o, Toggle n)
+                    {
+                        ///  todo -> check the type control codes
+                        RadioButton rb = (RadioButton)group.getSelectedToggle();
+                        Square[] squares = editor.board.getSquares();
+
+                        if(rb == chance && squares[finalPosition].getType() != SquareType.CHANCEANDCOMMUNITYCHEST ) {
+                            // removing property from its ColorGroup's arraylist
+                            if( squares[finalPosition].getType() == SquareType.PROPERTY )
+                            {
+                                ColorGroup temp = ((Property) squares[finalPosition]).getColorGroup();
+                                temp.removeProperty((Property)squares[finalPosition]);
+                            }
+                            editor.createNewChestCommunity(finalPosition);
+                        }
+                        else if (rb == joker && squares[finalPosition].getType() != SquareType.JOKER ){
+                            // todo - > default values for now , can be changed later by the players
+                            // removing property from its ColorGroup's arraylist
+                            if( squares[finalPosition].getType() == SquareType.PROPERTY )
+                            {
+                                ColorGroup temp =  ((Property) squares[finalPosition]).getColorGroup();
+                                temp.removeProperty((Property)squares[finalPosition]);
+                            }
+                            editor.createNewJoker(finalPosition,0,0,0,"Joker");
+                        }
+
+                        else if (rb == property && squares[finalPosition].getType() != SquareType.PROPERTY ){
+                            //todo ->  default values for now , can be changed later by the players
+                            ColorGroup temp = new ColorGroup("temp"); //might be deleted
+                            editor.createNewProperty(finalPosition,"ankara",temp,100,50,80);
+                        }
+                    }
+                });
+
+                Optional<ButtonType> result = squareTypeDialog.showAndWait();
+
+                if (result.get() == ButtonType.NEXT & joker.isSelected()){
+                    openJokerDialog();
+                }
+                else if (result.get() == ButtonType.NEXT & property.isSelected()){
+                    openPropertyDialog();
+                }
+            });
+        }
+    }
+
+    /*
     private GridPane getTiles() {
         GridPane gridPane = new GridPane();
 
@@ -233,6 +303,8 @@ public class EditorScreen{
         gridPane.setLayoutY(10);
         return gridPane;
     }
+
+     */
 
     //TODO create methods for style
     // make color group dialog
@@ -399,14 +471,12 @@ public class EditorScreen{
             // todo ->  processing user input : color group is left, checking the corner cases for the unchanged boxes
             editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
             editor.setNameForProperty(propertyName.getText() , position);
-
-
         });
-
     }
 
     //opening joker edit window
     private void openJokerDialog() {
+        /*
         Font font = new Font("Source Sans Pro", 20);
         Font fonth = new Font("Source Sans Pro", 30);
         Dialog jokerMainDialog = new Dialog();
@@ -472,8 +542,24 @@ public class EditorScreen{
 
         jokerMainDialog.getDialogPane().setContent(vbox);
 
+         */
+        Dialog jokerEditDialog = new Dialog();
+        jokerEditDialog.setDialogPane(jokerEditDP);
         /// getting user input
-        jokerMainDialog.setResultConverter((button) -> {
+        VBox vBox = (VBox) jokerEditDialog.getDialogPane().getContent();
+
+        HBox jokerBox = (HBox) vBox.getChildren().get(0);
+        RadioButton move = (RadioButton) vBox.getChildren().get(2);
+        RadioButton wait = (RadioButton) vBox.getChildren().get(3);
+        RadioButton none = (RadioButton) vBox.getChildren().get(4);
+        HBox actionBox = (HBox) vBox.getChildren().get(5);
+        HBox moneyBox = (HBox) vBox.getChildren().get(6);
+
+        TextField jokerSquareName = (TextField) jokerBox.getChildren().get(1);
+        TextField actionAmount = (TextField) actionBox.getChildren().get(1);
+        TextField money = (TextField) moneyBox.getChildren().get(1);
+
+        jokerEditDialog.setResultConverter((button) -> {
             if (button == ButtonType.OK) {
                 // todo pairin içine pair
                 Object[] results = new Object[3];
@@ -485,7 +571,7 @@ public class EditorScreen{
             return null;
         });
 
-        Optional<Object [] > optionalResult = jokerMainDialog.showAndWait();
+        Optional<Object [] > optionalResult = jokerEditDialog.showAndWait();
         optionalResult.ifPresent(results -> {
             System.out.println(
                     results[0] + " " + results[1] + " " + results[2]); // todo -> ratio buttons are left out
