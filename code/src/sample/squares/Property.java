@@ -50,7 +50,7 @@ public class Property extends Square {
         setPricesAndRent();
     }
 
-    /*public Property(JSONObject jo, Board board) {
+    public Property(JSONObject jo, Board board) {
         super(SquareType.PROPERTY);
         this.board = board;
         extractPropertiesFromJson(jo);
@@ -59,7 +59,7 @@ public class Property extends Square {
         isOwned = false;
         isMortgaged = false;
         owner = null;
-    } */
+    }
 
     public ColorGroup getColorGroup() {
         return colorGroup;
