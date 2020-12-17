@@ -13,13 +13,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import sample.Player;
-import sample.squares.ColorGroup;
+import sample.squares.*;
 import sample.Editor;
 import sample.GameEngine;
 import sample.Results;
-import sample.squares.Property;
-import sample.squares.Square;
-import sample.squares.SquareType;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
@@ -99,91 +96,7 @@ public class EditorScreen {
 
                     tile.setFill(Color.WHITE);
                     fillColors(squares, tile, pos );
-
-                    tile.setOnMouseClicked(event -> {
-                        position = pos;
-                        Font font = new Font("Source Sans Pro", 20);
-                        Dialog d = new Dialog();
-                        d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
-                        Text header = new Text("Select square type:");
-                        header.setFont(font);
-
-                        //group of radio buttons
-                        final ToggleGroup group = new ToggleGroup();
-
-                        RadioButton property = new RadioButton("Property");
-                        property.setToggleGroup(group);
-                        property.setFont(font);
-                        property.setSelected(true);
-
-                        RadioButton joker = new RadioButton("Joker");
-                        joker.setFont(font);
-                        joker.setToggleGroup(group);
-
-                        RadioButton chance = new RadioButton("Chance");
-                        chance.setFont(font);
-                        chance.setToggleGroup(group);
-
-                        RadioButton communityChest = new RadioButton("Community Chest");
-                        communityChest.setFont(font);
-                        communityChest.setToggleGroup(group);
-
-                        VBox vbox = new VBox(10);
-                        vbox.setPadding(new Insets(10));
-
-                        vbox.getChildren().addAll(header, property, joker, chance, communityChest);
-
-                        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
-                        ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
-                        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
-                        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
-
-
-                                ///  todo -> check the type control codes
-                                RadioButton rb = (RadioButton)group.getSelectedToggle();
-
-                                if(chance.isSelected()  ) {
-                                    // removing property from its ColorGroup's arraylist
-                                    if( squares[position].getType() == SquareType.PROPERTY )
-                                    {
-                                      ColorGroup temp = ((Property) squares[position]).getColorGroup();
-                                      temp.removeProperty((Property)squares[position]);
-                                    }
-
-                                    editor.createNewChestCommunity(pos);
-                                }
-                                else if (joker.isSelected() ){
-                                    // todo - > default values for now , can be changed later by the players
-                                    // removing property from its ColorGroup's arraylist
-                                    if( squares[position].getType() == SquareType.PROPERTY )
-                                    {
-                                        ColorGroup temp =  ((Property) squares[position]).getColorGroup();
-                                        temp.removeProperty((Property)squares[position]);
-                                    }
-
-                                    editor.createNewJoker(pos,0,0,0,"Joker");
-                               }
-
-                                else if (property.isSelected()  ){
-                                    //todo ->  default values for now , can be changed later by the players
-                                    ColorGroup temp = new ColorGroup("temp"); //might be deleted
-                                    editor.createNewProperty(pos,"ankara",temp,100,50,80);
-                                    System.out.println("hihi");
-                                      //   tile.setFill(temp.getColor());
-                                }
-
-
-                        d.getDialogPane().setContent(vbox);
-                        Optional<ButtonType> result = d.showAndWait();
-
-                        if (result.get() == ButtonType.NEXT & joker.isSelected()){
-                            openJokerDialog();
-                        }
-                        else if (result.get() == ButtonType.NEXT & property.isSelected()){
-                            openPropertyDialog();
-                        }
-
-                    });
+                    helper(squares,tile,pos);
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
                         stp.getChildren().addAll(tile);
@@ -216,17 +129,20 @@ public class EditorScreen {
 
         Label label1 = new Label("Name:");
         label1.setFont(font);
-        TextField propertyName = new TextField();
+        String temp = ((Property)editor.getSquare(position)).getName();
+        TextField propertyName = new TextField(temp);
         propertyName.setFont(fonts);
         propertyName.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         propertyName.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(2),BorderStroke.MEDIUM)));
+
         HBox hb2 = new HBox();
         hb2.getChildren().addAll(label1, propertyName);
         hb2.setSpacing(10);
 
         Label label2 = new Label("Price:");
         label2.setFont(font);
-        TextField propertyPrice = new TextField("0");
+       int  temp1 = ((Property)editor.getSquare(position)).getBuyingPrice();
+        TextField propertyPrice = new TextField(""+ temp1);
         propertyPrice.setFont(fonts);
         propertyPrice.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
         propertyPrice.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(2),BorderStroke.MEDIUM)));
@@ -287,7 +203,7 @@ public class EditorScreen {
 
                 VBox vbox4 = new VBox();
                 vbox4.getChildren().addAll(hb7, hb8, hb9);
-                Color temp ;
+
 
 
                 addColorGroupDialog.getDialogPane().setContent(vbox4);
@@ -385,7 +301,14 @@ public class EditorScreen {
 
         Label label1 = new Label("Name:");
         label1.setFont(font);
-        TextField jokerSquareName = new TextField();
+        String temp;
+        ///todo HATA VERIYOR BAK
+        if( editor.getSquare(position).getType() == SquareType.JOKER && ((Joker)editor.getSquare(position)).getName() != null)
+            temp = "Joker";
+        else
+            temp = ((Joker)editor.getSquare(position)).getName();
+
+        TextField jokerSquareName = new TextField(temp);
         HBox hb2 = new HBox();
         hb2.getChildren().addAll(label1, jokerSquareName);
         hb2.setSpacing(10);
@@ -594,7 +517,7 @@ public void helper(Square[] squares , Rectangle tile, int pos){
         ///  todo -> check the type control codes
         RadioButton rb = (RadioButton)group.getSelectedToggle();
 
-        if(chance.isSelected()  ) {
+        if(chance.isSelected() && squares[position].getType() != SquareType.CHANCEANDCOMMUNITYCHEST) {
             // removing property from its ColorGroup's arraylist
             if( squares[position].getType() == SquareType.PROPERTY )
             {
@@ -604,7 +527,7 @@ public void helper(Square[] squares , Rectangle tile, int pos){
 
             editor.createNewChestCommunity(pos);
         }
-        else if (joker.isSelected() ){
+        else if (joker.isSelected()  && squares[position].getType() != SquareType.JOKER){
             // todo - > default values for now , can be changed later by the players
             // removing property from its ColorGroup's arraylist
             if( squares[position].getType() == SquareType.PROPERTY )
@@ -616,7 +539,7 @@ public void helper(Square[] squares , Rectangle tile, int pos){
             editor.createNewJoker(pos,0,0,0,"Joker");
         }
 
-        else if (property.isSelected()  ){
+        else if (property.isSelected() && squares[position].getType() != SquareType.PROPERTY  ){
             //todo ->  default values for now , can be changed later by the players
             ColorGroup temp = new ColorGroup("temp"); //might be deleted
             editor.createNewProperty(pos,"ankara",temp,100,50,80);
