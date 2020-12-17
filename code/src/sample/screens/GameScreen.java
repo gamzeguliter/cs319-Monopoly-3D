@@ -2,6 +2,7 @@ package sample.screens;
 
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -11,14 +12,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import sample.GameEngine;
 import sample.Player;
 import sample.squares.Property;
 import sample.squares.SquareType;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameScreen {
+public class GameScreen extends Screen {
 
     // properties
     private Scene scene;
@@ -30,7 +33,6 @@ public class GameScreen {
 
     Button btnRollDice;
     Button btnEndTurn;
-    Button btnBuy;
 
     GameEngine gameEngine;
     Font font = Font.font("Source Sans Pro", 20);
@@ -56,7 +58,7 @@ public class GameScreen {
     private void initializePlayerTexts(Group group) {
         playerTexts = new Text[4];
         int count = 0;
-        for(Player player : gameEngine.getPlayers()) {
+        for (Player player : gameEngine.getPlayers()) {
             playerTexts[count] = getPlayerText(player);
             count++;
         }
@@ -72,8 +74,17 @@ public class GameScreen {
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
 
-    private void updatePlayerText(Text text, Player player) {
-        text.setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
+    //todo bu method direk getPlayers ile almasa daha iyi olur
+    private void updatePlayerTexts() {
+        for(int i = 0; i < gameEngine.getPlayers().size(); i++) {
+            if(gameEngine.getPlayers().get(i).isOut()) {
+                playerTexts[i].setDisable(true);
+            }
+            else {
+                Player player = gameEngine.getPlayers().get(i);
+                playerTexts[i].setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
+            }
+        }
     }
 
     private void setScene() {
@@ -93,15 +104,33 @@ public class GameScreen {
         btnRollDice.setFont(font3);
         btnRollDice.setOnAction(event -> {
             int roll = gameEngine.rollDice();
-            gameEngine.checkSquare();
-            openDialog();
-            btnRollDice.setDisable(true);
-            openDialog();
-            btnBuy.setDisable(gameEngine.isBuyDisabled());
             diceText.setText("Dice roll: " + roll);
-            Player currentPlayer = gameEngine.getCurrentPlayer();
-            updatePlayerText(playerTexts[gameEngine.getTurn()], currentPlayer);
+            btnRollDice.setDisable(true);
+
             updateSquares();
+            updatePlayerTexts();
+
+            if(gameEngine.passesStart()) {
+                createStartDialog();
+                updatePlayerTexts();
+            }
+
+            if (gameEngine.getCurrentSquare().getType() == SquareType.PROPERTY) {
+                createPropertyDialog();
+
+            } else if (gameEngine.getCurrentSquare().getType() == SquareType.JOKER) {
+                createJokerDialog();
+            }
+            else if(gameEngine.getCurrentSquare().getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
+                createChanceAndChestDialog();
+            }
+            //start square
+            //todo start square üstünden geçip gidiyorsa da çıkarmalısın
+            else {
+                createStartDialog();
+            }
+            updateSquares();
+            updatePlayerTexts();
         });
 
         btnRollDice.setLayoutX(100);
@@ -120,23 +149,7 @@ public class GameScreen {
         btnEndTurn.setLayoutX(200);
         btnEndTurn.setLayoutY(120);
 
-        //buy button
-        btnBuy = new Button();
-        btnBuy.setText("Buy");
-        btnBuy.setFont(font3);
-        System.out.println("isBuyEnabled: " + !gameEngine.isBuyDisabled());
-        btnBuy.setDisable(gameEngine.isBuyDisabled());
-        btnBuy.setOnAction(event -> {
-            gameEngine.buyProperty();
-            updateSquares();
-            updatePlayerText(playerTexts[gameEngine.getTurn()], gameEngine.getCurrentPlayer());
-            btnBuy.setDisable(true);
-        });
-
-        btnBuy.setLayoutX(300);
-        btnBuy.setLayoutY(120);
-
-        group.getChildren().addAll(btnRollDice, btnEndTurn, btnBuy);
+        group.getChildren().addAll(btnRollDice, btnEndTurn);
 
         // turn text
         turnText = new Text();
@@ -159,21 +172,179 @@ public class GameScreen {
         scene = new Scene(group, width, height);
     }
 
-    private void openDialog() {
-        Dialog d = new Dialog();
-        d.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(10));
-        Text header = new Text("Select square type:");
-        header.setFont(font);
-        vbox.getChildren().addAll(header);
-        d.getDialogPane().setContent(vbox);
-        d.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL, ButtonType.NEXT);
-        ((Button) d.getDialogPane().lookupButton(ButtonType.CANCEL)).setFont(font);
-        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setFont(font);
-        ((Button) d.getDialogPane().lookupButton(ButtonType.NEXT)).setDefaultButton(false);
-        d.show();
+    private void createStartDialog() {
+        Dialog dialog = new Dialog();
+        VBox vbox = gameEngine.startInfo();
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setText("Collect");
+        ((Button)okButton).setOnAction(event -> {
+            gameEngine.startAction();
+            dialog.close();
+        });
+        vbox.getChildren().add(okButton);
+        dialog.getDialogPane().setContent(vbox);
+        dialog.showAndWait();
     }
+
+    private void createChanceAndChestDialog() {
+        Dialog dialog = new Dialog();
+        VBox vbox = new VBox();
+        Text text = new Text("Draw Card");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setText("Draw");
+        ((Button)okButton).setOnAction(event -> {
+            gameEngine.drawCard();
+            createCardDialog();
+            dialog.close();
+        });
+        vbox.getChildren().addAll(text, okButton);
+        dialog.getDialogPane().setContent(vbox);
+        dialog.showAndWait();
+    }
+
+    private void createCardDialog() {
+        Dialog dialog = new Dialog();
+        VBox vbox = new VBox();
+        Text text = new Text(gameEngine.getCardInfo());
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setText("Do");
+        ((Button)okButton).setOnAction(event -> {
+            gameEngine.implementCard();
+            dialog.close();
+        });
+        vbox.getChildren().add(okButton);
+        dialog.getDialogPane().setContent(vbox);
+        dialog.showAndWait();
+    }
+
+    private void createJokerDialog() {
+        Dialog jokerDialog = new Dialog();
+        VBox vbox = gameEngine.getJokerContent();
+        jokerDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = jokerDialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setOnAction(event -> {
+            gameEngine.jokerActions();
+            jokerDialog.close();
+        });
+
+        jokerDialog.getDialogPane().setContent(vbox);
+        jokerDialog.showAndWait();
+    }
+
+    private void createPropertyDialog() {
+        Dialog propertyDialog = new Dialog();
+        VBox vbox = gameEngine.getPropertyContent();
+        Property property = (Property)(gameEngine.getCurrentSquare());
+        if(((Property)gameEngine.getCurrentSquare()).isOwned()) {
+            propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        }
+        else {
+            propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+        }
+        ArrayList<String> buttonNames = gameEngine.getPropertyButtons();
+        //add cancel button
+        propertyDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE); //todo bunu koyunca x tuşu ile kapanıyor olmaması lazım
+        Node closeButton = propertyDialog.getDialogPane().lookupButton(ButtonType.CLOSE);
+        closeButton.setDisable(true);
+
+        //dialog.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> event.consume());
+
+        for(String buttonName: buttonNames) {
+            switch(buttonName) {
+                case "cancel":
+                    closeButton.setDisable(false);
+                    //propertyDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+                    break;
+                case "sell":
+                    Button sellBtn = new Button("Sell");
+                    sellBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(sellBtn);
+                    break;
+
+                case "buy":
+                    Button buyBtn = new Button("Buy");
+                    buyBtn.setOnAction(event -> {
+                        gameEngine.buyProperty();
+                        updateSquares();
+                        propertyDialog.close();
+                    });
+                    vbox.getChildren().add(buyBtn);
+                    break;
+
+                case "auction":
+                    Button auctionBtn = new Button("Auction");
+                    auctionBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(auctionBtn);
+                    break;
+
+                case "mortgage":
+                    Button mortgageBtn = new Button("Mortgage");
+                    mortgageBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(mortgageBtn);
+                    break;
+
+                case "unmortgage":
+                    Button unmortgageBtn = new Button("Unmortgage");
+                    unmortgageBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(unmortgageBtn);
+                    break;
+
+                case "add house":
+                    Button addHouseBtn = new Button("Add House");
+                    addHouseBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(addHouseBtn);
+                    break;
+
+                case "sell house":
+                    Button sellHouseBtn = new Button("Sell House");
+                    sellHouseBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(sellHouseBtn);
+                    break;
+
+                case "add hotel":
+                    Button addHotelBtn = new Button("Add hotel");
+                    addHotelBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(addHotelBtn);
+                    break;
+
+                case "sell hotel":
+                    Button sellHotelBtn = new Button("Sell Hotel");
+                    sellHotelBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(sellHotelBtn);
+                    break;
+
+                case "pay rent":
+                    Button rentBtn = new Button("Pay Rent");
+                    rentBtn.setOnAction(event -> {
+
+                    });
+                    vbox.getChildren().add(rentBtn);
+                    break;
+            }
+        }
+        propertyDialog.getDialogPane().setContent(vbox);
+        propertyDialog.showAndWait();
+    }
+
 
     private GridPane getSquares() {
         GridPane gridPane = new GridPane();
@@ -217,8 +388,10 @@ public class GameScreen {
                     //tile.setFill(Color.ORCHID);
 
                     //set tile colors
+                    System.out.println(gameEngine.getSquare(pos).getType());
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
-                        tile.setFill(Color.MEDIUMSEAGREEN);
+                        Property property = (Property)(gameEngine.getSquare(pos));
+                        tile.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
                         tile.setFill(Color.DARKGOLDENROD);
@@ -313,7 +486,7 @@ public class GameScreen {
                             tile.setFill(owner.getColor());
                         }
                         else
-                            tile.setFill(Color.MEDIUMSEAGREEN);
+                            tile.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
                         tile.setFill(Color.DARKGOLDENROD);
@@ -359,4 +532,9 @@ public class GameScreen {
     // public methods
 
     public Scene getScene() { return scene; }
+
+    public Scene drawScene() throws IOException {
+        setScene();
+        return scene;
+    }
 }
