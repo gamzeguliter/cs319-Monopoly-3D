@@ -338,6 +338,25 @@
             <ButtonType fx:constant="CANCEL" />
          </buttonTypes>
       </DialogPane>
+       <DialogPane fx:id="selectColorGroup" layoutX="400.0" layoutY="200.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
+        <header>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Color Groups" />
+        </header>
+         <content>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" text="+" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Color Group" />
+               </children>
+            </HBox>
+         </content>
+         <buttonTypes>
+            <ButtonType fx:constant="CANCEL" />
+            <ButtonType fx:constant="OK" />
+         </buttonTypes>
+       </DialogPane>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <ComboBox prefWidth="150.0" />
 
    </children>
 </AnchorPane>
