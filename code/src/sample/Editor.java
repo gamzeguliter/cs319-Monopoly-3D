@@ -26,7 +26,9 @@ public class Editor {
 
     /// creates a new Chest and Community square while editing
     public void createNewChestCommunity(int index){
-             board.squares[index] = new ChanceAndCommunityChest();
+
+             board.squares[index] = new ChanceAndCommunityChest(true);
+
     }
 
     /// creates a new Joker square while editing

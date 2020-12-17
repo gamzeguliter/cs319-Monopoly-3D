@@ -13,8 +13,8 @@ public class Player {
     private int position;
     private Color color;
     private int balance;
-    private int suspendedTourNo;
-    private boolean isSuspended;
+    private int jailTime;
+    private boolean isInJail;
     private boolean isBankrupt;
     private boolean out;
     private ArrayList<Property> ownedProperties;
@@ -25,9 +25,9 @@ public class Player {
         this.color = color;
         this.balance = balance;
         position = 0;
-        isSuspended = false;
+        isInJail = false;
         isBankrupt = false;
-        suspendedTourNo = 0;
+        jailTime = 0;
         out = false;
         ownedProperties = new ArrayList<Property>();
     }
@@ -36,8 +36,8 @@ public class Player {
 
     //public methods
     public void suspend(int tourNo) {
-        isSuspended = true;
-        suspendedTourNo = tourNo;
+        isInJail = true;
+        jailTime = tourNo;
     }
 
     public void buyProperty(Property property) {
@@ -48,10 +48,10 @@ public class Player {
         ownedProperties.remove(property);
     }
 
-    public int getSuspendedTourNo() {
-        return suspendedTourNo;
+    public int getjailTime() {
+        return jailTime;
     }
-    boolean isSuspended() { return isSuspended; }
+    boolean isInJail() { return isInJail; }
     boolean isBankrupt() { return isBankrupt; }
 
     //getters and setters
