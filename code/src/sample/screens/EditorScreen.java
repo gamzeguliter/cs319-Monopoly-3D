@@ -27,16 +27,12 @@ public class EditorScreen {
     // properties
     private Scene scene;
     GridPane boardPane;
-    Editor editor ;
+    Editor editor;
     Text[] playerTexts;
     Text turnText;
     Text diceText;
     GridPane recs;
-    Button btnRollDice;
-    Button btnEndTurn;
-    Button btnBuy;
     GameEngine gameEngine;
-    private boolean diceRolled;
     int position;
 
     Font font = Font.font("Source Sans Pro", 20);
@@ -55,8 +51,7 @@ public class EditorScreen {
         Group group = new Group();
         int width = 1366;
         int height = 768;
-         recs = getTiles();
-
+        recs = getTiles();
 
         group.getChildren().add(recs);
         scene = new Scene(group, width, height);
