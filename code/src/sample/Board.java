@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.paint.Color;
 import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 
@@ -10,9 +11,11 @@ public class Board {
     // properties
     private String name;
     Square[] squares;
-
+    CardDeck chanceDeck;
+    CardDeck chestDeck;
     // TODO: make this a <String, ColorGroup> map?
     ArrayList<ColorGroup> colorGroups;
+    String currency;
     /*
     property array -?
         aynı name'de 2 group a izin verme!
@@ -35,6 +38,19 @@ public class Board {
         colorGroups = createGroups();
         squares = testSquares();
         name = "defaultName";
+        chestDeck = new CardDeck();
+        chestDeck.generateChestCardDeck();
+        chanceDeck = new CardDeck();
+        chanceDeck.generateChanceCardDeck();
+        currency = "Dollars";
+    }
+
+    public Card drawChanceCard() {
+        return chanceDeck.drawCard();
+    }
+
+    public Card drawChestCard() {
+        return chestDeck.drawCard();
     }
 
     public Board(String name) {
@@ -45,8 +61,15 @@ public class Board {
 
     private ArrayList<ColorGroup> createGroups() {
         ArrayList<ColorGroup> colors = new ArrayList<ColorGroup>();
-        colors.add(new ColorGroup("Red"));
-        colors.add(new ColorGroup("Pink"));
+
+        ColorGroup red = new ColorGroup("Red");
+        red.setColor(Color.NAVAJOWHITE);
+        colors.add(red);
+
+        ColorGroup pink = new ColorGroup("Pink");
+        pink.setColor(Color.HOTPINK);
+        colors.add(pink);
+
         return colors;
     }
 
@@ -58,16 +81,6 @@ public class Board {
         return squares[squareNo].getType();
     }
 
-    /*public boolean canBuildHouse(Property property, Player currentPlayer) {
-        for(ColorGroup group : colorGroups) {
-            if(property.getColorGroup() == group.getGroupName()) {
-                //check both if all props are owned by player and checks for controlled housing
-                return group.addHouse(property, currentPlayer);
-            }
-        }
-        return false;
-    }
-*/
     String[] propertyNames = {"New York", "Boston", "Paris", "Copenhagen", "Berlin", "İstanbul",
         "Ankara", "Chicago", "Rome", "Milan", "London", "Seul", "Beijing", "Luzern", "Bern", "Oslo",
         "Barcelona", "Madrid", "Amsterdam", "Munich"};
@@ -79,7 +92,7 @@ public class Board {
             if(i % 4 == 0)
                 squares[i] = new Joker(9, 10, 0,"");
             else if(i % 4 == 1)
-                squares[i] = new ChanceAndCommunityChest();
+                squares[i] = new ChanceAndCommunityChest(true);
             else if (i % 4 == 2) {
                 Property newProp = new Property(propertyNames[i % 20], colorGroups.get(0), 100, 80, 50);
                 squares[i] = newProp;

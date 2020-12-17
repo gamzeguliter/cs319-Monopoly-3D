@@ -7,9 +7,15 @@ import sample.squares.SquareType;
 public class ChanceAndCommunityChest extends Square {
 
     private String name;
+    private boolean isChance;
 
-    public ChanceAndCommunityChest() {
+    public ChanceAndCommunityChest(boolean chance) {
         super(SquareType.CHANCEANDCOMMUNITYCHEST);
+        isChance = chance;
+    }
+
+    public boolean isChance() {
+        return isChance;
     }
 
     public ChanceAndCommunityChest(JSONObject jo) {

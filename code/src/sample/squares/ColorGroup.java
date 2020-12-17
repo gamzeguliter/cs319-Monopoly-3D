@@ -86,6 +86,28 @@ public class ColorGroup {
         return true;
     }
 
+    //checks if the given property can be mortgaged
+    public boolean canMortgage(Property property) {
+        //if the group is not complete, property can be mortgaged
+        if(!isComplete(property.getOwner())) {
+            return true;
+        }
+        else {
+            //check if there are building on any property
+            return !checkBuildings();
+        }
+    }
+
+    //checks if there are any buildings on any property of the color group
+    public boolean checkBuildings() {
+        for(Property property : properties) {
+            if(property.getNoOfHouses() > 0 || property.isHotel()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getGroupName() {
         return groupName;
     }
@@ -98,7 +120,7 @@ public class ColorGroup {
         return color;
     }
 
-    public void setColors(Color color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 

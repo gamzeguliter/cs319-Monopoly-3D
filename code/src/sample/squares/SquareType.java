@@ -1,7 +1,7 @@
 package sample.squares;
 
 public enum SquareType {
-    START, //todo
+    START,
     JOKER,
     CHANCEANDCOMMUNITYCHEST,
     PROPERTY;

@@ -89,7 +89,7 @@ public class FileManager {
             switch (type) {
                 case "ChanceAndCommunityChest" -> squares[i] = new ChanceAndCommunityChest(squareJSON);
                 case "Joker" -> squares[i] = new Joker(squareJSON);
-                case "Property" -> squares[i] = new Property(squareJSON, board);
+                //case "Property" -> squares[i] = new Property(squareJSON, board);
                 case "Start" -> squares[i] = new Start(squareJSON);
                 default -> System.out.println("ERROR: Type of square was invalid: " + type);
             }
