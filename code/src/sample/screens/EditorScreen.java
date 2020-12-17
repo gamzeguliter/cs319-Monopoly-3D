@@ -1,9 +1,14 @@
 package sample.screens;
 
+import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -21,9 +26,10 @@ import sample.squares.Square;
 import sample.squares.SquareType;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Optional;
 
-public class EditorScreen {
+public class EditorScreen{
     // properties
     private Scene scene;
     GridPane boardPane;
@@ -34,12 +40,22 @@ public class EditorScreen {
     GridPane recs;
     GameEngine gameEngine;
     int position;
+    @FXML DialogPane jokerSquareEdit;
+    @FXML DialogPane toggleSquareType;
+    @FXML DialogPane propertySquareEdit;
+    @FXML DialogPane selectColorGroup;
+    @FXML DialogPane addColorGroup;
 
     Font font = Font.font("Source Sans Pro", 20);
-
+    Parent editorScreen = FXMLLoader.load(getClass().getResource("EditorScreen.fxml"));
+    DialogPane propertyEditDP = FXMLLoader.load(getClass().getResource("propertyEditScreen.fxml"));
+    DialogPane addColorGroupDP = FXMLLoader.load(getClass().getResource("addColorGroup.fxml"));
+    DialogPane selectColorGroupDP = FXMLLoader.load(getClass().getResource("selectColorGroup.fxml"));
+    DialogPane jokerEditDP = FXMLLoader.load(getClass().getResource("jokerEditScreen.fxml"));
+    DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("toggleSquareType.fxml"));
 
     // constructors
-    public EditorScreen() throws FileNotFoundException {
+    public EditorScreen() throws IOException {
         editor = new Editor();
         position = 0;
         gameEngine = new GameEngine();
@@ -47,14 +63,32 @@ public class EditorScreen {
     }
 
     // private methods
-    private void setScene() throws FileNotFoundException {
-        Group group = new Group();
-        int width = 1366;
-        int height = 768;
+    private void setScene() throws IOException {
         recs = getTiles();
+        scene = new Scene(editorScreen);
 
-        group.getChildren().add(recs);
-        scene = new Scene(group, width, height);
+        Dialog propertyEditDialog = new Dialog();
+        propertyEditDialog.setDialogPane(propertyEditDP);
+        propertyEditDialog.show();
+
+        Dialog addColorGroupDialog = new Dialog();
+        addColorGroupDialog.setDialogPane(addColorGroupDP);
+        addColorGroupDialog.show();
+
+        Dialog selectColorGroupDialog = new Dialog();
+        selectColorGroupDialog.setDialogPane(selectColorGroupDP);
+        selectColorGroupDialog.show();
+
+        Dialog jokerEditDialog = new Dialog();
+        jokerEditDialog.setDialogPane(jokerEditDP);
+        jokerEditDialog.show();
+
+        Dialog squareTypeDialog = new Dialog();
+        squareTypeDialog.setDialogPane(toggleSquareTypeDP);
+        squareTypeDialog.show();
+
+
+
     }
 
     private GridPane getTiles() {
