@@ -17,7 +17,7 @@ public class ColorGroup {
         this.groupName = groupName;
         properties = new ArrayList<Property>();
         // TODO: add a way to properly initialize color
-        color = Color.rgb(100,100,100);
+        color = Color.RED;
     }
 
     public ColorGroup(JSONObject jo) {

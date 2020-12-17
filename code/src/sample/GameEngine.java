@@ -1,10 +1,5 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -22,6 +17,7 @@ public class GameEngine {
     private Player currentPlayer;
     private ArrayList<ColorGroup> colorGroups;
     Card drawnCard;
+    boolean playerPassedStart;
 
     public GameEngine() {
         board = new Board();
@@ -35,6 +31,7 @@ public class GameEngine {
         currentPlayer = players.get(0);
         colorGroups = board.getColorGroups();
         drawnCard = null;
+        playerPassedStart = false;
     }
 
     public void updateGame() {
@@ -95,55 +92,54 @@ public class GameEngine {
         ArrayList<String> buttons = new ArrayList<String>();
 
         //square is a property
-        if(getCurrentSquare().getType() == SquareType.PROPERTY) { //todo tüm squareleri burada yapmayacaksan if kaldır
-            Property property = (Property)getCurrentSquare();
+        Property property = (Property)getCurrentSquare();
 
-            //owned by the current player
-            if(property.isOwned() && property.getOwner() == getCurrentPlayer()) {
-                if(property.isMortgaged()) {
-                    if(getCurrentPlayer().getBalance() >= property.getMortgageLiftingPrice()) {
-                        buttons.add("unmortgage");
-                    }
-                    buttons.add("sell");
-                    buttons.add("cancel");
+        //owned by the current player
+        if(property.isOwned() && property.getOwner() == getCurrentPlayer()) {
+
+            //property is mortgaged
+            if(property.isMortgaged()) {
+                if(getCurrentPlayer().getBalance() >= property.getMortgageLiftingPrice()) {
+                    buttons.add("unmortgage");
                 }
-                else {
-                   ColorGroup group = property.getColorGroup();
-
-                    //for mortgage button: check if there are any buildings on the color group
-                    if(group.canMortgage(property)) {
-                        buttons.add("mortgage");
-                    }
-
-                    //for sell button: check if there are any buildings on the group
-                    if(!group.checkBuildings()) {
-                        buttons.add("sell");
-                    }
-
-                    //for add house button:
-                    //for sell house button:
-                    //for add hotel button:
-                    //for sell hotel button:
-                }
+                buttons.add("sell");
+                buttons.add("cancel");
             }
-            //the property is not owned by the current player, but it is owned
-            else if(property.isOwned()){
-                //if the property is mortgaged, only cancel button
-                if(property.isMortgaged())
-                    buttons.add("cancel");
-                else {
-                    buttons.add("pay rent");
-                }
-            }
-            //the property is not owned, buy or auction
+            //property is not mortgaged
             else {
-                if(currentPlayer.getBalance() >= property.getBuyingPrice()) {
-                    buttons.add("buy");
+                ColorGroup group = property.getColorGroup();
+                //for mortgage button: check if there are any buildings on the color group
+                if(group.canMortgage(property)) {
+                    buttons.add("mortgage");
                 }
-                buttons.add("auction");
+                //for sell button: check if there are any buildings on the group
+                if(!group.checkBuildings()) {
+                    buttons.add("sell");
+                }
+
+                //TODO
+                //for add house button:
+                //for sell house button:
+                //for add hotel button:
+                //for sell hotel button:
             }
         }
-
+        //the property is not owned by the current player, but it is owned
+        else if(property.isOwned()){
+            //if the property is mortgaged, only cancel button
+            if(property.isMortgaged())
+                buttons.add("cancel");
+            else {
+                buttons.add("pay rent");
+            }
+        }
+        //the property is not owned, buy or auction
+        else {
+            if(currentPlayer.getBalance() >= property.getBuyingPrice()) {
+                buttons.add("buy");
+            }
+            buttons.add("auction");
+        }
         //if owned by someone else and not mortgaged -- pay rent button
         //if owned by someone else and mortgaged, add text mortgsaged and okay button
 
@@ -229,19 +225,6 @@ public class GameEngine {
 
 
 
-
-    public boolean isBuyDisabled() {
-        if(getCurrentSquare().getType() != SquareType.PROPERTY) {
-            System.out.println("Not property");
-            return true;
-        }
-        else if(((Property)getCurrentSquare()).isOwned() ||
-                ((Property)getCurrentSquare()).getBuyingPrice() > getCurrentPlayer().getBalance()) {
-            return true;
-        }
-        return false;
-    }
-
     public void initializeGame() {
 
     }
@@ -300,12 +283,43 @@ public class GameEngine {
     }
 
     //todo
-    public boolean sellProperty(int index, ColorGroup group) {
+    public boolean sellProperty(int index) {
         return true;
     }
 
+    public boolean sellProperty(int index,String playerName, int amount) {
+        if(index < 0) { //sell current square
+            Property property = (Property)getCurrentSquare();
+            for(Player player:players) {
+                if(player.getName().equals(playerName)){
+                    property.setOwner(player);
+                    player.pay(amount);
+                    player.buyProperty(property);
+                    currentPlayer.gain(amount);
+                    currentPlayer.sellProperty(property);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-    public boolean addHouse() {
+
+    public boolean auctionProperty(String playerName, int amount) {
+        Property property = (Property)getCurrentSquare();
+        for(Player player:players) {
+            if(player.getName().equals(playerName)){
+                property.setOwner(player);
+                player.pay(amount);
+                player.buyProperty(property);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean addHouse(int index) {
         //SORU: player istediği zaman istediği kareye ev kurabiliyor mu - öyleyse current square olmayacak!!!
         Property property = (Property)getCurrentSquare();
         ColorGroup group = property.getColorGroup();
@@ -319,34 +333,45 @@ public class GameEngine {
     }
 
     //todo
-    public boolean sellHouse(int index, ColorGroup group) {
+    public boolean sellHouse(int index) {
         return true;
     }
 
     //todo
-    public boolean addHotel(int index, ColorGroup group) {
+    public boolean addHotel(int index) {
         return true;
     }
 
     //todo
-    public boolean sellHotel(int index, ColorGroup group) {
+    public boolean sellHotel(int index) {
         return true;
     }
 
     //todo
-    public boolean mortgageProperty(int index, ColorGroup group) {
-        return true;
+    public void mortgageProperty(int index) {
+        if(index < 0) {
+            Property property = (Property)getCurrentSquare();
+            getCurrentPlayer().gain(property.getMortgagePrice());
+            property.mortgageProperty();
+        }
+        //todo else for picking the square
     }
 
     //todo
-    public boolean unmortgageProperty(int index, ColorGroup group) {
-        return true;
+    public void unmortgageProperty(int index) {
+        if(index < 0) {
+            Property property = (Property)getCurrentSquare();
+            getCurrentPlayer().pay(property.getMortgageLiftingPrice());
+            property.unmortgageProperty();
+        }
+        //todo else for picking the square
     }
 
     //todo ??
     public void nextTurn() {
         turn++;
         currentPlayer = players.get(turn % 4);
+        playerPassedStart = false;
     }
 
     public Player getCurrentPlayer() {
@@ -368,6 +393,9 @@ public class GameEngine {
         int roll1 = min + (int)(Math.random() * ((max - min) + 1));
         int roll2 = min + (int)(Math.random() * ((max - min) + 1));
         int position = currentPlayer.getPosition();
+        if(position + roll1 + roll2 > 40) {
+            playerPassedStart = true;
+        }
         position = (position + roll1 + roll2) % 40;
         currentPlayer.setPosition(position); //todo if the player is suspended condition -- double roll
         return roll1 + roll2;
@@ -386,6 +414,7 @@ public class GameEngine {
             drawnCard = board.drawChestCard();
         }
     }
+
     public String getCardInfo() {
         return drawnCard.getPrompt();
     }
@@ -401,7 +430,7 @@ public class GameEngine {
     }
 
     public VBox startInfo() {
-        Start start = (Start)getCurrentSquare();
+        Start start = (Start)board.getSquares()[0];
         VBox vBox = new VBox();
         Text startText = new Text("START SQUARE");
         Text startInfo = new Text("Collect " + start.getMoney() + " dollars!");
@@ -409,9 +438,9 @@ public class GameEngine {
        return vBox;
     }
 
-    //todo
+    //todo vakit kalırsa player starta gelince dur pop-up sonra tekrar ilerlet
+    //checks if player passed the start square
     public boolean passesStart() {
-        return false;
+        return playerPassedStart;
     }
-
 }

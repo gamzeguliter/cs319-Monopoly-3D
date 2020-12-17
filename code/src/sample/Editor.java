@@ -64,25 +64,32 @@ public class Editor {
     public void createColorGroupForProperty(Color color, String name, int index)
     {
         ColorGroup c = new ColorGroup(name);
+        c.setColor(color);
         c.addProperty(((Property)board.squares[index]));
         board.colorGroups.add(c);
 
     }
     public void setNameForJoker(String name , int index){
+
+        if(board.squares[index].getType() == SquareType.JOKER)
         ((Joker)board.squares[index]).setName(name);
     }
 
     public void setMovementForJoker(int movement,int index ) {
+
+        if(board.squares[index].getType() == SquareType.JOKER)
         ((Joker)board.squares[index]).setMovement(movement);
     }
     public void setMoneyForJoker(int money,int index)
     {
 
+        if(board.squares[index].getType() == SquareType.JOKER)
         ((Joker)board.squares[index]).setMoney(money);
 
     }
     public void setJailTimeForJoker(int suspendedTourNo,int index)
     {
+        if(board.squares[index].getType() == SquareType.JOKER)
         ((Joker)board.squares[index]).setSuspendedTourNo(suspendedTourNo);
 
     }
