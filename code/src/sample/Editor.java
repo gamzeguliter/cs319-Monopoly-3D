@@ -4,7 +4,6 @@ import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 
 import java.awt.*;
-import java.util.concurrent.SynchronousQueue;
 
 public class Editor {
 
@@ -15,8 +14,8 @@ public class Editor {
 
     public Editor(){
      board = new Board();
-    }
 
+    }
     public Square getSquare(int index) {
         return board.squares[index];
     }
@@ -27,8 +26,9 @@ public class Editor {
 
     /// creates a new Chest and Community square while editing
     public void createNewChestCommunity(int index){
-        // todo -> will be changed
+
              board.squares[index] = new ChanceAndCommunityChest(true);
+
     }
 
     /// creates a new Joker square while editing
@@ -44,9 +44,6 @@ public class Editor {
         //todo -> buraya bak geri, name de minor bir sorun olabilir
         board.squares[index] = new Property(name, colorGroup, buyingPrice,rentRate,mortgageRate);
         colorGroup.addProperty((Property) board.squares[index]);
-
-        if(board.squares[index].getType() == SquareType.PROPERTY )
-            System.out.println("cp2");
     }
     // Below methods are going to be called in the editor screen in order to process user input
      public Property getProperty(int index){
@@ -55,8 +52,6 @@ public class Editor {
 
 
     public void setNameForProperty(String name , int index){
-
-        if(board.squares[index].getType() == SquareType.PROPERTY)
         ((Property)board.squares[index]).setName(name);
     }
 
@@ -69,14 +64,10 @@ public class Editor {
     public void createColorGroupForProperty(Color color, String name, int index)
     {
         ColorGroup c = new ColorGroup(name);
-        c.setColor(color);
-        System.out.println("cp 1 "+ color );
-      //  if(board.squares[index].getType() != SquareType.JOKER && board.squares[index].getType() != SquareType.CHANCEANDCOMMUNITYCHEST){
         c.addProperty(((Property)board.squares[index]));
-
         board.colorGroups.add(c);
-    }
 
+    }
     public void setNameForJoker(String name , int index){
         ((Joker)board.squares[index]).setName(name);
     }
