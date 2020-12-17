@@ -3,7 +3,7 @@ package sample;
 import java.util.ArrayList;
 
 public class CardDeck {
-   
+
     Card[] cards;
     String[] chanceActions;
     String[] chancePrompts;

@@ -64,6 +64,7 @@ public class Editor {
     public void createColorGroupForProperty(Color color, String name, int index)
     {
         ColorGroup c = new ColorGroup(name);
+        c.setColor(color);
         c.addProperty(((Property)board.squares[index]));
         board.colorGroups.add(c);
 
