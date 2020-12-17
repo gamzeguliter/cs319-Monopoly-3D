@@ -263,19 +263,20 @@ public class GameScreen extends Screen {
         HBox hbox = new HBox();
         Text playerName = new Text("Enter player: ");
         TextField player = new TextField();
-        player.setEditable(true);
+        //player.setEditable(true);
         hbox.getChildren().addAll(playerName, player);
 
         HBox hbox2 = new HBox();
         Text amountPrompt = new Text("Enter amount: ");
         TextField amount = new TextField();
-        amount.setEditable(true);
+        //amount.setEditable(true);
         hbox2.getChildren().addAll(amountPrompt, amount);
 
-        auction.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        auction.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
         vbox.getChildren().addAll(auctionHeader, propertyName, hbox, hbox2);
-        auction.getDialogPane().setContent(vbox);
 
+
+        auction.getDialogPane().setContent(vbox);
         auction.setResultConverter(button -> {
             if (button == ButtonType.OK) {
 
@@ -284,11 +285,14 @@ public class GameScreen extends Screen {
             return null;
         });
 
+        auction.show();
         Optional<Pair<String, String>> result = auction.showAndWait();
         result.ifPresent(pair -> {
+            System.out.println(player.getText());
             gameEngine.auctionProperty(player.getText(), Integer.parseInt(amount.getText())); //if index is -1, it is the current square
-            auction.close();
+            //auction.close();
         });
+
     }
 
     private void createPropertyDialog() {
