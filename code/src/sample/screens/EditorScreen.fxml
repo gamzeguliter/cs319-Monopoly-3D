@@ -282,7 +282,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-                        <TextField style="-fx-font-size: 15;" />
+                        <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -290,7 +290,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="60.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
-                        <TextField style="-fx-font-size: 15;" />
+                        <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
                      </children></HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
@@ -309,7 +309,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Name:" />
-                        <TextField style="-fx-font-size: 15;" />
+                        <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
                      </children>
                   </HBox>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Movement:" />
@@ -322,13 +322,13 @@
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Amount:" />
-                        <TextField style="-fx-font-size: 15;" />
+                        <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 25;" text="Money:" />
-                        <TextField style="-fx-font-size: 15;" />
+                        <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
                      </children>
                   </HBox>
                </children></VBox>
@@ -349,7 +349,7 @@
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <ComboBox prefHeight="33.0" prefWidth="258.0" promptText="Select color..." style="-fx-font-size: 20;" />
+                  <ComboBox prefHeight="33.0" prefWidth="258.0" promptText="Select color..." style="-fx-font-size: 20; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
                         <Button mnemonicParsing="false" text="+" />
@@ -364,17 +364,54 @@
        <header>
            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="New Color Groups" />
        </header>
+         <buttonTypes>
+            <ButtonType fx:constant="CANCEL" />
+            <ButtonType fx:constant="OK" />
+         </buttonTypes>
+         <content>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                        <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Color:" />
+                        <ColorPicker style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
        </DialogPane>
-      <HBox prefHeight="100.0" prefWidth="200.0" />
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <VBox alignment="CENTER" layoutX="800.0" layoutY="0.0" prefHeight="700.0" prefWidth="600.0" spacing="20.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 40;">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
-         </children></HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" />
-      <ColorPicker />
-      <TextField />
-      <VBox prefHeight="200.0" prefWidth="100.0" />
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Color:" />
+            <Label style="-fx-font-size: 50; -fx-border-color: BLACK;" text="Default Board" />
+            <HBox alignment="CENTER" prefHeight="129.0" prefWidth="255.0" spacing="45.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mortgage  Rate" />
+                  <TextField prefHeight="51.0" prefWidth="142.0" style="-fx-font-size: 25; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="150.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Currency" />
+                  <TextField prefHeight="51.0" prefWidth="141.0" style="-fx-font-size: 25; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="140.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rent Rate" />
+                  <TextField prefHeight="51.0" prefWidth="142.0" style="-fx-font-size: 25; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" text="Save" />
+            <Button mnemonicParsing="false" text="Cancel" />
+         </children>
+      </VBox>
 
    </children>
 </AnchorPane>
