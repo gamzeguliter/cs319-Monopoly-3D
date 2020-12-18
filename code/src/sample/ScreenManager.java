@@ -1,47 +1,29 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import sample.screens.EditorScreen;
-import sample.screens.GameScreen;
 import sample.screens.MainMenuScreen;
+import sample.screens.Screen;
 
 public class ScreenManager extends Application {
-
-    int position = 0;
-
     Screen screen;
+    Stage stage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        MainMenuScreen mainMenuScreen = new MainMenuScreen();
-        Scene mainMenuScene = mainMenuScreen.getScene();
+        screen = new MainMenuScreen(this);
+        stage = primaryStage;
 
-        //Adding the scene to Stage
-        primaryStage.setScene(mainMenuScene);//game or editor--burdan değiştirin
-
-        //Displaying the contents of the stage
+        primaryStage.setScene(screen.getScene());
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private static void fileManagerTest() {
-        JSONObject jo = new JSONObject();
-        JSONArray jr = new JSONArray();
-        jr.put(1);
-        jr.put(2);
-        jr.put(3);
-        jo.put("arr", jr);
-
-        System.out.println(((JSONArray) jo.get("arr")).get(1));
+    public void changeScreen(Screen nextScreen) {
+        screen = nextScreen;
+        stage.setScene(screen.getScene());
     }
 }

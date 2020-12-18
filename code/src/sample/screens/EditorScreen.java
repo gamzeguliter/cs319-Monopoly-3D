@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import org.w3c.dom.css.Rect;
+import sample.ScreenManager;
 import sample.squares.ColorGroup;
 import sample.Editor;
 import sample.GameEngine;
@@ -30,7 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
-public class EditorScreen{
+public class EditorScreen extends Screen{
     // properties
     private Scene scene;
     GridPane boardPane;
@@ -56,7 +57,8 @@ public class EditorScreen{
     DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("toggleSquareType.fxml"));
 
     // constructors
-    public EditorScreen() throws IOException {
+    public EditorScreen(ScreenManager screenManager) throws IOException {
+        super(screenManager);
         editor = new Editor();
         position = 0;
         gameEngine = new GameEngine();
@@ -64,7 +66,7 @@ public class EditorScreen{
     }
 
     // private methods
-    private void setScene() throws IOException {
+    private void setScene() {
         //recs = getTiles();
         scene = new Scene(editorScreen);
         setControls();
@@ -343,6 +345,7 @@ public class EditorScreen{
 
 
  */
+        /*
         Dialog propertyEditDialog = new Dialog();
         propertyEditDialog.setDialogPane(propertyEditDP);
 
@@ -445,6 +448,7 @@ public class EditorScreen{
 
             colorGroupDialog.getDialogPane().setContent(vbox3);
             colorGroupDialog.show();
+
         });
 
         HBox hb5 = new HBox();
@@ -480,7 +484,7 @@ public class EditorScreen{
             // todo ->  processing user input : color group is left, checking the corner cases for the unchanged boxes
             editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
             editor.setNameForProperty(propertyName.getText() , position);
-        });
+        });*/
     }
 
     //opening joker edit window

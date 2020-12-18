@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.util.Pair;
 import sample.GameEngine;
 import sample.Player;
+import sample.ScreenManager;
 import sample.squares.Property;
 import sample.squares.SquareType;
 
@@ -38,7 +39,8 @@ public class GameScreen extends Screen {
     Font font = Font.font("Source Sans Pro", 20);
     int position;
     // constructors
-    public GameScreen() {
+    public GameScreen(ScreenManager screenManager) {
+        super(screenManager);
         gameEngine = new GameEngine();
         boardPane = getSquares();
         setScene();
@@ -620,13 +622,4 @@ public class GameScreen extends Screen {
     // public methods
 
     public Scene getScene() { return scene; }
-
-    public Scene drawScene() throws IOException {
-        setScene();
-        return scene;
-    }
-
-
-
-
 }

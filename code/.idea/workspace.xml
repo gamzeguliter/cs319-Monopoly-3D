@@ -19,7 +19,15 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try" />
+    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try">
+      <change afterPath="$PROJECT_DIR$/src/sample/ScreenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/Screen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/Screen.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +37,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -50,13 +59,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+    <configuration name="ScreenManager" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sample.ScreenManager" />
       <module name="code" />
       <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../javafx-sdk-11.0.2/lib --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
@@ -64,7 +74,10 @@
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="" />
@@ -184,32 +197,46 @@
     <option name="LAST_COMMIT_MESSAGE" value="fxml file try" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="384" y="112" key="#Project_Structure" timestamp="1608071284653">
-      <screen x="0" y="25" width="1792" height="1021" />
+    <state x="329" y="0" key="#Project_Structure" timestamp="1608319436763">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="329" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1608319436763" />
     <state x="384" y="112" key="#Project_Structure/0.25.1792.1021@0.25.1792.1021" timestamp="1608071284653" />
-    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608071546931">
-      <screen x="0" y="25" width="1792" height="1021" />
+    <state x="309" y="135" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608322509896">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="309" y="135" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1608322509896" />
     <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1021@0.25.1792.1021" timestamp="1608071546931" />
-    <state width="1750" height="275" key="GridCell.Tab.0.bottom" timestamp="1608154676966">
-      <screen x="0" y="25" width="1792" height="1021" />
+    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser" timestamp="1608319788392">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="574" y="119" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1608319788392" />
+    <state x="498" y="210" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1608322508023">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="210" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1608322508023" />
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom" timestamp="1608323589861">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1608323589861" />
     <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676966" />
     <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742648" />
-    <state width="1750" height="275" key="GridCell.Tab.0.center" timestamp="1608154676965">
-      <screen x="0" y="25" width="1792" height="1021" />
+    <state width="1493" height="210" key="GridCell.Tab.0.center" timestamp="1608323589861">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1608323589861" />
     <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
     <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
-    <state width="1750" height="275" key="GridCell.Tab.0.left" timestamp="1608154676965">
-      <screen x="0" y="25" width="1792" height="1021" />
+    <state width="1493" height="210" key="GridCell.Tab.0.left" timestamp="1608323589860">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1608323589860" />
     <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
     <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
-    <state width="1750" height="275" key="GridCell.Tab.0.right" timestamp="1608154676965">
-      <screen x="0" y="25" width="1792" height="1021" />
+    <state width="1493" height="210" key="GridCell.Tab.0.right" timestamp="1608323589861">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1608323589861" />
     <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
     <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
     <state x="179" y="111" key="MergeDialog" timestamp="1608163193165">
@@ -236,5 +263,9 @@
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state x="644" y="250" key="git4idea.branch.GitSmartOperationDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608142618337" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1608322317194">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1608322317194" />
   </component>
 </project>

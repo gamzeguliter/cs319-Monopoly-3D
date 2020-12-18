@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+    <DialogPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:id="propertySquareEdit" maxHeight="400.0" maxWidth="300.0" minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
+        <buttonTypes>
+            <ButtonType fx:constant="CANCEL" />
+            <ButtonType fx:constant="OK" />
+        </buttonTypes>
+        <header>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Property Square" />
+        </header>
+        <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                <children>
+                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                        <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+                            <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+                        </children>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin></HBox>
+                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="60.0">
+                        <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
+                            <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+                        </children></HBox>
+                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                        <children>
+                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Color Group:" />
+                            <Button mnemonicParsing="false" style="-fx-font-size: 15;" text="Select" />
+                        </children></HBox>
+                </children></VBox>
+        </content></DialogPane>
+
