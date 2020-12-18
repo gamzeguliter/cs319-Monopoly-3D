@@ -4,7 +4,6 @@ import javafx.scene.paint.Color;
 import org.json.JSONObject;
 import sample.Board;
 import sample.Player;
-import sample.PropertyInformation;
 
 /* TODO IMPORTANT ISSUE:
 When storing property in file system, only store name, colorgroup, buying price
@@ -194,7 +193,7 @@ public class Property extends Square {
         else
         {
             setOwner(player);
-            player.pay(buyingPrice);
+            player.buyProperty(this, buyingPrice);
             return true;
         }
     }
@@ -215,13 +214,6 @@ public class Property extends Square {
         int rentHotel = rent * 65;
         int housePrice = rent * 10;
         int hotelPrice = 5 * housePrice;
-    }
-
-    public PropertyInformation propertyInformation() {
-        PropertyInformation info = new PropertyInformation(isOwned, name, colorGroup.getColor(),
-                buyingPrice, rent, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses, rentHotel,
-                housePrice, hotelPrice, noOfHouses, hotel, owner, mortgagePrice, mortgageLiftingPrice);
-        return info;
     }
 
     public int getMortgagePrice() {

@@ -34,7 +34,6 @@ public class ColorGroup {
         properties.remove(property);
     }
 
-    //todo: addHotel, sellHouse/hotel + to sell a property no house should be present on colorgroup etc
 
     //to add a house: the set must be complete,
     // the player should have balance,
@@ -53,7 +52,6 @@ public class ColorGroup {
         }
         return true;
     }
-    //todo rent colorset vs with house vs
 
     public void completeRentUpdate() {
         for(Property property : properties) {

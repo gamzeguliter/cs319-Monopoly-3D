@@ -20,7 +20,7 @@ public class CardDeck {
         amount = 0;
 
         /*
-        todo x leri modify et
+        todo prompt update
          */
 
         //Initializing Chance Prompts and Actions

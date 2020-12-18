@@ -1,15 +1,15 @@
 package sample.screens;
 
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.io.IOException;
+import sample.ScreenManager;
 
 public abstract class Screen {
-    Scene scene;
+    protected Scene scene;
+    ScreenManager screenManager;
 
-    public Screen() {
+    public Screen(ScreenManager screenManager) {
+        this.screenManager = screenManager;
     }
 
-    public abstract Scene drawScene() throws IOException;
+    public abstract Scene getScene();
 }

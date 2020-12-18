@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane fx:id="toggleSquareType" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size:20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+        <buttonTypes>
+            <ButtonType fx:constant="CANCEL" />
+            <ButtonType fx:constant="NEXT" />
+        </buttonTypes>
+        <header>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Select Square Type:" textAlignment="CENTER" />
+        </header>
+        <content>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                <children>
+                    <RadioButton mnemonicParsing="false" selected="true" style="-fx-font-size: 25;" text="Property" toggleGroup="$squareTypeGroup">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="squareTypeGroup" />
+                        </toggleGroup></RadioButton>
+                    <RadioButton mnemonicParsing="false" style="-fx-font-size: 25;" text="Joker" toggleGroup="$squareTypeGroup" />
+                    <RadioButton mnemonicParsing="false" style="-fx-font-size: 25;" text="Chance" toggleGroup="$squareTypeGroup" />
+                    <RadioButton mnemonicParsing="false" style="-fx-font-size: 25;" text="Community Chest" toggleGroup="$squareTypeGroup" />
+                </children>
+            </VBox>
+        </content></DialogPane>
