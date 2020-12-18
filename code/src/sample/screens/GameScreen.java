@@ -32,13 +32,11 @@ public class GameScreen extends Screen {
     Text[] playerTexts;
     Text turnText;
     Text diceText;
-
     Button btnRollDice;
     Button btnEndTurn;
-
     GameEngine gameEngine;
     Font font = Font.font("Source Sans Pro", 20);
-
+    int position;
     // constructors
     public GameScreen() {
         gameEngine = new GameEngine();
@@ -470,7 +468,10 @@ public class GameScreen extends Screen {
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
                     //tile.setFill(Color.ORCHID);
-
+                    tile.setOnMouseClicked(event -> {
+                        position = pos;
+                    System.out.println("Position " +position );
+                    });
                     //set tile colors
                     System.out.println(gameEngine.getSquare(pos).getType());
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
@@ -561,7 +562,10 @@ public class GameScreen extends Screen {
                     tile.setX(col * 10);
                     tile.setY(row * 10);
                     tile.setStroke(Color.BLACK);
-
+                    tile.setOnMouseClicked(event -> {
+                        position = pos;
+                        System.out.println("Position " +position );
+                    });
                     //determine square colors
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
                         Property property = (Property) gameEngine.getSquare(pos);
@@ -621,4 +625,8 @@ public class GameScreen extends Screen {
         setScene();
         return scene;
     }
+
+
+
+
 }
