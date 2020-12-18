@@ -34,49 +34,6 @@ public class GameEngine {
         playerPassedStart = false;
     }
 
-    public void updateGame() {
-
-    }
-
-    /*public void checkSquare() {
-        if(currentPlayer.isInJail()) {
-            //todo
-        }
-        else {
-            //Joker square actions
-            if(getCurrentSquare().getType() == SquareType.JOKER) {
-                Joker joker = (Joker)getCurrentSquare();
-                Player player = getCurrentPlayer();
-                if(joker.isMoneyAction()) {
-                    player.gain(joker.getMoney()); //getMoney return negative if the amount is to be reduced
-                }
-                if(joker.isMovementAction()) {
-                    //todo joker square de position update edilse de ekranda direk moveluyor duraklaması lazım
-                    player.setPosition(player.getPosition() + joker.getMovement());
-                }
-                else if(joker.isSuspended()) {
-                    player.suspend(joker.getSuspendedTourNo());
-                }
-            }
-            //Chance and community chest actions
-            else if(getCurrentSquare().getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
-                //todo - draw card
-            }
-            //Start square -- adds money to players who pass it
-            else if(getCurrentSquare().getType() == SquareType.START) {
-                getCurrentPlayer().gain(((Start)getCurrentSquare()).getMoney());
-                //todo add money
-            }
-            //Property square
-            else {
-                Property property = (Property)getCurrentSquare();
-                if(property.isOwned()) {
-                    takeRent();
-                }
-                //todo else buy button enabled --> buy no enabled if player balance is smaller
-            }
-        }
-    }*/
 
     public VBox getPropertyContent() {
         Property property = (Property) getCurrentSquare();
@@ -116,12 +73,22 @@ public class GameEngine {
                 if(!group.checkBuildings()) {
                     buttons.add("sell");
                 }
-
-                //TODO
                 //for add house button:
+                if(group.canAddHouse(property, getCurrentPlayer())) {
+                    buttons.add("add house");
+                }
                 //for sell house button:
+                if(group.canSellHouse(property, getCurrentPlayer())) {
+                    buttons.add("sell house");
+                }
                 //for add hotel button:
+                if(group.canAddHotel(property, getCurrentPlayer())) {
+                    buttons.add("add hotel");
+                }
                 //for sell hotel button:
+                if(group.canSellHotel(property)) {
+                    buttons.add("sell hotel");
+                }
             }
         }
         //the property is not owned by the current player, but it is owned
@@ -140,19 +107,6 @@ public class GameEngine {
             }
             buttons.add("auction");
         }
-        //if owned by someone else and not mortgaged -- pay rent button
-        //if owned by someone else and mortgaged, add text mortgsaged and okay button
-
-        //if owned by current player
-        //if mortgaged add unmortgage, sell, cancel button --
-        // if unmortgage is clicked write unmortgage price and confirmation pane
-
-        //if sell, add sell dialog, after the sell, ask the buyer if they want to lift mortgage
-        //if they don't want to-- they pay 10% to bank
-
-        //if owned by current player and unmortgaged
-        //sell(check condition), add/sell house(check condition)
-
         return buttons;
     }
 
@@ -175,7 +129,6 @@ public class GameEngine {
         return vbox;
     }
 
-    //todo hem checksquares hem jokeractions olarak var
     public void jokerActions() {
         Joker joker = (Joker)getCurrentSquare();
         Player player = getCurrentPlayer();
@@ -224,7 +177,6 @@ public class GameEngine {
     }
 
 
-
     public void initializeGame() {
 
     }
@@ -269,7 +221,6 @@ public class GameEngine {
         return positions;
     }
 
-    // TOdo diagramda var ama burada nasıl olacak bilemedik
     public Square getCurrentSquare() {
         return board.squares[currentPlayer.getPosition()];
     }
@@ -278,15 +229,15 @@ public class GameEngine {
         return board.squares[index];
     }
 
-    public boolean buyProperty() {
-        return ((Property)getCurrentSquare()).buyProperty(getCurrentPlayer());
+    public void buyProperty() {
+        Property property = (Property)getCurrentSquare();
+        property.buyProperty(currentPlayer);
+        if(property.getColorGroup().isComplete(currentPlayer)) {
+            property.getColorGroup().completeRentUpdate();
+        }
     }
 
-    //todo
-    public boolean sellProperty(int index) {
-        return true;
-    }
-
+    //todo sell sırasında ya da auction sırasında alan olursa isComplete check
     public boolean sellProperty(int index,String playerName, int amount) {
         if(index < 0) { //sell current square
             Property property = (Property)getCurrentSquare();
@@ -301,9 +252,9 @@ public class GameEngine {
                 }
             }
         }
+        //todo else for picking the square
         return false;
     }
-
 
     public boolean auctionProperty(String playerName, int amount) {
         Property property = (Property)getCurrentSquare();
@@ -318,36 +269,38 @@ public class GameEngine {
         return false;
     }
 
-
-    public boolean addHouse(int index) {
-        //SORU: player istediği zaman istediği kareye ev kurabiliyor mu - öyleyse current square olmayacak!!!
-        Property property = (Property)getCurrentSquare();
-        ColorGroup group = property.getColorGroup();
-        return group.addHouse(property, currentPlayer);
-        /*for(ColorGroup group : colorGroups) {
-            if(property.getColorGroup() == group.getGroupName()) { //TEKRAR BAK: string comparison with == ?
-                return group.addHouse(property, currentPlayer);
-            }
+    public void addHouse(int index) {
+        if(index < 0) {
+            Property property = (Property)getCurrentSquare();
+            property.addHouse();
         }
-        return false;*/
+        //todo else for picking the square
     }
 
-    //todo
-    public boolean sellHouse(int index) {
-        return true;
+    public void sellHouse(int index) {
+        if(index < 0) {
+            Property property = (Property)getCurrentSquare();
+            property.sellHouse();
+        }
+        //todo else for picking the square
     }
 
-    //todo
-    public boolean addHotel(int index) {
-        return true;
+    public void addHotel(int index) {
+        if(index < 0) {
+            Property property = (Property)getCurrentSquare();
+            property.addHotel();
+        }
+        //todo else for picking the square
     }
 
-    //todo
-    public boolean sellHotel(int index) {
-        return true;
+    public void sellHotel(int index) {
+        if(index < 0) {
+            Property property = (Property)getCurrentSquare();
+            property.addHotel();
+        }
+        //todo else for picking the square
     }
 
-    //todo
     public void mortgageProperty(int index) {
         if(index < 0) {
             Property property = (Property)getCurrentSquare();
@@ -378,7 +331,6 @@ public class GameEngine {
         return currentPlayer;
     }
 
-    //todo rent i kendi check edecek sistem yaratmalı -- check if mortgaged
     public void takeRent() {
         Property property = (Property)getCurrentSquare();
         Player owner = property.getOwner();
@@ -413,22 +365,197 @@ public class GameEngine {
         else {
             drawnCard = board.drawChestCard();
         }
+        System.out.println(drawnCard.getAction() + "----" +drawnCard.getPrompt());
     }
 
     public String getCardInfo() {
-        return drawnCard.getPrompt();
+        if(((ChanceAndCommunityChest)getCurrentSquare()).isChance()) {
+            switch(drawnCard.getAction()) {
+                case ("Go to a place"):
+                    boolean propertyPresent = false;
+                    //we want to move player, same index shouldn't come
+                    for (int i = 0; i < 40; i++) {
+                        if (board.getSquares()[i].getType() == SquareType.PROPERTY) {
+                            propertyPresent = true;
+                            break;
+                        }
+                    }
+                    if (propertyPresent) {
+                        double random = Math.random();
+                        int index = (int) (random * 39);
+                        System.out.println("index " + index);
+                        while (board.getSquares()[index].getType() != SquareType.PROPERTY) {
+                            System.out.println("inside");
+                            random = Math.random();
+                            index = (int) (random * 39);
+                            System.out.println("index " + index);
+                        }
+                        drawnCard.setPromptInfo(((Property)(board.getSquares()[index])).getName());
+                        drawnCard.amount = index;
+                    } else {
+                        drawnCard.setPromptInfo("Start");
+                        drawnCard.amount = 0;
+                    }
+                    break;
+                case ("Earn money"):
+                    drawnCard.setPromptInfo(" " + board.currency);
+                    break;
+                case ("Pay money for house and hotel"):
+                    drawnCard.setPromptInfo("Pay 25 " + board.currency + " for each house and 100 " +
+                            board.currency + " for each hotel you own");
+                    break;
+                case ("Pay money"):
+                    drawnCard.setPromptInfo(" "+ board.currency);
+                    break;
+                case ("Pay each player"):
+                    drawnCard.setPromptInfo(" " + board.currency + " to each player");
+                    break;
+            }
+        }
+        else {
+            switch (drawnCard.getAction()) {
+                case ("Pay money"):
+                    drawnCard.setPromptInfo(" " + board.currency);
+                    break;
+                case ("Earn x from each player"):
+                    drawnCard.setPromptInfo(" " + board.currency + " from each player");
+                    break;
+                case ("Earn money"):
+                    drawnCard.setPromptInfo(" " + board.currency);
+                    break;
+                case ("Pay money for house and hotel"):
+                    //house -- 40
+                    //hotel -- 110
+                    drawnCard.setPromptInfo("Pay 40 " + board.currency + " for each house and 110 " +
+                            board.currency + " for each hotel you own");
+                    break;
+            }
+        }
+        System.out.println(drawnCard.getPrompt() + "----" +drawnCard.getPromptInfo());
+        return drawnCard.getPrompt() + drawnCard.getPromptInfo();
     }
 
-    //todo
+    //implements the actions on the chance/community chest cards
     public void implementCard() {
+        //chance card -- do chance implementations
+        if(((ChanceAndCommunityChest)getCurrentSquare()).isChance()) {
+            switch(drawnCard.getAction()) {
+                case("Go to a place"):
+                    currentPlayer.setPosition(drawnCard.amount);
+                    break;
+                case("Go to nearest joker"):
+                    System.out.println("*****JOKER CHECK");
+                    int distance = 42;
+                    for(int i = 0; i < 40; i ++) {
+                        if(board.getSquares()[i].getType() == SquareType.JOKER)
+                        {
+                            int newDist = 0;
+                            //advance to start first and then move to i
+                            if(i < getCurrentPlayer().getPosition()) {
+                                newDist = 40 - getCurrentPlayer().getPosition() + i;
+                            }
+                            else {
+                                newDist = i - getCurrentPlayer().getPosition();
+                            }
+                            if(newDist < distance)
+                            {
+                                distance = newDist;
+                            }
+                        }
+                    }
+                    if(distance != 42) {
+                        currentPlayer.setPosition(getCurrentPlayerPosition() + distance % 40);
+                    }
+                    System.out.println("JOKER DIST: "+ distance);
+                    break;
+                case ("Earn money"):
+                    currentPlayer.gain(drawnCard.amount);
+                    break;
 
+                case("Go back places"):
+                    currentPlayer.setPosition(getCurrentPlayerPosition() - drawnCard.amount % 40);
+                    break;
+                case("Pay money for house and hotel"):
+                    //house -- 25
+                    //hotel -- 100
+                    int amount = 0;
+                    for(Property property : currentPlayer.ownedProperties) {
+                        if(property.isHotel()) {
+                            amount += 100;
+                        }
+                        else
+                            amount += property.getNoOfHouses() * 25;
+                    }
+                    currentPlayer.pay(amount);
+                    break;
+                case("Pay money"):
+                    currentPlayer.pay(drawnCard.amount);
+                    break;
+                case("Pay each player"):
+                    for(Player player : players) {
+                        if(!player.isOut()) {
+                            //todo soru: oyuncunun parası yetmezse?
+                            if (currentPlayer.getBalance() < drawnCard.amount) {
+                                break;
+                            } else {
+                                currentPlayer.pay(drawnCard.amount);
+                                player.gain(drawnCard.amount);
+                            }
+                        }
+                    }
+                    break;
+                case("Go to go"):
+                    currentPlayer.setPosition(0);
+                    break;
+            }
+        }
+        else {
+            switch (drawnCard.getAction()) {
+                case ("Advance to Go"):
+                    currentPlayer.setPosition(drawnCard.amount);
+                    break;
+                case ("Pay money"):
+                    currentPlayer.pay(drawnCard.amount);
+                    break;
+                case ("Earn x from each player"):
+                    for (Player player : players) {
+                        if (!player.isOut()) {
+                            if (player.getBalance() < drawnCard.amount) {
+                                currentPlayer.gain(player.getBalance());
+                                player.setBalance(0);
+                            } else {
+                                player.pay(drawnCard.amount);
+                                currentPlayer.gain(drawnCard.amount);
+                            }
+                        }
+                    }
+                    break;
+                case ("Earn money"):
+                    currentPlayer.gain(drawnCard.amount);
+                    break;
+                case ("Pay money for house and hotel"):
+                    //house -- 40
+                    //hotel -- 110
+                    int amount = 0;
+                    for (Property property : currentPlayer.ownedProperties) {
+                        if (property.isHotel()) {
+                            amount += 110;
+                        } else
+                            amount += property.getNoOfHouses() * 40;
+                    }
+                    currentPlayer.pay(amount);
+                    break;
+            }
+        }
     }
 
+    //gives each player money as they pass through the start square
     public void startAction() {
-        Start start = (Start)getCurrentSquare();
+        Start start = (Start)board.getSquares()[0];
         currentPlayer.gain(start.getMoney());
     }
 
+    //creates vbox to pass to GameScreen for start square information
     public VBox startInfo() {
         Start start = (Start)board.getSquares()[0];
         VBox vBox = new VBox();

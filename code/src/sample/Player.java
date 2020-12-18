@@ -17,7 +17,7 @@ public class Player {
     private boolean isInJail;
     private boolean isBankrupt;
     private boolean out;
-    private ArrayList<Property> ownedProperties;
+    public ArrayList<Property> ownedProperties;
 
     //constructors
     public Player(String name, Color color, int balance) {

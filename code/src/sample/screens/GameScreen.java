@@ -195,7 +195,6 @@ public class GameScreen extends Screen {
         vbox.getChildren().add(okButton);
         dialog.getDialogPane().setContent(vbox);
         dialog.showAndWait();
-
     }
 
     private void createChanceAndChestDialog() {
@@ -214,7 +213,7 @@ public class GameScreen extends Screen {
         });
         vbox.getChildren().addAll(text, okButton);
         dialog.getDialogPane().setContent(vbox);
-        dialog.showAndWait();
+        dialog.show();
     }
 
     private void createCardDialog() {
@@ -230,9 +229,9 @@ public class GameScreen extends Screen {
             updateSquares();
             updatePlayerTexts();
         });
-        vbox.getChildren().add(okButton);
+        vbox.getChildren().addAll(text, okButton);
         dialog.getDialogPane().setContent(vbox);
-        dialog.showAndWait();
+        dialog.show();
     }
 
     private void createJokerDialog() {
