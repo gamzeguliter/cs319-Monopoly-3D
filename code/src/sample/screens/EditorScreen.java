@@ -535,7 +535,6 @@ public void changeTheSquare(Rectangle s){
                 }
             });
         }
-
     }
 
 

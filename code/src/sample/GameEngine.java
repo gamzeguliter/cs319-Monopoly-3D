@@ -128,10 +128,11 @@ public class GameEngine {
         return buttons;
     }
 
-    //todo update texts
     public VBox getJokerContent() {
         VBox vbox = new VBox();
         Joker joker = (Joker)getCurrentSquare();
+        Text name = new Text(joker.getName());
+        vbox.getChildren().add(name);
         if(joker.isMoneyAction()) {
             Text money = new Text("Money: " + joker.getMoney());
             vbox.getChildren().add(money);
@@ -165,7 +166,6 @@ public class GameEngine {
         return isMoved;
     }
 
-    //todo burası amele işi oldu arrayli fişekli bi şeyler yapıp düzeltmek lazım
     public VBox defaultPropertyInfo(Property property) {
         VBox vbox = new VBox();
 
@@ -259,28 +259,21 @@ public class GameEngine {
         }
     }
 
-    //todo sell sırasında ya da auction sırasında alan olursa isComplete check
     public void sellProperty(int index, String playerName, int amount) {
+        Property property;
         if(index < 0) { //sell current square
-            Property property = (Property)getCurrentSquare();
-            for(Player player:players) {
-                if(player.getName().equals(playerName)){
-                    property.setOwner(player);
-                    player.buyProperty(property, amount);
-                    currentPlayer.sellProperty(property, amount);
-                }
-            }
+            property = (Property)getCurrentSquare();
         }
         else { //sell the clicked square
-            Property property = (Property)board.getSquares()[index];
-            for(Player player:players) {
-                if(player.getName().equals(playerName)){
-                    property.setOwner(player);
-                    player.buyProperty(property, amount);
-                    currentPlayer.sellProperty(property, amount);
-                    if(property.getColorGroup().isComplete(player)) {
-                        property.getColorGroup().completeRentUpdate();
-                    }
+            property = (Property)board.getSquares()[index];
+        }
+        for(Player player:players) {
+            if(player.getName().equals(playerName)){
+                property.setOwner(player);
+                player.buyProperty(property, amount);
+                currentPlayer.sellProperty(property, amount);
+                if(property.getColorGroup().isComplete(player)) {
+                    property.getColorGroup().completeRentUpdate();
                 }
             }
         }
@@ -666,7 +659,7 @@ public class GameEngine {
         System.out.println("here");
         for(Property property : currentPlayer.ownedProperties) {
             System.out.println(property.getName());
-            if (property == board.getSquares()[index]) { //todo çalışmayabilir property vs square
+            if (property == board.getSquares()[index]) {
                 return true;
             }
         }
