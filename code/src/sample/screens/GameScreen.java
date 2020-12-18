@@ -207,7 +207,9 @@ public class GameScreen extends Screen {
     private void createDiceDialog() {
         Dialog dialog = new Dialog();
         VBox vbox = new VBox();
-        Text result = new Text("Dice Result: " + gameEngine.rollDice());
+        int[] dieResult = gameEngine.rollDice();
+        Text die1 = new Text("Die 1: " + dieResult[0]);
+        Text die2 = new Text("Die 2: " + dieResult[1]);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
@@ -218,7 +220,7 @@ public class GameScreen extends Screen {
             dialog.close();
             checkSquare();
         });
-        vbox.getChildren().addAll(result, okButton);
+        vbox.getChildren().addAll(die1, die2, okButton);
         dialog.getDialogPane().setContent(vbox);
         dialog.show();
     }

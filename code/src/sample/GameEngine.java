@@ -408,13 +408,16 @@ public class GameEngine {
         owner.gain(property.getRent());
     }
 
-    public int rollDice() {
+    public int[] rollDice() {
+        int[] dice = new int[2];
         int min = 1;
         int max = 6;
         int roll1 = min + (int) (Math.random() * ((max - min) + 1));
         int roll2 = min + (int) (Math.random() * ((max - min) + 1));
+        dice[0] = roll1;
+        dice[1] = roll2;
         diceResult = roll1 + roll2;
-        return diceResult;
+        return dice;
     }
 
     public void movePlayer() {
