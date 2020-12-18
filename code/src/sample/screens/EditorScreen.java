@@ -18,6 +18,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import org.w3c.dom.css.Rect;
+import sample.ScreenManager;
 import sample.squares.ColorGroup;
 import sample.Editor;
 import sample.GameEngine;
@@ -30,7 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
-public class EditorScreen{
+public class EditorScreen extends Screen{
     // properties
     private Scene scene;
     GridPane boardPane;
@@ -57,7 +58,8 @@ public class EditorScreen{
     DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("toggleSquareType.fxml"));
 
     // constructors
-    public EditorScreen() throws IOException {
+    public EditorScreen(ScreenManager screenManager) throws IOException {
+        super(screenManager);
         editor = new Editor();
         position = 0;
         gameEngine = new GameEngine();
@@ -65,7 +67,7 @@ public class EditorScreen{
     }
 
     // private methods
-    private void setScene() throws IOException {
+    private void setScene() {
         //recs = getTiles();
         scene = new Scene(editorScreen);
         setControls();
@@ -296,67 +298,44 @@ public class EditorScreen{
 
     //the property dialog
     private void openPropertyDialog() {
+        String colorGroup = "Blue";
+        Font font = new Font("Source Sans Pro", 20);
+        Font fonth = new Font("Source Sans Pro", 30);
+        Font fonts = new Font("Source Sans Pro", 10);
+        Dialog mainPropertyDialog = new Dialog();
+        mainPropertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Dialog propertyEditDialog = new Dialog();
-        propertyEditDialog.setDialogPane(propertyEditDP);
+        Text header = new Text("Property Square");
+        header.setFont(fonth);
+        HBox hb1 = new HBox();
+        hb1.getChildren().addAll(header);
 
-        VBox vBox = (VBox) propertyEditDialog.getDialogPane().getContent();
+        Label label1 = new Label("Name:");
+        label1.setFont(font);
+        TextField propertyName = new TextField();
+        propertyName.setFont(fonts);
+        propertyName.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
+        propertyName.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(2),BorderStroke.MEDIUM)));
+        HBox hb2 = new HBox();
+        hb2.getChildren().addAll(label1, propertyName);
+        hb2.setSpacing(10);
 
-        HBox nameBox = (HBox) vBox.getChildren().get(0);
-        HBox priceBox = (HBox) vBox.getChildren().get(1);
-        HBox colorBox = (HBox) vBox.getChildren().get(2);
+        Label label2 = new Label("Price:");
+        label2.setFont(font);
+        TextField propertyPrice = new TextField("0");
+        propertyPrice.setFont(fonts);
+        propertyPrice.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
+        propertyPrice.setBorder(new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(2),BorderStroke.MEDIUM)));
+        HBox hb4 = new HBox();
+        hb4.getChildren().addAll(label2, propertyPrice);
+        hb4.setSpacing(10);
 
-        TextField propertyName = (TextField) nameBox.getChildren().get(1);
-        TextField propertyPrice = (TextField) priceBox.getChildren().get(1);
-        Button color = (Button) colorBox.getChildren().get(1);
+        Label label3 = new Label("Color Group: " + colorGroup);
+        label3.setFont(font);
+        Button color = new Button("Select");
+        color.setFont(font);
 
-
-        //selecting the color group
-        color.setOnMouseClicked(event -> {
-            //adding a new color
-            Dialog selectColorDialog = new Dialog();
-            selectColorDialog.setDialogPane(selectColorGroupDP);
-            VBox vbox = (VBox)selectColorDialog.getDialogPane().getContent();
-            HBox hbox =(HBox) vbox.getChildren().get(1);
-            Button add = (Button)hbox.getChildren().get(0);
-
-            add.setOnMouseClicked(event2 -> {
-                Dialog addColorGroupDialog = new Dialog();
-                addColorGroupDialog.setDialogPane(addColorGroupDP);
-                VBox vbox2 = (VBox)addColorGroupDialog.getDialogPane().getContent();
-                HBox hbox2 =(HBox) vbox2.getChildren().get(0);
-                TextField colorGroupName = (TextField)hbox2.getChildren().get(1);
-                HBox hbox3 =(HBox) vbox2.getChildren().get(1);
-                ColorPicker colorPicker = (ColorPicker)hbox3.getChildren().get(1);
-                addColorGroupDialog.setResultConverter(button -> {
-                    if (button == ButtonType.OK) {
-
-                        return new Pair<>(colorGroupName.getText(), colorPicker.getValue());
-                    }
-                    return null;
-                });
-
-                ///  getting the user inputs for the name and the color of the color group
-                Optional<Pair<String, String>> result = addColorGroupDialog.showAndWait();
-
-
-                // TODO TODO TODO -> color group !!!!!!!!!!
-                result.ifPresent(pair -> {
-
-                    System.out.println("name of the color group=" + colorGroupName.getText());
-                    Color c = colorPicker.getValue();
-                    editor.createColorGroupForProperty(c,colorGroupName.getText(),position );
-                    System.out.println("New Color's "+colorPicker.getValue()+"");
-                });
-
-            });
-
-
-            selectColorDialog.show();
-        });
-
-
-
+        /*
         propertyEditDialog.setResultConverter(button -> {
             if (button == ButtonType.OK) {
                 Object[] results = new Object[2];
@@ -376,6 +355,7 @@ public class EditorScreen{
             editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
             editor.setNameForProperty(propertyName.getText() , position);
         });
+        */
     }
 
     //opening joker edit window
@@ -458,11 +438,6 @@ public void changeTheSquare(Rectangle s){
     // public methods
 
     public Scene getScene() { return scene; }
-
-
-
-
-
 
     public void update(){
         Node[] squares = new Node[40];
