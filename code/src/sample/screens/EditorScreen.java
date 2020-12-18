@@ -130,6 +130,7 @@ public class EditorScreen extends Screen{
                             ColorGroup temp = ((Property) squares2[position]).getColorGroup();
                             temp.removeProperty((Property) squares2[position]);
                         }
+
                         editor.createNewJoker(position, 0, 0, 0, "Joker");
 
                     }
@@ -145,7 +146,7 @@ public class EditorScreen extends Screen{
                 }
             });
         }
-
+   // update(squares);
 
     }
     //the property dialog
@@ -202,12 +203,13 @@ public class EditorScreen extends Screen{
                     for(int i = 0; i < editor.board.getColorGroups().size(); i++){
                         System.out.println(editor.board.getColorGroups().get(i));
                     }
+
+                    update();
                 });
 
             });
 
 
-            update(squares);
             selectColorDialog.show();
         });
 
@@ -277,11 +279,11 @@ public class EditorScreen extends Screen{
             if(wait.isSelected()){
                 editor.setJailTimeForJoker((Integer)results[1],position);
             }
-
+            update();
 
         });
 
-        update(squares);
+
     }
 
     public void fillColors(Square[] squares,Rectangle tile,int pos ){
@@ -308,10 +310,9 @@ public void changeTheSquare(Rectangle s){
 
 }
 
-    public Scene getScene() { return scene; }
-
-    public void update( Node[] squares ){
-
+public Scene getScene() { return scene; }
+public void update( ){
+        Node [] squares = new Node[40];
         Square[] squares2 = editor.board.getSquares();
         for (int i = 0; i < 40; i++) {
             GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
