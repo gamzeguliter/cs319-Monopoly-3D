@@ -194,7 +194,7 @@ public class Property extends Square {
         else
         {
             setOwner(player);
-            player.pay(buyingPrice);
+            player.buyProperty(this, buyingPrice);
             return true;
         }
     }

@@ -40,12 +40,14 @@ public class Player {
         jailTime = tourNo;
     }
 
-    public void buyProperty(Property property) {
+    public void buyProperty(Property property, int price) {
         ownedProperties.add(property);
+        pay(price);
     }
 
-    public void sellProperty(Property property) {
+    public void sellProperty(Property property, int price) {
         ownedProperties.remove(property);
+        gain(price);
     }
 
     public int getjailTime() {

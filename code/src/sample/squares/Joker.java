@@ -13,7 +13,7 @@ public class Joker extends Square {
     private String name;
 
     //constructor
-    public Joker(int movement, int money, int suspendedTourNo,String name) {
+    public Joker(int movement, int money, int suspendedTourNo, String name) {
         super(SquareType.JOKER);
         this.movement = movement;
         this.money = money;
