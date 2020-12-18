@@ -69,10 +69,6 @@ public class EditorScreen{
         scene = new Scene(editorScreen);
         setControls();
 
-        Dialog propertyEditDialog = new Dialog();
-        propertyEditDialog.setDialogPane(propertyEditDP);
-        propertyEditDialog.show();
-
         Dialog addColorGroupDialog = new Dialog();
         addColorGroupDialog.setDialogPane(addColorGroupDP);
         addColorGroupDialog.show();
@@ -80,10 +76,6 @@ public class EditorScreen{
         Dialog selectColorGroupDialog = new Dialog();
         selectColorGroupDialog.setDialogPane(selectColorGroupDP);
         selectColorGroupDialog.show();
-
-        Dialog jokerEditDialog = new Dialog();
-        jokerEditDialog.setDialogPane(jokerEditDP);
-        jokerEditDialog.show();
 
     }
 
@@ -311,6 +303,7 @@ public class EditorScreen{
 
     //the property dialog
     private void openPropertyDialog() {
+/*
         String colorGroup = "Blue";
         Font font = new Font("Source Sans Pro", 20);
         Font fonth = new Font("Source Sans Pro", 30);
@@ -347,6 +340,22 @@ public class EditorScreen{
         label3.setFont(font);
         Button color = new Button("Select");
         color.setFont(font);
+
+
+ */
+        Dialog propertyEditDialog = new Dialog();
+        propertyEditDialog.setDialogPane(propertyEditDP);
+
+        VBox vBox = (VBox) propertyEditDialog.getDialogPane().getContent();
+
+        HBox nameBox = (HBox) vBox.getChildren().get(0);
+        HBox priceBox = (HBox) vBox.getChildren().get(1);
+        HBox colorBox = (HBox) vBox.getChildren().get(2);
+
+        TextField propertyName = (TextField) nameBox.getChildren().get(1);
+        TextField propertyPrice = (TextField) priceBox.getChildren().get(1);
+        Button color = (Button) colorBox.getChildren().get(1);
+
 
         //selecting the color group
         color.setOnMouseClicked(event -> {
@@ -588,6 +597,8 @@ public class EditorScreen{
 
 
         });
+
+        //todo delete root ?
         //jokerMainDialog.show();
     }
 
