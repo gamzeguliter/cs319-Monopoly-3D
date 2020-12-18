@@ -18,6 +18,7 @@ public class GameEngine {
     private ArrayList<ColorGroup> colorGroups;
     Card drawnCard;
     boolean playerPassedStart;
+    private int diceResult;
 
     public GameEngine() {
         board = new Board();
@@ -32,11 +33,21 @@ public class GameEngine {
         colorGroups = board.getColorGroups();
         drawnCard = null;
         playerPassedStart = false;
+        diceResult = 0;
     }
 
 
-    public VBox getPropertyContent() {
-        Property property = (Property) getCurrentSquare();
+    public VBox getPropertyContent(int index) {
+
+        Property property;
+        if(index < 0) {
+            property = (Property) getCurrentSquare();
+        }
+        else
+        {
+            property = (Property)(board.getSquares()[index]);
+        }
+
         VBox content = defaultPropertyInfo(property);
         if (property.isOwned()) {
             Text owner = new Text("Owner: " + property.getOwner().getName());
@@ -45,11 +56,18 @@ public class GameEngine {
         return content;
     }
 
-    public ArrayList<String> getPropertyButtons() {
+    public ArrayList<String> getPropertyButtons(int index) {
         ArrayList<String> buttons = new ArrayList<String>();
 
         //square is a property
-        Property property = (Property)getCurrentSquare();
+        Property property;
+        if(index < 0) {
+            property = (Property)getCurrentSquare();
+        }
+        else
+        {
+            property = (Property)(board.getSquares()[index]);
+        }
 
         //owned by the current player
         if(property.isOwned() && property.getOwner() == getCurrentPlayer()) {
@@ -129,18 +147,22 @@ public class GameEngine {
         return vbox;
     }
 
-    public void jokerActions() {
+    //implements the joker actions and returns true if the player is moved
+    public boolean jokerActions() {
+        boolean isMoved = false;
         Joker joker = (Joker)getCurrentSquare();
         Player player = getCurrentPlayer();
         if(joker.isMoneyAction()) {
             player.gain(joker.getMoney()); //getMoney return negative if the amount is to be reduced
         }
         if(joker.isMovementAction()) {
+            isMoved = true;
             player.setPosition(player.getPosition() + joker.getMovement());
         }
         else if(joker.isSuspended()) {
             player.suspend(joker.getSuspendedTourNo());
         }
+        return isMoved;
     }
 
     //todo burası amele işi oldu arrayli fişekli bi şeyler yapıp düzeltmek lazım
@@ -238,35 +260,67 @@ public class GameEngine {
     }
 
     //todo sell sırasında ya da auction sırasında alan olursa isComplete check
-    public boolean sellProperty(int index,String playerName, int amount) {
+    public void sellProperty(int index, String playerName, int amount) {
         if(index < 0) { //sell current square
             Property property = (Property)getCurrentSquare();
             for(Player player:players) {
                 if(player.getName().equals(playerName)){
                     property.setOwner(player);
-                    player.pay(amount);
-                    player.buyProperty(property);
-                    currentPlayer.gain(amount);
-                    currentPlayer.sellProperty(property);
-                    return true;
+                    player.buyProperty(property, amount);
+                    currentPlayer.sellProperty(property, amount);
                 }
             }
         }
-        //todo else for picking the square
+        else { //sell the clicked square
+            Property property = (Property)board.getSquares()[index];
+            for(Player player:players) {
+                if(player.getName().equals(playerName)){
+                    property.setOwner(player);
+                    player.buyProperty(property, amount);
+                    currentPlayer.sellProperty(property, amount);
+                    if(property.getColorGroup().isComplete(player)) {
+                        property.getColorGroup().completeRentUpdate();
+                    }
+                }
+            }
+        }
+    }
+
+    //checks if the sold property was mortgaged
+    public boolean soldMortgaged(int index) {
+        Property property = (Property)board.getSquares()[index];
+        if(property.isMortgaged()) {
+            return true;
+        }
         return false;
     }
 
-    public boolean auctionProperty(String playerName, int amount) {
+    public VBox getMortgageLiftingInfo(int index) {
+        VBox vbox = new VBox();
+        Property property = (Property)board.getSquares()[index];
+        Text mortgageInfo = new Text("Would you like to lift the mortgage of " + property.getName()  + " by paying " + property.getMortgageLiftingPrice() + " " + board.currency + " ?");
+        Text liftLater = new Text("If you choose not to lift it now, you will pay " + property.getMortgagePrice() * 10 / 100  + " " + board.currency + " now and you will need to pay the same mortgage lifting price" +
+                " when you choose to lift it.");
+        vbox.getChildren().addAll(mortgageInfo, liftLater);
+        return vbox;
+    }
+
+    public void liftMortgageLater(int index) {
+        Property property = (Property)board.getSquares()[index];
+        property.getOwner().pay(property.getMortgagePrice() * 10 / 100 );
+    }
+
+    public void auctionProperty(String playerName, int amount) {
         Property property = (Property)getCurrentSquare();
         for(Player player:players) {
             if(player.getName().equals(playerName)){
                 property.setOwner(player);
-                player.pay(amount);
-                player.buyProperty(property);
-                return true;
+                player.buyProperty(property, amount);
+                if(property.getColorGroup().isComplete(player)) {
+                    property.getColorGroup().completeRentUpdate();
+                }
             }
         }
-        return false;
     }
 
     public void addHouse(int index) {
@@ -274,7 +328,10 @@ public class GameEngine {
             Property property = (Property)getCurrentSquare();
             property.addHouse();
         }
-        //todo else for picking the square
+        else {
+            Property property = (Property)board.getSquares()[index];
+            property.addHouse();
+        }
     }
 
     public void sellHouse(int index) {
@@ -282,7 +339,10 @@ public class GameEngine {
             Property property = (Property)getCurrentSquare();
             property.sellHouse();
         }
-        //todo else for picking the square
+        else {
+            Property property = (Property)board.getSquares()[index];
+            property.sellHouse();
+        }
     }
 
     public void addHotel(int index) {
@@ -290,7 +350,10 @@ public class GameEngine {
             Property property = (Property)getCurrentSquare();
             property.addHotel();
         }
-        //todo else for picking the square
+        else {
+            Property property = (Property)board.getSquares()[index];
+            property.addHotel();
+        }
     }
 
     public void sellHotel(int index) {
@@ -298,7 +361,10 @@ public class GameEngine {
             Property property = (Property)getCurrentSquare();
             property.addHotel();
         }
-        //todo else for picking the square
+        else {
+            Property property = (Property)board.getSquares()[index];
+            property.sellHotel();
+        }
     }
 
     public void mortgageProperty(int index) {
@@ -307,20 +373,23 @@ public class GameEngine {
             getCurrentPlayer().gain(property.getMortgagePrice());
             property.mortgageProperty();
         }
-        //todo else for picking the square
-    }
+        else {
+            Property property = (Property)board.getSquares()[index];
+            property.mortgageProperty();
+        }    }
 
-    //todo
     public void unmortgageProperty(int index) {
         if(index < 0) {
             Property property = (Property)getCurrentSquare();
             getCurrentPlayer().pay(property.getMortgageLiftingPrice());
             property.unmortgageProperty();
         }
-        //todo else for picking the square
+        else {
+            Property property = (Property)board.getSquares()[index];
+            property.unmortgageProperty();
+        }
     }
 
-    //todo ??
     public void nextTurn() {
         turn++;
         currentPlayer = players.get(turn % 4);
@@ -339,18 +408,25 @@ public class GameEngine {
         owner.gain(property.getRent());
     }
 
-    public int rollDice() {
+    public int[] rollDice() {
+        int[] dice = new int[2];
         int min = 1;
         int max = 6;
-        int roll1 = min + (int)(Math.random() * ((max - min) + 1));
-        int roll2 = min + (int)(Math.random() * ((max - min) + 1));
+        int roll1 = min + (int) (Math.random() * ((max - min) + 1));
+        int roll2 = min + (int) (Math.random() * ((max - min) + 1));
+        dice[0] = roll1;
+        dice[1] = roll2;
+        diceResult = roll1 + roll2;
+        return dice;
+    }
+
+    public void movePlayer() {
         int position = currentPlayer.getPosition();
-        if(position + roll1 + roll2 > 40) {
+        if(position + diceResult > 40) {
             playerPassedStart = true;
         }
-        position = (position + roll1 + roll2) % 40;
+        position = (position + diceResult) % 40;
         currentPlayer.setPosition(position); //todo if the player is suspended condition -- double roll
-        return roll1 + roll2;
     }
 
     public int getCurrentPlayerPosition() {
@@ -436,15 +512,22 @@ public class GameEngine {
     }
 
     //implements the actions on the chance/community chest cards
-    public void implementCard() {
+    //returns true if the player is moved
+    public boolean implementCard() {
+        boolean didMove = false;
+        playerPassedStart = false;
         //chance card -- do chance implementations
         if(((ChanceAndCommunityChest)getCurrentSquare()).isChance()) {
             switch(drawnCard.getAction()) {
                 case("Go to a place"):
+                    didMove = true;
+                    if(drawnCard.amount < currentPlayer.getPosition()) {
+                        playerPassedStart = true;
+                    }
                     currentPlayer.setPosition(drawnCard.amount);
                     break;
                 case("Go to nearest joker"):
-                    System.out.println("*****JOKER CHECK");
+                    didMove = true;
                     int distance = 42;
                     for(int i = 0; i < 40; i ++) {
                         if(board.getSquares()[i].getType() == SquareType.JOKER)
@@ -464,6 +547,9 @@ public class GameEngine {
                         }
                     }
                     if(distance != 42) {
+                        if( 40 < getCurrentPlayerPosition() + distance) {
+                            playerPassedStart = true;
+                        }
                         currentPlayer.setPosition(getCurrentPlayerPosition() + distance % 40);
                     }
                     System.out.println("JOKER DIST: "+ distance);
@@ -473,6 +559,7 @@ public class GameEngine {
                     break;
 
                 case("Go back places"):
+                    didMove = true;
                     currentPlayer.setPosition(getCurrentPlayerPosition() - drawnCard.amount % 40);
                     break;
                 case("Pay money for house and hotel"):
@@ -505,6 +592,7 @@ public class GameEngine {
                     }
                     break;
                 case("Go to go"):
+                    didMove = true;
                     currentPlayer.setPosition(0);
                     break;
             }
@@ -512,6 +600,7 @@ public class GameEngine {
         else {
             switch (drawnCard.getAction()) {
                 case ("Advance to Go"):
+                    didMove = true;
                     currentPlayer.setPosition(drawnCard.amount);
                     break;
                 case ("Pay money"):
@@ -547,6 +636,8 @@ public class GameEngine {
                     break;
             }
         }
+
+        return didMove;
     }
 
     //gives each player money as they pass through the start square
@@ -570,4 +661,16 @@ public class GameEngine {
     public boolean passesStart() {
         return playerPassedStart;
     }
+
+    public boolean canClick(int index) {
+        System.out.println("here");
+        for(Property property : currentPlayer.ownedProperties) {
+            System.out.println(property.getName());
+            if (property == board.getSquares()[index]) { //todo çalışmayabilir property vs square
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
