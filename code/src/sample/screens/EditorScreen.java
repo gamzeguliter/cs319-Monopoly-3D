@@ -42,13 +42,7 @@ public class EditorScreen{
 
     GameEngine gameEngine;
     int position;
-    @FXML DialogPane jokerSquareEdit;
-    @FXML DialogPane toggleSquareType;
-    @FXML DialogPane propertySquareEdit;
-    @FXML DialogPane selectColorGroup;
-    @FXML DialogPane addColorGroup;
 
-    Font font = Font.font("Source Sans Pro", 20);
     Parent editorScreen = FXMLLoader.load(getClass().getResource("EditorScreen.fxml"));
     DialogPane propertyEditDP = FXMLLoader.load(getClass().getResource("propertyEditScreen.fxml"));
     DialogPane addColorGroupDP = FXMLLoader.load(getClass().getResource("addColorGroup.fxml"));

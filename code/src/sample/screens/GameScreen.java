@@ -1,13 +1,14 @@
 package sample.screens;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,7 +17,9 @@ import javafx.scene.text.Text;
 import javafx.util.Pair;
 import sample.GameEngine;
 import sample.Player;
+import sample.squares.ColorGroup;
 import sample.squares.Property;
+import sample.squares.Square;
 import sample.squares.SquareType;
 
 import java.io.IOException;
@@ -37,13 +40,15 @@ public class GameScreen extends Screen {
     GameEngine gameEngine;
     Font font = Font.font("Source Sans Pro", 20);
     int position;
+    Parent gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
+    DialogPane diceScreen = FXMLLoader.load(getClass().getResource("diceScreen.fxml"));
+
     // constructors
-    public GameScreen() {
+    public GameScreen() throws IOException {
         gameEngine = new GameEngine();
         boardPane = getSquares();
         setScene();
     }
-
 
     private Text getPlayerText(Player player) {
         Text t = new Text();
@@ -74,6 +79,8 @@ public class GameScreen extends Screen {
         group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
 
+
+
     //todo bu method direk getPlayers ile almasa daha iyi olur
     private void updatePlayerTexts() {
         for(int i = 0; i < gameEngine.getPlayers().size(); i++) {
@@ -88,96 +95,34 @@ public class GameScreen extends Screen {
     }
 
     private void setScene() {
-        Group group = new Group();
-        int width = 1366;
-        int height = 768;
+        scene = new Scene(gameScreen);
 
-        // initialize player texts
-        initializePlayerTexts(group);
+        VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        HBox hBox = (HBox) vBox.getChildren().get(3);
+        Label turnText = (Label) vBox.getChildren().get(2);
+        Button btnRollDice = (Button) hBox.getChildren().get(0);
+        Button btnEndTurn = (Button) hBox.getChildren().get(1);
 
-        // initialize buttons
-        btnRollDice = new Button();
-        btnEndTurn = new Button();
-        Font font3 = Font.font("Source Sans Pro", 15);
+        turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
 
-        //roll dice button
-        btnRollDice.setText("Roll Dice");
-        btnRollDice.setFont(font3);
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
         //todo tekrar check buraya
         btnRollDice.setOnAction(event -> {
-
             createDiceDialog();
             btnEndTurn.setDisable(false); //todo eğer oyunda tekrar hareket varsa hareket pop-upından sonra disable kaldır
-            //int roll = gameEngine.rollDice();
-            //diceText.setText("Dice roll: " + roll);
             btnRollDice.setDisable(true);
-            /*updateSquares();
-            updatePlayerTexts();
-
-            if(gameEngine.passesStart()) {
-                createStartDialog();
-                updatePlayerTexts();
-            }
-
-            if (gameEngine.getCurrentSquare().getType() == SquareType.PROPERTY) {
-                createPropertyDialog(-1);
-
-            } else if (gameEngine.getCurrentSquare().getType() == SquareType.JOKER) {
-                createJokerDialog();
-            }
-            else if(gameEngine.getCurrentSquare().getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
-                createChanceAndChestDialog();
-            }
-            //start square
-            //todo start square üstünden geçip gidiyorsa da çıkarmalısın
-            else {
-                createStartDialog();
-            }
-            updateSquares();
-            updatePlayerTexts();*/
         });
 
-        btnRollDice.setLayoutX(100);
-        btnRollDice.setLayoutY(120);
-
         //end turn button
-        btnEndTurn.setText("End Turn");
-        btnEndTurn.setFont(font3);
+        Label finalTurnText = turnText;
         btnEndTurn.setOnAction(event -> {
             gameEngine.nextTurn();
-            turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
+            finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
             btnRollDice.setDisable(false);
             btnEndTurn.setDisable(true);
         });
-
-        btnEndTurn.setLayoutX(200);
-        btnEndTurn.setLayoutY(120);
-
-        group.getChildren().addAll(btnRollDice, btnEndTurn);
-
-        // turn text
-        turnText = new Text();
-        turnText.setFont(font);
-        turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
-        turnText.setX(150);
-        turnText.setY(200);
-        group.getChildren().add(turnText);
-
-        // dice text
-        /*
-        diceText = new Text();
-        diceText.setFont(font);
-        diceText.setText("Dice roll: 0");
-        diceText.setX(150);
-        diceText.setY(250);
-        group.getChildren().add(diceText);*/
-
-        group.getChildren().add(boardPane);
-
-        scene = new Scene(group, width, height);
     }
 
     private void checkSquare() {
@@ -205,24 +150,26 @@ public class GameScreen extends Screen {
     }
 
     private void createDiceDialog() {
-        Dialog dialog = new Dialog();
-        VBox vbox = new VBox();
+        Dialog diceDialog = new Dialog();
+        diceDialog.setDialogPane(diceScreen);
+
+        VBox vbox = (VBox) diceDialog.getDialogPane().getContent();
         int[] dieResult = gameEngine.rollDice();
-        Text die1 = new Text("Die 1: " + dieResult[0]);
-        Text die2 = new Text("Die 2: " + dieResult[1]);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        Text die1 = (Text) vbox.getChildren().get(0);
+        Text die2 = (Text) vbox.getChildren().get(1);
+        die1.setText("Die 1: " + dieResult[0]);
+        die2.setText("Die 2: " + dieResult[1]);
+
+        Node okButton = diceDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
             //if(gameEngine.canMove()) -- todo check jail
             gameEngine.movePlayer();
             updateSquares();
             updatePlayerTexts();
-            dialog.close();
+            diceDialog.close();
             checkSquare();
         });
-        vbox.getChildren().addAll(die1, die2, okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+        diceDialog.show();
     }
 
     private void createStartDialog() {
