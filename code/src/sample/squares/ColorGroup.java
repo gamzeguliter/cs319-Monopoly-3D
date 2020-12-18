@@ -42,20 +42,64 @@ public class ColorGroup {
     // none of the properties should be mortgaged,
     // property shouldn't have hotel,
     // property shouldn't have already 4 houses
-    public boolean addHouse(Property property, Player player) {
-        if (this.isComplete(player)
-                || isBalancedHousing(property)
+    public boolean canAddHouse(Property property, Player player) {
+        if (!isComplete(player)
+                || !isBalancedHousing(property, true)
                 || property.isHotel()
                 || player.getBalance() < property.getHousePrice()
                 || property.getNoOfHouses() >= 4
-                || !isMortgaged()) {
+                || isMortgaged()) {
             return false;
         }
-        return property.addHouse();
-        //todo when a property has a house, the money of all props in color group should be updated?
+        return true;
+    }
+    //todo rent colorset vs with house vs
+
+    public void completeRentUpdate() {
+        for(Property property : properties) {
+            property.setCurrentRent(property.getCurrentRent() * 2);
+        }
     }
 
-    private boolean isComplete(Player player) {
+    public boolean canSellHouse(Property property, Player player) {
+        if (!this.isComplete(player)
+                || isBalancedHousing(property, false)
+                || property.isHotel()
+                || property.getNoOfHouses() == 0
+                || isMortgaged()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canAddHotel(Property property, Player player) {
+        if (!this.isComplete(player)
+                || !allHousesComplete()
+                || property.isHotel()
+                || isMortgaged()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canSellHotel(Property property) {
+        if (property.isHotel()) {
+            return true;
+        }
+        return false;
+    }
+
+    //checks if all properties in color
+    private boolean allHousesComplete() {
+        for(Property property: properties) {
+            if(property.getNoOfHouses() < 4) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isComplete(Player player) {
         for (Property propertyInGroup : properties) {
             if (!propertyInGroup.isOwned() || propertyInGroup.getOwner() != player)
                 return false;
@@ -72,14 +116,22 @@ public class ColorGroup {
         return true;
     }
 
-    private boolean isBalancedHousing(Property property) {
+    private boolean isBalancedHousing(Property property, boolean addHouse) {
         int houseNo = property.getNoOfHouses();
         for (Property propertyInGroup : properties) {
             if (propertyInGroup == property) {
                 continue;
             } else {
-                if (houseNo + 1 > propertyInGroup.getNoOfHouses() + 1) {
-                    return false;
+                if(addHouse) {
+                    if (houseNo + 1 > propertyInGroup.getNoOfHouses() + 1) {
+                        return false;
+                    }
+                }
+                //check balanced housing for sell house
+                else {
+                    if (houseNo - 1 < propertyInGroup.getNoOfHouses() - 1) {
+                        return false;
+                    }
                 }
             }
         }

@@ -42,7 +42,7 @@ public class Board {
         chestDeck.generateChestCardDeck();
         chanceDeck = new CardDeck();
         chanceDeck.generateChanceCardDeck();
-        currency = "Dollars";
+        currency = "Meteors";
     }
 
     public Card drawChanceCard() {

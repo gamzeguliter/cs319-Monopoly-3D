@@ -26,6 +26,7 @@ public class Property extends Square {
     int housePrice;
     int hotelPrice;
     private int rent;
+    private int currentRent;
     private int noOfHouses;
     private boolean hotel;
     private Player owner;
@@ -42,6 +43,7 @@ public class Property extends Square {
         this.mortgagePrice = buyingPrice * mortgageRate / 100;
         this.mortgageLiftingPrice = mortgagePrice + mortgagePrice * 10 / 100;
         this.rent = buyingPrice * rentRate / 100;
+        currentRent = rent;
         noOfHouses = 0;
         hotel = false;
         isOwned = false;
@@ -69,13 +71,18 @@ public class Property extends Square {
         this.colorGroup = group;
     }
 
-
-    //TODO buy house, sell house gibi şeyler -- gameengine?
-    //TODO sell property make isOwned false set owner to null
     public boolean setOwner(Player newOwner) {
         owner = newOwner;
         isOwned = true;
         return true;
+    }
+
+    public int getCurrentRent() {
+        return currentRent;
+    }
+
+    public void setCurrentRent(int rent) {
+        currentRent = rent;
     }
 
     public Player getOwner() {
@@ -122,16 +129,62 @@ public class Property extends Square {
         return isMortgaged;
     }
 
-    public boolean addHouse() {
-        if(noOfHouses == 4 || hotel || owner.getBalance() < housePrice)
-        {
-            return false;
+    public void addHouse() {
+        noOfHouses++;
+        owner.pay(housePrice);
+        switch (noOfHouses) {
+            case(1):
+                currentRent = rentOneHouse;
+                break;
+
+            case(2):
+                currentRent = rentTwoHouses;
+                break;
+
+            case(3):
+                currentRent = rentThreeHouses;
+                break;
+
+            case(4):
+                currentRent = rentFourHouses;
+                break;
         }
-        else {
-            noOfHouses++;
-            //TODO update rent
-            return true;
+    }
+
+    public void sellHouse() {
+        noOfHouses--;
+        owner.gain(housePrice / 2);
+        switch (noOfHouses) {
+            case(0):
+                currentRent = rent * 2; //given that they need to have all the properties in set
+            case(1):
+                currentRent = rentOneHouse;
+                break;
+
+            case(2):
+                currentRent = rentTwoHouses;
+                break;
+
+            case(3):
+                currentRent = rentThreeHouses;
+                break;
+
+            case(4):
+                currentRent = rentFourHouses;
+                break;
         }
+    }
+
+    public void addHotel() {
+        hotel = true;
+        owner.pay(hotelPrice);
+        currentRent = rentHotel;
+    }
+
+    public void sellHotel() {
+        hotel = false;
+        owner.gain(hotelPrice / 2);
+        currentRent = rentFourHouses;
     }
 
     public boolean buyProperty(Player player) {
