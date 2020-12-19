@@ -5,10 +5,6 @@ import org.json.JSONObject;
 import sample.Board;
 import sample.Player;
 
-/* TODO IMPORTANT ISSUE:
-When storing property in file system, only store name, colorgroup, buying price
-when reading from file and creating square, give the rent and mortgage rate of the board!!!!!
- */
 
 public class Property extends Square {
 
@@ -34,6 +30,10 @@ public class Property extends Square {
     private ColorGroup colorGroup;
     private Board board;
 
+    /* TODO IMPORTANT ISSUE:
+When storing property in file system, only store name, colorgroup, buying price
+when reading from file and creating square, give the rent and mortgage rate of the board!!!!!
+ */
     public Property(String name, ColorGroup colorGroup, int buyingPrice, int rentRate, int mortgageRate) {
         super(SquareType.PROPERTY);
         this.name = name;
@@ -246,6 +246,15 @@ public class Property extends Square {
 
     public int getHotelPrice() {
         return hotelPrice;
+    }
+
+    public void reset() {
+        owner = null;
+        isOwned = false;
+        isMortgaged = false;
+        currentRent = rent;
+        noOfHouses = 0;
+        hotel = false;
     }
 
     @Override

@@ -31,11 +31,11 @@ public class GameScreen extends Screen {
     private Scene scene;
     GridPane boardPane;
 
-    Text[] playerTexts;
+    ArrayList<Text> playerTexts;
     Text turnText;
-    Text diceText;
     Button btnRollDice;
     Button btnEndTurn;
+    Button btnResign;
     GameEngine gameEngine;
     Font font = Font.font("Source Sans Pro", 20);
     int position;
@@ -64,13 +64,18 @@ public class GameScreen extends Screen {
         return t;
     }
 
+    //todo değişecek
     private void initializePlayerTexts(Group group) {
-        playerTexts = new Text[4];
+        playerTexts = new ArrayList<>();
         int count = 0;
         for (Player player : gameEngine.getPlayers()) {
-            playerTexts[count] = getPlayerText(player);
+            playerTexts.add(getPlayerText(player));
+            playerTexts.get(count).setX(800);
+            playerTexts.get(count).setY(100 + count * 100);
+            group.getChildren().add(playerTexts.get(count));
             count++;
         }
+        /*
         playerTexts[0].setX(800);
         playerTexts[0].setY(100);
         playerTexts[1].setX(800);
@@ -78,23 +83,19 @@ public class GameScreen extends Screen {
         playerTexts[2].setX(800);
         playerTexts[2].setY(300);
         playerTexts[3].setX(800);
-        playerTexts[3].setY(400);
+        playerTexts[3].setY(400);*/
 
-        group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
+        //group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
 
     //todo bu method direk getPlayers ile almasa daha iyi olur
     private void updatePlayerTexts() {
-        for(int i = 0; i < gameEngine.getPlayers().size(); i++) {
-            if(gameEngine.getPlayers().get(i).isOut()) {
-                playerTexts[i].setDisable(true);
-            }
-            else {
-                Player player = gameEngine.getPlayers().get(i);
-                playerTexts[i].setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
-            }
+        for (int i = 0; i < gameEngine.getPlayers().size(); i++) {
+            Player player = gameEngine.getPlayers().get(i);
+            playerTexts.get(i).setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
         }
     }
+
 
     //done knotrol edelim
     private void setScene() {
@@ -107,7 +108,20 @@ public class GameScreen extends Screen {
         Button btnEndTurn = (Button) hBox.getChildren().get(1);
 
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
+        // initialize buttons
+        //btnRollDice = new Button();
+        //btnEndTurn = new Button();
+        btnResign = new Button("Resign"); //todo eksik
+        Font font3 = Font.font("Source Sans Pro", 15);
 
+        //resign button
+        btnResign.setOnAction(actionEvent -> {
+            createResignDialog();
+        });
+
+        //roll dice button
+        btnRollDice.setText("Roll Dice");
+        btnRollDice.setFont(font3);
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
@@ -121,11 +135,31 @@ public class GameScreen extends Screen {
         //end turn button
         Label finalTurnText = turnText;
         btnEndTurn.setOnAction(event -> {
-            gameEngine.nextTurn();
+            if(gameEngine.isBankrupt()) {
+                createBankruptDialog();
+            }
+            else {
+                gameEngine.nextTurn();
+            }
             finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
             btnRollDice.setDisable(false);
             btnEndTurn.setDisable(true);
         });
+
+        btnEndTurn.setLayoutX(200);
+        btnEndTurn.setLayoutY(120);
+
+        // turn text
+        //turnText = new Text();
+        turnText.setFont(font);
+        turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
+        /*turnText.setX(150);
+        turnText.setY(200);
+        group.getChildren().add(turnText);
+
+        group.getChildren().add(boardPane);*/
+
+        //scene = new Scene(group, width, height);
     }
 
     private void checkSquare() {
@@ -149,7 +183,53 @@ public class GameScreen extends Screen {
         }
         updateSquares();
         updatePlayerTexts();
+    }
 
+    private void createBankruptDialog() {
+        Dialog dialog = new Dialog();
+        VBox vbox = new VBox();
+        Text bankrupt = new Text("YOU LOSE");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setOnAction(event -> {
+            ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
+            updatePlayerTexts();
+            for (int i = 0; i < indexes.size(); i++) {
+                createAuctionOrSellDialog(indexes.get(i), true);
+                updateSquares();
+                updatePlayerTexts();
+            }
+            gameEngine.bankrupt();
+            gameEngine.nextTurn();
+        });
+        vbox.getChildren().addAll(bankrupt);
+        dialog.getDialogPane().setContent(vbox);
+        dialog.show();
+    }
+
+    private void createResignDialog() {
+        Dialog dialog = new Dialog();
+        VBox vbox = new VBox();
+        Text resignConfirmation = new Text("Are you sure you want to resign?");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setText("Yes");
+        ((Button)okButton).setOnAction(event -> {
+            dialog.close();
+            ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
+            updatePlayerTexts();
+
+            for (int i = 0; i < indexes.size(); i++) {
+                createAuctionOrSellDialog(indexes.get(i), true);
+                updateSquares();
+                updatePlayerTexts();
+            }
+            gameEngine.resign();
+        });
+        vbox.getChildren().addAll(resignConfirmation, okButton);
+        dialog.getDialogPane().setContent(vbox);
+        dialog.show();
     }
 
     //done
@@ -167,6 +247,7 @@ public class GameScreen extends Screen {
         Node okButton = diceDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
             //if(gameEngine.canMove()) -- todo check jail
+
             gameEngine.movePlayer();
             updateSquares();
             updatePlayerTexts();
@@ -286,6 +367,12 @@ public class GameScreen extends Screen {
         ComboBox playerSelection = (ComboBox) playerBox.getChildren().get(1);
         TextField price = (TextField) priceBox.getChildren().get(1);
 
+        if(index < 0)
+            propertyName.setText("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
+        else {
+            propertyName.setText("Property: " + ((Property)(gameEngine.getSquare(index))).getName());
+        }
+
         if(isAuction) {
              header = new Text("Auction Property");
         }
@@ -307,14 +394,14 @@ public class GameScreen extends Screen {
         result.ifPresent(pair -> {
             //Todo System.out.println(player.getText());
             if(isAuction) {
-                //todo gameEngine.auctionProperty(player.getText(), Integer.parseInt(amount.getText()));
+                gameEngine.auctionProperty(index, player.getText(), Integer.parseInt(amount.getText()));
             }
             else {
                 //selling a mortgaged property -- ask the new owner if they want to lift the mortgage
-                // todo gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
-                if(gameEngine.soldMortgaged(index)) {
-                    createMortgageLiftDialog(index);
-                }
+                gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
+            }
+            if(gameEngine.soldMortgaged(index)) {
+                createMortgageLiftDialog(index);
             }
             updateSquares();
             updatePlayerTexts();
@@ -373,7 +460,7 @@ public class GameScreen extends Screen {
         else {
             property = (Property) (gameEngine.getSquare(index));
         }
-        if(((Property)gameEngine.getCurrentSquare()).isOwned()) {
+        if(property.isOwned()) {
             propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
         }
         else {
@@ -418,7 +505,7 @@ public class GameScreen extends Screen {
                     Button auctionBtn = new Button("Auction");
                     auctionBtn.setOnAction(event -> {
                         propertyDialog.close();
-                        createAuctionOrSellDialog( 0, true);
+                        createAuctionOrSellDialog( index, true);
                         updateSquares();
                     });
                     buttonBox.getChildren().add(auctionBtn);
@@ -641,7 +728,7 @@ public class GameScreen extends Screen {
                         if(gameEngine.canClick(pos)) {
                             createPropertyDialog(pos);
                         }
-                        System.out.println("Position " +position );
+                        System.out.println("Positionnnnn " + position );
                     });
 
                     //determine square colors
