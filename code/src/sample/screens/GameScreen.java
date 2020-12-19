@@ -105,9 +105,9 @@ public class GameScreen extends Screen {
 
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
         // initialize buttons
-        btnRollDice = new Button();
-        btnEndTurn = new Button();
-        btnResign = new Button("Resign");
+        //btnRollDice = new Button();
+        //btnEndTurn = new Button();
+        btnResign = new Button("Resign"); //todo eksik
         Font font3 = Font.font("Source Sans Pro", 15);
 
         //resign button
@@ -124,7 +124,6 @@ public class GameScreen extends Screen {
         //todo tekrar check buraya
         btnRollDice.setOnAction(event -> {
             createDiceDialog();
-            btnEndTurn.setDisable(false);
             btnEndTurn.setDisable(false); //todo eğer oyunda tekrar hareket varsa hareket pop-upından sonra disable kaldır
             btnRollDice.setDisable(true);
         });
@@ -146,19 +145,17 @@ public class GameScreen extends Screen {
         btnEndTurn.setLayoutX(200);
         btnEndTurn.setLayoutY(120);
 
-        group.getChildren().addAll(btnRollDice, btnEndTurn, btnResign);
-
         // turn text
-        turnText = new Text();
+        //turnText = new Text();
         turnText.setFont(font);
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
-        turnText.setX(150);
+        /*turnText.setX(150);
         turnText.setY(200);
         group.getChildren().add(turnText);
 
-        group.getChildren().add(boardPane);
+        group.getChildren().add(boardPane);*/
 
-        scene = new Scene(group, width, height);
+        //scene = new Scene(group, width, height);
     }
 
     private void checkSquare() {
