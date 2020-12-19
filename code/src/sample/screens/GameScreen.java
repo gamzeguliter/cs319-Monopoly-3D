@@ -1,13 +1,14 @@
 package sample.screens;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -38,15 +39,17 @@ public class GameScreen extends Screen {
     GameEngine gameEngine;
     Font font = Font.font("Source Sans Pro", 20);
     int position;
+    Parent gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
+    DialogPane diceScreen = FXMLLoader.load(getClass().getResource("diceScreen.fxml"));
+    DialogPane properyScreen = FXMLLoader.load(getClass().getResource("propertyScreen.fxml"));
 
     // constructors
-    public GameScreen(ScreenManager screenManager) {
+    public GameScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
         gameEngine = new GameEngine();
         boardPane = getSquares();
         setScene();
     }
-
 
     private Text getPlayerText(Player player) {
         Text t = new Text();
@@ -92,13 +95,15 @@ public class GameScreen extends Screen {
 
 
     private void setScene() {
-        Group group = new Group();
-        int width = 1366;
-        int height = 768;
+        scene = new Scene(gameScreen);
 
-        // initialize player texts
-        initializePlayerTexts(group);
+        VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        HBox hBox = (HBox) vBox.getChildren().get(3);
+        Label turnText = (Label) vBox.getChildren().get(2);
+        Button btnRollDice = (Button) hBox.getChildren().get(0);
+        Button btnEndTurn = (Button) hBox.getChildren().get(1);
 
+        turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
         // initialize buttons
         btnRollDice = new Button();
         btnEndTurn = new Button();
@@ -116,18 +121,16 @@ public class GameScreen extends Screen {
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
+        //todo tekrar check buraya
         btnRollDice.setOnAction(event -> {
             createDiceDialog();
             btnEndTurn.setDisable(false);
+            btnEndTurn.setDisable(false); //todo eğer oyunda tekrar hareket varsa hareket pop-upından sonra disable kaldır
             btnRollDice.setDisable(true);
         });
 
-        btnRollDice.setLayoutX(100);
-        btnRollDice.setLayoutY(120);
-
         //end turn button
-        btnEndTurn.setText("End Turn");
-        btnEndTurn.setFont(font3);
+        Label finalTurnText = turnText;
         btnEndTurn.setOnAction(event -> {
             if(gameEngine.isBankrupt()) {
                 createBankruptDialog();
@@ -135,7 +138,7 @@ public class GameScreen extends Screen {
             else {
                 gameEngine.nextTurn();
             }
-            turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
+            finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
             btnRollDice.setDisable(false);
             btnEndTurn.setDisable(true);
         });
@@ -229,25 +232,27 @@ public class GameScreen extends Screen {
     }
 
     private void createDiceDialog() {
-        Dialog dialog = new Dialog();
-        VBox vbox = new VBox();
+        Dialog diceDialog = new Dialog();
+        diceDialog.setDialogPane(diceScreen);
+
+        VBox vbox = (VBox) diceDialog.getDialogPane().getContent();
         int[] dieResult = gameEngine.rollDice();
-        Text die1 = new Text("Die 1: " + dieResult[0]);
-        Text die2 = new Text("Die 2: " + dieResult[1]);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        Text die1 = (Text) vbox.getChildren().get(0);
+        Text die2 = (Text) vbox.getChildren().get(1);
+        die1.setText("Die 1: " + dieResult[0]);
+        die2.setText("Die 2: " + dieResult[1]);
+
+        Node okButton = diceDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
             //if(gameEngine.canMove()) -- todo check jail
 
             gameEngine.movePlayer();
             updateSquares();
             updatePlayerTexts();
-            dialog.close();
+            diceDialog.close();
             checkSquare();
         });
-        vbox.getChildren().addAll(die1, die2, okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+        diceDialog.show();
     }
 
     private void createStartDialog() {
@@ -427,9 +432,17 @@ public class GameScreen extends Screen {
 
     private void createPropertyDialog(int index) {
         Dialog propertyDialog = new Dialog();
-        Text header = new Text(gameEngine.getPropertyName(index));
-        VBox vbox = gameEngine.getPropertyContent(index);
-        vbox.getChildren().add(header);
+        propertyDialog.setDialogPane(properyScreen);
+
+        VBox mainVBox = (VBox) propertyDialog.getDialogPane().getContent();
+        Text header = (Text) propertyDialog.getDialogPane().getHeader();
+        VBox propertyBox = (VBox) mainVBox.getChildren().get(0);
+        VBox buttonBox = (VBox) mainVBox.getChildren().get(1);
+
+        propertyBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
+
+        header.setText(gameEngine.getPropertyName(index));
+
         Property property;
         if(index < 0 ) {
             property = (Property)(gameEngine.getCurrentSquare());
@@ -464,7 +477,7 @@ public class GameScreen extends Screen {
                         createAuctionOrSellDialog( index, false);
                         updateSquares();
                     });
-                    vbox.getChildren().add(sellBtn);
+                    buttonBox.getChildren().add(sellBtn);
                     break;
 
                 case "buy":
@@ -475,7 +488,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(buyBtn);
+                    buttonBox.getChildren().add(buyBtn);
                     break;
 
                 case "auction":
@@ -485,7 +498,7 @@ public class GameScreen extends Screen {
                         createAuctionOrSellDialog( index, true);
                         updateSquares();
                     });
-                    vbox.getChildren().add(auctionBtn);
+                    buttonBox.getChildren().add(auctionBtn);
                     break;
 
                 case "mortgage":
@@ -495,7 +508,7 @@ public class GameScreen extends Screen {
                         propertyDialog.close();
                         updatePlayerTexts();
                     });
-                    vbox.getChildren().add(mortgageBtn);
+                    buttonBox.getChildren().add(mortgageBtn);
                     break;
 
                 case "unmortgage":
@@ -505,7 +518,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(unmortgageBtn);
+                    buttonBox.getChildren().add(unmortgageBtn);
                     break;
 
                 case "add house":
@@ -515,7 +528,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(addHouseBtn);
+                    buttonBox.getChildren().add(addHouseBtn);
                     break;
 
                 case "sell house":
@@ -525,7 +538,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(sellHouseBtn);
+                    buttonBox.getChildren().add(sellHouseBtn);
                     break;
 
                 case "add hotel":
@@ -535,7 +548,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(addHotelBtn);
+                    buttonBox.getChildren().add(addHotelBtn);
                     break;
 
                 case "sell hotel":
@@ -545,7 +558,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(sellHotelBtn);
+                    buttonBox.getChildren().add(sellHotelBtn);
                     break;
 
                 case "pay rent":
@@ -555,12 +568,10 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(rentBtn);
+                    buttonBox.getChildren().add(rentBtn);
                     break;
             }
         }
-        propertyDialog.getDialogPane().setContent(vbox);
-        //propertyDialog.showAndWait();
         propertyDialog.show();
     }
 
