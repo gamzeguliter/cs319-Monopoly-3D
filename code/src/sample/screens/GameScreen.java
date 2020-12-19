@@ -149,7 +149,9 @@ public class GameScreen extends Screen {
                 createBankruptDialog();
             }
             else {
-                gameEngine.nextTurn();
+                if(gameEngine.nextTurn()){
+                    createGameOverDialog();
+                }
             }
             finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
             btnRollDice.setDisable(false);
@@ -199,11 +201,35 @@ public class GameScreen extends Screen {
                 //updatePlayerTexts();
             }
             gameEngine.bankrupt();
-            gameEngine.nextTurn();
+            if(gameEngine.nextTurn()) {
+                createGameOverDialog();
+            }
         });
         vbox.getChildren().addAll(bankrupt);
         dialog.getDialogPane().setContent(vbox);
         dialog.show();
+    }
+
+    private void createGameOverDialog() {
+        Dialog dialog = new Dialog();
+        VBox vbox = new VBox();
+        Text winner = new Text(gameEngine.getWinner() + "WINS!!!!");
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setText("Go back to the main page");
+        ((Button)okButton).setOnAction(event -> {
+            dialog.close();
+            screenManager.changeScreen(new MainMenuScreen(screenManager));
+        });
+        vbox.getChildren().addAll(winner, okButton);
+        dialog.getDialogPane().setContent(vbox);
+        dialog.show();
+    }
+
+    private void exitConfirmationDialog() {
+        //todo @öykü -- cancel butonu
+        //are you sure you want to exit?
+        //yes -> take to main page
     }
 
     private void createResignDialog() {
