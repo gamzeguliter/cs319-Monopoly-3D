@@ -14,8 +14,6 @@ public class Player {
     private Color color;
     private int balance;
     private int jailTime;
-    private boolean isInJail;
-    private boolean isBankrupt;
     private boolean out;
     public ArrayList<Property> ownedProperties;
 
@@ -25,8 +23,6 @@ public class Player {
         this.color = color;
         this.balance = balance;
         position = 0;
-        isInJail = false;
-        isBankrupt = false;
         jailTime = 0;
         out = false;
         ownedProperties = new ArrayList<Property>();
@@ -36,7 +32,6 @@ public class Player {
 
     //public methods
     public void suspend(int tourNo) {
-        isInJail = true;
         jailTime = tourNo;
     }
 
@@ -53,8 +48,7 @@ public class Player {
     public int getjailTime() {
         return jailTime;
     }
-    boolean isInJail() { return isInJail; }
-    boolean isBankrupt() { return isBankrupt; }
+    boolean isInJail() { return jailTime > 0; }
 
     //getters and setters
     // TODO: implement pawn related methods
@@ -85,7 +79,11 @@ public class Player {
         return out;
     }
 
-    public void resign() {
+    public void out() {
         out = true;
+    }
+
+    public boolean isBankrupt() {
+        return balance < 0;
     }
 }
