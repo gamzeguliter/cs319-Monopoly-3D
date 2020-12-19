@@ -26,9 +26,9 @@ public class Editor {
     }
 
     /// creates a new Chest and Community square while editing
-    public void createNewChestCommunity(int index){
+    public void createNewChestCommunity(int index,boolean chance){
         System.out.println("chest and community created");
-        board.squares[index] = new ChanceAndCommunityChest(true);
+        board.squares[index] = new ChanceAndCommunityChest(chance);
 
     }
 
