@@ -13,9 +13,12 @@ public class Board {
     Square[] squares;
     CardDeck chanceDeck;
     CardDeck chestDeck;
+     int rentRate;
+     int mortgageRate;
+     String  currency;
     // TODO: make this a <String, ColorGroup> map?
     ArrayList<ColorGroup> colorGroups;
-    String currency;
+
     /*
     property array -?
         aynı name'de 2 group a izin verme!
@@ -42,7 +45,9 @@ public class Board {
         chestDeck.generateChestCardDeck();
         chanceDeck = new CardDeck();
         chanceDeck.generateChanceCardDeck();
-        currency = "Meteors";
+        currency = "dolars";
+        rentRate = 50;
+        mortgageRate = 80;
     }
 
     public Card drawChanceCard() {
@@ -90,7 +95,7 @@ public class Board {
         squares[0] = new Start(20);
         for (int i = 1; i < 40; i++) {
             if(i % 4 == 0)
-                squares[i] = new Joker(9, 10, 0,"");
+                squares[i] = new Joker(3, 0, 0,"Joker");
             else if(i % 4 == 1)
                 squares[i] = new ChanceAndCommunityChest(true);
             else if (i % 4 == 2) {
@@ -110,6 +115,20 @@ public class Board {
     // getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
+
+
+    public String getCurrency() {return currency; }
+
+    public int getMortgageRate() {return mortgageRate; }
+
+    public int getRentRate() {return rentRate; }
+
+
+    public void setRentRate(int rentRate) { this.rentRate = rentRate; }
+
+    public void setMortgageRent(int mortgageRent) { this.mortgageRate = mortgageRate; }
 
     public ColorGroup getColorGroup(String groupName) {
         for (ColorGroup colorGroup : colorGroups){
