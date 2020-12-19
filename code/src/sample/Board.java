@@ -13,12 +13,12 @@ public class Board {
     Square[] squares;
     CardDeck chanceDeck;
     CardDeck chestDeck;
-     int rentRate;
-     int mortgageRate;
-     String  currency;
     // TODO: make this a <String, ColorGroup> map?
     ArrayList<ColorGroup> colorGroups;
+    String currency;
 
+    int rentRate;
+    int mortgageRate;
     /*
     property array -?
         aynı name'de 2 group a izin verme!
@@ -31,31 +31,19 @@ public class Board {
 
 
     // constructors
-    // TODO: this exists so i can create empty board!!, change later
-    public Board(int empty) {
 
-    }
-
-    // default constructor
+    // test constructor
     public Board() {
         colorGroups = createGroups();
-        squares =  getTestSquares();
-        name = "defaultName";
+        squares = getTestSquares();
+        name = "default";
         chestDeck = new CardDeck();
         chestDeck.generateChestCardDeck();
         chanceDeck = new CardDeck();
         chanceDeck.generateChanceCardDeck();
-        currency = "dolars";
+        currency = "Meteors";
         rentRate = 50;
-        mortgageRate = 80;
-    }
-
-    public Card drawChanceCard() {
-        return chanceDeck.drawCard();
-    }
-
-    public Card drawChestCard() {
-        return chestDeck.drawCard();
+        mortgageRate = 120;
     }
 
     public Board(String name) {
@@ -66,22 +54,17 @@ public class Board {
         this.name = name;
     }
 
-
-
-    //TODO load board constructor
-
     public void updatePropertyGroups() {
-        for (int i = 0; i < squares.length; i++) {
-            if (squares[i].getType() == SquareType.PROPERTY) {
-                Property property = (Property) squares[i];
+        for (Square square : squares) {
+            if (square.getType() == SquareType.PROPERTY) {
+                Property property = (Property) square;
                 getColorGroup(property.getGroupName()).addProperty(property);
             }
         }
     }
 
-    public SquareType getSquareType(int squareNo) {
-        return squares[squareNo].getType();
-    }
+    public Card drawChanceCard() { return chanceDeck.drawCard(); }
+    public Card drawChestCard() { return chestDeck.drawCard(); }
 
     public ColorGroup getColorGroup(String groupName) {
         for (ColorGroup colorGroup : colorGroups){
@@ -124,7 +107,7 @@ public class Board {
         squares[0] = new Start(20);
         for (int i = 1; i < 40; i++) {
             if(i % 4 == 0)
-                squares[i] = new Joker(3, 0, 0,"Joker");
+                squares[i] = new Joker(9, 10, 0,"");
             else if(i % 4 == 1)
                 squares[i] = new ChanceAndCommunityChest(true);
             else if (i % 4 == 2) {
@@ -142,10 +125,7 @@ public class Board {
     }
 
     private ArrayList<ColorGroup> createGroups() {
-        ArrayList<ColorGroup> colors = new ArrayList<ColorGroup>();
-    // getters and setters
-
-
+        ArrayList<ColorGroup> colors = new ArrayList<>();
 
         ColorGroup red = new ColorGroup("Red");
         red.setColor(Color.NAVAJOWHITE);

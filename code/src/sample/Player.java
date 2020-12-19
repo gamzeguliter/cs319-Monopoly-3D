@@ -1,6 +1,6 @@
 package sample;
 
-
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import sample.squares.Property;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Player {
     //properties
     String name;
-    Pawn pawn;
+    Image icon;
     private int position;
     private Color color;
     private int balance;
@@ -18,6 +18,17 @@ public class Player {
     public ArrayList<Property> ownedProperties;
 
     //constructors
+    public Player(String name, Color color, int balance, Image icon) {
+        this.name = name;
+        this.color = color;
+        this.balance = balance;
+        this.icon = icon;
+        position = 0;
+        jailTime = 0;
+        out = false;
+        ownedProperties = new ArrayList<Property>();
+    }
+
     public Player(String name, Color color, int balance) {
         this.name = name;
         this.color = color;
@@ -92,4 +103,6 @@ public class Player {
     public boolean isBankrupt() {
         return balance < 0;
     }
+
+    public Image getIcon() { return icon; }
 }
