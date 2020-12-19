@@ -627,7 +627,7 @@ public class GameScreen extends Screen {
 
     //create the board on screen
     private GridPane getSquares() {
-        GridPane gridPane = new GridPane();
+        GridPane gridPane = (GridPane) gameScreen.getChildrenUnmodifiable().get(0);
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -645,26 +645,9 @@ public class GameScreen extends Screen {
                     pos = 40 + row + col;
 
                 if (pos < 40) {
-                    StackPane stp = new StackPane();
-                    stp.setPadding(new Insets(1, 1, 1, 1));
-
                     // create rectangle of correct color for tile
-                    Rectangle tile = new Rectangle();
-                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
-                        tile.setHeight(60);
-                        tile.setWidth(60);
-                    }
-                    else if (row == 10 | row == 0){
-                        tile.setHeight(60);
-                        tile.setWidth(40);
-                    }
-                    else{
-                        tile.setHeight(40);
-                        tile.setWidth(60);
-                    }
-                    tile.setX(col * 10);
-                    tile.setY(row * 10);
-                    tile.setStroke(Color.BLACK);
+                    StackPane stackPane = (StackPane) gridPane.getChildren().get(pos);
+                    Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
 
                     tile.setOnMouseClicked(event -> {
                         System.out.println("Position " +position );
@@ -708,20 +691,19 @@ public class GameScreen extends Screen {
                     text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        stp.getChildren().addAll(tile, text);
-                        gridPane.add(stp, col, row);
+                        stackPane.getChildren().addAll(text); //try
                     }
                 }
             }
         }
-        gridPane.setLayoutX(10);
-        gridPane.setLayoutY(300);
         return gridPane;
     }
 
     //updates the board tiles on screen
     private void updateSquares() {
-        boardPane.getChildren().clear();
+        //boardPane.getChildren().clear();
+        //GridPane gridPane = (GridPane) gameScreen.getChildrenUnmodifiable().get(0);
+
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -739,28 +721,11 @@ public class GameScreen extends Screen {
                     pos = 40 + row + col;
 
                 if (pos < 40) {
-                    StackPane stp = new StackPane();
-                    stp.setPadding(new Insets(1, 1, 1, 1));
-
-                    Rectangle tile = new Rectangle();
-                    if ((row == col) | (row == 0 & col == 10) | (col == 0 & row == 10)){
-                        tile.setHeight(60);
-                        tile.setWidth(60);
-                    }
-                    else if (row == 10 | row == 0){
-                        tile.setHeight(60);
-                        tile.setWidth(40);
-                    }
-                    else{
-                        tile.setHeight(40);
-                        tile.setWidth(60);
-                    }
-                    tile.setX(col * 10);
-                    tile.setY(row * 10);
-                    tile.setStroke(Color.BLACK);
+                    StackPane stackPane = (StackPane) boardPane.getChildren().get(pos);
+                    Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
 
                     //todo add pictures/names to tiles, make player pawns
-
+                    System.out.println(pos);
                     //make the tiles clickable
                     tile.setOnMouseClicked(event -> {
                         position = pos;
@@ -796,6 +761,11 @@ public class GameScreen extends Screen {
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                     String playersOnTile = "";
 
+                    for (int i = 0; i < 40; i++){
+                        if (stackPane.getChildren().size() > 1 )
+                            stackPane.getChildren().remove(1);
+                    }
+
                     for (int i = 0; i < playerPositions.size(); i++) {
                         int position = playerPositions.get(i);
                         if (col >= row) {
@@ -806,18 +776,17 @@ public class GameScreen extends Screen {
                             if (40 - sum == position) {
                                 playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
                             }
+
                         }
                     }
 
                     Text text = new Text(playersOnTile);
-                    Font font2 = Font.font("Source Sans Pro", 10);
+                    Font font2 = Font.font("Source Sans Pro", 15);
                     text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        //stp.getChildren().add(0, tile);
-                        stp.getChildren().addAll(tile, text);
+                        stackPane.getChildren().add(text);
                     }
-                    boardPane.add(stp, col, row);
                 }
             }
         }
