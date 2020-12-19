@@ -56,6 +56,14 @@ public class GameEngine {
         return content;
     }
 
+    public String getPropertyName(int index){
+        if (index < 0){
+            return ((Property) getCurrentSquare()).getName();
+        }
+        else
+            return((Property) getSquare(index)).getName();
+    }
+
     public ArrayList<String> getPropertyButtons(int index) {
         ArrayList<String> buttons = new ArrayList<String>();
 
