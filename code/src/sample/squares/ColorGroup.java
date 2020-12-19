@@ -7,7 +7,7 @@ import sample.squares.Property;
 
 import java.util.ArrayList;
 
-public class ColorGroup {
+public class ColorGroup implements JSONable {
 
     private String groupName;
     private ArrayList<Property> properties;
@@ -21,11 +21,12 @@ public class ColorGroup {
     }
 
     public ColorGroup(JSONObject jo) {
-        extractPropertiesFromJson(jo);
+        extractPropertiesFromJSON(jo);
     }
 
     public void addProperty(Property property) {
-        property.getColorGroup().removeProperty(property);
+        if (property.getColorGroup() != null)
+            property.getColorGroup().removeProperty(property);
         property.setColorGroup(this);
         properties.add(property);
     }
@@ -174,7 +175,7 @@ public class ColorGroup {
         this.color = color;
     }
 
-    public JSONObject getJson() {
+    public JSONObject getJSON() {
         JSONObject jo = new JSONObject();
         jo.put("groupName", groupName);
         jo.put("r", color.getRed());
@@ -183,7 +184,7 @@ public class ColorGroup {
         return jo;
     }
 
-    public void extractPropertiesFromJson(JSONObject jo) {
+    public void extractPropertiesFromJSON(JSONObject jo) {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to ChanceAndCommunityChest was null");
         }
