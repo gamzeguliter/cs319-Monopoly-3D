@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <AnchorPane fx:id="editorScreenAnchor" prefHeight="768.0" prefWidth="1367.0" style="-fx-background-color: rgb(182, 216, 184);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -249,7 +250,7 @@
       </GridPane>
       <VBox alignment="CENTER" layoutX="800.0" layoutY="0.0" prefHeight="700.0" prefWidth="600.0" spacing="20.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 40;">
          <children>
-            <Label style="-fx-font-size: 50; -fx-border-color: BLACK;" text="Default Board" />
+            <TextField style="-fx-font-size: 20; -fx-border-color: BLACK;" text="Default Board" />
             <HBox alignment="CENTER" prefHeight="129.0" prefWidth="255.0" spacing="45.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mortgage  Rate" />
