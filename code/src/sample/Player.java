@@ -31,9 +31,6 @@ public class Player {
     //private methods
 
     //public methods
-    public void suspend(int tourNo) {
-        jailTime = tourNo;
-    }
 
     public void buyProperty(Property property, int price) {
         ownedProperties.add(property);
@@ -48,12 +45,21 @@ public class Player {
     public int getjailTime() {
         return jailTime;
     }
-    boolean isInJail() { return jailTime > 0; }
+
+    public int setJailTime(int jail) {
+        return jailTime = jail;
+    }
+
+    public boolean isInJail() { return jailTime > 0; }
 
     //getters and setters
     // TODO: implement pawn related methods
     // getPawn()
     // setPawn()
+
+    public void endJail() {
+        jailTime = 0;
+    }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

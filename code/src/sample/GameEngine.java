@@ -179,7 +179,9 @@ public class GameEngine {
             player.setPosition(player.getPosition() + joker.getMovement());
         }
         else if(joker.isSuspended()) {
-            player.suspend(joker.getSuspendedTourNo());
+            //the player should go to jail for + 2 turns because next turn decreases it and we need to know if
+            //the player is released yet
+            player.setJailTime(joker.getSuspendedTourNo() + 2);
         }
         return isMoved;
     }
@@ -426,6 +428,9 @@ public class GameEngine {
         turn++;
         currentPlayer = players.get(turn % players.size());
         playerPassedStart = false;
+        if(currentPlayer.isInJail()) {
+            currentPlayer.setJailTime(currentPlayer.getjailTime() - 1);
+        }
         return true;
     }
 
@@ -450,6 +455,9 @@ public class GameEngine {
         dice[0] = roll1;
         dice[1] = roll2;
         diceResult = roll1 + roll2;
+        if(currentPlayer.getjailTime() == 1 ) {
+            releasePlayer(false);
+        }
         return dice;
     }
 
@@ -735,4 +743,19 @@ public class GameEngine {
         return currentPlayer.isBankrupt();
     }
 
+    public String jokerText() {
+        return "You are in jail for " + currentPlayer.getjailTime() + " turns. \n" +
+                "Would you like to get out of jail by paying 50 " + board.currency + " ?";
+    }
+
+    public void releasePlayer(boolean rollDouble) {
+        if (!rollDouble) {
+            currentPlayer.pay(50);
+        }
+        currentPlayer.endJail();
+    }
+
+    public boolean playerInJail() {
+        return currentPlayer.isInJail();
+    }
 }

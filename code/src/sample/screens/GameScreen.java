@@ -88,6 +88,7 @@ public class GameScreen extends Screen {
         //group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
 
+    //değişecek
     //todo bu method direk getPlayers ile almasa daha iyi olur
     private void updatePlayerTexts() {
         for (int i = 0; i < gameEngine.getPlayers().size(); i++) {
@@ -127,6 +128,9 @@ public class GameScreen extends Screen {
 
         //todo tekrar check buraya
         btnRollDice.setOnAction(event -> {
+            if(gameEngine.getCurrentPlayer().isInJail()) {
+                jailFinishDialog();
+            }
             createDiceDialog();
             btnEndTurn.setDisable(false); //todo eğer oyunda tekrar hareket varsa hareket pop-upından sonra disable kaldır
             btnRollDice.setDisable(true);
@@ -246,13 +250,26 @@ public class GameScreen extends Screen {
 
         Node okButton = diceDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
-            //if(gameEngine.canMove()) -- todo check jail
-
-            gameEngine.movePlayer();
-            updateSquares();
-            updatePlayerTexts();
-            diceDialog.close();
-            checkSquare();
+            if(gameEngine.playerInJail()) {
+                if(dieResult[0] == dieResult[1]) {
+                    gameEngine.releasePlayer(true);
+                    gameEngine.movePlayer();
+                    updateSquares();
+                    updatePlayerTexts();
+                    diceDialog.close();
+                    checkSquare();
+                }
+                else {
+                    jailFinishDialog();
+                }
+            }
+            else {
+                gameEngine.movePlayer();
+                updateSquares();
+                updatePlayerTexts();
+                diceDialog.close();
+                checkSquare();
+            }
         });
         diceDialog.show();
     }
@@ -317,6 +334,7 @@ public class GameScreen extends Screen {
     }
 
     //done check
+    //todo jail update
     private void createJokerDialog() {
         Dialog jokerDialog = new Dialog();
         jokerDialog.setDialogPane(jokerScreen);
@@ -333,7 +351,7 @@ public class GameScreen extends Screen {
         jokerDialog.getDialogPane().getChildren().get(1);
 
         Node okButton = jokerDialog.getDialogPane().lookupButton(ButtonType.OK);
-        ((Button)okButton).setText("Sold!");
+        ((Button)okButton).setText("Do");
         ((Button)okButton).setOnAction(event -> {
             if(gameEngine.jokerActions()) {
                 jokerDialog.close();
@@ -342,6 +360,10 @@ public class GameScreen extends Screen {
                 checkSquare();
             }
             else {
+                if(gameEngine.getCurrentPlayer().isInJail())
+                {
+                    jailFinishDialog();
+                }
                 jokerDialog.close();
                 updateSquares();
                 updatePlayerTexts();
@@ -349,6 +371,24 @@ public class GameScreen extends Screen {
         });
 
         jokerDialog.showAndWait();
+    }
+
+    private void jailFinishDialog() {
+        Dialog dialog = new Dialog();
+        VBox vBox = new VBox();
+        Text text = new Text(gameEngine.jokerText());
+        vBox.getChildren().add(text);
+        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        ((Button)okButton).setText("Do");
+        ((Button)okButton).setOnAction(event -> {
+            gameEngine.releasePlayer(false);
+            dialog.close();
+            updateSquares();
+            updatePlayerTexts();
+        });
+        dialog.getDialogPane().setContent(vBox);
+        dialog.show();
     }
 
     // done combo box düzeltilecek
