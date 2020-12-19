@@ -677,9 +677,8 @@ public class GameEngine {
     public VBox startInfo() {
         Start start = (Start)board.getSquares()[0];
         VBox vBox = new VBox();
-        Text startText = new Text("START SQUARE");
         Text startInfo = new Text("Collect " + start.getMoney() + " dollars!");
-        vBox.getChildren().addAll(startText, startInfo);
+        vBox.getChildren().addAll(startInfo);
        return vBox;
     }
 

@@ -76,7 +76,7 @@ public class MainMenuScreen extends Screen {
     private void dispatchPlayAGame() throws IOException {
 
         //screenManager.changeScreen(new BoardSelectionScreen(screenManager));
-        screenManager.changeScreen(new BoardSelectionScreen(screenManager));
+        screenManager.changeScreen(new GameScreen(screenManager));
     }
 
     private void dispatchEditABoard() {
