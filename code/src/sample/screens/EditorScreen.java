@@ -94,7 +94,13 @@ public class EditorScreen extends Screen{
         Button save    = (Button) v.getChildren().get(8);
 
         cancel.setCancelButton(true);
-        cancel.setOnAction(event -> screenManager.changeScreen(new MainMenuScreen(screenManager)));
+        cancel.setOnAction(event -> {
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         save.setOnAction(event -> {
 
@@ -515,7 +521,13 @@ public void update( ){
 
     TextField boardName = (TextField) v.getChildren().get(0);
     cancel.setCancelButton(true);
-    cancel.setOnAction(event -> screenManager.changeScreen(new MainMenuScreen(screenManager)));
+    cancel.setOnAction(event -> {
+        try {
+            screenManager.changeScreen(new MainMenuScreen(screenManager));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    });
 
 
     save.setOnAction(new EventHandler<ActionEvent>() {

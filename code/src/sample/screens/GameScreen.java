@@ -279,7 +279,11 @@ public class GameScreen extends Screen {
         ((Button)okButton).setText("Go back to the main page");
         ((Button)okButton).setOnAction(event -> {
             gameOverDialog.close();
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         vbox.getChildren().addAll(winner);
         gameOverDialog.getDialogPane().setContent(vbox);

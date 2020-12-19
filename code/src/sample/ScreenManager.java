@@ -6,12 +6,14 @@ import sample.managers.FileManager;
 import sample.screens.MainMenuScreen;
 import sample.screens.Screen;
 
+import java.io.IOException;
+
 public class ScreenManager extends Application {
     Screen screen;
     Stage stage;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         screen = new MainMenuScreen(this);
         stage = primaryStage;
 
