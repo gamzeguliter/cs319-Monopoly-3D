@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 
-<DialogPane fx:id="chanceAndCommunityChest" maxHeight="200.0" maxWidth="300.0" minHeight="200.0" minWidth="300.0" prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane fx:id="chanceAndCommunityChest" maxHeight="150.0" maxWidth="300.0" minHeight="150.0" minWidth="300.0" prefHeight="150.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <header>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Draw Card" wrappingWidth="300.0800018310547" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Draw Card" textAlignment="CENTER" wrappingWidth="300.0" />
     </header>
     <buttonTypes>
         <ButtonType fx:constant="OK" />

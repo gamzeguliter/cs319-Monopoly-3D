@@ -46,6 +46,12 @@ public class GameScreen extends Screen {
     DialogPane auctionOrSellScreen = FXMLLoader.load(getClass().getResource("auctionOrSellScreen.fxml"));
     DialogPane jokerScreen = FXMLLoader.load(getClass().getResource("jokerScreen.fxml"));
     DialogPane chanceAndCommunityChestScreen = FXMLLoader.load(getClass().getResource("chanceAndCommunityChestScreen.fxml"));
+    DialogPane mortgageLiftingScreen = FXMLLoader.load(getClass().getResource("mortgageLiftingScreen.fxml"));
+    DialogPane jailFinishScreen = FXMLLoader.load(getClass().getResource("jailFinishScreen.fxml"));
+    DialogPane cardScreen = FXMLLoader.load(getClass().getResource("cardScreen.fxml"));
+    DialogPane startScreen = FXMLLoader.load(getClass().getResource("startScreen.fxml"));
+
+
 
     // constructors
     public GameScreen(ScreenManager screenManager) throws IOException {
@@ -116,7 +122,6 @@ public class GameScreen extends Screen {
         Label turnText = (Label) vBox.getChildren().get(2);
         Button btnRollDice = (Button) hBox.getChildren().get(0);
         Button btnEndTurn = (Button) hBox.getChildren().get(1);
-        System.out.println(vBox2.getChildren());
         HBox hBox2 = (HBox) vBox2.getChildren().get(4);
         Button btnResign = (Button) hBox2.getChildren().get(0);
 
@@ -269,21 +274,22 @@ public class GameScreen extends Screen {
         diceDialog.show();
     }
 
+    //done
     private void createStartDialog() {
-        Dialog dialog = new Dialog();
+        Dialog startDialog = new Dialog();
+        startDialog.setDialogPane(startScreen);
         VBox vbox = gameEngine.startInfo();
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        Node okButton = startDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Collect");
         ((Button)okButton).setOnAction(event -> {
             gameEngine.startAction();
             updateSquares();
             //updatePlayerTexts();
-            dialog.close();
+            startDialog.close();
         });
         vbox.getChildren().add(okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.showAndWait();
+        startDialog.getDialogPane().setContent(vbox);
+        startDialog.showAndWait();
     }
 
     //done check
@@ -303,29 +309,32 @@ public class GameScreen extends Screen {
         chanceAndCommunityChestDialog.show();
     }
 
+    //done
     private void createCardDialog() {
-        Dialog dialog = new Dialog();
+        Dialog cardDialog = new Dialog();
+        cardDialog.setDialogPane(cardScreen);
+
         VBox vbox = new VBox();
         Text text = new Text(gameEngine.getCardInfo());
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        vbox.getChildren().add(text);
+
+        Node okButton = cardDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Do");
         ((Button)okButton).setOnAction(event -> {
             if(gameEngine.implementCard()) {
-                dialog.close();
+                cardDialog.close();
                 updateSquares();
                 //updatePlayerTexts();
                 checkSquare();
             }
             else {
-                dialog.close();
+                cardDialog.close();
                 updateSquares();
                 //updatePlayerTexts();
             }
         });
-        vbox.getChildren().addAll(text, okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+        cardDialog.getDialogPane().setContent(vbox);
+        cardDialog.show();
     }
 
     //done check
@@ -373,22 +382,25 @@ public class GameScreen extends Screen {
         jokerDialog.showAndWait();
     }
 
+    //done
     private void jailFinishDialog() {
-        Dialog dialog = new Dialog();
+        Dialog jailFinish = new Dialog();
+        jailFinish.setDialogPane(jailFinishScreen);
+
         VBox vBox = new VBox();
         Text text = new Text(gameEngine.jokerText());
         vBox.getChildren().add(text);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
+        Node okButton = jailFinish.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Do");
         ((Button)okButton).setOnAction(event -> {
             gameEngine.releasePlayer(false);
-            dialog.close();
+            jailFinish.close();
             updateSquares();
             //updatePlayerTexts();
         });
-        dialog.getDialogPane().setContent(vBox);
-        dialog.show();
+        jailFinish.getDialogPane().setContent(vBox);
+        jailFinish.show();
     }
 
     // done combo box düzeltilecek
@@ -448,12 +460,14 @@ public class GameScreen extends Screen {
         });
     }
 
+    //done kontrol edelim
     private void createMortgageLiftDialog(int index) {
         Dialog mortgageLifting = new Dialog();
+        mortgageLifting.setDialogPane(mortgageLiftingScreen);
         VBox vbox = gameEngine.getMortgageLiftingInfo(index);
 
         //cancel button
-        mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
         Node closeButton = mortgageLifting.getDialogPane().lookupButton(ButtonType.CLOSE);
         ((Button)closeButton).setText("Lift mortgage later");
         ((Button)closeButton).setOnAction(event -> {
@@ -464,7 +478,6 @@ public class GameScreen extends Screen {
         });
 
         //ok button
-        mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Node okButton = mortgageLifting.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Lift mortgage now");
         ((Button)okButton).setOnAction(event -> {
@@ -474,7 +487,6 @@ public class GameScreen extends Screen {
             //updatePlayerTexts();
         });
 
-        vbox.getChildren().addAll(okButton,closeButton);
         mortgageLifting.getDialogPane().setContent(vbox);
         mortgageLifting.show();
     }
@@ -658,10 +670,6 @@ public class GameScreen extends Screen {
                     StackPane stackPane = (StackPane) gridPane.getChildren().get(pos);
                     Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
 
-                    tile.setOnMouseClicked(event -> {
-                        System.out.println("Position " +position );
-                    });
-
                     //set tile colors
                     System.out.println(gameEngine.getSquare(pos).getType());
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
@@ -734,7 +742,6 @@ public class GameScreen extends Screen {
                     Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
 
                     //todo add pictures/names to tiles, make player pawns
-                    System.out.println(pos);
                     //make the tiles clickable
                     tile.setOnMouseClicked(event -> {
                         position = pos;
@@ -742,7 +749,6 @@ public class GameScreen extends Screen {
                         if(gameEngine.canClick(pos)) {
                             createPropertyDialog(pos);
                         }
-                        System.out.println("Positionnnnn " + position );
                     });
 
                     //determine square colors
