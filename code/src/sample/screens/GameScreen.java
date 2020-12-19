@@ -50,8 +50,9 @@ public class GameScreen extends Screen {
     DialogPane jailFinishScreen = FXMLLoader.load(getClass().getResource("jailFinishScreen.fxml"));
     DialogPane cardScreen = FXMLLoader.load(getClass().getResource("cardScreen.fxml"));
     DialogPane startScreen = FXMLLoader.load(getClass().getResource("startScreen.fxml"));
-
-
+    DialogPane resignScreen = FXMLLoader.load(getClass().getResource("resignScreen.fxml"));
+    DialogPane gameOverScreen = FXMLLoader.load(getClass().getResource("gameOverScreen.fxml"));
+    DialogPane bankruptScreen = FXMLLoader.load(getClass().getResource("bankruptScreen.fxml"));
 
     // constructors
     public GameScreen(ScreenManager screenManager) throws IOException {
@@ -191,12 +192,15 @@ public class GameScreen extends Screen {
         //updatePlayerTexts();
     }
 
+    //done
     private void createBankruptDialog() {
-        Dialog dialog = new Dialog();
+        Dialog bankruptDialog = new Dialog();
+        bankruptDialog.setDialogPane(bankruptScreen);
+
         VBox vbox = new VBox();
         Text bankrupt = new Text("YOU LOSE");
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+
+        Node okButton = bankruptDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
             ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
             //updatePlayerTexts();
@@ -211,24 +215,27 @@ public class GameScreen extends Screen {
             }
         });
         vbox.getChildren().addAll(bankrupt);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+        bankruptDialog.getDialogPane().setContent(vbox);
+        bankruptDialog.show();
     }
 
+    //done check
     private void createGameOverDialog() {
-        Dialog dialog = new Dialog();
+        Dialog gameOverDialog = new Dialog();
+        gameOverDialog.setDialogPane(gameOverScreen);
+
         VBox vbox = new VBox();
         Text winner = new Text(gameEngine.getWinner() + "WINS!!!!");
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+
+        Node okButton = gameOverDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Go back to the main page");
         ((Button)okButton).setOnAction(event -> {
-            dialog.close();
+            gameOverDialog.close();
             screenManager.changeScreen(new MainMenuScreen(screenManager));
         });
-        vbox.getChildren().addAll(winner, okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+        vbox.getChildren().addAll(winner);
+        gameOverDialog.getDialogPane().setContent(vbox);
+        gameOverDialog.show();
     }
 
     private void exitConfirmationDialog() {
@@ -237,16 +244,18 @@ public class GameScreen extends Screen {
         //yes -> take to main page
     }
 
+    //done
     private void createResignDialog() {
-        Dialog dialog = new Dialog();
+        Dialog resignDialog = new Dialog();
+        resignDialog.setDialogPane(resignScreen);
+
         VBox vbox = new VBox();
         Text resignConfirmation = new Text("Are you sure you want to resign?");
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+
+        Node okButton = resignDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Yes");
         ((Button)okButton).setOnAction(event -> {
-            dialog.close();
+            resignDialog.close();
             ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
             //updatePlayerTexts();
 
@@ -257,9 +266,10 @@ public class GameScreen extends Screen {
             }
             gameEngine.resign();
         });
-        vbox.getChildren().addAll(resignConfirmation, okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+
+        vbox.getChildren().addAll(resignConfirmation);
+        resignDialog.getDialogPane().setContent(vbox);
+        resignDialog.show();
     }
 
 
