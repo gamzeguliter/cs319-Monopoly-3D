@@ -4,21 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<DialogPane minHeight="800.0" minWidth="300.0" prefHeight="800.0" prefWidth="300.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane minHeight="800.0" minWidth="300.0" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <content>
-        <VBox prefHeight="200.0" prefWidth="100.0">
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
             <children>
-                <VBox prefHeight="600.0" prefWidth="100.0" />
-                <VBox prefHeight="200.0" prefWidth="100.0" />
+              <VBox alignment="CENTER" prefHeight="63.0" prefWidth="300.0" style="-fx-background-color: LIGHTBLUE;">
+                  <children>
+                      <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Property" textAlignment="CENTER" wrappingWidth="243.26000213623047" />
+                  </children>
+              </VBox>
             </children>
         </VBox>
     </content>
-    <header>
-        <VBox alignment="CENTER" prefHeight="63.0" prefWidth="300.0" style="-fx-background-color: LIGHTBLUE;">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Property" textAlignment="CENTER" wrappingWidth="302.26000213623047" />
-            </children>
-        </VBox>
-    </header>
 
 </DialogPane>

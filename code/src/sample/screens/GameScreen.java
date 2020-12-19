@@ -435,21 +435,7 @@ public class GameScreen extends Screen {
         Dialog jokerDialog = new Dialog();
         jokerDialog.setDialogPane(jokerScreen);
 
-        VBox vBox = (VBox) jokerDialog.getDialogPane().getContent();
-
         VBox jokerContent = gameEngine.getJokerContent();
-        String jokerName = gameEngine.getJokerName();
-
-        System.out.println(jokerDialog.getDialogPane().getChildren());
-        System.out.println(jokerDialog.getDialogPane());
-        System.out.println(jokerDialog.getDialogPane().getChildren().get(0));
-
-        Text header = (Text) jokerDialog.getDialogPane().getChildren().get(0);
-
-        vBox.getChildren().add(jokerContent);
-
-        header.setText(jokerName);
-        jokerDialog.getDialogPane().getChildren().get(1);
 
         Node okButton = jokerDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Do");
@@ -470,7 +456,7 @@ public class GameScreen extends Screen {
                 getPlayerTexts();
             }
         });
-
+        jokerDialog.getDialogPane().setContent(jokerContent);
         jokerDialog.showAndWait();
     }
 
@@ -529,7 +515,6 @@ public class GameScreen extends Screen {
             if (button == ButtonType.OK) {
                 //todo return new Pair<>(playerSelection.getText(), price.getText());  PLAYER SELECTION ARTIK BİR COMBO BOX COMBO BOX LISTENER?
             }
-
             return null;
         });
 
@@ -587,23 +572,13 @@ public class GameScreen extends Screen {
         Dialog propertyDialog = new Dialog();
         propertyDialog.setDialogPane(propertyScreen);
 
-        VBox mainVBox = (VBox) propertyDialog.getDialogPane().getContent();
+        VBox vBox = (VBox) propertyDialog.getDialogPane().getContent();
+        VBox vBox2 = (VBox) vBox.getChildren().get(0);
+        Text propertyName = (Text) vBox2.getChildren().get(0);
 
-        VBox deneme = (VBox) propertyDialog.getDialogPane().getContent();
-        System.out.println(deneme.getChildren());
+        propertyName.setText(gameEngine.getPropertyName(index));
 
-        System.out.println(propertyDialog.getDialogPane());
-        System.out.println(propertyDialog.getDialogPane().getChildren());
-        System.out.println(propertyDialog.getDialogPane().getContent());
-
-
-        Text header = (Text) propertyDialog.getDialogPane().getChildren();
-        VBox propertyBox = (VBox) mainVBox.getChildren().get(0);
-        VBox buttonBox = (VBox) mainVBox.getChildren().get(1);
-
-        propertyBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
-
-        header.setText(gameEngine.getPropertyName(index));
+        vBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
 
         Property property;
         if(index < 0 ) {
@@ -626,6 +601,7 @@ public class GameScreen extends Screen {
 
         //dialog.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> event.consume());
 
+        VBox buttonBox = new VBox();
         for(String buttonName: buttonNames) {
             switch(buttonName) {
                 case "cancel":
@@ -734,6 +710,7 @@ public class GameScreen extends Screen {
                     break;
             }
         }
+        vBox.getChildren().add(buttonBox); //fazladan vbox mu ekledik
         propertyDialog.showAndWait();
     }
 
