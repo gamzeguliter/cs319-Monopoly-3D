@@ -21,6 +21,7 @@ public class ColorGroup implements JSONable {
     }
 
     public ColorGroup(JSONObject jo) {
+        properties = new ArrayList<Property>();
         extractPropertiesFromJSON(jo);
     }
 

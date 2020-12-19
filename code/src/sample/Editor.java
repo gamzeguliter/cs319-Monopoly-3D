@@ -15,8 +15,8 @@ public class Editor {
 
     public Editor(){
         board = new Board();
-
     }
+
     public Square getSquare(int index) {
         return board.squares[index];
     }
@@ -30,6 +30,7 @@ public class Editor {
         System.out.println("chest and community created");
         board.squares[index] = new ChanceAndCommunityChest(chance);
 
+        System.out.println(board.squares[index].getJSON().toString());
     }
 
     /// creates a new Joker square while editing

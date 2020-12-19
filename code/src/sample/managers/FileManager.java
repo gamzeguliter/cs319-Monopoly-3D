@@ -18,9 +18,12 @@ public class FileManager {
 
     // check if folder exists? this should not be called if folder does not exists anyway
     public static Board readBoardFromFolder(String boardName) {
+        System.out.println("********************************************************" + boardName);
         String boardPath = getFolderPathFromBoardName(boardName);
+
         String boardConfigJsonText = readTextFromFile(boardPath + "/" + configFileName);
         JSONObject boardConfigJSON = new JSONObject(boardConfigJsonText);
+        System.out.println(boardConfigJSON.toString());
 
         // check if folder exists, if not there is error in file system
         if (Files.notExists(Paths.get(boardPath))) {
@@ -51,7 +54,7 @@ public class FileManager {
         }
         board.setSquares(squares);
 
-        return new Board();
+        return board;
     }
 
     public static void writeBoardToFolder(Board board) {
@@ -92,6 +95,7 @@ public class FileManager {
         boardConfigJSON.put("squares", squaresJSON);
 
         writeTextToFile(boardPath + "/" + configFileName, boardConfigJSON.toString());
+        System.out.println("Succesfully wrote board to file");
     }
 
     // helper methods

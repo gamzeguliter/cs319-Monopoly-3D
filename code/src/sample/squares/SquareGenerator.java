@@ -8,7 +8,7 @@ public class SquareGenerator {
 
     public static Square getSquareFromJSON(JSONObject jo, Board board) {
         String type = jo.getString("type");
-
+        System.out.println(type);
         switch (type) {
             case "ChanceAndCommunityChest" -> {return new ChanceAndCommunityChest(jo);}
             case "Joker" -> {return new Joker(jo);}

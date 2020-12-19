@@ -86,7 +86,6 @@ public class EditorScreen extends Screen{
         TextField currency =(TextField) h2.getChildren().get(1);
         currency.setText(editor.board.getCurrency());
 
-
         HBox h3 = (HBox)v.getChildren().get(3);
         TextField rentRate =(TextField) h3.getChildren().get(1);
         rentRate.setText(""+editor.board.getMortgageRate());
@@ -95,37 +94,26 @@ public class EditorScreen extends Screen{
         Button save    = (Button) v.getChildren().get(8);
 
         cancel.setCancelButton(true);
-        cancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                screenManager.changeScreen(new MainMenuScreen(screenManager));
-            }
-           });
+        cancel.setOnAction(event -> screenManager.changeScreen(new MainMenuScreen(screenManager)));
 
+        save.setOnAction(event -> {
 
+            if(!mortgageRate.getText().isEmpty())
+            editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
 
-                save.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+            if(!rentRate.getText().isEmpty())
+            editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
 
-                if(!mortgageRate.getText().isEmpty())
-                editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
+            if(!currency.getText().isEmpty())
+            editor.board.setCurrency(currency.getText());
 
-                if(!rentRate.getText().isEmpty())
-                editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
+            if(!boardName.getText().isEmpty())
+                editor.board.setName(boardName.getText());
 
-                if(!currency.getText().isEmpty())
-                editor.board.setCurrency(currency.getText());
+            System.out.println("hello");
 
-                if(!boardName.getText().isEmpty())
-                    editor.board.setName(boardName.getText());
-
-
-                FileManager.writeBoardToFolder(editor.board);
-            }
+            FileManager.writeBoardToFolder(editor.board);
         });
-
-
 
         for (int pos = 0; pos < 40; pos++) {
             int finalPosition = pos;
@@ -254,6 +242,7 @@ public class EditorScreen extends Screen{
         Button uploadBoard = (Button) hBox2.getChildren().get(0);
         Button deleteBoard = (Button) hBox2.getChildren().get(1);
     }
+
     //the property dialog
     private void openPropertyDialog(Node[]squares) {
 
@@ -271,7 +260,6 @@ public class EditorScreen extends Screen{
         Button color = (Button) colorBox.getChildren().get(1);
         propertyName.setText(((Property)editor.getProperty(position)).getName());
         propertyPrice.setText(((Property)editor.getProperty(position)).getBuyingPrice()+"");
-
 
         //selecting the color group
         color.setOnMouseClicked(event -> {
@@ -345,8 +333,6 @@ public class EditorScreen extends Screen{
             selectColorDialog.show();
         });
 
-
-
         propertyEditDialog.setResultConverter(button -> {
             if (button == ButtonType.OK) {
                 Object[] results = new Object[2];
@@ -366,7 +352,6 @@ public class EditorScreen extends Screen{
             editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
             editor.setNameForProperty(propertyName.getText() , position);
         });
-
 
         update();
     }
@@ -524,18 +509,13 @@ public void update( ){
     TextField rentRate =(TextField) h3.getChildren().get(1);
 
 
-    Button cancel  = (Button) v.getChildren().get(8);
-    Button save    = (Button) v.getChildren().get(9);
+    Button cancel  = (Button) v.getChildren().get(9);
+    Button save    = (Button) v.getChildren().get(8);
     cancel.setCancelButton(true);
 
     TextField boardName = (TextField) v.getChildren().get(0);
     cancel.setCancelButton(true);
-    cancel.setOnAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
-        }
-    });
+    cancel.setOnAction(event -> screenManager.changeScreen(new MainMenuScreen(screenManager)));
 
 
     save.setOnAction(new EventHandler<ActionEvent>() {
@@ -556,7 +536,6 @@ public void update( ){
 
 
             FileManager.writeBoardToFolder(editor.board);
-
         }
     });
     /// end of the right half
