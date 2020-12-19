@@ -46,11 +46,6 @@
                   <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" />
                </children>
             </StackPane>
-            <StackPane GridPane.rowIndex="1" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
             <StackPane GridPane.columnIndex="2">
                <children>
                   <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" />
@@ -96,132 +91,7 @@
                   <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" />
                </children>
             </StackPane>
-            <StackPane GridPane.rowIndex="2" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="3" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="4" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="5" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="6" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="7" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="8" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="9" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="2" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="4" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="5" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="6" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="7" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="8" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="9" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="10" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="9" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="8" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="7" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="6" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="5" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="4" GridPane.valignment="TOP">
-               <children>
-                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
-               </children>
-            </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <children>
                   <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
                </children>
@@ -231,7 +101,137 @@
                   <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
                </children>
             </StackPane>
-            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="4" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="5" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="6" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="7" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="8" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="9" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="10" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="9" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="8" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="7" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="6" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="5" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="4" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="3" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="2" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="90.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="9" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <children>
+                  <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
+               </children>
+            </StackPane>
+            <StackPane GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <children>
                   <Rectangle fill="WHITE" height="60.0" stroke="BLACK" strokeType="OUTSIDE" width="90.0" x="12.0" y="1.0" />
                </children>

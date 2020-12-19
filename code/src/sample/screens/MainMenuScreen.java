@@ -30,7 +30,13 @@ public class MainMenuScreen extends Screen {
 
         Button btnPlayAGame = new Button("Play a Game");
         btnPlayAGame.setPrefSize(buttonWidth, buttonHeight);
-        btnPlayAGame.setOnAction(actionEvent -> dispatchPlayAGame());
+        btnPlayAGame.setOnAction(actionEvent -> {
+            try {
+                dispatchPlayAGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Button btnEditABoard = new Button("Edit a Board");
         btnEditABoard.setPrefSize(buttonWidth, buttonHeight);
@@ -67,8 +73,10 @@ public class MainMenuScreen extends Screen {
         return scene;
     }
 
-    private void dispatchPlayAGame() {
-        screenManager.changeScreen(new BoardSelectionScreen(screenManager));
+    private void dispatchPlayAGame() throws IOException {
+
+        //screenManager.changeScreen(new BoardSelectionScreen(screenManager));
+        screenManager.changeScreen(new GameScreen(screenManager));
     }
 
     private void dispatchEditABoard() {
