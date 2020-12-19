@@ -725,7 +725,7 @@ public class GameEngine {
         currentPlayer.out();
         players.remove(currentPlayer);
         turn--;
-        currentPlayer = players.get(turn - 1);
+        currentPlayer = players.get(Math.abs(turn - 1) % players.size());
 
     }
 
