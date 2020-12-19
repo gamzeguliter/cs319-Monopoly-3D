@@ -54,12 +54,10 @@ public class Board {
         this.name = name;
     }
 
-    //TODO load board constructor
-
     public void updatePropertyGroups() {
-        for (int i = 0; i < squares.length; i++) {
-            if (squares[i].getType() == SquareType.PROPERTY) {
-                Property property = (Property) squares[i];
+        for (Square square : squares) {
+            if (square.getType() == SquareType.PROPERTY) {
+                Property property = (Property) square;
                 getColorGroup(property.getGroupName()).addProperty(property);
             }
         }
@@ -67,10 +65,6 @@ public class Board {
 
     public Card drawChanceCard() { return chanceDeck.drawCard(); }
     public Card drawChestCard() { return chestDeck.drawCard(); }
-
-    public SquareType getSquareType(int squareNo) {
-        return squares[squareNo].getType();
-    }
 
     public ColorGroup getColorGroup(String groupName) {
         for (ColorGroup colorGroup : colorGroups){
@@ -131,7 +125,7 @@ public class Board {
     }
 
     private ArrayList<ColorGroup> createGroups() {
-        ArrayList<ColorGroup> colors = new ArrayList<ColorGroup>();
+        ArrayList<ColorGroup> colors = new ArrayList<>();
 
         ColorGroup red = new ColorGroup("Red");
         red.setColor(Color.NAVAJOWHITE);

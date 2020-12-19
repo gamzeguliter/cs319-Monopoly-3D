@@ -21,7 +21,6 @@ public class Card {
         this.prompt = prompt;
     }
 
-
     public String getAction() {
         return action;
     }

@@ -1,8 +1,5 @@
 package sample;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class CardDeck {
 
     Card[] cards;
@@ -95,7 +92,7 @@ public class CardDeck {
             }
             if (i == 5 || i == 15 || i == 6 || i == 14) { // 6 is jail
                 //earn money
-                amount = ((int) (Math.random() * (100 - 1))) + 1;
+                amount = ((int) (Math.random() * (100 - 20))) + 20;
                 card = new Card(chancePrompts[4] + amount, chanceActions[4], amount);
                 cards[i] = card;
             }
@@ -109,20 +106,20 @@ public class CardDeck {
 
             if (i == 9) {
                 // pay for house and hotel
-                amount = ((int) (Math.random() * (10 - 1))) + 1;
+                amount = ((int) (Math.random() * (20 - 5))) + 5;
                 card = new Card("", chanceActions[6], amount);
                 cards[i] = card;
             }
 
             if (i == 10 || i == 8) {
                 //pay money
-                amount = ((int) (Math.random() * (20 - 1))) + 1;
+                amount = ((int) (Math.random() * (50 - 10))) + 10;
                 card = new Card(chancePrompts[7] + amount, chanceActions[7], amount);
                 cards[i] = card;
             }
             if (i == 13) {
                 //pay each player
-                amount = ((int) (Math.random() * (10 - 1))) + 1;
+                amount = ((int) (Math.random() * (20 - 5))) + 5;
                 card = new Card(chancePrompts[8] + amount, chanceActions[8], amount);
                 cards[i] = card;
             }
@@ -145,26 +142,26 @@ public class CardDeck {
             }
             if (i == 1 || i == 3 || i == 7 || i == 8 || i == 10 || i == 13 || i == 15 || i == 16) {// 5 is the jail can be changed
                 // earn money
-                amount = ((int) (Math.random() * (100 - 1))) + 1;
+                amount = ((int) (Math.random() * (100 - 20))) + 20;
                 card = new Card(chestPrompts[3] + amount, chestActions[3], amount);
                 cards[i] = card;
             }
 
             if (i == 2 || i == 11 || i == 12 || i == 4) { // 4  is the jail , can be changed
                 // pay money
-                amount = ((int) (Math.random() * (50 - 1))) + 1;
+                amount = ((int) (Math.random() * (50 - 10))) + 10;
                 card = new Card(chestPrompts[1] + amount, chestActions[1], amount);
                 cards[i] = card;
             }
             if (i == 6 || i == 9) {
                 // earn money from each player
-                amount = ((int) (Math.random() * (20 - 1))) + 1;
+                amount = ((int) (Math.random() * (20 - 5))) + 5;
                 card = new Card(chestPrompts[2] + amount, chestActions[2], amount);
                 cards[i] = card;
             }
             if (i == 14) {
                 // pay for houses and hotels
-                amount = ((int) (Math.random() * (30 - 1))) + 1;
+                amount = ((int) (Math.random() * (30 - 10))) + 10;
                 card = new Card(chestPrompts[5], chestActions[5], amount);
                 cards[i] = card;
             }
