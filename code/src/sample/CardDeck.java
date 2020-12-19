@@ -1,8 +1,5 @@
 package sample;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class CardDeck {
 
     Card[] cards;

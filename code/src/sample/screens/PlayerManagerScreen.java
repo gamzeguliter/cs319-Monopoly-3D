@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import sample.*;
+import sample.managers.FileManager;
+import sample.managers.PlayerManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -104,7 +106,7 @@ public class PlayerManagerScreen extends Screen {
         HBox iconBox = new HBox();
 
         iconBox.setAlignment(Pos.CENTER);
-        Image iconImage = getImage(iconChoices.get(playerCount-1) + ".png");
+        Image iconImage = Utils.getImage("boards/" + boardName + "/icons/" + iconChoices.get(playerCount-1) + ".png", 100, 100);
         ImageView iconView = new ImageView(iconImage);
         iconViews.add(iconView);
 
@@ -148,25 +150,12 @@ public class PlayerManagerScreen extends Screen {
 
     private void changeToNextIcon(int playerNo) {
         iconChoices.set(playerNo-1, (iconChoices.get(playerNo-1) + 1) % 4);
-        iconViews.get(playerNo-1).setImage(getImage(iconChoices.get(playerNo-1) + ".png"));
+        iconViews.get(playerNo-1).setImage(Utils.getImage("boards/" + boardName + "/icons/"  + iconChoices.get(playerNo-1) + ".png", 100, 100));
     }
 
     @Override
     public Scene getScene() {
         return scene;
-    }
-
-    // TODO: do this with utils!
-    private Image getImage(String imageName) {
-        InputStream stream = null;
-        try {
-            stream = new FileInputStream(System.getProperty("user.dir") +
-                    "/boards/" + boardName + "/icons/" + imageName);
-            return new Image(stream, 100, 100, false, false);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private void done() {
@@ -184,9 +173,14 @@ public class PlayerManagerScreen extends Screen {
             playerColors.add(colorPicker.getValue());
         }
 
+        ArrayList<Image> icons = new ArrayList<>();
+        for (int iconNo : iconChoices) {
+            icons.add(Utils.getImage("boards/" + boardName + "/icons/"  + iconNo + ".png", 30, 30));
+        }
+
         ArrayList<Player> players = playerManager.generatePlayers(
                 playerNames,
-                iconChoices,
+                icons,
                 playerColors
                 );
 

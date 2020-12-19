@@ -2,6 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import sample.managers.FileManager;
 import sample.screens.MainMenuScreen;
 import sample.screens.Screen;
 
@@ -10,7 +11,7 @@ public class ScreenManager extends Application {
     Stage stage;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
         screen = new MainMenuScreen(this);
         stage = primaryStage;
 
