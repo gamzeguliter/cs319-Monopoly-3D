@@ -39,7 +39,7 @@ public class GameScreen extends Screen {
     GameEngine gameEngine;
     Font font = Font.font("Source Sans Pro", 20);
     int position;
-    Parent gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
+    AnchorPane gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
     DialogPane diceScreen = FXMLLoader.load(getClass().getResource("diceScreen.fxml"));
     DialogPane propertyScreen = FXMLLoader.load(getClass().getResource("propertyScreen.fxml"));
     DialogPane auctionOrSellScreen = FXMLLoader.load(getClass().getResource("auctionOrSellScreen.fxml"));
@@ -169,7 +169,7 @@ public class GameScreen extends Screen {
     private void checkSquare() {
         if(gameEngine.passesStart()) {
             createStartDialog();
-            updatePlayerTexts();
+            ////updatePlayerTexts();
         }
 
         if (gameEngine.getCurrentSquare().getType() == SquareType.PROPERTY) {
@@ -186,7 +186,7 @@ public class GameScreen extends Screen {
             createStartDialog();
         }
         updateSquares();
-        updatePlayerTexts();
+        //updatePlayerTexts();
     }
 
     private void createBankruptDialog() {
@@ -197,11 +197,11 @@ public class GameScreen extends Screen {
         Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
             ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
-            updatePlayerTexts();
+            //updatePlayerTexts();
             for (int i = 0; i < indexes.size(); i++) {
                 createAuctionOrSellDialog(indexes.get(i), true);
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
             }
             gameEngine.bankrupt();
             gameEngine.nextTurn();
@@ -222,12 +222,12 @@ public class GameScreen extends Screen {
         ((Button)okButton).setOnAction(event -> {
             dialog.close();
             ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
-            updatePlayerTexts();
+            //updatePlayerTexts();
 
             for (int i = 0; i < indexes.size(); i++) {
                 createAuctionOrSellDialog(indexes.get(i), true);
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
             }
             gameEngine.resign();
         });
@@ -255,7 +255,7 @@ public class GameScreen extends Screen {
                     gameEngine.releasePlayer(true);
                     gameEngine.movePlayer();
                     updateSquares();
-                    updatePlayerTexts();
+                    //updatePlayerTexts();
                     diceDialog.close();
                     checkSquare();
                 }
@@ -266,7 +266,7 @@ public class GameScreen extends Screen {
             else {
                 gameEngine.movePlayer();
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
                 diceDialog.close();
                 checkSquare();
             }
@@ -283,7 +283,7 @@ public class GameScreen extends Screen {
         ((Button)okButton).setOnAction(event -> {
             gameEngine.startAction();
             updateSquares();
-            updatePlayerTexts();
+            //updatePlayerTexts();
             dialog.close();
         });
         vbox.getChildren().add(okButton);
@@ -303,7 +303,7 @@ public class GameScreen extends Screen {
             createCardDialog();
             chanceAndCommunityChestDialog.close();
             updateSquares();
-            updatePlayerTexts();
+            //updatePlayerTexts();
         });
         chanceAndCommunityChestDialog.show();
     }
@@ -319,13 +319,13 @@ public class GameScreen extends Screen {
             if(gameEngine.implementCard()) {
                 dialog.close();
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
                 checkSquare();
             }
             else {
                 dialog.close();
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
             }
         });
         vbox.getChildren().addAll(text, okButton);
@@ -344,7 +344,12 @@ public class GameScreen extends Screen {
         VBox jokerContent = gameEngine.getJokerContent();
         String jokerName = gameEngine.getJokerName();
 
+        System.out.println(jokerDialog.getDialogPane().getChildren());
+        System.out.println(jokerDialog.getDialogPane());
+        System.out.println(jokerDialog.getDialogPane().getChildren().get(0));
+
         Text header = (Text) jokerDialog.getDialogPane().getChildren().get(0);
+
         vBox.getChildren().add(jokerContent);
 
         header.setText(jokerName);
@@ -356,7 +361,7 @@ public class GameScreen extends Screen {
             if(gameEngine.jokerActions()) {
                 jokerDialog.close();
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
                 checkSquare();
             }
             else {
@@ -366,7 +371,7 @@ public class GameScreen extends Screen {
                 }
                 jokerDialog.close();
                 updateSquares();
-                updatePlayerTexts();
+                //updatePlayerTexts();
             }
         });
 
@@ -385,7 +390,7 @@ public class GameScreen extends Screen {
             gameEngine.releasePlayer(false);
             dialog.close();
             updateSquares();
-            updatePlayerTexts();
+            //updatePlayerTexts();
         });
         dialog.getDialogPane().setContent(vBox);
         dialog.show();
@@ -444,7 +449,7 @@ public class GameScreen extends Screen {
                 createMortgageLiftDialog(index);
             }
             updateSquares();
-            updatePlayerTexts();
+            //updatePlayerTexts();
         });
     }
 
@@ -460,7 +465,7 @@ public class GameScreen extends Screen {
             gameEngine.liftMortgageLater(index);
             mortgageLifting.close();
             updateSquares();
-            updatePlayerTexts();
+            //updatePlayerTexts();
         });
 
         //ok button
@@ -471,7 +476,7 @@ public class GameScreen extends Screen {
             gameEngine.unmortgageProperty(index);
             mortgageLifting.close();
             updateSquares();
-            updatePlayerTexts();
+            //updatePlayerTexts();
         });
 
         vbox.getChildren().addAll(okButton,closeButton);
@@ -485,7 +490,16 @@ public class GameScreen extends Screen {
         propertyDialog.setDialogPane(propertyScreen);
 
         VBox mainVBox = (VBox) propertyDialog.getDialogPane().getContent();
-        Text header = (Text) propertyDialog.getDialogPane().getHeader();
+
+        VBox deneme = (VBox) propertyDialog.getDialogPane().getContent();
+        System.out.println(deneme.getChildren());
+
+        System.out.println(propertyDialog.getDialogPane());
+        System.out.println(propertyDialog.getDialogPane().getChildren());
+        System.out.println(propertyDialog.getDialogPane().getContent());
+
+
+        Text header = (Text) propertyDialog.getDialogPane().getChildren();
         VBox propertyBox = (VBox) mainVBox.getChildren().get(0);
         VBox buttonBox = (VBox) mainVBox.getChildren().get(1);
 
@@ -535,7 +549,7 @@ public class GameScreen extends Screen {
                     buyBtn.setOnAction(event -> {
                         gameEngine.buyProperty();
                         updateSquares();
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(buyBtn);
@@ -556,7 +570,7 @@ public class GameScreen extends Screen {
                     mortgageBtn.setOnAction(event -> {
                         gameEngine.mortgageProperty(index);
                         propertyDialog.close();
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                     });
                     buttonBox.getChildren().add(mortgageBtn);
                     break;
@@ -565,7 +579,7 @@ public class GameScreen extends Screen {
                     Button unmortgageBtn = new Button("Unmortgage");
                     unmortgageBtn.setOnAction(event -> {
                         gameEngine.unmortgageProperty(index);
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(unmortgageBtn);
@@ -575,7 +589,7 @@ public class GameScreen extends Screen {
                     Button addHouseBtn = new Button("Add House");
                     addHouseBtn.setOnAction(event -> {
                         gameEngine.addHouse(index);
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(addHouseBtn);
@@ -585,7 +599,7 @@ public class GameScreen extends Screen {
                     Button sellHouseBtn = new Button("Sell House");
                     sellHouseBtn.setOnAction(event -> {
                         gameEngine.sellHouse(index);
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(sellHouseBtn);
@@ -595,7 +609,7 @@ public class GameScreen extends Screen {
                     Button addHotelBtn = new Button("Add hotel");
                     addHotelBtn.setOnAction(event -> {
                         gameEngine.addHotel(index);
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(addHotelBtn);
@@ -605,7 +619,7 @@ public class GameScreen extends Screen {
                     Button sellHotelBtn = new Button("Sell Hotel");
                     sellHotelBtn.setOnAction(event -> {
                         gameEngine.sellHotel(index);
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(sellHotelBtn);
@@ -615,14 +629,14 @@ public class GameScreen extends Screen {
                     Button rentBtn = new Button("Pay Rent");
                     rentBtn.setOnAction(event -> {
                         gameEngine.takeRent();
-                        updatePlayerTexts();
+                        //updatePlayerTexts();
                         propertyDialog.close();
                     });
                     buttonBox.getChildren().add(rentBtn);
                     break;
             }
         }
-        propertyDialog.show();
+        propertyDialog.showAndWait();
     }
 
     //create the board on screen
