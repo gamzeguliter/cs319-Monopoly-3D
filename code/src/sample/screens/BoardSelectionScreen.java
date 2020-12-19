@@ -66,7 +66,7 @@ public class BoardSelectionScreen extends Screen {
         mainBox.setAlignment(Pos.CENTER);
         mainBox.setSpacing(10);
 
-        Image boardImage = Utils.getImage("boards\\" + boardName + "\\board_icon.png",
+        Image boardImage = Utils.getImage("boards/" + boardName + "/board_icon.png",
                 imWidth, imHeight);
         ImageView boardImageView = new ImageView(boardImage);
         Label boardLabel = new Label(boardName);
@@ -84,7 +84,7 @@ public class BoardSelectionScreen extends Screen {
     }
 
     private ArrayList<String> getBoardNames() {
-        String boardsDirectory = System.getProperty("user.dir") + "\\boards";
+        String boardsDirectory = System.getProperty("user.dir") + "/boards";
 
         File file = new File(boardsDirectory);
         String[] boardNames = file.list(new FilenameFilter() {

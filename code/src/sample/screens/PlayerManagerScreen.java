@@ -155,7 +155,7 @@ public class PlayerManagerScreen extends Screen {
         InputStream stream = null;
         try {
             stream = new FileInputStream(System.getProperty("user.dir") +
-                    "\\boards\\" + boardName + "\\icons\\" + imageName);
+                    "/boards/" + boardName + "/icons/" + imageName);
             return new Image(stream, 100, 100, false, false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
