@@ -110,6 +110,7 @@ public class GameScreen extends Screen {
         scene = new Scene(gameScreen);
 
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        System.out.println(vBox);
         HBox hBox = (HBox) vBox.getChildren().get(3);
         Label turnText = (Label) vBox.getChildren().get(2);
         Button btnRollDice = (Button) hBox.getChildren().get(0);
@@ -120,7 +121,6 @@ public class GameScreen extends Screen {
         //btnRollDice = new Button();
         //btnEndTurn = new Button();
         btnResign = new Button("Resign"); //todo eksik
-        Font font3 = Font.font("Source Sans Pro", 15);
 
         //resign button
         btnResign.setOnAction(actionEvent -> {
@@ -129,7 +129,6 @@ public class GameScreen extends Screen {
 
         //roll dice button
         btnRollDice.setText("Roll Dice");
-        btnRollDice.setFont(font3);
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
@@ -154,20 +153,9 @@ public class GameScreen extends Screen {
             btnEndTurn.setDisable(true);
         });
 
-        btnEndTurn.setLayoutX(200);
-        btnEndTurn.setLayoutY(120);
-
         // turn text
-        //turnText = new Text();
-        turnText.setFont(font);
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
-        /*turnText.setX(150);
-        turnText.setY(200);
-        group.getChildren().add(turnText);
 
-        group.getChildren().add(boardPane);*/
-
-        //scene = new Scene(group, width, height);
     }
 
     private void checkSquare() {
