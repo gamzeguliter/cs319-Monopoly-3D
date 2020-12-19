@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.*;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.util.Pair;
 import sample.ScreenManager;
 import sample.managers.FileManager;
@@ -22,10 +24,14 @@ import sample.squares.*;
 import sample.Editor;
 import sample.GameEngine;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+
+//todo make start square unclickable
+//todo pictures need to be saved
 
 public class EditorScreen extends Screen{
     // properties
@@ -113,6 +119,8 @@ public class EditorScreen extends Screen{
             System.out.println("hello");
 
             FileManager.writeBoardToFolder(editor.board);
+            screenManager.changeScreen(new MainMenuScreen(screenManager));
+
         });
 
         for (int pos = 0; pos < 40; pos++) {
@@ -212,7 +220,7 @@ public class EditorScreen extends Screen{
 
             });
         }
-        // @yiğit burdan ulaşabiliyorsun altta pawnImagex leri ve background u buttonlara bağlayabilirsin delete board olmayacaksa haber ver silerim
+
         GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
         StackPane stackPane = (StackPane) boardPane.getChildren().get(40);
         ImageView background = (ImageView) stackPane.getChildren().get(0);
@@ -225,22 +233,67 @@ public class EditorScreen extends Screen{
         VBox pawnBox3 = (VBox) hBox1.getChildren().get(2);
         VBox pawnBox4 = (VBox) hBox1.getChildren().get(3);
 
+        //todo resimleri image olarak alabilirsiniz
         ImageView pawnImage1 = (ImageView) pawnBox1.getChildren().get(0);
         Button upload1 = (Button) pawnBox1.getChildren().get(1);
+        upload1.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(scene.getWindow());
+            if (file != null) {
+                String path = file.toURI().toASCIIString();
+                Image image = new Image(path); //todo buradan
+                pawnImage1.setImage(image);
+            }
+        });
 
         ImageView pawnImage2 = (ImageView) pawnBox2.getChildren().get(0);
         Button upload2 = (Button) pawnBox2.getChildren().get(1);
+        upload2.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(scene.getWindow());
+            if (file != null) {
+                String path = file.toURI().toASCIIString();
+                Image image = new Image(path); //todo buradan
+                pawnImage2.setImage(image);
+            }
+        });
 
         ImageView pawnImage3 = (ImageView) pawnBox3.getChildren().get(0);
         Button upload3 = (Button) pawnBox3.getChildren().get(1);
+        upload3.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(scene.getWindow());
+            if (file != null) {
+                String path = file.toURI().toASCIIString();
+                Image image = new Image(path); //todo buradan
+                pawnImage3.setImage(image);
+            }
+        });
 
         ImageView pawnImage4 = (ImageView) pawnBox4.getChildren().get(0);
         Button upload4= (Button) pawnBox4.getChildren().get(1);
+        upload4.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(scene.getWindow());
+            if (file != null) {
+                String path = file.toURI().toASCIIString();
+                Image image = new Image(path); //todo buradan
+                pawnImage4.setImage(image);
+            }
+        });
 
         HBox hBox2 = (HBox) vBox1.getChildren().get(7);
 
         Button uploadBoard = (Button) hBox2.getChildren().get(0);
-        Button deleteBoard = (Button) hBox2.getChildren().get(1);
+        uploadBoard.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(scene.getWindow());
+            if (file != null) {
+                String path = file.toURI().toASCIIString();
+                Image image = new Image(path); //todo buradan
+                background.setImage(image);
+            }
+        });
     }
 
     //the property dialog
@@ -452,13 +505,8 @@ public class EditorScreen extends Screen{
                 else{
                     System.out.println("movement" + ((Joker) editor.getSquare(position)).getMovement());
                     System.out.println("waiting time" + ((Joker) editor.getSquare(position)).getSuspendedTourNo());
-
                 }
-
             });
-
-
-
         update();
     }
 
@@ -483,6 +531,7 @@ public class EditorScreen extends Screen{
     }
 
 public Scene getScene() { return scene; }
+
 public void update( ){
         Node [] squares = new Node[40];
         Square[] squares2 = editor.board.getSquares();
@@ -536,6 +585,7 @@ public void update( ){
 
 
             FileManager.writeBoardToFolder(editor.board);
+            screenManager.changeScreen(new MainMenuScreen(screenManager));
         }
     });
     /// end of the right half

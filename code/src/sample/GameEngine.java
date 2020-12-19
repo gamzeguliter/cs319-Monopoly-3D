@@ -257,7 +257,7 @@ public class GameEngine {
 
     public ArrayList<Player> getPlayers() {
         return players;
-    } //todo sonra silinecek
+    }
 
     public ArrayList<Integer> getPlayerPositions() {
         ArrayList<Integer> positions = new ArrayList<Integer>();
@@ -363,7 +363,6 @@ public class GameEngine {
         }
     }
 
-    //todo check for money in player for add/sell house/hotel
     public void sellHouse(int index) {
         if(index < 0) {
             Property property = (Property)getCurrentSquare();
@@ -421,7 +420,6 @@ public class GameEngine {
         property.unmortgageProperty();
     }
 
-    //todo eğer resign ya da bankrupt olursa players dan removelandığı için turn++ 1 oyuncu atlıyor
     public boolean nextTurn() {
         turn++;
         currentPlayer = players.get(turn % players.size());
@@ -465,7 +463,7 @@ public class GameEngine {
             playerPassedStart = true;
         }
         position = (position + diceResult) % 40;
-        currentPlayer.setPosition(position); //todo if the player is suspended condition -- double roll
+        currentPlayer.setPosition(position);
     }
 
     public int getCurrentPlayerPosition() {
@@ -682,7 +680,6 @@ public class GameEngine {
        return vBox;
     }
 
-    //todo vakit kalırsa player starta gelince dur pop-up sonra tekrar ilerlet
     //checks if player passed the start square
     public boolean passesStart() {
         return playerPassedStart;
