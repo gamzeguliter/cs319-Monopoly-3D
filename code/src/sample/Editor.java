@@ -4,6 +4,7 @@ import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Editor {
 
@@ -13,7 +14,7 @@ public class Editor {
     private String  currency;
 
     public Editor(){
-     board = new Board();
+        board = new Board();
 
     }
     public Square getSquare(int index) {
@@ -26,8 +27,8 @@ public class Editor {
 
     /// creates a new Chest and Community square while editing
     public void createNewChestCommunity(int index){
-
-             board.squares[index] = new ChanceAndCommunityChest(true);
+        System.out.println("chest and community created");
+        board.squares[index] = new ChanceAndCommunityChest(true);
 
     }
 
@@ -36,19 +37,23 @@ public class Editor {
         // default values for now
         //todo -> buraya bak geri, name de minor bir sorun olabilir
         board.squares[index] = new Joker(movement, money,suspendedTourNo,name);
+        System.out.println("check" +money + " " + movement);
     }
 
-   /// creates a new property square while editing
+    /// creates a new property square while editing
     public void createNewProperty(int index, String name, ColorGroup colorGroup, int buyingPrice,int rentRate, int mortgageRate) {
 
         //todo -> buraya bak geri, name de minor bir sorun olabilir
+        if(board.getColorGroups().contains(colorGroup) == false){
+            board.getColorGroups().add(colorGroup);
+        }
         board.squares[index] = new Property(name, colorGroup, buyingPrice,rentRate,mortgageRate);
         colorGroup.addProperty((Property) board.squares[index]);
     }
     // Below methods are going to be called in the editor screen in order to process user input
-     public Property getProperty(int index){
+    public Property getProperty(int index){
         return (Property)board.squares[index];
-     }
+    }
 
 
     public void setNameForProperty(String name , int index){
@@ -69,28 +74,41 @@ public class Editor {
         board.colorGroups.add(c);
 
     }
+    public void changeColorGroupForProperty(ColorGroup cg, int index)
+    {        cg.addProperty(((Property)board.squares[index]));
+
+    }
     public void setNameForJoker(String name , int index){
 
         if(board.squares[index].getType() == SquareType.JOKER)
-        ((Joker)board.squares[index]).setName(name);
+            ((Joker)board.squares[index]).setName(name);
+    }
+    public ColorGroup getColorGroup(String name){
+        ArrayList<ColorGroup> cg =  board.getColorGroups();
+        for(int i =0; i < cg.size(); i++){
+            if(cg.get(i).getGroupName() == name){
+                return cg.get(i);
+            }
+        }
+        return null;
     }
 
     public void setMovementForJoker(int movement,int index ) {
 
         if(board.squares[index].getType() == SquareType.JOKER)
-        ((Joker)board.squares[index]).setMovement(movement);
+            ((Joker)board.squares[index]).setMovement(movement);
     }
     public void setMoneyForJoker(int money,int index)
     {
 
         if(board.squares[index].getType() == SquareType.JOKER)
-        ((Joker)board.squares[index]).setMoney(money);
+            ((Joker)board.squares[index]).setMoney(money);
 
     }
     public void setJailTimeForJoker(int suspendedTourNo,int index)
     {
         if(board.squares[index].getType() == SquareType.JOKER)
-        ((Joker)board.squares[index]).setSuspendedTourNo(suspendedTourNo);
+            ((Joker)board.squares[index]).setSuspendedTourNo(suspendedTourNo);
 
     }
 

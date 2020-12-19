@@ -29,10 +29,14 @@ public class ColorGroup implements JSONable {
             property.getColorGroup().removeProperty(property);
         property.setColorGroup(this);
         properties.add(property);
+
     }
 
     public void removeProperty(Property property) {
         properties.remove(property);
+    }
+    public ArrayList<Property> getProperties() {
+       return properties;
     }
 
 
