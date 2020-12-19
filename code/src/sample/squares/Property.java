@@ -5,10 +5,6 @@ import org.json.JSONObject;
 import sample.Board;
 import sample.Player;
 
-/* TODO IMPORTANT ISSUE:
-When storing property in file system, only store name, colorgroup, buying price
-when reading from file and creating square, give the rent and mortgage rate of the board!!!!!
- */
 
 public class Property extends Square {
 
@@ -33,11 +29,17 @@ public class Property extends Square {
     private boolean isMortgaged;
     private ColorGroup colorGroup;
     private Board board;
+    String groupName;
 
+    /* TODO IMPORTANT ISSUE:
+When storing property in file system, only store name, colorgroup, buying price
+when reading from file and creating square, give the rent and mortgage rate of the board!!!!!
+ */
     public Property(String name, ColorGroup colorGroup, int buyingPrice, int rentRate, int mortgageRate) {
         super(SquareType.PROPERTY);
         this.name = name;
         this.colorGroup = colorGroup;
+        groupName = colorGroup.getGroupName();
         this.buyingPrice = buyingPrice;
         this.mortgagePrice = buyingPrice * mortgageRate / 100;
         this.mortgageLiftingPrice = mortgagePrice + mortgagePrice * 10 / 100;
@@ -54,7 +56,7 @@ public class Property extends Square {
     public Property(JSONObject jo, Board board) {
         super(SquareType.PROPERTY);
         this.board = board;
-        extractPropertiesFromJson(jo);
+        extractPropertiesFromJSON(jo);
         noOfHouses = 0;
         hotel = false;
         isOwned = false;
@@ -248,21 +250,27 @@ public class Property extends Square {
         return hotelPrice;
     }
 
+    public void reset() {
+        owner = null;
+        isOwned = false;
+        isMortgaged = false;
+        currentRent = rent;
+        noOfHouses = 0;
+        hotel = false;
+    }
+
     @Override
-    public JSONObject getJson() {
+    public JSONObject getJSON() {
         JSONObject jo = new JSONObject();
         jo.put("type", "Property");
         jo.put("name", name);
         jo.put("groupName", colorGroup.getGroupName());
         jo.put("buyingPrice", buyingPrice);
-        jo.put("mortgagePrice", mortgagePrice);
-        jo.put("housePrice", housePrice);
-        jo.put("rent", rent);
         return jo;
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject jo) {
+    public void extractPropertiesFromJSON(JSONObject jo) {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to Property was null");
         }
@@ -272,12 +280,21 @@ public class Property extends Square {
             System.out.println("ERROR: Property initialized with wrong type of JSONObject: " + type);
         }
 
-        this.name = jo.getString("name");
-        this.colorGroup = board.getColorGroup(jo.getString("groupName"));
-        this.buyingPrice = jo.getInt("buyingPrice");
-        this.mortgagePrice = jo.getInt("mortgagePrice");
-        this.housePrice = jo.getInt("housePrice");
-        this.rent = jo.getInt("rent");
+        name = jo.getString("name");
+        groupName = jo.getString("groupName");
+        buyingPrice = jo.getInt("buyingPrice");
+
+        float rentRate = board.getRentRate();
+        rent = (int) (buyingPrice * rentRate / 100);
+        currentRent = rent;
+        setPricesAndRent();
+
+        float mortgageRate = board.getMortgageRate();
+        mortgagePrice = (int) (buyingPrice * mortgageRate / 100);
+        mortgageLiftingPrice = mortgagePrice + mortgagePrice * 10 / 100;
     }
+
+    public void setGroupName(String groupName) { this.groupName = groupName; }
+    public String getGroupName() { return groupName; }
 
 }

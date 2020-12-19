@@ -59,8 +59,10 @@ public class Board {
     }
 
     public Board(String name) {
-        colorGroups = createGroups();
-        squares = testSquares();
+        chestDeck = new CardDeck();
+        chestDeck.generateChestCardDeck();
+        chanceDeck = new CardDeck();
+        chanceDeck.generateChanceCardDeck();
         this.name = name;
     }
 
@@ -81,16 +83,59 @@ public class Board {
 
     //TODO load board constructor
 
-    // private methods
+    public void updatePropertyGroups() {
+        for (int i = 0; i < squares.length; i++) {
+            if (squares[i].getType() == SquareType.PROPERTY) {
+                Property property = (Property) squares[i];
+                getColorGroup(property.getGroupName()).addProperty(property);
+            }
+        }
+    }
+
+    public Card drawChanceCard() { return chanceDeck.drawCard(); }
+    public Card drawChestCard() { return chestDeck.drawCard(); }
+
     public SquareType getSquareType(int squareNo) {
         return squares[squareNo].getType();
     }
 
-    String[] propertyNames = {"New York", "Boston", "Paris", "Copenhagen", "Berlin", "İstanbul",
-        "Ankara", "Chicago", "Rome", "Milan", "London", "Seul", "Beijing", "Luzern", "Bern", "Oslo",
-        "Barcelona", "Madrid", "Amsterdam", "Munich"};
+    public ColorGroup getColorGroup(String groupName) {
+        for (ColorGroup colorGroup : colorGroups){
+            if (colorGroup.getGroupName().equals(groupName)) {
+                return colorGroup;
+            }
+        }
+        System.out.println("ERROR: Could not find ColorGroup in colorGroups: " + groupName);
+        return null;
+    }
 
-    private Square[] testSquares() {
+    // getters and setters
+
+    public void setName(String name) { this.name = name; }
+    public String getName() { return name; }
+
+    public void setColorGroups(ArrayList<ColorGroup> colorGroups) { this.colorGroups = colorGroups; }
+    public ArrayList<ColorGroup> getColorGroups() { return colorGroups; }
+
+    public void setSquares(Square[] squares) { this.squares = squares; }
+    public Square[] getSquares() { return squares; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
+    public String getCurrency() { return currency; }
+
+    public void setMortgageRate(int mortgageRate) { this.mortgageRate = mortgageRate; }
+    public int getMortgageRate() { return mortgageRate; }
+
+    public void setRentRate(int rentRate) { this.rentRate = rentRate; }
+    public int getRentRate() { return rentRate; }
+
+    // TODO: test code, remove later?
+
+    private final String[] propertyNames = {"New York", "Boston", "Paris", "Copenhagen", "Berlin", "İstanbul",
+            "Ankara", "Chicago", "Rome", "Milan", "London", "Seul", "Beijing", "Luzern", "Bern", "Oslo",
+            "Barcelona", "Madrid", "Amsterdam", "Munich"};
+
+    private Square[] getTestSquares() {
         Square[] squares = new Square[40];
         squares[0] = new Start(20);
         for (int i = 1; i < 40; i++) {
@@ -112,6 +157,8 @@ public class Board {
         return squares;
     }
 
+    private ArrayList<ColorGroup> createGroups() {
+        ArrayList<ColorGroup> colors = new ArrayList<ColorGroup>();
     // getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -140,19 +187,14 @@ public class Board {
         return null;
     }
 
-    public ArrayList<ColorGroup> getColorGroups() {
-        return colorGroups;
-    }
+        ColorGroup red = new ColorGroup("Red");
+        red.setColor(Color.NAVAJOWHITE);
+        colors.add(red);
 
-    public void setColorGroups(ArrayList<ColorGroup> colorGroups) {
-        this.colorGroups = colorGroups;
-    }
+        ColorGroup pink = new ColorGroup("Pink");
+        pink.setColor(Color.HOTPINK);
+        colors.add(pink);
 
-    public Square[] getSquares() {
-        return squares;
-    }
-
-    public void setSquares(Square[] squares) {
-        this.squares = squares;
+        return colors;
     }
 }

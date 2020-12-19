@@ -5,9 +5,9 @@
 <?import javafx.scene.text.*?>
 
 <DialogPane fx:id="addColorGroup" maxHeight="400.0" maxWidth="300.0" minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-        <header>
+    <header>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="New Color Groups" />
-        </header>
+    </header>
         <buttonTypes>
             <ButtonType fx:constant="CANCEL" />
             <ButtonType fx:constant="OK" />

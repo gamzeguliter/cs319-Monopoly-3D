@@ -19,6 +19,7 @@ public class ScreenManager extends Application {
     }
 
     public static void main(String[] args) {
+        FileManager.writeBoardToFolder(new Board());
         launch(args);
     }
 

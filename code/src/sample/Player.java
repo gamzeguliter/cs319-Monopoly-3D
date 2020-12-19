@@ -9,13 +9,11 @@ import java.util.ArrayList;
 public class Player {
     //properties
     String name;
-    // TODO: Pawn pawn;
+    Pawn pawn;
     private int position;
     private Color color;
     private int balance;
     private int jailTime;
-    private boolean isInJail;
-    private boolean isBankrupt;
     private boolean out;
     public ArrayList<Property> ownedProperties;
 
@@ -25,8 +23,6 @@ public class Player {
         this.color = color;
         this.balance = balance;
         position = 0;
-        isInJail = false;
-        isBankrupt = false;
         jailTime = 0;
         out = false;
         ownedProperties = new ArrayList<Property>();
@@ -35,10 +31,6 @@ public class Player {
     //private methods
 
     //public methods
-    public void suspend(int tourNo) {
-        isInJail = true;
-        jailTime = tourNo;
-    }
 
     public void buyProperty(Property property, int price) {
         ownedProperties.add(property);
@@ -53,13 +45,21 @@ public class Player {
     public int getjailTime() {
         return jailTime;
     }
-    boolean isInJail() { return isInJail; }
-    boolean isBankrupt() { return isBankrupt; }
+
+    public int setJailTime(int jail) {
+        return jailTime = jail;
+    }
+
+    public boolean isInJail() { return jailTime > 0; }
 
     //getters and setters
     // TODO: implement pawn related methods
     // getPawn()
     // setPawn()
+
+    public void endJail() {
+        jailTime = 0;
+    }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -85,7 +85,11 @@ public class Player {
         return out;
     }
 
-    public void resign() {
+    public void out() {
         out = true;
+    }
+
+    public boolean isBankrupt() {
+        return balance < 0;
     }
 }

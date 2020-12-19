@@ -19,6 +19,7 @@ public class GameEngine {
     Card drawnCard;
     boolean playerPassedStart;
     private int diceResult;
+    private int currentPlayerNo;
 
     public GameEngine() {
         board = new Board();
@@ -28,6 +29,20 @@ public class GameEngine {
         players.add(new Player("player2", Color.TURQUOISE, 1000));
         players.add(new Player("player3", Color.MAROON, 1000));
         players.add(new Player("player4", Color.SILVER, 1000));
+        currentPlayerNo = players.size();
+        turn = 0;
+        currentPlayer = players.get(0);
+        colorGroups = board.getColorGroups();
+        drawnCard = null;
+        playerPassedStart = false;
+        diceResult = 0;
+    }
+
+    //constructor that takes board and players as paramaters
+    public GameEngine(Board board, ArrayList<Player> players) {
+        this.board = board;
+        this.players = players;
+        currentPlayerNo = players.size();
         turn = 0;
         currentPlayer = players.get(0);
         colorGroups = board.getColorGroups();
@@ -55,6 +70,7 @@ public class GameEngine {
         }
         return content;
     }
+
 
     public ArrayList<String> getPropertyButtons(int index) {
         ArrayList<String> buttons = new ArrayList<String>();
@@ -120,19 +136,21 @@ public class GameEngine {
         }
         //the property is not owned, buy or auction
         else {
-            if(currentPlayer.getBalance() >= property.getBuyingPrice()) {
-                buttons.add("buy");
-            }
+            buttons.add("buy");
             buttons.add("auction");
         }
         return buttons;
     }
 
+    public String getJokerName(){
+        Joker joker = (Joker)getCurrentSquare();
+        String name = joker.getName();
+        return name;
+    }
+
     public VBox getJokerContent() {
         VBox vbox = new VBox();
         Joker joker = (Joker)getCurrentSquare();
-        Text name = new Text(joker.getName());
-        vbox.getChildren().add(name);
         if(joker.isMoneyAction()) {
             Text money = new Text("Money: " + joker.getMoney());
             vbox.getChildren().add(money);
@@ -161,15 +179,25 @@ public class GameEngine {
             player.setPosition(player.getPosition() + joker.getMovement());
         }
         else if(joker.isSuspended()) {
-            player.suspend(joker.getSuspendedTourNo());
+            //the player should go to jail for + 2 turns because next turn decreases it and we need to know if
+            //the player is released yet
+            player.setJailTime(joker.getSuspendedTourNo() + 2);
         }
         return isMoved;
     }
 
+    public String getPropertyName(int index) {
+        if(index < 0) {
+            return ((Property)getCurrentSquare()).getName();
+        }
+        else
+        {
+            return ((Property)getSquare(index)).getName();
+        }
+    }
+
     public VBox defaultPropertyInfo(Property property) {
         VBox vbox = new VBox();
-
-        Text propertyName = new Text(property.getName());
 
         Text price = new Text("Price: " + property.getBuyingPrice());
 
@@ -193,7 +221,7 @@ public class GameEngine {
 
         Text mortgage = new Text("Mortgage " + property.getMortgagePrice());
 
-        vbox.getChildren().addAll(propertyName, price, rent, rentWithColorGroup, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses,
+        vbox.getChildren().addAll(price, rent, rentWithColorGroup, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses,
                 rentHotel, housePrice, hotelPrice, mortgage);
         return vbox;
     }
@@ -224,11 +252,6 @@ public class GameEngine {
             playernames.add(player.getName());
         }
         return playernames;
-    }
-
-    //todo texti durdur -
-    public void resign(Player player) {
-        player.resign();
     }
 
     public ArrayList<Player> getPlayers() {
@@ -281,7 +304,13 @@ public class GameEngine {
 
     //checks if the sold property was mortgaged
     public boolean soldMortgaged(int index) {
-        Property property = (Property)board.getSquares()[index];
+        Property property;
+        if(index < 0) {
+            property = (Property)getCurrentSquare();
+        }
+        else {
+            property = (Property)board.getSquares()[index];
+        }
         if(property.isMortgaged()) {
             return true;
         }
@@ -303,8 +332,14 @@ public class GameEngine {
         property.getOwner().pay(property.getMortgagePrice() * 10 / 100 );
     }
 
-    public void auctionProperty(String playerName, int amount) {
-        Property property = (Property)getCurrentSquare();
+    public void auctionProperty(int index, String playerName, int amount) {
+        Property property;
+        if(index < 0) {
+            property = (Property)getCurrentSquare();
+        }
+        else {
+            property = (Property)getSquare(index);
+        }
         for(Player player:players) {
             if(player.getName().equals(playerName)){
                 property.setOwner(player);
@@ -327,6 +362,7 @@ public class GameEngine {
         }
     }
 
+    //todo check for money in player for add/sell house/hotel
     public void sellHouse(int index) {
         if(index < 0) {
             Property property = (Property)getCurrentSquare();
@@ -361,32 +397,38 @@ public class GameEngine {
     }
 
     public void mortgageProperty(int index) {
+        Property property;
         if(index < 0) {
-            Property property = (Property)getCurrentSquare();
-            getCurrentPlayer().gain(property.getMortgagePrice());
-            property.mortgageProperty();
+            property = (Property)getCurrentSquare();
         }
         else {
-            Property property = (Property)board.getSquares()[index];
-            property.mortgageProperty();
-        }    }
-
-    public void unmortgageProperty(int index) {
-        if(index < 0) {
-            Property property = (Property)getCurrentSquare();
-            getCurrentPlayer().pay(property.getMortgageLiftingPrice());
-            property.unmortgageProperty();
+            property = (Property)board.getSquares()[index];
         }
-        else {
-            Property property = (Property)board.getSquares()[index];
-            property.unmortgageProperty();
-        }
+        getCurrentPlayer().gain(property.getMortgagePrice());
+        property.mortgageProperty();
     }
 
-    public void nextTurn() {
+    public void unmortgageProperty(int index) {
+        Property property;
+        if(index < 0) {
+            property = (Property)getCurrentSquare();
+        }
+        else {
+            property = (Property)board.getSquares()[index];
+        }
+        getCurrentPlayer().pay(property.getMortgageLiftingPrice());
+        property.unmortgageProperty();
+    }
+
+    //todo eğer resign ya da bankrupt olursa players dan removelandığı için turn++ 1 oyuncu atlıyor
+    public boolean nextTurn() {
         turn++;
-        currentPlayer = players.get(turn % 4);
+        currentPlayer = players.get(turn % players.size());
         playerPassedStart = false;
+        if(currentPlayer.isInJail()) {
+            currentPlayer.setJailTime(currentPlayer.getjailTime() - 1);
+        }
+        return checkWin(); //return if the game is over
     }
 
     public Player getCurrentPlayer() {
@@ -410,6 +452,9 @@ public class GameEngine {
         dice[0] = roll1;
         dice[1] = roll2;
         diceResult = roll1 + roll2;
+        if(currentPlayer.getjailTime() == 1 ) {
+            releasePlayer(false);
+        }
         return dice;
     }
 
@@ -573,15 +618,8 @@ public class GameEngine {
                     break;
                 case("Pay each player"):
                     for(Player player : players) {
-                        if(!player.isOut()) {
-                            //todo soru: oyuncunun parası yetmezse?
-                            if (currentPlayer.getBalance() < drawnCard.amount) {
-                                break;
-                            } else {
-                                currentPlayer.pay(drawnCard.amount);
-                                player.gain(drawnCard.amount);
-                            }
-                        }
+                        currentPlayer.pay(drawnCard.amount);
+                        player.gain(drawnCard.amount);
                     }
                     break;
                 case("Go to go"):
@@ -602,13 +640,8 @@ public class GameEngine {
                 case ("Earn x from each player"):
                     for (Player player : players) {
                         if (!player.isOut()) {
-                            if (player.getBalance() < drawnCard.amount) {
-                                currentPlayer.gain(player.getBalance());
-                                player.setBalance(0);
-                            } else {
-                                player.pay(drawnCard.amount);
-                                currentPlayer.gain(drawnCard.amount);
-                            }
+                            player.pay(drawnCard.amount);
+                            currentPlayer.gain(drawnCard.amount);
                         }
                     }
                     break;
@@ -666,4 +699,73 @@ public class GameEngine {
         return false;
     }
 
+   public ArrayList<Integer> sellPlayerProperties() {
+        ArrayList<Integer> propertyIndexes = new ArrayList<>();
+        int index = 0;
+        while(currentPlayer.ownedProperties.size() > 0) {
+            for(int i = 0; i < 40; i ++) {
+                if (getSquare(i).getType() == SquareType.PROPERTY) {
+                    if (getSquare(i) == currentPlayer.ownedProperties.get(index)) {
+                        propertyIndexes.add(i);
+                        Property property = currentPlayer.ownedProperties.get(index);
+                        property.reset();
+                        currentPlayer.ownedProperties.remove(index);
+                        index++;
+                        break;
+                    }
+                }
+            }
+        }
+        currentPlayer.out();
+        players.remove(currentPlayer);
+        return propertyIndexes;
+   }
+
+    public void resign() {
+        currentPlayer.out();
+        players.remove(currentPlayer);
+        turn--;
+        currentPlayer = players.get(turn - 1);
+
+    }
+
+    public void bankrupt() {
+        currentPlayer.out();
+        players.remove(currentPlayer);
+        turn--;
+        currentPlayer = players.get((turn - 1) % players.size());
+    }
+
+    public boolean isBankrupt() {
+        return currentPlayer.isBankrupt();
+    }
+
+    public String jokerText() {
+        return "You are in jail for " + currentPlayer.getjailTime() + " turns. \n" +
+                "Would you like to get out of jail by paying 50 " + board.currency + " ?";
+    }
+
+    public void releasePlayer(boolean rollDouble) {
+        if (!rollDouble) {
+            currentPlayer.pay(50);
+        }
+        currentPlayer.endJail();
+    }
+
+    public boolean playerInJail() {
+        return currentPlayer.isInJail();
+    }
+
+    public boolean checkWin() {
+        if(players.size() <= 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public String getWinner() {
+        return players.get(0).getName();
+    }
 }

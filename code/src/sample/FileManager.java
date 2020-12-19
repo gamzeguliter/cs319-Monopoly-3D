@@ -12,11 +12,10 @@ import java.util.Arrays;
 
 public class FileManager {
 
-    private static final String jsonName = "\\boardconfig.json";
-    private static final String iconsFolderName = "\\icons";
+    private static final String jsonName = "/boardconfig.json";
 
     private static String getFolderFromName(String name) {
-        return System.getProperty("user.dir") + "\\boards\\" + name;
+        return System.getProperty("user.dir") + "/boards/" + name;
     }
 
     private static String readTextFromFile(String path) {
@@ -68,8 +67,7 @@ public class FileManager {
             System.out.println("ERROR: could not find board to read: " + boardName);
         }
 
-        Board board = new Board(1);
-        board.setName(boardName);
+        Board board = new Board(boardName);
 
         JSONObject jo = new JSONObject(boardConfigJsonText);
 
@@ -89,7 +87,7 @@ public class FileManager {
             switch (type) {
                 case "ChanceAndCommunityChest" -> squares[i] = new ChanceAndCommunityChest(squareJSON);
                 case "Joker" -> squares[i] = new Joker(squareJSON);
-                //case "Property" -> squares[i] = new Property(squareJSON, board);
+                case "Property" -> squares[i] = new Property(squareJSON, board);
                 case "Start" -> squares[i] = new Start(squareJSON);
                 default -> System.out.println("ERROR: Type of square was invalid: " + type);
             }
@@ -115,20 +113,23 @@ public class FileManager {
 
         JSONObject jo = new JSONObject();
         jo.put("name", board.getName());
+        jo.put("mortgageRate", board.getMortgageRate());
+        jo.put("rentRate", board.getRentRate());
+        jo.put("currency", board.getCurrency());
 
         ArrayList<ColorGroup> colorGroups = board.getColorGroups();
         JSONArray colorGroupsJSON = new JSONArray();
         for (ColorGroup colorGroup : colorGroups) {
-            colorGroupsJSON.put(colorGroup.getJson());
+            colorGroupsJSON.put(colorGroup.getJSON());
         }
         jo.put("colorGroups", colorGroupsJSON);
 
         Square[] squares = board.getSquares();
         JSONArray squaresJSON = new JSONArray();
         for (Square square : squares) {
-            squaresJSON.put(square.getJson());
+            squaresJSON.put(square.getJSON());
         }
-        jo.put("squares", squares);
+        jo.put("squares", squaresJSON);
 
         writeTextToFile(root + jsonName, jo.toString());
     }

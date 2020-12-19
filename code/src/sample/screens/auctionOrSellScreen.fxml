@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<DialogPane fx:id="auctionOrSell" maxHeight="400.0" maxWidth="300.0" minHeight="400.0" minWidth="300.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <header>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="header" />
+    </header>
+   <content>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Property: " />
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player: " />
+                  <ComboBox prefWidth="150.0" style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+               </children></HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
+                  <TextField style="-fx-font-size: 15; -fx-background-color: rgb(203, 227, 199); -fx-border-color: BLACK;" />
+               </children></HBox>
+         </children>
+      </VBox>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="CANCEL" />
+      <ButtonType fx:constant="OK" />
+   </buttonTypes>
+    
+
+</DialogPane>

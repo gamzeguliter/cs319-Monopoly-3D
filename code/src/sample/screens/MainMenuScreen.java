@@ -22,13 +22,21 @@ public class MainMenuScreen extends Screen {
 
     private void initializeScene() {
         GridPane buttonsGrid = new GridPane();
+        buttonsGrid.setAlignment(Pos.CENTER);
+        buttonsGrid.setVgap(15.0f);
 
         double buttonWidth = 200;
         double buttonHeight = 50;
 
         Button btnPlayAGame = new Button("Play a Game");
         btnPlayAGame.setPrefSize(buttonWidth, buttonHeight);
-        btnPlayAGame.setOnAction(actionEvent -> dispatchPlayAGame());
+        btnPlayAGame.setOnAction(actionEvent -> {
+            try {
+                dispatchPlayAGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Button btnEditABoard = new Button("Edit a Board");
         btnEditABoard.setPrefSize(buttonWidth, buttonHeight);
@@ -52,8 +60,6 @@ public class MainMenuScreen extends Screen {
                 btnViewHelp,
                 btnViewCredits,
                 btnExit);
-        buttonsGrid.setAlignment(Pos.CENTER);
-        buttonsGrid.setVgap(15.0f);
 
         StackPane pane = new StackPane();
         pane.getChildren().add(buttonsGrid);
@@ -67,8 +73,10 @@ public class MainMenuScreen extends Screen {
         return scene;
     }
 
-    private void dispatchPlayAGame() {
-        screenManager.changeScreen(new GameScreen(screenManager));
+    private void dispatchPlayAGame() throws IOException {
+
+        //screenManager.changeScreen(new BoardSelectionScreen(screenManager));
+        screenManager.changeScreen(new BoardSelectionScreen(screenManager));
     }
 
     private void dispatchEditABoard() {

@@ -19,23 +19,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try">
+    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="gamescreen fxmls">
+      <change beforePath="$PROJECT_DIR$/out/production/code/META-INF/code.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/ScreenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/ScreenManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/screens/EditorScreen$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/screens/EditorScreen$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/screens/GameScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/screens/GameScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/ColorGroup.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/SquareType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/SquareType.class" afterDir="false" />
+    </list>
+    <list id="93aaa99f-fba8-4a90-9b21-d4cd3aba218f" name="gamescreen fxmls" comment="">
+      <change afterPath="$PROJECT_DIR$/src/sample/screens/diceScreen.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/sample/screens/propertyScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/GameEngine.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/GameEngine.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/PropertyInformation.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/screens/EditorScreen$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/screens/EditorScreen$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/screens/EditorScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/screens/EditorScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/screens/GameScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/screens/GameScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/sample/screens/MainMenuScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/screens/MainMenuScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/sample/squares/Property.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/GameEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/GameEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/PropertyInformation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/EditorScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/GameScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Joker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Joker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/squares/Property.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/squares/Property.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +47,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -83,13 +85,14 @@
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="" />
+      <changelist id="93aaa99f-fba8-4a90-9b21-d4cd3aba218f" name="gamescreen fxmls" comment="" />
       <created>1607807319568</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -186,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608162070242</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="gamescreen fxmls">
+      <created>1608376150247</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1608376150247</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -203,7 +213,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fxml file try" />
-    <option name="LAST_COMMIT_MESSAGE" value="fxml file try" />
+    <MESSAGE value="gamescreen fxmls" />
+    <option name="LAST_COMMIT_MESSAGE" value="gamescreen fxmls" />
   </component>
   <component name="WindowStateProjectService">
     <state x="329" y="0" key="#Project_Structure" timestamp="1608319436763">
