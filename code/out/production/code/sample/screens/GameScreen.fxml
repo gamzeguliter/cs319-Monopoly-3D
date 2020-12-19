@@ -248,6 +248,11 @@
       </GridPane>
       <VBox alignment="CENTER" layoutX="800.0" layoutY="0.0" prefHeight="769.0" prefWidth="600.0" spacing="20.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 40;">
          <children>
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Exit Game" style="-fx-font-size: 30;"/>
+               </children>
+            </HBox>
             <Label style="-fx-font-size: 50; -fx-border-color: BLACK;" text="Players" />
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -295,7 +300,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button contentDisplay="CENTER" mnemonicParsing="false" text="Resign" style="-fx-font-size: 30"/>
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" style="-fx-font-size: 30" text="Resign" />
                      </children>
                   </HBox>
                </children></VBox>
