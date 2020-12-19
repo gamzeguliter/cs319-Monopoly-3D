@@ -141,7 +141,6 @@ public class GameScreen extends Screen {
             count++;
         }
     }
-
      */
 
     //done kontrol edelim
