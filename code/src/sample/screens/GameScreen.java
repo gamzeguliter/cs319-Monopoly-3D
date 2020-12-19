@@ -81,7 +81,7 @@ public class GameScreen extends Screen {
     //todo değişecek
     private void getPlayerTexts() {
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
-        VBox vBox2 = (VBox) vBox.getChildren().get(1);
+        VBox vBox2 = (VBox) vBox.getChildren().get(2);
         HBox player1 = (HBox) vBox2.getChildren().get(0);
         HBox player2 = (HBox) vBox2.getChildren().get(1);
         HBox player3 = (HBox) vBox2.getChildren().get(2);
@@ -149,9 +149,11 @@ public class GameScreen extends Screen {
         scene = new Scene(gameScreen);
 
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
-        VBox vBox2 = (VBox) vBox.getChildren().get(1);
-        HBox hBox = (HBox) vBox.getChildren().get(3);
-        Label turnText = (Label) vBox.getChildren().get(2);
+        HBox exitBox = (HBox) vBox.getChildren().get(0);
+        Button exitGameBtn = (Button) exitBox.getChildren().get(0); //todo exit button burda
+        VBox vBox2 = (VBox) vBox.getChildren().get(2);
+        HBox hBox = (HBox) vBox.getChildren().get(4);
+        Label turnText = (Label) vBox.getChildren().get(3);
         Button btnRollDice = (Button) hBox.getChildren().get(0);
         Button btnEndTurn = (Button) hBox.getChildren().get(1);
         HBox hBox2 = (HBox) vBox2.getChildren().get(4);
