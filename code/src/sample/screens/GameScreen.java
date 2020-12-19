@@ -342,6 +342,7 @@ public class GameScreen extends Screen {
     private void createPropertyDialog(int index) {
         Dialog propertyDialog = new Dialog();
         VBox vbox = gameEngine.getPropertyContent(index);
+        Text header = new Text(gameEngine.getPropertyName(index));
         Property property;
         if(index < 0 ) {
             property = (Property)(gameEngine.getCurrentSquare());
