@@ -46,7 +46,6 @@ public class GameScreen extends Screen {
         setScene();
     }
 
-
     private Text getPlayerText(Player player) {
         Text t = new Text();
         t.setFont(font);
