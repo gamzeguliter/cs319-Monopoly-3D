@@ -422,16 +422,13 @@ public class GameEngine {
 
     //todo eğer resign ya da bankrupt olursa players dan removelandığı için turn++ 1 oyuncu atlıyor
     public boolean nextTurn() {
-        /*if(currentPlayer.isBankrupt()) {
-            return false;
-        }*/
         turn++;
         currentPlayer = players.get(turn % players.size());
         playerPassedStart = false;
         if(currentPlayer.isInJail()) {
             currentPlayer.setJailTime(currentPlayer.getjailTime() - 1);
         }
-        return true;
+        return checkWin(); //return if the game is over
     }
 
     public Player getCurrentPlayer() {
@@ -756,5 +753,18 @@ public class GameEngine {
 
     public boolean playerInJail() {
         return currentPlayer.isInJail();
+    }
+
+    public boolean checkWin() {
+        if(players.size() <= 1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public String getWinner() {
+        return players.get(0).getName();
     }
 }
