@@ -12,6 +12,11 @@ public class ChanceAndCommunityChest extends Square {
     public ChanceAndCommunityChest(boolean chance) {
         super(SquareType.CHANCEANDCOMMUNITYCHEST);
         isChance = chance;
+        if (isChance) {
+            name = "chance";
+        } else {
+            name = "community";
+        }
     }
 
     public boolean isChance() {
@@ -20,7 +25,7 @@ public class ChanceAndCommunityChest extends Square {
 
     public ChanceAndCommunityChest(JSONObject jo) {
         super(SquareType.CHANCEANDCOMMUNITYCHEST);
-        extractPropertiesFromJson(jo);
+        extractPropertiesFromJSON(jo);
     }
 
     public String getName() {
@@ -32,15 +37,16 @@ public class ChanceAndCommunityChest extends Square {
     }
 
     @Override
-    public JSONObject getJson() {
+    public JSONObject getJSON() {
         JSONObject jo = new JSONObject();
         jo.put("type", "ChanceAndCommunityChest");
         jo.put("name", name);
+        jo.put("isChance", isChance);
         return jo;
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject jo) {
+    public void extractPropertiesFromJSON(JSONObject jo) {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to ChanceAndCommunityChest was null");
         }
@@ -51,5 +57,6 @@ public class ChanceAndCommunityChest extends Square {
         }
 
         name = jo.getString("name");
+        isChance = jo.getBoolean("isChance");
     }
 }

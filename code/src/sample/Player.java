@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Player {
     //properties
     String name;
-    // TODO: Pawn pawn;
+    Pawn pawn;
     private int position;
     private Color color;
     private int balance;

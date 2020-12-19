@@ -293,6 +293,11 @@
                         <Rectangle fill="DODGERBLUE" height="50.0" layoutX="25.0" stroke="BLACK" strokeType="INSIDE" width="50.0" x="25.0" HBox.hgrow="SOMETIMES" />
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button contentDisplay="CENTER" mnemonicParsing="false" text="Resign" style="-fx-font-size: 30"/>
+                     </children>
+                  </HBox>
                </children></VBox>
             <Label text="Player Turn:  " />
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">

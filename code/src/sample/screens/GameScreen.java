@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.Board;
 import sample.GameEngine;
 import sample.Player;
 import sample.ScreenManager;
@@ -50,6 +51,13 @@ public class GameScreen extends Screen {
     public GameScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
         gameEngine = new GameEngine();
+        boardPane = getSquares();
+        setScene();
+    }
+
+    public GameScreen(ScreenManager screenManager, Board board, ArrayList<Player> players) throws IOException {
+        super(screenManager);
+        gameEngine = new GameEngine(board, players);
         boardPane = getSquares();
         setScene();
     }
@@ -103,17 +111,16 @@ public class GameScreen extends Screen {
         scene = new Scene(gameScreen);
 
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        VBox vBox2 = (VBox) vBox.getChildren().get(1);
         HBox hBox = (HBox) vBox.getChildren().get(3);
         Label turnText = (Label) vBox.getChildren().get(2);
         Button btnRollDice = (Button) hBox.getChildren().get(0);
         Button btnEndTurn = (Button) hBox.getChildren().get(1);
+        System.out.println(vBox2.getChildren());
+        HBox hBox2 = (HBox) vBox2.getChildren().get(4);
+        Button btnResign = (Button) hBox2.getChildren().get(0);
 
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
-        // initialize buttons
-        //btnRollDice = new Button();
-        //btnEndTurn = new Button();
-        btnResign = new Button("Resign"); //todo eksik
-        Font font3 = Font.font("Source Sans Pro", 15);
 
         //resign button
         btnResign.setOnAction(actionEvent -> {
@@ -122,7 +129,6 @@ public class GameScreen extends Screen {
 
         //roll dice button
         btnRollDice.setText("Roll Dice");
-        btnRollDice.setFont(font3);
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
@@ -150,20 +156,9 @@ public class GameScreen extends Screen {
             btnEndTurn.setDisable(true);
         });
 
-        btnEndTurn.setLayoutX(200);
-        btnEndTurn.setLayoutY(120);
-
         // turn text
-        //turnText = new Text();
-        turnText.setFont(font);
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
-        /*turnText.setX(150);
-        turnText.setY(200);
-        group.getChildren().add(turnText);
 
-        group.getChildren().add(boardPane);*/
-
-        //scene = new Scene(group, width, height);
     }
 
     private void checkSquare() {

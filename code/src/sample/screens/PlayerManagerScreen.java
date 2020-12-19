@@ -11,30 +11,35 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import sample.ScreenManager;
+import sample.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 
 public class PlayerManagerScreen extends Screen {
 
-    Scene scene;
-    String boardName = "default";
+    // static properties
+    public static final int width = 1366;
+    public static final int height = 768;
 
-    int width = 1366;
-    int height = 768;
+    // non-static properties
+    private PlayerManager playerManager;
 
-    HBox playersBox;
-    Label infoLabel;
-    int playerCount;
+    private Scene scene;
+    private final String boardName;
 
-    ArrayList<TextField> nameFields;
-    ArrayList<ImageView> iconViews;
-    ArrayList<Integer> iconChoices;
-    ArrayList<ColorPicker> colorPickers;
+    private HBox playersBox;
+    private final Label infoLabel;
+    private int playerCount;
+
+    private final ArrayList<TextField> nameFields;
+    private final ArrayList<ImageView> iconViews;
+    private final ArrayList<Integer> iconChoices;
+    private final ArrayList<ColorPicker> colorPickers;
 
     PlayerManagerScreen(ScreenManager screenManager, String boardName) {
         super(screenManager);
@@ -45,6 +50,7 @@ public class PlayerManagerScreen extends Screen {
         iconChoices = new ArrayList<Integer>();
         colorPickers = new ArrayList<ColorPicker>();
         infoLabel = new Label("");
+        playerManager = new PlayerManager();
         initializeScene();
     }
 
@@ -168,6 +174,31 @@ public class PlayerManagerScreen extends Screen {
             return;
 
         // finalize
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (TextField nameField : nameFields) {
+            playerNames.add(nameField.getText());
+        }
+
+        ArrayList<Color> playerColors = new ArrayList<>();
+        for (ColorPicker colorPicker : colorPickers) {
+            playerColors.add(colorPicker.getValue());
+        }
+
+        ArrayList<Player> players = playerManager.generatePlayers(
+                playerNames,
+                iconChoices,
+                playerColors
+                );
+
+        Board board = FileManager.readBoardFromFolder(boardName);
+        board.updatePropertyGroups();
+
+        try {
+            GameScreen gameScreen = new GameScreen(screenManager, board, players);
+            screenManager.changeScreen(gameScreen);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isValid() {

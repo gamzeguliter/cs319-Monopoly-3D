@@ -29,6 +29,7 @@ public class Property extends Square {
     private boolean isMortgaged;
     private ColorGroup colorGroup;
     private Board board;
+    String groupName;
 
     /* TODO IMPORTANT ISSUE:
 When storing property in file system, only store name, colorgroup, buying price
@@ -38,6 +39,7 @@ when reading from file and creating square, give the rent and mortgage rate of t
         super(SquareType.PROPERTY);
         this.name = name;
         this.colorGroup = colorGroup;
+        groupName = colorGroup.getGroupName();
         this.buyingPrice = buyingPrice;
         this.mortgagePrice = buyingPrice * mortgageRate / 100;
         this.mortgageLiftingPrice = mortgagePrice + mortgagePrice * 10 / 100;
@@ -54,7 +56,7 @@ when reading from file and creating square, give the rent and mortgage rate of t
     public Property(JSONObject jo, Board board) {
         super(SquareType.PROPERTY);
         this.board = board;
-        extractPropertiesFromJson(jo);
+        extractPropertiesFromJSON(jo);
         noOfHouses = 0;
         hotel = false;
         isOwned = false;
@@ -258,20 +260,17 @@ when reading from file and creating square, give the rent and mortgage rate of t
     }
 
     @Override
-    public JSONObject getJson() {
+    public JSONObject getJSON() {
         JSONObject jo = new JSONObject();
         jo.put("type", "Property");
         jo.put("name", name);
         jo.put("groupName", colorGroup.getGroupName());
         jo.put("buyingPrice", buyingPrice);
-        jo.put("mortgagePrice", mortgagePrice);
-        jo.put("housePrice", housePrice);
-        jo.put("rent", rent);
         return jo;
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject jo) {
+    public void extractPropertiesFromJSON(JSONObject jo) {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to Property was null");
         }
@@ -281,12 +280,21 @@ when reading from file and creating square, give the rent and mortgage rate of t
             System.out.println("ERROR: Property initialized with wrong type of JSONObject: " + type);
         }
 
-        this.name = jo.getString("name");
-        this.colorGroup = board.getColorGroup(jo.getString("groupName"));
-        this.buyingPrice = jo.getInt("buyingPrice");
-        this.mortgagePrice = jo.getInt("mortgagePrice");
-        this.housePrice = jo.getInt("housePrice");
-        this.rent = jo.getInt("rent");
+        name = jo.getString("name");
+        groupName = jo.getString("groupName");
+        buyingPrice = jo.getInt("buyingPrice");
+
+        float rentRate = board.getRentRate();
+        rent = (int) (buyingPrice * rentRate / 100);
+        currentRent = rent;
+        setPricesAndRent();
+
+        float mortgageRate = board.getMortgageRate();
+        mortgagePrice = (int) (buyingPrice * mortgageRate / 100);
+        mortgageLiftingPrice = mortgagePrice + mortgagePrice * 10 / 100;
     }
+
+    public void setGroupName(String groupName) { this.groupName = groupName; }
+    public String getGroupName() { return groupName; }
 
 }
