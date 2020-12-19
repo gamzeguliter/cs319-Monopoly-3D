@@ -15,7 +15,7 @@ public class Start extends Square {
 
     public Start(JSONObject jo) {
         super(SquareType.START);
-        extractPropertiesFromJson(jo);
+        extractPropertiesFromJSON(jo);
     }
 
     public int getMoney() {
@@ -27,7 +27,7 @@ public class Start extends Square {
     }
 
     @Override
-    public JSONObject getJson() {
+    public JSONObject getJSON() {
         JSONObject jo = new JSONObject();
         jo.put("type", "Start");
         jo.put("money", money);
@@ -35,7 +35,7 @@ public class Start extends Square {
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject jo) {
+    public void extractPropertiesFromJSON(JSONObject jo) {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to Start was null");
         }

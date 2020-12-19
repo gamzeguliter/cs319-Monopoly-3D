@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.Board;
 import sample.GameEngine;
 import sample.Player;
 import sample.ScreenManager;
@@ -50,6 +51,13 @@ public class GameScreen extends Screen {
     public GameScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
         gameEngine = new GameEngine();
+        boardPane = getSquares();
+        setScene();
+    }
+
+    public GameScreen(ScreenManager screenManager, Board board, ArrayList<Player> players) throws IOException {
+        super(screenManager);
+        gameEngine = new GameEngine(board, players);
         boardPane = getSquares();
         setScene();
     }

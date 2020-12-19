@@ -2,7 +2,7 @@ package sample.squares;
 
 import org.json.JSONObject;
 
-public abstract class Square {
+public abstract class Square implements JSONable {
     private SquareType type;
 
     public Square(SquareType type) {
@@ -14,7 +14,4 @@ public abstract class Square {
     }
 
     public SquareType getType() { return type; }
-
-    public abstract JSONObject getJson();
-    public abstract void extractPropertiesFromJson(JSONObject json);
 }

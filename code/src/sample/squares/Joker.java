@@ -23,7 +23,7 @@ public class Joker extends Square {
 
     public Joker(JSONObject jo) {
         super(SquareType.JOKER);
-        extractPropertiesFromJson(jo);
+        extractPropertiesFromJSON(jo);
     }
 
     //methods
@@ -74,7 +74,7 @@ public class Joker extends Square {
     }
 
     @Override
-    public JSONObject getJson() {
+    public JSONObject getJSON() {
         JSONObject jo = new JSONObject();
         jo.put("type", "Joker");
         jo.put("name", name);
@@ -85,7 +85,7 @@ public class Joker extends Square {
     }
 
     @Override
-    public void extractPropertiesFromJson(JSONObject jo) {
+    public void extractPropertiesFromJSON(JSONObject jo) {
         if (jo == null) {
             System.out.println("ERROR: JSONObject passed to Joker was null");
         }
