@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.ImageView;
+import javax.swing.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -89,8 +91,8 @@ public class EditorScreen extends Screen{
         TextField rentRate =(TextField) h3.getChildren().get(1);
         rentRate.setText(""+editor.board.getMortgageRate());
 
-        Button cancel  = (Button) v.getChildren().get(5);
-        Button save    = (Button) v.getChildren().get(4);
+        Button cancel  = (Button) v.getChildren().get(9);
+        Button save    = (Button) v.getChildren().get(8);
 
         cancel.setCancelButton(true);
         cancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -222,7 +224,35 @@ public class EditorScreen extends Screen{
 
             });
         }
+        // @yiğit burdan ulaşabiliyorsun altta pawnImagex leri ve background u buttonlara bağlayabilirsin delete board olmayacaksa haber ver silerim
+        GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
+        StackPane stackPane = (StackPane) boardPane.getChildren().get(40);
+        ImageView background = (ImageView) stackPane.getChildren().get(0);
 
+        VBox vBox1 = (VBox) editorScreen.getChildrenUnmodifiable().get(1);
+        HBox hBox1 = (HBox) vBox1.getChildren().get(5);
+
+        VBox pawnBox1 = (VBox) hBox1.getChildren().get(0);
+        VBox pawnBox2 = (VBox) hBox1.getChildren().get(1);
+        VBox pawnBox3 = (VBox) hBox1.getChildren().get(2);
+        VBox pawnBox4 = (VBox) hBox1.getChildren().get(3);
+
+        ImageView pawnImage1 = (ImageView) pawnBox1.getChildren().get(0);
+        Button upload1 = (Button) pawnBox1.getChildren().get(1);
+
+        ImageView pawnImage2 = (ImageView) pawnBox2.getChildren().get(0);
+        Button upload2 = (Button) pawnBox2.getChildren().get(1);
+
+        ImageView pawnImage3 = (ImageView) pawnBox3.getChildren().get(0);
+        Button upload3 = (Button) pawnBox3.getChildren().get(1);
+
+        ImageView pawnImage4 = (ImageView) pawnBox4.getChildren().get(0);
+        Button upload4= (Button) pawnBox4.getChildren().get(1);
+
+        HBox hBox2 = (HBox) vBox1.getChildren().get(7);
+
+        Button uploadBoard = (Button) hBox2.getChildren().get(0);
+        Button deleteBoard = (Button) hBox2.getChildren().get(1);
     }
     //the property dialog
     private void openPropertyDialog(Node[]squares) {
@@ -494,8 +524,8 @@ public void update( ){
     TextField rentRate =(TextField) h3.getChildren().get(1);
 
 
-    Button cancel  = (Button) v.getChildren().get(5);
-    Button save    = (Button) v.getChildren().get(4);
+    Button cancel  = (Button) v.getChildren().get(8);
+    Button save    = (Button) v.getChildren().get(9);
     cancel.setCancelButton(true);
 
     TextField boardName = (TextField) v.getChildren().get(0);
