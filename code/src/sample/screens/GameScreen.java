@@ -102,17 +102,16 @@ public class GameScreen extends Screen {
         scene = new Scene(gameScreen);
 
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
-        System.out.println(vBox);
+        VBox vBox2 = (VBox) vBox.getChildren().get(1);
         HBox hBox = (HBox) vBox.getChildren().get(3);
         Label turnText = (Label) vBox.getChildren().get(2);
         Button btnRollDice = (Button) hBox.getChildren().get(0);
         Button btnEndTurn = (Button) hBox.getChildren().get(1);
+        System.out.println(vBox2.getChildren());
+        HBox hBox2 = (HBox) vBox2.getChildren().get(4);
+        Button btnResign = (Button) hBox2.getChildren().get(0);
 
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
-        // initialize buttons
-        //btnRollDice = new Button();
-        //btnEndTurn = new Button();
-        btnResign = new Button("Resign"); //todo eksik
 
         //resign button
         btnResign.setOnAction(actionEvent -> {
