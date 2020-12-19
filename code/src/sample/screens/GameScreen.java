@@ -107,38 +107,12 @@ public class GameScreen extends Screen {
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
-        //todo tekrar check buraya
         btnRollDice.setOnAction(event -> {
-
             createDiceDialog();
-            btnEndTurn.setDisable(false); //todo eğer oyunda tekrar hareket varsa hareket pop-upından sonra disable kaldır
+            btnEndTurn.setDisable(false);
             //int roll = gameEngine.rollDice();
             //diceText.setText("Dice roll: " + roll);
             btnRollDice.setDisable(true);
-            /*updateSquares();
-            updatePlayerTexts();
-
-            if(gameEngine.passesStart()) {
-                createStartDialog();
-                updatePlayerTexts();
-            }
-
-            if (gameEngine.getCurrentSquare().getType() == SquareType.PROPERTY) {
-                createPropertyDialog(-1);
-
-            } else if (gameEngine.getCurrentSquare().getType() == SquareType.JOKER) {
-                createJokerDialog();
-            }
-            else if(gameEngine.getCurrentSquare().getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
-                createChanceAndChestDialog();
-            }
-            //start square
-            //todo start square üstünden geçip gidiyorsa da çıkarmalısın
-            else {
-                createStartDialog();
-            }
-            updateSquares();
-            updatePlayerTexts();*/
         });
 
         btnRollDice.setLayoutX(100);
@@ -166,15 +140,6 @@ public class GameScreen extends Screen {
         turnText.setX(150);
         turnText.setY(200);
         group.getChildren().add(turnText);
-
-        // dice text
-        /*
-        diceText = new Text();
-        diceText.setFont(font);
-        diceText.setText("Dice roll: 0");
-        diceText.setX(150);
-        diceText.setY(250);
-        group.getChildren().add(diceText);*/
 
         group.getChildren().add(boardPane);
 
