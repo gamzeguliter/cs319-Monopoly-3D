@@ -39,7 +39,7 @@ public class Board {
     // default constructor
     public Board() {
         colorGroups = createGroups();
-        squares = testSquares();
+        squares =  getTestSquares();
         name = "defaultName";
         chestDeck = new CardDeck();
         chestDeck.generateChestCardDeck();
@@ -66,19 +66,6 @@ public class Board {
         this.name = name;
     }
 
-    private ArrayList<ColorGroup> createGroups() {
-        ArrayList<ColorGroup> colors = new ArrayList<ColorGroup>();
-
-        ColorGroup red = new ColorGroup("Red");
-        red.setColor(Color.NAVAJOWHITE);
-        colors.add(red);
-
-        ColorGroup pink = new ColorGroup("Pink");
-        pink.setColor(Color.HOTPINK);
-        colors.add(pink);
-
-        return colors;
-    }
 
 
     //TODO load board constructor
@@ -91,9 +78,6 @@ public class Board {
             }
         }
     }
-
-    public Card drawChanceCard() { return chanceDeck.drawCard(); }
-    public Card drawChestCard() { return chestDeck.drawCard(); }
 
     public SquareType getSquareType(int squareNo) {
         return squares[squareNo].getType();
@@ -160,32 +144,8 @@ public class Board {
     private ArrayList<ColorGroup> createGroups() {
         ArrayList<ColorGroup> colors = new ArrayList<ColorGroup>();
     // getters and setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public void setCurrency(String currency) { this.currency = currency; }
 
 
-    public String getCurrency() {return currency; }
-
-    public int getMortgageRate() {return mortgageRate; }
-
-    public int getRentRate() {return rentRate; }
-
-
-    public void setRentRate(int rentRate) { this.rentRate = rentRate; }
-
-    public void setMortgageRent(int mortgageRent) { this.mortgageRate = mortgageRate; }
-
-    public ColorGroup getColorGroup(String groupName) {
-        for (ColorGroup colorGroup : colorGroups){
-            if (colorGroup.getGroupName().equals(groupName)) {
-                return colorGroup;
-            }
-        }
-        System.out.println("ERROR: Could not find ColorGroup in colorGroups: " + groupName);
-        return null;
-    }
 
         ColorGroup red = new ColorGroup("Red");
         red.setColor(Color.NAVAJOWHITE);

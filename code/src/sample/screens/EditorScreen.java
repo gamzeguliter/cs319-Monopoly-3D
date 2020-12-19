@@ -97,7 +97,7 @@ public class EditorScreen extends Screen{
             public void handle(ActionEvent event) {
 
                 if(!mortgageRate.getText().isEmpty())
-                editor.board.setMortgageRent(Integer.parseInt(mortgageRate.getText()));
+                editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
 
                 if(!rentRate.getText().isEmpty())
                 editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
@@ -449,7 +449,7 @@ public void update( ){
         public void handle(ActionEvent event) {
 
             if(!mortgageRate.getText().isEmpty())
-                editor.board.setMortgageRent(Integer.parseInt(mortgageRate.getText()));
+                editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
 
             if(!rentRate.getText().isEmpty())
                 editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
