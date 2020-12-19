@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -849,23 +850,31 @@ public class GameScreen extends Screen {
                     });
 
                     //determine square colors
+                    Rectangle propertyRect = new Rectangle();
+                    propertyRect.setWidth(60);
+                    propertyRect.setHeight(30);
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
+
                         Property property = (Property) gameEngine.getSquare(pos);
                         if (property.isOwned() == true) {
                             Player owner = property.getOwner();
                             tile.setFill(owner.getColor());
                         }
                         else
-                            tile.setFill(property.getColorGroup().getColor());
+                            tile.setFill(Color.WHITESMOKE);
+                        propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
+                        propertyRect = null;
                         tile.setFill(Color.DARKGOLDENROD);
                     }
 
                     else if(gameEngine.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
+                        propertyRect = null;
                         tile.setFill(Color.LIME);
                     }
                     else {
+                        propertyRect = null;
                         tile.setFill(Color.BLUEVIOLET);
                     }
 
@@ -903,6 +912,10 @@ public class GameScreen extends Screen {
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
                             stackPane.getChildren().add(view);
+                        }
+                        if(propertyRect != null) {
+                            stackPane.getChildren().add(propertyRect);
+                            StackPane.setAlignment(propertyRect,  Pos.TOP_LEFT);
                         }
                        // stackPane.getChildren().add(text);
                     }
