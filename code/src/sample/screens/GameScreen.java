@@ -9,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -777,16 +779,19 @@ public class GameScreen extends Screen {
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                     String playersOnTile = "";
+                    ArrayList<Image> pawns = new ArrayList<>();
 
                     for (int i = 0; i < playerPositions.size(); i++) {
                         int position = playerPositions.get(i);
                         if (col >= row) {
                             if (sum == position) {
                                 playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                                pawns.add(gameEngine.getPlayers().get(i).getIcon());
                             }
                         } else {
                             if (40 - sum == position) {
                                 playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                                pawns.add(gameEngine.getPlayers().get(i).getIcon());
                             }
                         }
                     }
@@ -796,7 +801,11 @@ public class GameScreen extends Screen {
                     text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        stackPane.getChildren().addAll(text); //try
+                        for(Image image : pawns) {
+                            ImageView view = new ImageView(image);
+                            stackPane.getChildren().add(view);
+                        }
+                       // stackPane.getChildren().addAll(text); //try
                     }
                 }
             }
@@ -863,6 +872,7 @@ public class GameScreen extends Screen {
                     // find players on tile and set text
                     ArrayList<Integer> playerPositions = gameEngine.getPlayerPositions();
                     String playersOnTile = "";
+                    ArrayList<Image> pawns = new ArrayList<>();
 
                     for (int i = 0; i < 40; i++){
                         if (stackPane.getChildren().size() > 1 )
@@ -874,10 +884,12 @@ public class GameScreen extends Screen {
                         if (col >= row) {
                             if (sum == position) {
                                 playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                                pawns.add(gameEngine.getPlayers().get(i).getIcon());
                             }
                         } else {
                             if (40 - sum == position) {
                                 playersOnTile = playersOnTile + gameEngine.getPlayerNames().get(i) + "\n";
+                                pawns.add(gameEngine.getPlayers().get(i).getIcon());
                             }
 
                         }
@@ -888,7 +900,11 @@ public class GameScreen extends Screen {
                     text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        stackPane.getChildren().add(text);
+                        for(Image image : pawns) {
+                            ImageView view = new ImageView(image);
+                            stackPane.getChildren().add(view);
+                        }
+                       // stackPane.getChildren().add(text);
                     }
                 }
             }

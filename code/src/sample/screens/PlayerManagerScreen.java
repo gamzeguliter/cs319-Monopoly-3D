@@ -175,7 +175,7 @@ public class PlayerManagerScreen extends Screen {
 
         ArrayList<Image> icons = new ArrayList<>();
         for (int iconNo : iconChoices) {
-            icons.add(Utils.getImage("boards/" + boardName + "/icons/"  + iconNo + ".png", 20, 20));
+            icons.add(Utils.getImage("boards/" + boardName + "/icons/"  + iconNo + ".png", 60, 60));
         }
 
         ArrayList<Player> players = playerManager.generatePlayers(
