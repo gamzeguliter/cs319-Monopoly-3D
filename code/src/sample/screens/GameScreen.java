@@ -42,6 +42,7 @@ public class GameScreen extends Screen {
     int position;
     Parent gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
     DialogPane diceScreen = FXMLLoader.load(getClass().getResource("diceScreen.fxml"));
+    DialogPane properyScreen = FXMLLoader.load(getClass().getResource("propertyScreen.fxml"));
 
     // constructors
     public GameScreen() throws IOException {
@@ -341,8 +342,17 @@ public class GameScreen extends Screen {
 
     private void createPropertyDialog(int index) {
         Dialog propertyDialog = new Dialog();
-        VBox vbox = gameEngine.getPropertyContent(index);
-        Text header = new Text(gameEngine.getPropertyName(index));
+        propertyDialog.setDialogPane(properyScreen);
+
+        VBox mainVBox = (VBox) propertyDialog.getDialogPane().getContent();
+        Text header = (Text) propertyDialog.getDialogPane().getHeader();
+        VBox propertyBox = (VBox) mainVBox.getChildren().get(0);
+        VBox buttonBox = (VBox) mainVBox.getChildren().get(1);
+
+        propertyBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
+
+        header.setText(gameEngine.getPropertyName(index));
+
         Property property;
         if(index < 0 ) {
             property = (Property)(gameEngine.getCurrentSquare());
@@ -377,7 +387,7 @@ public class GameScreen extends Screen {
                         createAuctionOrSellDialog( index, false);
                         updateSquares();
                     });
-                    vbox.getChildren().add(sellBtn);
+                    buttonBox.getChildren().add(sellBtn);
                     break;
 
                 case "buy":
@@ -388,7 +398,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(buyBtn);
+                    buttonBox.getChildren().add(buyBtn);
                     break;
 
                 case "auction":
@@ -398,7 +408,7 @@ public class GameScreen extends Screen {
                         createAuctionOrSellDialog( 0, true);
                         updateSquares();
                     });
-                    vbox.getChildren().add(auctionBtn);
+                    buttonBox.getChildren().add(auctionBtn);
                     break;
 
                 case "mortgage":
@@ -408,7 +418,7 @@ public class GameScreen extends Screen {
                         propertyDialog.close();
                         updatePlayerTexts();
                     });
-                    vbox.getChildren().add(mortgageBtn);
+                    buttonBox.getChildren().add(mortgageBtn);
                     break;
 
                 case "unmortgage":
@@ -418,7 +428,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(unmortgageBtn);
+                    buttonBox.getChildren().add(unmortgageBtn);
                     break;
 
                 case "add house":
@@ -428,7 +438,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(addHouseBtn);
+                    buttonBox.getChildren().add(addHouseBtn);
                     break;
 
                 case "sell house":
@@ -438,7 +448,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(sellHouseBtn);
+                    buttonBox.getChildren().add(sellHouseBtn);
                     break;
 
                 case "add hotel":
@@ -448,7 +458,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(addHotelBtn);
+                    buttonBox.getChildren().add(addHotelBtn);
                     break;
 
                 case "sell hotel":
@@ -458,7 +468,7 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(sellHotelBtn);
+                    buttonBox.getChildren().add(sellHotelBtn);
                     break;
 
                 case "pay rent":
@@ -468,12 +478,10 @@ public class GameScreen extends Screen {
                         updatePlayerTexts();
                         propertyDialog.close();
                     });
-                    vbox.getChildren().add(rentBtn);
+                    buttonBox.getChildren().add(rentBtn);
                     break;
             }
         }
-        propertyDialog.getDialogPane().setContent(vbox);
-        //propertyDialog.showAndWait();
         propertyDialog.show();
     }
 

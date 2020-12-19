@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Text?>
-<DialogPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;">
-    <header>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Property" />
-    </header>
+<DialogPane minHeight="800.0" minWidth="300.0" prefHeight="800.0" prefWidth="300.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <VBox prefHeight="600.0" prefWidth="100.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+         </children>
+      </VBox>
+   </content>
+   <header>
+      <VBox alignment="CENTER" prefHeight="63.0" prefWidth="300.0" style="-fx-background-color: LIGHTBLUE;">
+         <children>
+              <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 30;" text="Property" textAlignment="CENTER" wrappingWidth="302.26000213623047" />
+         </children>
+      </VBox>
+   </header>
 
 </DialogPane>

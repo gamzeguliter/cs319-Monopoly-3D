@@ -19,7 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="fxml file try" />
+    <list default="true" id="23854d91-4a60-44ad-8e1d-50662061a81b" name="Default Changelist" comment="game screen and dice screen">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/screens/propertyScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/screens/propertyScreen.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +168,77 @@
       <option name="project" value="LOCAL" />
       <updated>1608162070242</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fxml file try">
+      <created>1608210861478</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1608210861478</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fxml file try">
+      <created>1608210935682</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1608210935682</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fxml file try">
+      <created>1608211622931</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1608211622931</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fxml file try">
+      <created>1608211691672</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1608211691673</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fxml editorscreen">
+      <created>1608216902680</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1608216902680</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fxml for dialogs">
+      <created>1608235615468</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1608235615468</updated>
+    </task>
+    <task id="LOCAL-00020" summary="editor screen fxml changes">
+      <created>1608249400542</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1608249400542</updated>
+    </task>
+    <task id="LOCAL-00021" summary="editor screen fxml changes2">
+      <created>1608316439766</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1608316439767</updated>
+    </task>
+    <task id="LOCAL-00022" summary="game screen and dice screen">
+      <created>1608334750532</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1608334750532</updated>
+    </task>
+    <task id="LOCAL-00023" summary="game screen and dice screen">
+      <created>1608336284914</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1608336284914</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -181,44 +255,55 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fxml file try" />
-    <option name="LAST_COMMIT_MESSAGE" value="fxml file try" />
+    <MESSAGE value="fxml editorscreen" />
+    <MESSAGE value="fxml for dialogs" />
+    <MESSAGE value="editor screen fxml changes" />
+    <MESSAGE value="editor screen fxml changes2" />
+    <MESSAGE value="game screen and dice screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="game screen and dice screen" />
   </component>
   <component name="WindowStateProjectService">
     <state x="384" y="112" key="#Project_Structure" timestamp="1608071284653">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
     <state x="384" y="112" key="#Project_Structure/0.25.1792.1021@0.25.1792.1021" timestamp="1608071284653" />
-    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608071546931">
+    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608317621406">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
-    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1021@0.25.1792.1021" timestamp="1608071546931" />
-    <state width="1750" height="275" key="GridCell.Tab.0.bottom" timestamp="1608154676966">
+    <state x="360" y="192" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1792.1021@0.25.1792.1021" timestamp="1608317621406" />
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom" timestamp="1608336287656">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
-    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676966" />
-    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742648" />
-    <state width="1750" height="275" key="GridCell.Tab.0.center" timestamp="1608154676965">
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1019@0.25.1792.1019" timestamp="1608324284084" />
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1021@0.25.1792.1021" timestamp="1608336287656" />
+    <state width="1750" height="275" key="GridCell.Tab.0.bottom/0.25.1792.1023@0.25.1792.1023" timestamp="1608280471336" />
+    <state width="1750" height="275" key="GridCell.Tab.0.center" timestamp="1608336287656">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
-    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
-    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
-    <state width="1750" height="275" key="GridCell.Tab.0.left" timestamp="1608154676965">
+    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1019@0.25.1792.1019" timestamp="1608324284083" />
+    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1021@0.25.1792.1021" timestamp="1608336287656" />
+    <state width="1750" height="275" key="GridCell.Tab.0.center/0.25.1792.1023@0.25.1792.1023" timestamp="1608280471335" />
+    <state width="1750" height="275" key="GridCell.Tab.0.left" timestamp="1608336287656">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
-    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
-    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
-    <state width="1750" height="275" key="GridCell.Tab.0.right" timestamp="1608154676965">
+    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1019@0.25.1792.1019" timestamp="1608324284083" />
+    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1021@0.25.1792.1021" timestamp="1608336287656" />
+    <state width="1750" height="275" key="GridCell.Tab.0.left/0.25.1792.1023@0.25.1792.1023" timestamp="1608280471335" />
+    <state width="1750" height="275" key="GridCell.Tab.0.right" timestamp="1608336287656">
       <screen x="0" y="25" width="1792" height="1021" />
     </state>
-    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1608154676965" />
-    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1608072742647" />
-    <state x="179" y="111" key="MergeDialog" timestamp="1608163193165">
-      <screen x="0" y="25" width="1792" height="1023" />
+    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1019@0.25.1792.1019" timestamp="1608324284084" />
+    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1021@0.25.1792.1021" timestamp="1608336287656" />
+    <state width="1750" height="275" key="GridCell.Tab.0.right/0.25.1792.1023@0.25.1792.1023" timestamp="1608280471336" />
+    <state x="179" y="111" key="MergeDialog" timestamp="1608249455066">
+      <screen x="0" y="25" width="1792" height="1021" />
     </state>
+    <state x="179" y="111" key="MergeDialog/0.25.1792.1021@0.25.1792.1021" timestamp="1608249455066" />
     <state x="179" y="111" key="MergeDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608163193165" />
-    <state x="534" y="299" key="MultipleFileMergeDialog" timestamp="1608163193214">
-      <screen x="0" y="25" width="1792" height="1023" />
+    <state x="534" y="298" key="MultipleFileMergeDialog" timestamp="1608249455129">
+      <screen x="0" y="25" width="1792" height="1021" />
     </state>
+    <state x="534" y="298" key="MultipleFileMergeDialog/0.25.1792.1021@0.25.1792.1021" timestamp="1608249455129" />
     <state x="534" y="299" key="MultipleFileMergeDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608163193214" />
     <state x="384" y="112" key="SettingsEditor" timestamp="1608071357786">
       <screen x="0" y="25" width="1792" height="1021" />
@@ -228,13 +313,32 @@
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state x="595" y="296" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.25.1792.1023@0.25.1792.1023" timestamp="1608163126181" />
-    <state x="496" y="270" key="Vcs.Push.Dialog.v2" timestamp="1608163364747">
-      <screen x="0" y="25" width="1792" height="1023" />
+    <state x="217" y="272" key="Vcs.Push.Dialog.v2" timestamp="1608334824461">
+      <screen x="0" y="25" width="1792" height="1021" />
     </state>
+    <state x="217" y="272" key="Vcs.Push.Dialog.v2/0.25.1792.1021@0.25.1792.1021" timestamp="1608334824461" />
     <state x="496" y="270" key="Vcs.Push.Dialog.v2/0.25.1792.1023@0.25.1792.1023" timestamp="1608163364747" />
+    <state x="439" y="273" width="914" height="623" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1608277714009">
+      <screen x="0" y="25" width="1792" height="1021" />
+    </state>
+    <state x="439" y="273" width="914" height="623" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.25.1792.1021@0.25.1792.1021" timestamp="1608277714009" />
     <state x="644" y="250" key="git4idea.branch.GitSmartOperationDialog" timestamp="1608142618337">
       <screen x="0" y="25" width="1792" height="1023" />
     </state>
     <state x="644" y="250" key="git4idea.branch.GitSmartOperationDialog/0.25.1792.1023@0.25.1792.1023" timestamp="1608142618337" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
