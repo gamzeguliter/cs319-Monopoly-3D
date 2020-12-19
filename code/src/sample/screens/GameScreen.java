@@ -75,45 +75,76 @@ public class GameScreen extends Screen {
         t.setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
         t.setFill(player.getColor());
         t.setY(50);
-        //t.setFont(new Font(20));
         return t;
     }
 
     //todo değişecek
-    private void initializePlayerTexts(Group group) {
-        playerTexts = new ArrayList<>();
+    private void getPlayerTexts() {
+        VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        VBox vBox2 = (VBox) vBox.getChildren().get(1);
+        HBox player1 = (HBox) vBox2.getChildren().get(0);
+        HBox player2 = (HBox) vBox2.getChildren().get(1);
+        HBox player3 = (HBox) vBox2.getChildren().get(2);
+        HBox player4 = (HBox) vBox2.getChildren().get(3);
+
+        ArrayList<HBox> playerBoxes = new ArrayList<HBox>();
+        playerBoxes.add(player1);
+        playerBoxes.add(player2);
+        playerBoxes.add(player3);
+        playerBoxes.add(player4);
+
         int count = 0;
         for (Player player : gameEngine.getPlayers()) {
-            playerTexts.add(getPlayerText(player));
-            playerTexts.get(count).setX(800);
-            playerTexts.get(count).setY(100 + count * 100);
-            group.getChildren().add(playerTexts.get(count));
+            HBox currentBox = playerBoxes.get(count);
+            currentBox.setVisible(true);
+
+            Rectangle color = (Rectangle) currentBox.getChildren().get(1);
+            color.setFill(player.getColor());
+
+            VBox infoBox = (VBox) currentBox.getChildren().get(0);
+
+            Label playerLabel = (Label) infoBox.getChildren().get(0);
+            Label moneyLabel = (Label) infoBox.getChildren().get(1);
+
+            playerLabel.setText("Player" + (count + 1) + ": " + player.getName());
+            moneyLabel.setText("Money: " + player.getBalance());
             count++;
         }
-        /*
-        playerTexts[0].setX(800);
-        playerTexts[0].setY(100);
-        playerTexts[1].setX(800);
-        playerTexts[1].setY(200);
-        playerTexts[2].setX(800);
-        playerTexts[2].setY(300);
-        playerTexts[3].setX(800);
-        playerTexts[3].setY(400);*/
-
-        //group.getChildren().addAll(playerTexts[0], playerTexts[1], playerTexts[2], playerTexts[3]);
     }
+
+    /*
 
     //değişecek
     //todo bu method direk getPlayers ile almasa daha iyi olur
-    private void updatePlayerTexts() {
-        for (int i = 0; i < gameEngine.getPlayers().size(); i++) {
-            Player player = gameEngine.getPlayers().get(i);
-            playerTexts.get(i).setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
+    private void updatePlayerTexts(VBox vBox) {
+        HBox player1 = (HBox) vBox.getChildren().get(0);
+        HBox player2 = (HBox) vBox.getChildren().get(1);
+        HBox player3 = (HBox) vBox.getChildren().get(2);
+        HBox player4 = (HBox) vBox.getChildren().get(3);
+
+        ArrayList<HBox> playerBoxes = new ArrayList<HBox>();
+        playerBoxes.add(player1);
+        playerBoxes.add(player2);
+        playerBoxes.add(player3);
+        playerBoxes.add(player4);
+
+        int count = 0;
+        for (Player player : gameEngine.getPlayers()) {
+            HBox currentBox = playerBoxes.get(count);
+            VBox infoBox = (VBox) currentBox.getChildren().get(0);
+
+            Label playerLabel = (Label) infoBox.getChildren().get(0);
+            Label moneyLabel = (Label) infoBox.getChildren().get(1);
+
+            playerLabel.setText("Player" + (count + 1) + ": " + player.getName());
+            moneyLabel.setText("Money: " + player.getBalance());
+            count++;
         }
     }
 
+     */
 
-    //done knotrol edelim
+    //done kontrol edelim
     private void setScene() {
         scene = new Scene(gameScreen);
 
@@ -125,6 +156,8 @@ public class GameScreen extends Screen {
         Button btnEndTurn = (Button) hBox.getChildren().get(1);
         HBox hBox2 = (HBox) vBox2.getChildren().get(4);
         Button btnResign = (Button) hBox2.getChildren().get(0);
+
+        getPlayerTexts();
 
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
 
@@ -160,6 +193,7 @@ public class GameScreen extends Screen {
                 }
             }
             finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
+            getPlayerTexts();
             btnRollDice.setDisable(false);
             btnEndTurn.setDisable(true);
         });
@@ -207,7 +241,7 @@ public class GameScreen extends Screen {
             for (int i = 0; i < indexes.size(); i++) {
                 createAuctionOrSellDialog(indexes.get(i), true);
                 updateSquares();
-                //updatePlayerTexts();
+                getPlayerTexts();
             }
             gameEngine.bankrupt();
             if(gameEngine.nextTurn()) {
