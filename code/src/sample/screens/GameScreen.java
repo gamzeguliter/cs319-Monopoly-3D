@@ -41,7 +41,10 @@ public class GameScreen extends Screen {
     int position;
     Parent gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
     DialogPane diceScreen = FXMLLoader.load(getClass().getResource("diceScreen.fxml"));
-    DialogPane properyScreen = FXMLLoader.load(getClass().getResource("propertyScreen.fxml"));
+    DialogPane propertyScreen = FXMLLoader.load(getClass().getResource("propertyScreen.fxml"));
+    DialogPane auctionOrSellScreen = FXMLLoader.load(getClass().getResource("auctionOrSellScreen.fxml"));
+    DialogPane jokerScreen = FXMLLoader.load(getClass().getResource("jokerScreen.fxml"));
+    DialogPane chanceAndCommunityChestScreen = FXMLLoader.load(getClass().getResource("chanceAndCommunityChestScreen.fxml"));
 
     // constructors
     public GameScreen(ScreenManager screenManager) throws IOException {
@@ -93,6 +96,7 @@ public class GameScreen extends Screen {
         }
     }
 
+    //done knotrol edelim
     private void setScene() {
         scene = new Scene(gameScreen);
 
@@ -148,6 +152,7 @@ public class GameScreen extends Screen {
 
     }
 
+    //done
     private void createDiceDialog() {
         Dialog diceDialog = new Dialog();
         diceDialog.setDialogPane(diceScreen);
@@ -188,23 +193,21 @@ public class GameScreen extends Screen {
         dialog.showAndWait();
     }
 
+    //done check
     private void createChanceAndChestDialog() {
-        Dialog dialog = new Dialog();
-        VBox vbox = new VBox();
-        Text text = new Text("Draw Card");
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
+        Dialog chanceAndCommunityChestDialog = new Dialog();
+        chanceAndCommunityChestDialog.setDialogPane(chanceAndCommunityChestScreen);
+
+        Node okButton = chanceAndCommunityChestDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Draw");
         ((Button)okButton).setOnAction(event -> {
             gameEngine.drawCard();
             createCardDialog();
-            dialog.close();
+            chanceAndCommunityChestDialog.close();
             updateSquares();
             updatePlayerTexts();
         });
-        vbox.getChildren().addAll(text, okButton);
-        dialog.getDialogPane().setContent(vbox);
-        dialog.show();
+        chanceAndCommunityChestDialog.show();
     }
 
     private void createCardDialog() {
@@ -232,11 +235,24 @@ public class GameScreen extends Screen {
         dialog.show();
     }
 
+    //done check
     private void createJokerDialog() {
         Dialog jokerDialog = new Dialog();
-        VBox vbox = gameEngine.getJokerContent();
-        jokerDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        jokerDialog.setDialogPane(jokerScreen);
+
+        VBox vBox = (VBox) jokerDialog.getDialogPane().getContent();
+
+        VBox jokerContent = gameEngine.getJokerContent();
+        String jokerName = gameEngine.getJokerName();
+
+        Text header = (Text) jokerDialog.getDialogPane().getChildren().get(0);
+        vBox.getChildren().add(jokerContent);
+
+        header.setText(jokerName);
+        jokerDialog.getDialogPane().getChildren().get(1);
+
         Node okButton = jokerDialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setText("Sold!");
         ((Button)okButton).setOnAction(event -> {
             if(gameEngine.jokerActions()) {
                 jokerDialog.close();
@@ -251,53 +267,51 @@ public class GameScreen extends Screen {
             }
         });
 
-        jokerDialog.getDialogPane().setContent(vbox);
         jokerDialog.showAndWait();
     }
 
+    // done combo box düzeltilecek
     private void createAuctionOrSellDialog(int index, boolean isAuction) {
-        Dialog auction = new Dialog();
-        VBox vbox = new VBox();
-        Text header;
+        Dialog auctionOrSell = new Dialog();
+        auctionOrSell.setDialogPane(auctionOrSellScreen);
+
+        VBox mainVBox = (VBox) auctionOrSell.getDialogPane().getContent();
+        Text header = (Text) auctionOrSell.getDialogPane().getHeader();
+
+        HBox propertyBox = (HBox) mainVBox.getChildren().get(0);
+        HBox playerBox = (HBox) mainVBox.getChildren().get(1);
+        HBox priceBox = (HBox) mainVBox.getChildren().get(2);
+
+        Text propertyName = (Text) propertyBox.getChildren().get(0);
+        ComboBox playerSelection = (ComboBox) playerBox.getChildren().get(1);
+        TextField price = (TextField) priceBox.getChildren().get(1);
+
         if(isAuction) {
              header = new Text("Auction Property");
         }
         else
             header = new Text("Sell Property");
 
-        Text propertyName = new Text("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
-        HBox hbox = new HBox();
-        Text playerName = new Text("Enter player: ");
-        TextField player = new TextField();
-        hbox.getChildren().addAll(playerName, player);
+        propertyName.setText("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
 
-        HBox hbox2 = new HBox();
-        Text amountPrompt = new Text("Enter amount: ");
-        TextField amount = new TextField();
-        hbox2.getChildren().addAll(amountPrompt, amount);
-
-        auction.getDialogPane().getButtonTypes().addAll(ButtonType.OK);
-        vbox.getChildren().addAll(header, propertyName, hbox, hbox2);
-
-        auction.getDialogPane().setContent(vbox);
-        auction.setResultConverter(button -> {
+        auctionOrSell.setResultConverter(button -> {
             if (button == ButtonType.OK) {
-
-                return new Pair<>(player.getText(), amount.getText());
+                //todo return new Pair<>(playerSelection.getText(), price.getText());  PLAYER SELECTION ARTIK BİR COMBO BOX COMBO BOX LISTENER?
             }
+
             return null;
         });
 
         //auction.show();
-        Optional<Pair<String, String>> result = auction.showAndWait();
+        Optional<Pair<String, String>> result = auctionOrSell.showAndWait();
         result.ifPresent(pair -> {
-            System.out.println(player.getText());
+            //Todo System.out.println(player.getText());
             if(isAuction) {
-                gameEngine.auctionProperty(player.getText(), Integer.parseInt(amount.getText()));
+                //todo gameEngine.auctionProperty(player.getText(), Integer.parseInt(amount.getText()));
             }
             else {
                 //selling a mortgaged property -- ask the new owner if they want to lift the mortgage
-                gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
+                // todo gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
                 if(gameEngine.soldMortgaged(index)) {
                     createMortgageLiftDialog(index);
                 }
@@ -338,9 +352,10 @@ public class GameScreen extends Screen {
         mortgageLifting.show();
     }
 
+    //done konrol edelim
     private void createPropertyDialog(int index) {
         Dialog propertyDialog = new Dialog();
-        propertyDialog.setDialogPane(properyScreen);
+        propertyDialog.setDialogPane(propertyScreen);
 
         VBox mainVBox = (VBox) propertyDialog.getDialogPane().getContent();
         Text header = (Text) propertyDialog.getDialogPane().getHeader();

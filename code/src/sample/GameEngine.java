@@ -136,11 +136,15 @@ public class GameEngine {
         return buttons;
     }
 
+    public String getJokerName(){
+        Joker joker = (Joker)getCurrentSquare();
+        String name = joker.getName();
+        return name;
+    }
+
     public VBox getJokerContent() {
         VBox vbox = new VBox();
         Joker joker = (Joker)getCurrentSquare();
-        Text name = new Text(joker.getName());
-        vbox.getChildren().add(name);
         if(joker.isMoneyAction()) {
             Text money = new Text("Money: " + joker.getMoney());
             vbox.getChildren().add(money);
