@@ -394,11 +394,11 @@ public class GameScreen extends Screen {
         result.ifPresent(pair -> {
             //Todo System.out.println(player.getText());
             if(isAuction) {
-                gameEngine.auctionProperty(index, player.getText(), Integer.parseInt(amount.getText()));
+                //todo gameEngine.auctionProperty(index, player.getText(), Integer.parseInt(amount.getText()));
             }
             else {
                 //selling a mortgaged property -- ask the new owner if they want to lift the mortgage
-                gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
+                //todo gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
             }
             if(gameEngine.soldMortgaged(index)) {
                 createMortgageLiftDialog(index);
