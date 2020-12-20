@@ -637,9 +637,10 @@ public class EditorScreen extends Screen {
     HBox h3 = (HBox)v.getChildren().get(3);
     TextField rentRate =(TextField) h3.getChildren().get(1);
 
+    HBox buttons = (HBox) v.getChildren().get(8);
 
-    Button cancel  = (Button) v.getChildren().get(9);
-    Button save    = (Button) v.getChildren().get(8);
+    Button cancel  = (Button) buttons.getChildren().get(1);
+    Button save    = (Button) buttons.getChildren().get(0);
     cancel.setCancelButton(true);
 
         TextField boardName = (TextField) v.getChildren().get(0);
