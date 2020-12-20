@@ -22,6 +22,7 @@ public class ScreenManager extends Application {
     }
 
     public static void main(String[] args) {
+        // generates default board so that it always exists
         FileManager.writeBoardToFolder(new Board());
         launch(args);
     }

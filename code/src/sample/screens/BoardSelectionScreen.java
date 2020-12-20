@@ -11,8 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import sample.Board;
 import sample.ScreenManager;
 import sample.Utils;
+import sample.managers.FileManager;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -31,8 +33,11 @@ public class BoardSelectionScreen extends Screen {
     ScrollPane boardsScrollPane;
     HBox boardsBox;
 
-    public BoardSelectionScreen(ScreenManager screenManager) throws IOException {
+    String cameFrom;
+
+    public BoardSelectionScreen(ScreenManager screenManager, String cameFrom) throws IOException {
         super(screenManager);
+        this.cameFrom = cameFrom;
         initializeScene();
     }
 
@@ -66,8 +71,7 @@ public class BoardSelectionScreen extends Screen {
         mainBox.setAlignment(Pos.CENTER);
         mainBox.setSpacing(10);
 
-        Image boardImage = Utils.getImage("boards/" + boardName + "/board_icon.png",
-                imWidth, imHeight);
+        Image boardImage = FileManager.getBoardIcon(boardName);
         ImageView boardImageView = new ImageView(boardImage);
         Label boardLabel = new Label(boardName);
         Button btnSelect = new Button("Select");
@@ -106,10 +110,15 @@ public class BoardSelectionScreen extends Screen {
     private void selectBoard(VBox boardBox) throws IOException {
         String boardName = getBoardNameFromBoardBox(boardBox);
 
-        PlayerManagerScreen playerManagerScreen = new PlayerManagerScreen(screenManager, boardName);
-        screenManager.changeScreen(playerManagerScreen);
-
-        // TODO: open editor instead if necessary
+        if (cameFrom.equals("play")) {
+            PlayerManagerScreen playerManagerScreen = new PlayerManagerScreen(screenManager, boardName);
+            screenManager.changeScreen(playerManagerScreen);
+        } else if (cameFrom.equals("edit")) {
+            Board board = FileManager.readBoardFromFolder(boardName);
+            board.updatePropertyGroups();
+            EditorScreen editorScreen = new EditorScreen(screenManager, board);
+            screenManager.changeScreen(editorScreen);
+        }
     }
 
     private String getBoardNameFromBoardBox(VBox boardBox) {
