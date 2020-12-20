@@ -106,18 +106,18 @@ public class EditorScreen extends Screen {
             StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
             stackPane.getChildren().add(text);
 
-            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
-                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance()) {
-                    //name = "";
+            if (editor.getSquare(i).getType() == SquareType.START ) {
+                Image image = FileManager.getImage("src/sample/icons/go.png", 50, 50);
+                ImageView imageView = new ImageView(image);
+                stackPane.getChildren().add(imageView);
+            }
+            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ) {
+                if (((ChanceAndCommunityChest) editor.getSquare(i)).isChance()) {
                     picture += "chance";
-                }
-                else {
-                    //name = "Community" + "\n" + "Chest";
+                } else {
                     picture += "chest";
                 }
-
-                Image image = new Image("icons/chest.png");
-                //FileManager.getImage
+                Image image = FileManager.getImage("src/sample/icons/" + picture + ".png", 50, 50);
                 ImageView imageView = new ImageView(image);
                 stackPane.getChildren().add(imageView);
             }
@@ -625,23 +625,39 @@ public class EditorScreen extends Screen {
             squares[i] = stackPane.getChildren().get(0);
 
             String name = "";
-            stackPane.getChildren().remove(1);
-            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
-                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance())
-                    name = "Chance";
-                else
-                    name ="Community" + "\n" + "Chest";
+            String picture = "";
+
+            if(stackPane.getChildren().size() > 2) {
+                stackPane.getChildren().remove(1);
             }
+            stackPane.getChildren().remove(1);
+
             if (editor.getSquare(i).getType() == SquareType.PROPERTY)
                 name = ((Property)editor.getSquare(i)).getName();
             if (editor.getSquare(i).getType() == SquareType.JOKER)
                 name = ((Joker)editor.getSquare(i)).getName();
 
-
             Text text = new Text(name);
             Font font2 = Font.font("Source Sans Pro", 10);
             text.setFont(font2); //size of the player texts
             //StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
+
+            if (editor.getSquare(i).getType() == SquareType.START ) {
+                Image image = FileManager.getImage("src/sample/icons/go.png", 50, 50);
+                ImageView imageView = new ImageView(image);
+                stackPane.getChildren().add(imageView);
+            }
+
+            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ) {
+                if (((ChanceAndCommunityChest) editor.getSquare(i)).isChance()) {
+                    picture += "chance";
+                } else {
+                    picture += "chest";
+                }
+                Image image = FileManager.getImage("src/sample/icons/" + picture + ".png", 50, 50);
+                ImageView imageView = new ImageView(image);
+                stackPane.getChildren().add(imageView);
+            }
 
             fillColors(squares2, (Rectangle) squares[i], i);
             stackPane.getChildren().add(text);
