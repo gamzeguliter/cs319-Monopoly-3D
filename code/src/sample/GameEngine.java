@@ -1,9 +1,9 @@
 package sample;
 
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import sample.entities.Card;
 import sample.squares.*;
 
 import java.util.ArrayList;
@@ -506,10 +506,10 @@ public class GameEngine {
                             System.out.println("index " + index);
                         }
                         drawnCard.setPromptInfo(((Property)(board.getSquares()[index])).getName());
-                        drawnCard.amount = index;
+                        drawnCard.setAmount(index);
                     } else {
                         drawnCard.setPromptInfo("Start");
-                        drawnCard.amount = 0;
+                        drawnCard.setAmount(0);
                     }
                     break;
                 case ("Earn money"):
@@ -560,10 +560,10 @@ public class GameEngine {
             switch(drawnCard.getAction()) {
                 case("Go to a place"):
                     didMove = true;
-                    if(drawnCard.amount < currentPlayer.getPosition()) {
+                    if(drawnCard.getAmount() < currentPlayer.getPosition()) {
                         playerPassedStart = true;
                     }
-                    currentPlayer.setPosition(drawnCard.amount);
+                    currentPlayer.setPosition(drawnCard.getAmount());
                     break;
                 case("Go to nearest joker"):
                     didMove = true;
@@ -594,12 +594,12 @@ public class GameEngine {
                     System.out.println("JOKER DIST: "+ distance);
                     break;
                 case ("Earn money"):
-                    currentPlayer.gain(drawnCard.amount);
+                    currentPlayer.gain(drawnCard.getAmount());
                     break;
 
                 case("Go back places"):
                     didMove = true;
-                    currentPlayer.setPosition(getCurrentPlayerPosition() - drawnCard.amount % 40);
+                    currentPlayer.setPosition(getCurrentPlayerPosition() - drawnCard.getAmount() % 40);
                     break;
                 case("Pay money for house and hotel"):
                     //house -- 25
@@ -615,12 +615,12 @@ public class GameEngine {
                     currentPlayer.pay(amount);
                     break;
                 case("Pay money"):
-                    currentPlayer.pay(drawnCard.amount);
+                    currentPlayer.pay(drawnCard.getAmount());
                     break;
                 case("Pay each player"):
                     for(Player player : players) {
-                        currentPlayer.pay(drawnCard.amount);
-                        player.gain(drawnCard.amount);
+                        currentPlayer.pay(drawnCard.getAmount());
+                        player.gain(drawnCard.getAmount());
                     }
                     break;
                 case("Go to go"):
@@ -633,21 +633,21 @@ public class GameEngine {
             switch (drawnCard.getAction()) {
                 case ("Advance to Go"):
                     didMove = true;
-                    currentPlayer.setPosition(drawnCard.amount);
+                    currentPlayer.setPosition(drawnCard.getAmount());
                     break;
                 case ("Pay money"):
-                    currentPlayer.pay(drawnCard.amount);
+                    currentPlayer.pay(drawnCard.getAmount());
                     break;
                 case ("Earn x from each player"):
                     for (Player player : players) {
                         if (!player.isOut()) {
-                            player.pay(drawnCard.amount);
-                            currentPlayer.gain(drawnCard.amount);
+                            player.pay(drawnCard.getAmount());
+                            currentPlayer.gain(drawnCard.getAmount());
                         }
                     }
                     break;
                 case ("Earn money"):
-                    currentPlayer.gain(drawnCard.amount);
+                    currentPlayer.gain(drawnCard.getAmount());
                     break;
                 case ("Pay money for house and hotel"):
                     //house -- 40

@@ -137,13 +137,13 @@ public class FileManager {
         writeImageToPath(boardIcon, boardPath + "/board_icon.png");
     }
 
-    public static ArrayList<Image> getPlayerIcons(String boardName) {
+    public static ArrayList<Image> getPlayerIcons(String boardName, int width, int height) {
         ArrayList<Image> playerIcons = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            Image icon = getImage("/boards/" + boardName + "/icons/" + i + ".png", 100, 100);
+            Image icon = getImage("/boards/" + boardName + "/icons/" + i + ".png", width, height);
             if (icon == null)
-                icon = generateWhiteImage(100, 100);
+                icon = generateWhiteImage(width, height);
 
             playerIcons.add(icon);
         }

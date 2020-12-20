@@ -1,16 +1,10 @@
 package sample.screens;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -25,7 +19,6 @@ import sample.Board;
 import sample.GameEngine;
 import sample.Player;
 import sample.ScreenManager;
-import sample.squares.ColorGroup;
 import sample.squares.Property;
 import sample.squares.SquareType;
 
@@ -48,20 +41,20 @@ public class GameScreen extends Screen {
     Label turnText;
     Font font = Font.font("Source Sans Pro", 20);
     int position;
-    AnchorPane gameScreen = FXMLLoader.load(getClass().getResource("GameScreen.fxml"));
-    DialogPane diceScreen = FXMLLoader.load(getClass().getResource("diceScreen.fxml"));
-    DialogPane propertyScreen = FXMLLoader.load(getClass().getResource("propertyScreen.fxml"));
-    DialogPane auctionOrSellScreen = FXMLLoader.load(getClass().getResource("auctionOrSellScreen.fxml"));
-    DialogPane jokerScreen = FXMLLoader.load(getClass().getResource("jokerScreen.fxml"));
-    DialogPane chanceAndCommunityChestScreen = FXMLLoader.load(getClass().getResource("chanceAndCommunityChestScreen.fxml"));
-    DialogPane mortgageLiftingScreen = FXMLLoader.load(getClass().getResource("mortgageLiftingScreen.fxml"));
-    DialogPane jailFinishScreen = FXMLLoader.load(getClass().getResource("jailFinishScreen.fxml"));
-    DialogPane cardScreen = FXMLLoader.load(getClass().getResource("cardScreen.fxml"));
-    DialogPane startScreen = FXMLLoader.load(getClass().getResource("startScreen.fxml"));
-    DialogPane resignScreen = FXMLLoader.load(getClass().getResource("resignScreen.fxml"));
-    DialogPane gameOverScreen = FXMLLoader.load(getClass().getResource("gameOverScreen.fxml"));
-    DialogPane bankruptScreen = FXMLLoader.load(getClass().getResource("bankruptScreen.fxml"));
-    DialogPane exitScreen = FXMLLoader.load(getClass().getResource("exitScreen.fxml"));
+    AnchorPane gameScreen = FXMLLoader.load(getClass().getResource("../layouts/GameScreen.fxml"));
+    DialogPane diceScreen = FXMLLoader.load(getClass().getResource("../layouts/diceScreen.fxml"));
+    DialogPane propertyScreen = FXMLLoader.load(getClass().getResource("../layouts/propertyScreen.fxml"));
+    DialogPane auctionOrSellScreen = FXMLLoader.load(getClass().getResource("../layouts/auctionOrSellScreen.fxml"));
+    DialogPane jokerScreen = FXMLLoader.load(getClass().getResource("../layouts/jokerScreen.fxml"));
+    DialogPane chanceAndCommunityChestScreen = FXMLLoader.load(getClass().getResource("../layouts/chanceAndCommunityChestScreen.fxml"));
+    DialogPane mortgageLiftingScreen = FXMLLoader.load(getClass().getResource("../layouts/mortgageLiftingScreen.fxml"));
+    DialogPane jailFinishScreen = FXMLLoader.load(getClass().getResource("../layouts/jailFinishScreen.fxml"));
+    DialogPane cardScreen = FXMLLoader.load(getClass().getResource("../layouts/cardScreen.fxml"));
+    DialogPane startScreen = FXMLLoader.load(getClass().getResource("../layouts/startScreen.fxml"));
+    DialogPane resignScreen = FXMLLoader.load(getClass().getResource("../layouts/resignScreen.fxml"));
+    DialogPane gameOverScreen = FXMLLoader.load(getClass().getResource("../layouts/gameOverScreen.fxml"));
+    DialogPane bankruptScreen = FXMLLoader.load(getClass().getResource("../layouts/bankruptScreen.fxml"));
+    DialogPane exitScreen = FXMLLoader.load(getClass().getResource("../layouts/exitScreen.fxml"));
 
     // constructors
     public GameScreen(ScreenManager screenManager) throws IOException {

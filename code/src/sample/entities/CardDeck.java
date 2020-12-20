@@ -1,4 +1,4 @@
-package sample;
+package sample.entities;
 
 public class CardDeck {
 

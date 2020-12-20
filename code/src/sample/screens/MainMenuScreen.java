@@ -2,21 +2,17 @@ package sample.screens;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import sample.ScreenManager;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 
 public class MainMenuScreen extends Screen {
 
-    AnchorPane mainMenuScreen = FXMLLoader.load(getClass().getResource("MainMenuScreen.fxml"));
+    AnchorPane mainMenuScreen = FXMLLoader.load(getClass().getResource("../layouts/MainMenuScreen.fxml"));
 
     public MainMenuScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);

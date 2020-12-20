@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -51,12 +50,12 @@ public class EditorScreen extends Screen {
     Image boardIcon;
 
     Font font = Font.font("Source Sans Pro", 20);
-    Parent editorScreen = FXMLLoader.load(getClass().getResource("EditorScreen.fxml"));
-    DialogPane propertyEditDP = FXMLLoader.load(getClass().getResource("propertyEditScreen.fxml"));
-    DialogPane addColorGroupDP = FXMLLoader.load(getClass().getResource("addColorGroup.fxml"));
-    DialogPane selectColorGroupDP = FXMLLoader.load(getClass().getResource("selectColorGroup.fxml"));
-    DialogPane jokerEditDP = FXMLLoader.load(getClass().getResource("jokerEditScreen.fxml"));
-    DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("toggleSquareType.fxml"));
+    Parent editorScreen = FXMLLoader.load(getClass().getResource("../layouts/EditorScreen.fxml"));
+    DialogPane propertyEditDP = FXMLLoader.load(getClass().getResource("../layouts/propertyEditScreen.fxml"));
+    DialogPane addColorGroupDP = FXMLLoader.load(getClass().getResource("../layouts/addColorGroup.fxml"));
+    DialogPane selectColorGroupDP = FXMLLoader.load(getClass().getResource("../layouts/selectColorGroup.fxml"));
+    DialogPane jokerEditDP = FXMLLoader.load(getClass().getResource("../layouts/jokerEditScreen.fxml"));
+    DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("../layouts/toggleSquareType.fxml"));
 
     // constructors
     public EditorScreen(ScreenManager screenManager) throws IOException {
@@ -71,7 +70,7 @@ public class EditorScreen extends Screen {
         editor = new Editor(board);
         position = 0;
 
-        playerIcons = FileManager.getPlayerIcons(board.getName());
+        playerIcons = FileManager.getPlayerIcons(board.getName(), 100, 100);
         boardIcon = FileManager.getBoardIcon(board.getName());
 
 

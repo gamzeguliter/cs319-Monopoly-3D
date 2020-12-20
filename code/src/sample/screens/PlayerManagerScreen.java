@@ -41,7 +41,7 @@ public class PlayerManagerScreen extends Screen {
     private final ArrayList<Integer> iconChoices;
     private final ArrayList<ColorPicker> colorPickers;
 
-    AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("PlayerManagerScreen.fxml"));
+    AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("../layouts/PlayerManagerScreen.fxml"));
 
     PlayerManagerScreen(ScreenManager screenManager, String boardName) throws IOException {
         super(screenManager);
@@ -169,7 +169,10 @@ public class PlayerManagerScreen extends Screen {
             playerColors.add(colorPicker.getValue());
         }
 
-        ArrayList<Image> icons = FileManager.getPlayerIcons(boardName);
+        ArrayList<Image> icons = new ArrayList<>();
+        for (ImageView imageView : iconViews) {
+            icons.add(imageView.getImage());
+        }
 
         ArrayList<Player> players = playerManager.generatePlayers(
                 playerNames,
