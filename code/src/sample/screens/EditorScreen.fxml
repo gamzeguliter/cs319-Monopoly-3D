@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
 
 <AnchorPane fx:id="editorScreenAnchor" prefHeight="768.0" prefWidth="1367.0" style="-fx-background-color: rgb(182, 216, 184);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -305,11 +304,15 @@
                </children></HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
-                  <Button mnemonicParsing="false" text="Upload" style="-fx-font-size: 25;"/>
-                  <Button lineSpacing="50.0" mnemonicParsing="false" text="Delete" style="-fx-font-size: 25;"/>
+                  <Button mnemonicParsing="false" style="-fx-font-size: 25;" text="Upload" />
+                  <Button lineSpacing="50.0" mnemonicParsing="false" style="-fx-font-size: 25;" text="Delete" />
                </children></HBox>
-            <Button mnemonicParsing="false" text="Save" />
-            <Button mnemonicParsing="false" text="Cancel" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Save" />
+                  <Button mnemonicParsing="false" text="Cancel" />
+               </children>
+            </HBox>
          </children>
       </VBox>
 
