@@ -58,6 +58,11 @@ public class ColorGroup implements JSONable {
                 || player.getBalance() < property.getHousePrice()
                 || property.getNoOfHouses() >= 4
                 || isMortgaged()) {
+            System.out.println("comp: " + !isComplete(player));
+            System.out.println("comp: " +!isBalancedHousing(property, true));
+            System.out.println("comp: " + property.isHotel());
+            System.out.println("comp: " + (player.getBalance() < property.getHousePrice()));
+            System.out.println("comp: " + isMortgaged());
             return false;
         }
         return true;
@@ -71,7 +76,7 @@ public class ColorGroup implements JSONable {
 
     public boolean canSellHouse(Property property, Player player) {
         if (!this.isComplete(player)
-                || isBalancedHousing(property, false)
+                || !isBalancedHousing(property, false)
                 || property.isHotel()
                 || property.getNoOfHouses() == 0
                 || isMortgaged()) {
@@ -119,9 +124,9 @@ public class ColorGroup implements JSONable {
     private boolean isMortgaged() {
         for (Property property : properties) {
             if (property.isMortgaged())
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
     private boolean isBalancedHousing(Property property, boolean addHouse) {
@@ -131,13 +136,13 @@ public class ColorGroup implements JSONable {
                 continue;
             } else {
                 if(addHouse) {
-                    if (houseNo + 1 > propertyInGroup.getNoOfHouses() + 1) {
+                    if (houseNo > propertyInGroup.getNoOfHouses()) {
                         return false;
                     }
                 }
                 //check balanced housing for sell house
                 else {
-                    if (houseNo - 1 < propertyInGroup.getNoOfHouses() - 1) {
+                    if (houseNo < propertyInGroup.getNoOfHouses()) {
                         return false;
                     }
                 }

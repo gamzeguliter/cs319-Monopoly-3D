@@ -102,20 +102,24 @@ public class GameManager {
                 if(!group.checkBuildings()) {
                     buttons.add("sell");
                 }
+                System.out.println(group.canAddHouse(property, getCurrentPlayer()));
                 //for add house button:
                 if(group.canAddHouse(property, getCurrentPlayer())) {
                     buttons.add("add house");
                 }
                 //for sell house button:
                 if(group.canSellHouse(property, getCurrentPlayer())) {
+                    System.out.println(group.canSellHouse(property, getCurrentPlayer()));
                     buttons.add("sell house");
                 }
                 //for add hotel button:
                 if(group.canAddHotel(property, getCurrentPlayer())) {
+                    System.out.println(group.canAddHotel(property, getCurrentPlayer()));
                     buttons.add("add hotel");
                 }
                 //for sell hotel button:
                 if(group.canSellHotel(property)) {
+                    System.out.println(group.canSellHotel(property));
                     buttons.add("sell hotel");
                 }
             }
@@ -220,6 +224,14 @@ public class GameManager {
 
         vbox.getChildren().addAll(price, rent, rentWithColorGroup, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses,
                 rentHotel, housePrice, hotelPrice, mortgage);
+
+        if(property.isOwned()) {
+            Text noOfHouses = new Text("House number: " + property.getNoOfHouses());
+            Text hotelno = new Text("Hotel number: 0");
+            if(property.isHotel())
+                hotelno = new Text("Hotel number: 1");
+            vbox.getChildren().addAll(noOfHouses, hotelno);
+        }
         return vbox;
     }
 
@@ -303,7 +315,7 @@ public class GameManager {
     public boolean soldMortgaged(int index) {
         Property property;
         if(index < 0) {
-            property = (Property)getCurrentSquare();
+            property = (Property) getCurrentSquare();
         }
         else {
             property = (Property)board.getSquares()[index];
@@ -316,7 +328,13 @@ public class GameManager {
 
     public VBox getMortgageLiftingInfo(int index) {
         VBox vbox = new VBox();
-        Property property = (Property)board.getSquares()[index];
+        Property property;
+        if(index < 0) {
+            property = (Property) getCurrentSquare();
+        }
+        else {
+            property = (Property)board.getSquares()[index];
+        }
         Text mortgageInfo = new Text("Would you like to lift the mortgage of " + property.getName()  + " by paying " + property.getMortgageLiftingPrice() + " " + board.currency + " ?");
         Text liftLater = new Text("If you choose not to lift it now, you will pay " + property.getMortgagePrice() * 10 / 100  + " " + board.currency + " now and you will need to pay the same mortgage lifting price" +
                 " when you choose to lift it.");

@@ -550,9 +550,6 @@ public class GameScreen extends Screen {
         VBox vbox = gameManager.getMortgageLiftingInfo(index);
 
         //cancel button
-       /* if (mortgageLifting.getDialogPane().getButtonTypes().size() < 1)
-            mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE); */
-
         mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         Node closeButton = mortgageLifting.getDialogPane().lookupButton(ButtonType.CLOSE);
         ((Button)closeButton).setText("Lift mortgage later");
@@ -780,22 +777,22 @@ public class GameScreen extends Screen {
 
                     if ((pos > 0 && pos < 10) || (pos > 20 && pos < 30)) {
                         propertyRect.setWidth(60);
-                        propertyRect.setHeight(30);
+                        propertyRect.setHeight(20);
                         propPos = Pos.TOP_CENTER;
                     }
                     else if(pos > 10 && pos < 20)  {
-                        propertyRect.setWidth(30);
+                        propertyRect.setWidth(20);
                         propertyRect.setHeight(60);
                         propPos = Pos.CENTER_LEFT;
                     }
                     else if(pos > 30) {
-                        propertyRect.setWidth(30);
+                        propertyRect.setWidth(20);
                         propertyRect.setHeight(60);
                         propPos = Pos.CENTER_RIGHT;
                     }
                     else {
                         propertyRect.setWidth(90);
-                        propertyRect.setHeight(30);
+                        propertyRect.setHeight(20);
                         propPos = Pos.TOP_CENTER;
                     }
 
@@ -813,7 +810,8 @@ public class GameScreen extends Screen {
                         propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameManager.getSquare(pos).getType() == SquareType.JOKER){
-                        tile.setFill(rgb(203, 142, 110));
+                        tile.setFill(rgb(248, 156, 111));
+
                         Text text = new Text(gameManager.getJokerName(pos));
                         stackPane.getChildren().add(text);
                         propertyRect = null;

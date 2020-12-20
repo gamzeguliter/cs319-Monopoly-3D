@@ -30,10 +30,7 @@ public class Property extends Square {
     private Board board;
     String groupName;
 
-    /* TODO IMPORTANT ISSUE:
-When storing property in file system, only store name, colorgroup, buying price
-when reading from file and creating square, give the rent and mortgage rate of the board!!!!!
- */
+
     public Property(String name, ColorGroup colorGroup, int buyingPrice, int rentRate, int mortgageRate) {
         super(SquareType.PROPERTY);
         this.name = name;
@@ -202,13 +199,15 @@ when reading from file and creating square, give the rent and mortgage rate of t
     }
 
     private void setPricesAndRent() {
-        int rentOneHouse = rent * 5;
-        int rentTwoHouses = rent * 15;
-        int rentThreeHouses = rent * 40;
-        int rentFourHouses  = rent * 50;
-        int rentHotel = rent * 65;
-        int housePrice = rent * 10;
-        int hotelPrice = 5 * housePrice;
+        rentOneHouse = rent * 5;
+        rentTwoHouses = rent * 15;
+        rentThreeHouses = rent * 40;
+        rentFourHouses  = rent * 50;
+        rentHotel = rent * 65;
+        //housePrice = rent * 10;
+        housePrice = 1;
+        hotelPrice = 1;
+        //hotelPrice = 5 * housePrice;
     }
 
     public int getMortgagePrice() {
