@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -173,9 +174,8 @@ public class GameManager {
             player.gain(joker.getMoney()); //getMoney return negative if the amount is to be reduced
         }
         if(joker.isMovementAction()) {
-            //isMoved = true;
-            player.setJailTime(3 + 2);
-            //player.setPosition(player.getPosition() + joker.getMovement());
+            isMoved = true;
+            player.setPosition(player.getPosition() + joker.getMovement());
         }
         else if(joker.isSuspended()) {
             //the player should go to jail for + 2 turns because next turn decreases it and we need to know if
@@ -200,7 +200,7 @@ public class GameManager {
 
         Text mortgage;
         if(property.isMortgaged()) {
-            mortgage = new Text("THIS PROPERTY IS MORTGAGED");
+            mortgage = new Text("MORTGAGED");
         }
         else {
             mortgage = new Text("Mortgage: " + property.getMortgagePrice());
@@ -426,7 +426,7 @@ public class GameManager {
 
     public boolean nextTurn() {
         turn++;
-        currentPlayer = players.get(turn % players.size());
+        currentPlayer = players.get(Math.abs(turn) % players.size());
         playerPassedStart = false;
         if(currentPlayer.isInJail()) {
             currentPlayer.setJailTime(currentPlayer.getjailTime() - 1);
@@ -723,8 +723,8 @@ public class GameManager {
     public void resign() {
         currentPlayer.out();
         players.remove(currentPlayer);
-        turn--;
-        currentPlayer = players.get(Math.abs(turn - 1) % players.size());
+        turn  = turn - 1;
+        currentPlayer = players.get(Math.abs(turn) % players.size());
 
     }
 
@@ -781,5 +781,9 @@ public class GameManager {
 
     public boolean lastPlayer() {
         return players.size() <= 2;
+    }
+
+    public Image boardImage() {
+        return FileManager.getBoardIcon(board.getName());
     }
 }

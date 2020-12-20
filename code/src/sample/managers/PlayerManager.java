@@ -1,8 +1,9 @@
-package sample;
+package sample.managers;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import sample.entities.Player;
+import sample.Player;
+import sample.Utils;
 
 import java.util.ArrayList;
 

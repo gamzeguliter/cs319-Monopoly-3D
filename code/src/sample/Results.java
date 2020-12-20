@@ -1,4 +1,4 @@
-package sample.entities;
+package sample;
 public class Results {
 
     public String name;

@@ -14,10 +14,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.FileManager;
 import sample.entities.Board;
 import sample.GameManager;
 import sample.entities.Player;
 import sample.ScreenManager;
+import sample.squares.ChanceAndCommunityChest;
 import sample.squares.Property;
 import sample.squares.SquareType;
 
@@ -67,6 +69,11 @@ public class GameScreen extends Screen {
         super(screenManager);
         gameManager = new GameManager(board, players);
         boardPane = getSquares();
+        StackPane background = (StackPane) boardPane.getChildren().get(40);
+        ImageView boardImage = new ImageView(gameManager.boardImage());
+        boardImage.setFitWidth(575);
+        boardImage.setFitHeight(575);
+        background.getChildren().add(boardImage);
         setScene();
     }
 
@@ -247,6 +254,7 @@ public class GameScreen extends Screen {
         ((Button) okButton).setOnAction(event -> {
             bankrupt.close();
             if(gameManager.lastPlayer()) {
+                gameManager.resign();
                 createGameOverDialog();
             }
             else {
@@ -275,35 +283,7 @@ public class GameScreen extends Screen {
         bankrupt.show();
     }
 
-    /*
-        Dialog bankruptDialog = new Dialog();
-        bankruptDialog.setDialogPane(bankruptScreen);
 
-        VBox vbox = new VBox();
-        Text bankrupt = new Text("YOU LOSE");
-
-        Node okButton = bankruptDialog.getDialogPane().lookupButton(ButtonType.OK);
-        ((Button)okButton).setOnAction(event -> {
-            if(gameEngine.lastPlayer()) {
-                createGameOverDialog();
-            }
-            else {
-                ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
-                getPlayerTexts();
-                for (int i = 0; i < indexes.size(); i++) {
-                    createAuctionOrSellDialog(indexes.get(i), true);
-                    updateSquares();
-                    getPlayerTexts();
-                }
-                gameEngine.resign();
-                gameEngine.nextTurn();
-                updateTurnText();
-            }
-        });
-        vbox.getChildren().addAll(bankrupt);
-        bankruptDialog.getDialogPane().setContent(vbox);
-        bankruptDialog.show();
-    }*/
 
     //done check
     private void createGameOverDialog() {
@@ -330,6 +310,9 @@ public class GameScreen extends Screen {
 
     private void exitConfirmationDialog() {
         //todo @öykü -- cancel butonu
+        VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        HBox exitBox = (HBox) vBox.getChildren().get(0);
+        Button exitGameBtn = (Button) exitBox.getChildren().get(0); //todo exit button burda
         //are you sure you want to exit?
         //yes -> take to main page
     }
@@ -641,10 +624,17 @@ public class GameScreen extends Screen {
 
         //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
 
-        vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255) + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", " + (property.getColorGroup().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
+        vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255)
+                + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", "
+                + (property.getColorGroup().getColor().getBlue() * 255)
+                + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
 
         if(property.isOwned()) {
-            propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb(" + (property.getOwner().getColor().getRed() * 255) + ", " + (property.getOwner().getColor().getGreen() * 255) + ", " + (property.getOwner().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
+            propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb("
+                    + (property.getOwner().getColor().getRed() * 255) + ", "
+                    + (property.getOwner().getColor().getGreen() * 255) + ", "
+                    + (property.getOwner().getColor().getBlue() * 255)
+                    + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
         }
         else {
             propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
@@ -845,10 +835,23 @@ public class GameScreen extends Screen {
                         propertyRect = null;
                     }
                     else if(gameManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
+                        String name = "";
+                            if(((ChanceAndCommunityChest)(gameManager.getSquare(pos))).isChance()) {
+                                name = "chance";
+                            }
+                            else {
+                                name = "chest";
+                            }
+                        Image image = FileManager.getImage("src/sample/icons/" + name + ".png", 50, 50);
+                        ImageView imageView = new ImageView(image);
+                        stackPane.getChildren().add(imageView);
                         tile.setFill(Color.LIME);
                         propertyRect = null;
                     }
                     else { //start square
+                        Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
+                        ImageView imageView = new ImageView(image);
+                        stackPane.getChildren().add(imageView);
                         tile.setFill(Color.BLUEVIOLET);
                         propertyRect = null;
                     }
@@ -884,9 +887,11 @@ public class GameScreen extends Screen {
                         }
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
+                            view.setFitHeight(50);
+                            view.setFitWidth(50);
                             stackPane.getChildren().add(view);
                         }
-                        stackPane.getChildren().addAll(text); //todo pawnlar gelince kaldır
+                        stackPane.getChildren().addAll(text);
                     }
                 }
             }
@@ -898,6 +903,10 @@ public class GameScreen extends Screen {
     private void updateSquares() {
         //boardPane.getChildren().clear();
         //GridPane gridPane = (GridPane) gameScreen.getChildrenUnmodifiable().get(0);
+
+        StackPane background = (StackPane) boardPane.getChildren().get(40);
+        ImageView boardImage = new ImageView(gameManager.boardImage());
+        background.getChildren().add(boardImage);
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -918,7 +927,6 @@ public class GameScreen extends Screen {
                     StackPane stackPane = (StackPane) boardPane.getChildren().get(pos);
                     Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
 
-                    //todo add pictures/names to tiles, make player pawns
                     //make the tiles clickable
                     tile.setOnMouseClicked(event -> {
                         position = pos;
@@ -963,17 +971,31 @@ public class GameScreen extends Screen {
                             tile.setFill(Color.WHITESMOKE);
                         propertyRect.setFill(property.getColorGroup().getColor());
                     }
+
                     else if(gameManager.getSquare(pos).getType() == SquareType.JOKER){
                         propertyRect = null;
                         tile.setFill(Color.DARKGOLDENROD);
                     }
 
                     else if(gameManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
+                        String name = "";
+                        if(((ChanceAndCommunityChest)(gameManager.getSquare(pos))).isChance()) {
+                            name = "chance";
+                        }
+                        else {
+                            name = "chest";
+                        }
+                        Image image = FileManager.getImage("src/sample/icons/" + name + ".png", 50, 50);
+                        ImageView imageView = new ImageView(image);
+                        stackPane.getChildren().add(imageView);
                         propertyRect = null;
                         tile.setFill(Color.LIME);
                     }
                     else {
                         propertyRect = null;
+                        Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
+                        ImageView imageView = new ImageView(image);
+                        stackPane.getChildren().add(imageView);
                         tile.setFill(Color.BLUEVIOLET);
                     }
 
@@ -983,7 +1005,7 @@ public class GameScreen extends Screen {
                     ArrayList<Image> pawns = new ArrayList<>();
 
                     for (int i = 0; i < 40; i++){
-                        if (stackPane.getChildren().size() > 1 )
+                        if (stackPane.getChildren().size() > 2 )
                             stackPane.getChildren().remove(1);
                     }
 
@@ -1014,9 +1036,11 @@ public class GameScreen extends Screen {
                         }
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
+                            view.setFitHeight(50);
+                            view.setFitWidth(50);
                             stackPane.getChildren().add(view);
                         }
-                       stackPane.getChildren().add(text); //todo pawnlar kaydedilince kaldır
+                       stackPane.getChildren().add(text);
                     }
                 }
             }

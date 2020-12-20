@@ -1,9 +1,9 @@
-package sample;
+package sample.managers;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.*;
 import org.json.*;
-import sample.entities.Board;
+import sample.Board;
 import sample.squares.ColorGroup;
 import sample.squares.Square;
 import sample.squares.SquareGenerator;
@@ -11,6 +11,7 @@ import sample.squares.SquareGenerator;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;

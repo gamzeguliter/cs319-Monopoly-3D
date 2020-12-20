@@ -2,7 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import sample.entities.Board;
+import sample.managers.FileManager;
 import sample.screens.MainMenuScreen;
 import sample.screens.Screen;
 

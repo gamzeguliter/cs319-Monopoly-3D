@@ -13,10 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import sample.*;
-import sample.entities.Board;
-import sample.entities.Player;
-import sample.FileManager;
-import sample.PlayerManager;
+import sample.managers.FileManager;
+import sample.managers.PlayerManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
