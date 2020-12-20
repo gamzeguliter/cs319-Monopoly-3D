@@ -786,4 +786,8 @@ public class GameManager {
     public Image boardImage() {
         return FileManager.getBoardIcon(board.getName());
     }
+
+    public String getJokerName(int index) {
+        return ((Joker) getSquare(index)).getName();
+    }
 }

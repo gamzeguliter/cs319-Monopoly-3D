@@ -77,18 +77,6 @@ public class GameScreen extends Screen {
         setScene();
     }
 
-    /*
-    private Text getPlayerText(Player player) {
-        Text t = new Text();
-        t.setFont(font);
-        t.setText(player.getName() + "\nBalance: " + player.getBalance() + "\nPosition: " + player.getPosition());
-        t.setFill(player.getColor());
-        t.setY(50);
-        return t;
-    }
-
-     */
-
     private void getPlayerTexts() {
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
         VBox vBox2 = (VBox) vBox.getChildren().get(2);
@@ -308,16 +296,6 @@ public class GameScreen extends Screen {
         gameOverDialog.show();
     }
 
-    private void exitConfirmationDialog() {
-        //todo @öykü -- cancel butonu
-        VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
-        HBox exitBox = (HBox) vBox.getChildren().get(0);
-        Button exitGameBtn = (Button) exitBox.getChildren().get(0); //todo exit button burda
-        //are you sure you want to exit?
-        //yes -> take to main page
-    }
-
-    //done
     private void createResignDialog() {
         Dialog resignDialog = new Dialog();
         resignDialog.setDialogPane(resignScreen);
@@ -835,6 +813,8 @@ public class GameScreen extends Screen {
                     }
                     else if(gameManager.getSquare(pos).getType() == SquareType.JOKER){
                         tile.setFill(Color.DARKGOLDENROD);
+                        Text text = new Text(gameManager.getJokerName(pos));
+                        stackPane.getChildren().add(text);
                         propertyRect = null;
                     }
                     else if(gameManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
@@ -907,9 +887,9 @@ public class GameScreen extends Screen {
         //boardPane.getChildren().clear();
         //GridPane gridPane = (GridPane) gameScreen.getChildrenUnmodifiable().get(0);
 
-        StackPane background = (StackPane) boardPane.getChildren().get(40);
+        /*StackPane background = (StackPane) boardPane.getChildren().get(40);
         ImageView boardImage = new ImageView(gameManager.boardImage());
-        background.getChildren().add(boardImage);
+        background.getChildren().add(boardImage);*/
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -964,6 +944,7 @@ public class GameScreen extends Screen {
                         propPos = Pos.TOP_CENTER;
                     }
 
+                    String jokerText = "";
                     if (gameManager.getSquare(pos).getType() == SquareType.PROPERTY) {
                         Property property = (Property) gameManager.getSquare(pos);
                         if (property.isOwned()) {
@@ -977,6 +958,8 @@ public class GameScreen extends Screen {
 
                     else if(gameManager.getSquare(pos).getType() == SquareType.JOKER){
                         propertyRect = null;
+                        Text text = new Text(gameManager.getJokerName(pos));
+                        stackPane.getChildren().add(text);
                         tile.setFill(Color.DARKGOLDENROD);
                     }
 

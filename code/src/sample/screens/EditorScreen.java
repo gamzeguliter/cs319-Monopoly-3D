@@ -106,7 +106,7 @@ public class EditorScreen extends Screen {
             stackPane.getChildren().add(text);
 
             if (EditorScreen.this.editorManager.getSquare(i).getType() == SquareType.START ) {
-                Image image = FileManager.getImage("src/sample/icons/go.png", 50, 50);
+                Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
                 ImageView imageView = new ImageView(image);
                 stackPane.getChildren().add(imageView);
             }
@@ -641,7 +641,7 @@ public class EditorScreen extends Screen {
             //StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
 
             if (EditorScreen.this.editorManager.getSquare(i).getType() == SquareType.START ) {
-                Image image = FileManager.getImage("src/sample/icons/go.png", 50, 50);
+                Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
                 ImageView imageView = new ImageView(image);
                 stackPane.getChildren().add(imageView);
             }
