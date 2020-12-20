@@ -33,7 +33,7 @@ public class PlayerManagerScreen extends Screen {
     private final String boardName;
 
     private HBox playersBox;
-    private final Label infoLabel;
+    private Label infoLabel;
     private int playerCount;
 
     private final ArrayList<TextField> nameFields;
@@ -41,7 +41,7 @@ public class PlayerManagerScreen extends Screen {
     private final ArrayList<Integer> iconChoices;
     private final ArrayList<ColorPicker> colorPickers;
 
-    //AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("PlayerManagerScreen.fxml"));
+    AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("PlayerManagerScreen.fxml"));
 
     PlayerManagerScreen(ScreenManager screenManager, String boardName) throws IOException {
         super(screenManager);
@@ -57,32 +57,24 @@ public class PlayerManagerScreen extends Screen {
     }
 
     private void initializeScene() {
-        VBox mainBox = new VBox();
-        mainBox.setAlignment(Pos.CENTER);
-        mainBox.setSpacing(25);
+        VBox mainBox = (VBox) playerManagerScreen.getChildren().get(1);
 
-        playersBox = new HBox();
-        playersBox.setAlignment(Pos.CENTER);
-        playersBox.setMaxHeight(height/2);
-        playersBox.setSpacing(20f);
+        playersBox = (HBox) mainBox.getChildren().get(1);
 
         iconChoices.add(0);
         VBox player1Box = generatePlayerBox("player1");
 
-        Button btnAddPlayer = new Button("Add Player");
+        infoLabel = (Label) mainBox.getChildren().get(3);
+
+        Button btnAddPlayer = (Button) playersBox.getChildren().get(0);
         btnAddPlayer.setOnAction(actionEvent -> addPlayer());
 
-        playersBox.getChildren().addAll(player1Box, btnAddPlayer);
+        playersBox.getChildren().add(0, player1Box);
 
-        Button btnDone = new Button("Done");
+        Button btnDone = (Button) mainBox.getChildren().get(2);
         btnDone.setOnAction(actionEvent -> done());
 
-        mainBox.getChildren().addAll(playersBox, btnDone, infoLabel);
-
-        StackPane pane = new StackPane();
-        pane.getChildren().add(mainBox);
-
-        scene = new Scene(pane,height,width);//playerManagerScreen);
+        scene = new Scene(playerManagerScreen);//playerManagerScreen);
     }
 
     private VBox generatePlayerBox(String playerName) {
@@ -106,6 +98,7 @@ public class PlayerManagerScreen extends Screen {
         HBox iconBox = new HBox();
 
         iconBox.setAlignment(Pos.CENTER);
+        iconBox.setSpacing(10f);
         Image iconImage = Utils.getImage("boards/" + boardName + "/icons/" + iconChoices.get(playerCount-1) + ".png", 100, 100);
         ImageView iconView = new ImageView(iconImage);
         iconViews.add(iconView);
@@ -123,13 +116,16 @@ public class PlayerManagerScreen extends Screen {
         Label colorLabel = new Label("Color: ");
 
         ColorPicker colorPicker = new ColorPicker();
-        colorPicker.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
-        colorPicker.setStyle("-fx-font: 'Source Sans Pro';" + "-fx-font-family: 'Source Sans Pro';" + "-fx-font-size: 10;");
+        colorPicker.setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+        colorPicker.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        colorPicker.setStyle("-fx-font: 'Source Sans Pro';" + "-fx-font-family: 'Source Sans Pro';" + "-fx-font-size: 12;");
         colorPickers.add(colorPicker);
 
         colorBox.getChildren().addAll(colorLabel, colorPicker);
 
         vBox.getChildren().addAll(nameBox, iconBox, colorBox);
+        vBox.setBackground(new Background(new BackgroundFill(Color.rgb(203, 227, 199), CornerRadii.EMPTY, Insets.EMPTY)));
 
         return vBox;
     }
