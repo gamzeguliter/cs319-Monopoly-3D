@@ -78,6 +78,7 @@ public class GameScreen extends Screen {
         setScene();
     }
 
+    /*
     private Text getPlayerText(Player player) {
         Text t = new Text();
         t.setFont(font);
@@ -86,6 +87,8 @@ public class GameScreen extends Screen {
         t.setY(50);
         return t;
     }
+
+     */
 
     private void getPlayerTexts() {
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
@@ -645,15 +648,14 @@ public class GameScreen extends Screen {
         }
 
         //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
-        vBox2.setBackground(new Background(new BackgroundFill(property.getColorGroup().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
-        //propertyDialog.setDialogPane(new Background(new BackgroundFill(property.getColorGroup().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255) + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", " + (property.getColorGroup().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
+
         if(property.isOwned()) {
-            propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
-            //propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+            propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb(" + (property.getOwner().getColor().getRed() * 255) + ", " + (property.getOwner().getColor().getGreen() * 255) + ", " + (property.getOwner().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
         }
         else {
-            //vBox2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-            //propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+            propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
         }
 
         ArrayList<String> buttonNames = gameEngine.getPropertyButtons(index);
