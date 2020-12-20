@@ -1,9 +1,8 @@
 package sample.squares;
 
-import javafx.scene.paint.Color;
 import org.json.JSONObject;
-import sample.Board;
-import sample.Player;
+import sample.entities.Board;
+import sample.entities.Player;
 
 
 public class Property extends Square {

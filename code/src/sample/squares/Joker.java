@@ -27,8 +27,6 @@ public class Joker extends Square {
     }
 
     //methods
-    //TODO pictures
-
     public int getMovement() {
         return movement;
     }

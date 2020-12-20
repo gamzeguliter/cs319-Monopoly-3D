@@ -138,7 +138,7 @@ public class GameScreen extends Screen {
 
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
         HBox exitBox = (HBox) vBox.getChildren().get(0);
-        Button exitGameBtn = (Button) exitBox.getChildren().get(0); //todo exit button burda
+        Button exitGameBtn = (Button) exitBox.getChildren().get(0);
         VBox vBox2 = (VBox) vBox.getChildren().get(2);
         HBox hBox = (HBox) vBox.getChildren().get(4);
         turnText = (Label) vBox.getChildren().get(3);
@@ -452,8 +452,7 @@ public class GameScreen extends Screen {
         cardDialog.show();
     }
 
-    //done check
-    //todo jail update
+
     private void createJokerDialog() {
         Dialog jokerDialog = new Dialog();
         jokerDialog.setDialogPane(jokerScreen);
@@ -618,9 +617,6 @@ public class GameScreen extends Screen {
         else {
             property = (Property) (gameManager.getSquare(index));
         }
-
-        //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
-
         vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255) + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", " + (property.getColorGroup().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
 
         if(property.isOwned()) {

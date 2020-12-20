@@ -1,4 +1,4 @@
-package sample;
+package sample.entities;
 
 import javafx.scene.paint.Color;
 import sample.entities.Card;
@@ -11,13 +11,13 @@ import java.util.ArrayList;
 public class Board {
 
     // properties
-    private String name;
-    Square[] squares;
-    CardDeck chanceDeck;
-    CardDeck chestDeck;
+    public String name;
+    public Square[] squares;
+    public CardDeck chanceDeck;
+    public CardDeck chestDeck;
     // TODO: make this a <String, ColorGroup> map?
-    ArrayList<ColorGroup> colorGroups;
-    String currency;
+    public ArrayList<ColorGroup> colorGroups;
+    public String currency;
 
     int rentRate;
     int mortgageRate;

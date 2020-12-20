@@ -296,7 +296,6 @@ public class EditorScreen extends Screen {
         VBox pawnBox3 = (VBox) hBox1.getChildren().get(2);
         VBox pawnBox4 = (VBox) hBox1.getChildren().get(3);
 
-        //todo resimleri image olarak alabilirsiniz
         ImageView pawnImage1 = (ImageView) pawnBox1.getChildren().get(0);
         if (playerIcons.size() > 0)
             pawnImage1.setImage(playerIcons.get(0));
@@ -336,7 +335,7 @@ public class EditorScreen extends Screen {
             File file = fileChooser.showOpenDialog(scene.getWindow());
             if (file != null) {
                 String path = file.toURI().toASCIIString();
-                Image image = new Image(path); //todo buradan
+                Image image = new Image(path);
                 playerIcons.set(2, image);
                 pawnImage3.setImage(image);
             }
