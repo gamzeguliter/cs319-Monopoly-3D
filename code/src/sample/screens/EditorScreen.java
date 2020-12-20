@@ -77,12 +77,9 @@ public class EditorScreen extends Screen {
         if (boardIcon == null) {
             boardIcon = FileManager.generateWhiteImage(575, 575);
         }
-
-
         setScene();
     }
 
-    // private methods
     private void setScene() {
         //recs = getTiles();
         scene = new Scene(EditorScreen.this.editorScreen);
@@ -90,17 +87,21 @@ public class EditorScreen extends Screen {
 
     }
 
+    //setting edit controls
     private void setControls() {
         Node[] squares = new Node[40];
         Square[] squares2 = EditorScreen.this.editorManager.board.getSquares();
+
         for (int i = 0; i < 40; i++) {
             GridPane boardPane = (GridPane) EditorScreen.this.editorScreen.getChildrenUnmodifiable().get(0);
-
             String picture = "";
             String name = "";
 
+            //property square
             if (EditorScreen.this.editorManager.getSquare(i).getType() == SquareType.PROPERTY)
                 name = ((Property) EditorScreen.this.editorManager.getSquare(i)).getName();
+
+            //joker square
             if (EditorScreen.this.editorManager.getSquare(i).getType() == SquareType.JOKER)
                 name = ((Joker) EditorScreen.this.editorManager.getSquare(i)).getName();
 
@@ -110,11 +111,14 @@ public class EditorScreen extends Screen {
             StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
             stackPane.getChildren().add(text);
 
+            //start square
             if (EditorScreen.this.editorManager.getSquare(i).getType() == SquareType.START ) {
                 Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
                 ImageView imageView = new ImageView(image);
                 stackPane.getChildren().add(imageView);
             }
+
+            //chance and community chest square
             if (EditorScreen.this.editorManager.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ) {
                 if (((ChanceAndCommunityChest) EditorScreen.this.editorManager.getSquare(i)).isChance()) {
                     picture += "chance";
@@ -151,6 +155,7 @@ public class EditorScreen extends Screen {
         Button cancel = (Button) buttons.getChildren().get(1);
         Button save = (Button) buttons.getChildren().get(0);
 
+        //cancel button action listener
         cancel.setCancelButton(true);
         cancel.setOnAction(event -> {
             try {
@@ -160,6 +165,7 @@ public class EditorScreen extends Screen {
             }
         });
 
+        //save button action listener / event filter
         save.addEventFilter( ActionEvent.ACTION,
                 event -> {
                     if(boardName.getText().equalsIgnoreCase("Default board")) {
@@ -202,6 +208,7 @@ public class EditorScreen extends Screen {
             }
         });
 
+        //make the tiles clickable
         for (int pos = 1; pos < 40; pos++) {
             int finalPosition = pos;
             squares[pos].setOnMouseClicked(event -> {
@@ -238,8 +245,8 @@ public class EditorScreen extends Screen {
                         EditorScreen.this.editorManager.createNewJoker(position, 0, 0, 0, "Joker");
 
                     }
-
                     openJokerDialog(squares);
+
                 } else if (result.get() == ButtonType.NEXT & property.isSelected()) {
                     if (squares2[position].getType() != SquareType.PROPERTY) {
                         if (EditorScreen.this.editorManager.board.getColorGroups().size() == 0) {
@@ -284,8 +291,6 @@ public class EditorScreen extends Screen {
                     System.out.println(EditorScreen.this.editorManager.getSquare(finalPosition).getType());
                     update();
                 }
-
-
             });
         }
 
@@ -301,6 +306,7 @@ public class EditorScreen extends Screen {
         VBox pawnBox3 = (VBox) hBox1.getChildren().get(2);
         VBox pawnBox4 = (VBox) hBox1.getChildren().get(3);
 
+        //pawn image uploads
         ImageView pawnImage1 = (ImageView) pawnBox1.getChildren().get(0);
         if (playerIcons.size() > 0)
             pawnImage1.setImage(playerIcons.get(0));
@@ -363,6 +369,7 @@ public class EditorScreen extends Screen {
 
         HBox hBox2 = (HBox) vBox1.getChildren().get(7);
 
+        //board picture uploads
         Button uploadBoard = (Button) hBox2.getChildren().get(0);
         if (boardIcon != null)
             background.setImage(boardIcon);

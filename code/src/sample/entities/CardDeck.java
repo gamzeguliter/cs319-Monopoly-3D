@@ -8,7 +8,6 @@ public class CardDeck {
 
     String[] chestPrompts;
     String[] chestActions;
-    String place;
     int amount;
 
     public CardDeck() {
