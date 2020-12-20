@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 15;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="768.0" prefWidth="1366.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fitHeight="798.0" fitWidth="1400.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../monopolybackground.jpg" />
             </image>
         </ImageView>
-      <VBox prefHeight="200.0" prefWidth="100.0" />
-      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <VBox alignment="CENTER" layoutX="-4.0" layoutY="174.0" prefHeight="465.0" prefWidth="1400.0" spacing="50.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player Selection" style="-fx-font-size: 55;" />
+            <HBox alignment="CENTER" prefHeight="309.0" prefWidth="668.0" spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Add Player" />
+               </children>
+            </HBox>
+            <Button mnemonicParsing="false" text="Done" />
+            <Label />
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

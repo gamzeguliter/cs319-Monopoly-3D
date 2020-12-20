@@ -246,11 +246,11 @@
             </StackPane>
          </children>
       </GridPane>
-      <VBox alignment="CENTER" layoutX="800.0" layoutY="0.0" prefHeight="769.0" prefWidth="600.0" spacing="20.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 40;">
+      <VBox alignment="CENTER" layoutX="800.0" layoutY="0.0" prefHeight="769.0" prefWidth="600.0" spacing="20.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 35;">
          <children>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="TOP_RIGHT" prefHeight="66.0" prefWidth="600.0">
                <children>
-                  <Button mnemonicParsing="false" text="Exit Game" style="-fx-font-size: 30;"/>
+                  <Button mnemonicParsing="false" style="-fx-font-size: 30;" text="Exit Game" />
                </children>
             </HBox>
             <Label style="-fx-font-size: 50; -fx-border-color: BLACK;" text="Players" />
