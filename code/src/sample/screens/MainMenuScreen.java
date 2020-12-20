@@ -69,11 +69,13 @@ public class MainMenuScreen extends Screen {
     }
 
     private void dispatchViewHelp() {
+        try{ screenManager.changeScreen(new HelpScreen(screenManager) ); } catch(Exception e){
 
+        }
     }
 
     private void dispatchViewCredits() {
-
+        try{ screenManager.changeScreen(new CreditsScreen(screenManager) ); } catch(Exception e){}
     }
 
     private void dispatchExit() {
