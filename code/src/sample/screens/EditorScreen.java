@@ -326,8 +326,6 @@ public class EditorScreen extends Screen{
             ComboBox combo_box =(ComboBox)vbox.getChildren().get(0);
             ArrayList<String> choices = new ArrayList<>();
 
-
-
             ArrayList<ColorGroup> tempColorGroup = editor.board.getColorGroups();
             for(int i =0; i < editor.board.getColorGroups().size(); i++){
                 choices.add(tempColorGroup.get(i).getGroupName());
@@ -683,12 +681,6 @@ public void update( ){
                     editor.createNewChestCommunity(finalPosition,false);
                     update();
                 }
-
-
-
-
-
-
             });
         }
 
