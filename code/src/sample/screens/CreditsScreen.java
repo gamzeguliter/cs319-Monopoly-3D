@@ -16,11 +16,13 @@ import java.io.IOException;
 public class CreditsScreen extends Screen {
 
     private Label infoLabel;
+    private Label creditsLabel;
     AnchorPane creditsScreen = FXMLLoader.load(getClass().getResource("../layouts/CreditsScreen.fxml"));
 
     public CreditsScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
-        infoLabel = new Label("CREDITS\nCansu Moran\nElif Gamze Güliter\nMelisa Taşpınar\nÖykü Irmak Hatipoğlu\nYiğit Gürses");
+        creditsLabel = new Label("CREDITS");
+        infoLabel = new Label("Cansu Moran\nElif Gamze Güliter\nMelisa Taşpınar\nÖykü Irmak Hatipoğlu\nYiğit Gürses");
         initializeScene();
     }
 
@@ -30,7 +32,9 @@ public class CreditsScreen extends Screen {
         Button goBack = (Button) vbox2.getChildren().get(0); //todo go back goes back
 
         infoLabel.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(infoLabel);
+        creditsLabel.setAlignment(Pos.CENTER);
+        creditsLabel.setStyle("-fx-font-size: 60;");
+        vbox.getChildren().addAll(creditsLabel, infoLabel);
         vbox.setAlignment(Pos.CENTER);
         scene = new Scene(creditsScreen);
     }
