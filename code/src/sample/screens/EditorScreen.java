@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static javafx.scene.paint.Color.rgb;
+
 public class EditorScreen extends Screen {
     // properties
     private Scene scene;
@@ -599,14 +601,14 @@ public class EditorScreen extends Screen {
             tile.setFill(((Property)squares[pos]).getColorGroup().getColor());
         }
         else if(squares[pos].getType() == SquareType.JOKER){
-            tile.setFill(Color.DARKGOLDENROD);
+            tile.setFill(rgb(203, 142, 110));
         }
 
         else if(EditorScreen.this.editorManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
-            tile.setFill(Color.LIME);
+            tile.setFill(rgb(99, 142, 99));
         }
         else {
-            tile.setFill(Color.BLUEVIOLET);
+            tile.setFill(Color.ALICEBLUE);
         }
 
     }

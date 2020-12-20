@@ -813,7 +813,7 @@ public class GameScreen extends Screen {
                         propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameManager.getSquare(pos).getType() == SquareType.JOKER){
-                        tile.setFill(Color.LIGHTCORAL);
+                        tile.setFill(rgb(203, 142, 110));
                         Text text = new Text(gameManager.getJokerName(pos));
                         stackPane.getChildren().add(text);
                         propertyRect = null;
@@ -829,7 +829,7 @@ public class GameScreen extends Screen {
                         Image image = FileManager.getImage("src/sample/icons/" + name + ".png", 50, 50);
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
-                        tile.setFill(rgb(182, 216, 184));
+                        tile.setFill(rgb(99, 142, 99));
                         propertyRect = null;
                     }
                     else { //start square
@@ -955,7 +955,7 @@ public class GameScreen extends Screen {
                         propertyRect = null;
                         Text text = new Text(gameManager.getJokerName(pos));
                         stackPane.getChildren().add(text);
-                        tile.setFill(Color.LIGHTCORAL);
+                        tile.setFill(rgb(203, 142, 110));
                     }
 
                     else if(gameManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
@@ -970,7 +970,7 @@ public class GameScreen extends Screen {
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
                         propertyRect = null;
-                        tile.setFill(rgb(182, 216, 184));
+                        tile.setFill(rgb(99, 142, 99));
                     }
                     else {
                         propertyRect = null;

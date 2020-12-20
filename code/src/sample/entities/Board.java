@@ -15,21 +15,11 @@ public class Board {
     public Square[] squares;
     public CardDeck chanceDeck;
     public CardDeck chestDeck;
-    // TODO: make this a <String, ColorGroup> map?
     public ArrayList<ColorGroup> colorGroups;
     public String currency;
 
     int rentRate;
     int mortgageRate;
-    /*
-    property array -?
-        aynı name'de 2 group a izin verme!
-        property'i colorGroupa koyarken, property içindeki colorgroup ismine bak
-
-        property(name, ...., string colorgroup)
-
-       if(colorgroup yoksa yarat, varsa içindeki property array e bu property 'i ekle
-     */
 
 
     // constructors
@@ -98,33 +88,7 @@ public class Board {
     public void setRentRate(int rentRate) { this.rentRate = rentRate; }
     public int getRentRate() { return rentRate; }
 
-    // TODO: test code, remove later?
 
-    private final String[] propertyNames = {"New York", "Boston", "Paris", "Copenhagen", "Berlin", "İstanbul",
-            "Ankara", "Chicago", "Rome", "Milan", "London", "Seul", "Beijing", "Luzern", "Bern", "Oslo",
-            "Barcelona", "Madrid", "Amsterdam", "Munich"};
-
-    private Square[] getTestSquares() {
-        Square[] squares = new Square[40];
-        squares[0] = new Start(20);
-        for (int i = 1; i < 40; i++) {
-            if(i % 4 == 0)
-                squares[i] = new Joker(9, 10, 0,"");
-            else if(i % 4 == 1)
-                squares[i] = new ChanceAndCommunityChest(true);
-            else if (i % 4 == 2) {
-                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(0), 100, 80, 50);
-                squares[i] = newProp;
-                colorGroups.get(0).addProperty(newProp);
-            }
-            else {
-                Property newProp = new Property(propertyNames[i % 20], colorGroups.get(1), 100, 80, 50);
-                squares[i] = newProp;
-                colorGroups.get(1).addProperty(newProp);
-            }
-        }
-        return squares;
-    }
     private Square[] getDefaultBoard(){
         Square[] squares = new Square[40];
         squares[0] = new Start(5000);
@@ -149,7 +113,7 @@ public class Board {
         squares[1] = new Property("Ankara",colorGroups.get(0),1500,80,50);
         squares[2] = new ChanceAndCommunityChest(false);
         squares[3] = new Property("Izmir",colorGroups.get(0),770,80,50);
-        squares[4] = new Joker( 0, -10,0, "Income Tax");
+        squares[4] = new Joker( 0, -10,0, "Income \n Tax");
         squares[5] = new Joker(0,0,2,"Jail");
         squares[6] = new Property("Adana",colorGroups.get(6),880,80,50);
         squares[7] = new ChanceAndCommunityChest( true);
@@ -192,7 +156,6 @@ public class Board {
 
     private ArrayList<ColorGroup> createGroups() {
         ArrayList<ColorGroup> colors = new ArrayList<>();
-
         return colors;
     }
 }
