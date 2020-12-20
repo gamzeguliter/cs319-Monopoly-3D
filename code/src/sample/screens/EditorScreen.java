@@ -294,7 +294,6 @@ public class EditorScreen extends Screen {
 
         ImageView pawnImage4 = (ImageView) pawnBox4.getChildren().get(0);
         Button upload4 = (Button) pawnBox4.getChildren().get(1);
-        Button upload4= (Button) pawnBox4.getChildren().get(1);
         upload4.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(scene.getWindow());
@@ -568,7 +567,29 @@ public class EditorScreen extends Screen {
             GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
             StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
             squares[i] = stackPane.getChildren().get(0);
-            fillColors(squares2,(Rectangle)squares[i],i); /// paint inside of the squares
+
+            String name = "";
+            stackPane.getChildren().remove(1);
+            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
+                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance())
+                    name = "Chance";
+                else
+                    name ="Community" + "\n" + "Chest";
+            }
+            if (editor.getSquare(i).getType() == SquareType.PROPERTY)
+                name = "property";
+            if (editor.getSquare(i).getType() == SquareType.JOKER)
+                name = "joker";
+
+            Text text = new Text(name);
+            Font font2 = Font.font("Source Sans Pro", 10);
+            text.setFont(font2); //size of the player texts
+            //StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
+
+            fillColors(squares2, (Rectangle) squares[i], i);
+            stackPane.getChildren().add(text);
+            squares[i] = stackPane.getChildren().get(0);/// paint inside of the squares
+
         }
 
     //// This is the right half of the editor screen
@@ -596,7 +617,11 @@ public class EditorScreen extends Screen {
         cancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                screenManager.changeScreen(new MainMenuScreen(screenManager));
+                try {
+                    screenManager.changeScreen(new MainMenuScreen(screenManager));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
         save.setOnAction(new EventHandler<ActionEvent>() {
@@ -615,44 +640,44 @@ public class EditorScreen extends Screen {
         });
         /// end of the right half
         for (int pos = 0; pos < 40; pos++) {
-    TextField boardName = (TextField) v.getChildren().get(0);
-    cancel.setCancelButton(true);
-    cancel.setOnAction(event -> {
-        try {
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
-        } catch (IOException e) {
-            e.printStackTrace();
+           // TextField boardName = (TextField) v.getChildren().get(0);
+            cancel.setCancelButton(true);
+            cancel.setOnAction(event -> {
+                try {
+                    screenManager.changeScreen(new MainMenuScreen(screenManager));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+
+            save.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                    if (!mortgageRate.getText().isEmpty())
+                        editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
+
+                    if (!rentRate.getText().isEmpty())
+                        editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
+
+                    if (!currency.getText().isEmpty())
+                        editor.board.setCurrency(currency.getText());
+
+                    if (!boardName.getText().isEmpty())
+                        editor.board.setName(boardName.getText());
+
+
+                    FileManager.writeBoardToFolder(editor.board);
+                    try {
+                        screenManager.changeScreen(new MainMenuScreen(screenManager));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            /// end of the right half
         }
-    });
-
-
-    save.setOnAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-
-            if(!mortgageRate.getText().isEmpty())
-                editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
-
-            if(!rentRate.getText().isEmpty())
-                editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
-
-            if(!currency.getText().isEmpty())
-                editor.board.setCurrency(currency.getText());
-
-            if(!boardName.getText().isEmpty())
-                editor.board.setName(boardName.getText());
-
-
-            FileManager.writeBoardToFolder(editor.board);
-            try {
-                screenManager.changeScreen(new MainMenuScreen(screenManager));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    });
-    /// end of the right half
-
     for (int pos = 0; pos < 40; pos++) {
             int finalPosition = pos;
             squares[pos].setOnMouseClicked(event -> {
