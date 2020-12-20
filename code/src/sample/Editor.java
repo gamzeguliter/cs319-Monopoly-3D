@@ -17,6 +17,10 @@ public class Editor {
         board = new Board();
     }
 
+    public Editor(Board board) {
+        this.board = board;
+    }
+
     public Square getSquare(int index) {
         return board.squares[index];
     }

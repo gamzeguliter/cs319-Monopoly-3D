@@ -1,12 +1,17 @@
 package sample.managers;
 
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.*;
 import org.json.*;
 import sample.Board;
 import sample.squares.ColorGroup;
 import sample.squares.Square;
 import sample.squares.SquareGenerator;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -18,7 +23,6 @@ public class FileManager {
 
     // check if folder exists? this should not be called if folder does not exists anyway
     public static Board readBoardFromFolder(String boardName) {
-        System.out.println("********************************************************" + boardName);
         String boardPath = getFolderPathFromBoardName(boardName);
 
         String boardConfigJsonText = readTextFromFile(boardPath + "/" + configFileName);
@@ -98,7 +102,92 @@ public class FileManager {
         System.out.println("Succesfully wrote board to file");
     }
 
+    public static Image getImage(String relativePath, int width, int height) {
+        InputStream stream;
+        try {
+            stream = new FileInputStream(System.getProperty("user.dir") + "/" + relativePath);
+            return new Image(stream, width, height, false, false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void saveIconsOnBoard(ArrayList<Image> playerIcons, Image boardIcon, String boardName) {
+        String boardPath = getFolderPathFromBoardName(boardName);
+        String iconsPath = boardPath + "/icons";
+
+        // generate the folder if it does not already exist
+        if (Files.notExists(Paths.get(iconsPath))) {
+            File file = new File(iconsPath);
+            boolean bool = file.mkdir();
+            if(bool){
+                System.out.println("Directory created successfully");
+            }else{
+                System.out.println("Couldn’t create specified directory");
+            }
+        }
+
+        for (int i = 0; i < playerIcons.size(); i++) {
+            Image icon = playerIcons.get(i);
+            writeImageToPath(icon, iconsPath + "/" + i + ".png");
+            System.out.println(iconsPath + "/" + i + ".png");
+        }
+
+        writeImageToPath(boardIcon, boardPath + "/board_icon.png");
+    }
+
+    public static ArrayList<Image> getPlayerIcons(String boardName) {
+        ArrayList<Image> playerIcons = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            Image icon = getImage("/boards/" + boardName + "/icons/" + i + ".png", 100, 100);
+            if (icon == null)
+                icon = generateWhiteImage(100, 100);
+
+            playerIcons.add(icon);
+        }
+
+        return playerIcons;
+    }
+
+    public static Image getBoardIcon(String boardName) {
+        Image boardIcon = getImage("/boards/" + boardName + "/board_icon.png", 100, 100);
+        if (boardIcon == null) {
+            boardIcon = generateWhiteImage(100, 100);
+        }
+        return boardIcon;
+    }
+
     // helper methods
+
+    private static Image generateWhiteImage(int width, int height) {
+        WritableImage img = new WritableImage(width, height);
+        PixelWriter pw = img.getPixelWriter();
+
+        // Should really verify 0.0 <= red, green, blue, opacity <= 1.0
+        int alpha = 255;
+        int r = 255;
+        int g = 255;
+        int b = 255;
+
+        int pixel = (alpha << 24) | (r << 16) | (g << 8) | b ;
+        int[] pixels = new int[width * height];
+        Arrays.fill(pixels, pixel);
+
+        pw.setPixels(0, 0, width, height, PixelFormat.getIntArgbInstance(), pixels, 0, width);
+        return img ;
+    }
+
+    private static void writeImageToPath(Image img, String path) {
+        File file = new File(path);
+        BufferedImage bImage = SwingFXUtils.fromFXImage(img, null);
+        try {
+            ImageIO.write(bImage, "png", file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static String getFolderPathFromBoardName(String name) {
         return System.getProperty("user.dir") + "/boards/" + name;
