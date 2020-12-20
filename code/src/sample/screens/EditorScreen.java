@@ -481,7 +481,6 @@ public class EditorScreen extends Screen {
         result.ifPresent(pair -> {
             System.out.println("name of the property=" + propertyName.getText() + ", amount of the price=" + propertyPrice.getText());
 
-            // todo ->  processing user input : color group is left, checking the corner cases for the unchanged boxes
             EditorScreen.this.editorManager.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
             EditorScreen.this.editorManager.setNameForProperty(propertyName.getText() , position);
         });

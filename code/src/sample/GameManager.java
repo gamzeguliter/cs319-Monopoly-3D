@@ -154,7 +154,7 @@ public class GameManager {
             Text movement = new Text("Movement: " + joker.getMovement());
             vbox.getChildren().add(movement);
         }
-        else if(joker.isSuspended()) { //todo -- suspend => jail
+        else if(joker.isSuspended()) {
             Text jail = new Text("Jail: " + joker.getSuspendedTourNo());
             vbox.getChildren().add(jail);
         }
@@ -336,7 +336,8 @@ public class GameManager {
             property = (Property)board.getSquares()[index];
         }
         Text mortgageInfo = new Text("Would you like to lift the mortgage of " + property.getName()  + " by paying " + property.getMortgageLiftingPrice() + " " + board.currency + " ?");
-        Text liftLater = new Text("If you choose not to lift it now, you will pay " + property.getMortgagePrice() * 10 / 100  + " " + board.currency + " now and you will need to pay the same mortgage lifting price" +
+        Text liftLater = new Text("If you choose not to lift it now, you will pay " + property.getMortgagePrice() * 10 / 100  + " " + board.currency + " now " +
+                "\nand you will need to pay the same mortgage lifting price" +
                 " when you choose to lift it.");
         vbox.getChildren().addAll(mortgageInfo, liftLater);
         return vbox;
@@ -528,6 +529,7 @@ public class GameManager {
                     drawnCard.setPromptInfo(" " + board.currency);
                     break;
                 case ("Pay money for house and hotel"):
+                    drawnCard.setPrompt("Make general repairs on all your property");
                     drawnCard.setPromptInfo("Pay 25 " + board.currency + " for each house and 100 " +
                             board.currency + " for each hotel you own");
                     break;

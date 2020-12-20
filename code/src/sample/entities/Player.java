@@ -63,11 +63,6 @@ public class Player {
 
     public boolean isInJail() { return jailTime > 0; }
 
-    //getters and setters
-    // TODO: implement pawn related methods
-    // getPawn()
-    // setPawn()
-
     public void endJail() {
         jailTime = 0;
     }

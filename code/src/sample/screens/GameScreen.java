@@ -550,8 +550,8 @@ public class GameScreen extends Screen {
         VBox vbox = gameManager.getMortgageLiftingInfo(index);
 
         //cancel button
-        mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        Node closeButton = mortgageLifting.getDialogPane().lookupButton(ButtonType.CLOSE);
+        //mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+        Node closeButton = mortgageLifting.getDialogPane().lookupButton(ButtonType.CANCEL);
         ((Button)closeButton).setText("Lift mortgage later");
         ((Button)closeButton).setOnAction(event -> {
             gameManager.liftMortgageLater(index);
@@ -596,12 +596,6 @@ public class GameScreen extends Screen {
         else {
             property = (Property) (gameManager.getSquare(index));
         }
-
-        //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
-
-        vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255) + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", " + (property.getColorGroup().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
-
-        //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
 
         vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255)
                 + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", "

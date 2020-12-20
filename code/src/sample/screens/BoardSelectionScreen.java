@@ -46,18 +46,14 @@ public class BoardSelectionScreen extends Screen {
 
         boardsBox = (HBox) boardsScrollPane.getContent();
 
-        // TODO: get rid of outer for loop when we have more boards
-            boardNames = getBoardNames();
-            for (String boardName : boardNames) {
-                VBox board = getBoardBox(boardName);
-                board.setBorder(new Border(new BorderStroke(Color.BLACK,
-                                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-                boardsBox.getChildren().add(board);
-            }
+        boardNames = getBoardNames();
+        for (String boardName : boardNames) {
+            VBox board = getBoardBox(boardName);
+            board.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+            boardsBox.getChildren().add(board);
+        }
 
         boardsScrollPane.setContent(boardsBox);
-
-        // TODO: if selection is for editor, add new board button
 
         scene = new Scene(boardSelectionScreen);
     }

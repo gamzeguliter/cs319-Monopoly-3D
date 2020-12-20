@@ -18,7 +18,6 @@ public class PlayerManager {
             Image iconChoice = iconChoices.get(i);
             Color color = playerColors.get(i);
 
-            // TODO: add iconchoice when they can draw, also remove balance when available
             players.add(new Player(name, color, 5000, iconChoice));
         }
 

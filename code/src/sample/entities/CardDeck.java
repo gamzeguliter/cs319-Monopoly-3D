@@ -16,10 +16,6 @@ public class CardDeck {
         chanceActions = new String[10];
         amount = 0;
 
-        /*
-        todo prompt update
-         */
-
         //Initializing Chance Prompts and Actions
         chanceActions[0] = "Go to a place";
         chanceActions[1] = "Go to jail";
@@ -34,26 +30,26 @@ public class CardDeck {
 
         chancePrompts = new String[10];
 
-        chancePrompts[0] = "Go to ";
+        chancePrompts[0] = "Take a trip to ";
         chancePrompts[1] = "Go to jail";
         chancePrompts[2] = "Get out of jail";
-        chancePrompts[3] = "Go to nearest joker square, if there is no joker in the game, do nothing";
-        chancePrompts[4] = "Earn ";
+        chancePrompts[3] = "Take a walk on nearest joker square.\nIf there is no joker in the game, do nothing";
+        chancePrompts[4] = "It is your lucky day! Collect ";
         chancePrompts[5] = "Go back ";
         chancePrompts[6] = "Pay 25 for house and hotel";
-        chancePrompts[7] = "Pay ";
-        chancePrompts[8] = "Pay ";
+        chancePrompts[7] = "Pay poor tax of ";
+        chancePrompts[8] = "You have been elected Chairman of the Board-Pay ";
         chancePrompts[9] = "Go to Go";
 
         //Initializing Chest Prompts and Actions
 
         chestPrompts = new String[7];
         chestPrompts[0] = "Advance to Go";
-        chestPrompts[1] = "Pay ";
-        chestPrompts[2] = "Earn ";
-        chestPrompts[3] = "Earn ";
+        chestPrompts[1] = "Doctor's fees- Pay ";
+        chestPrompts[2] = "It is your birthday!\nCollect ";
+        chestPrompts[3] = "You have won a crossword competition. \nCollect ";
         chestPrompts[4] = "Get out of Jail Free. ";
-        chestPrompts[5] = "Pay ";
+        chestPrompts[5] = "You are assessed for street repair. \nPay ";
         chestPrompts[6] = "Go to Jail. Go directly to Jail.";
 
 

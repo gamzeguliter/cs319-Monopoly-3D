@@ -40,7 +40,6 @@ public class EditorManager {
     /// creates a new Joker square while editing
     public void createNewJoker(int index,int movement, int money,int suspendedTourNo,String name){
         // default values for now
-        //todo -> buraya bak geri, name de minor bir sorun olabilir
         board.squares[index] = new Joker(movement, money,suspendedTourNo,name);
         System.out.println("check" +money + " " + movement);
     }
@@ -48,7 +47,6 @@ public class EditorManager {
     /// creates a new property square while editing
     public void createNewProperty(int index, String name, ColorGroup colorGroup, int buyingPrice,int rentRate, int mortgageRate) {
 
-        //todo -> buraya bak geri, name de minor bir sorun olabilir
         if(board.getColorGroups().contains(colorGroup) == false){
             board.getColorGroups().add(colorGroup);
         }
@@ -70,7 +68,7 @@ public class EditorManager {
             ((Property)(board.squares[index])).setBuyingPrice(price);
 
     }
-    // todo -> this is a little problematic
+
     public void createColorGroupForProperty(Color color, String name, int index)
     {
         ColorGroup c = new ColorGroup(name);

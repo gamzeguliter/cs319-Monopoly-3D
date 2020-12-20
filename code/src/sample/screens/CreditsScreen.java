@@ -29,7 +29,14 @@ public class CreditsScreen extends Screen {
     private void initializeScene() {
         VBox vbox = (VBox) creditsScreen.getChildren().get(2);
         VBox vbox2 = (VBox) creditsScreen.getChildren().get(1);
-        Button goBack = (Button) vbox2.getChildren().get(0); //todo go back goes back
+        Button goBack = (Button) vbox2.getChildren().get(0);
+        goBack.setOnAction(action -> {
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         infoLabel.setAlignment(Pos.CENTER);
         creditsLabel.setAlignment(Pos.CENTER);
