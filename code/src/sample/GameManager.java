@@ -1,14 +1,17 @@
 package sample;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import sample.entities.Board;
 import sample.entities.Card;
+import sample.entities.Player;
 import sample.squares.*;
 
 import java.util.ArrayList;
 
-public class GameEngine {
+public class GameManager {
 
     private Board board;
     //private SpinningWheel wheel;
@@ -22,7 +25,7 @@ public class GameEngine {
     private int diceResult;
     private int currentPlayerNo;
 
-    public GameEngine() {
+    public GameManager() {
         board = new Board();
         //temporary players to test
         players = new ArrayList<Player>(); //added
@@ -40,7 +43,7 @@ public class GameEngine {
     }
 
     //constructor that takes board and players as paramaters
-    public GameEngine(Board board, ArrayList<Player> players) {
+    public GameManager(Board board, ArrayList<Player> players) {
         this.board = board;
         this.players = players;
         currentPlayerNo = players.size();
@@ -171,9 +174,8 @@ public class GameEngine {
             player.gain(joker.getMoney()); //getMoney return negative if the amount is to be reduced
         }
         if(joker.isMovementAction()) {
-            //isMoved = true;
-            player.setJailTime(3 + 2);
-            //player.setPosition(player.getPosition() + joker.getMovement());
+            isMoved = true;
+            player.setPosition(player.getPosition() + joker.getMovement());
         }
         else if(joker.isSuspended()) {
             //the player should go to jail for + 2 turns because next turn decreases it and we need to know if
@@ -198,7 +200,7 @@ public class GameEngine {
 
         Text mortgage;
         if(property.isMortgaged()) {
-            mortgage = new Text("THIS PROPERTY IS MORTGAGED");
+            mortgage = new Text("MORTGAGED");
         }
         else {
             mortgage = new Text("Mortgage: " + property.getMortgagePrice());
@@ -779,5 +781,9 @@ public class GameEngine {
 
     public boolean lastPlayer() {
         return players.size() <= 2;
+    }
+
+    public Image boardImage() {
+        return FileManager.getBoardIcon(board.getName());
     }
 }
