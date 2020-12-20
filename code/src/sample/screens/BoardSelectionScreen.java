@@ -1,27 +1,28 @@
 package sample.screens;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import sample.ScreenManager;
 import sample.Utils;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BoardSelectionScreen extends Screen {
 
-    int width = 1366;
-    int height = 768;
-
+    AnchorPane boardSelectionScreen = FXMLLoader.load(getClass().getResource("BoardSelectionScreen.fxml"));
     int imWidth = 100;
     int imHeight = 100;
 
@@ -30,36 +31,34 @@ public class BoardSelectionScreen extends Screen {
     ScrollPane boardsScrollPane;
     HBox boardsBox;
 
-    public BoardSelectionScreen(ScreenManager screenManager) {
+    public BoardSelectionScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
         initializeScene();
     }
 
     private void initializeScene() {
-        VBox mainPane = new VBox();
-        mainPane.setAlignment(Pos.CENTER);
+        VBox mainPane = (VBox) boardSelectionScreen.getChildren().get(1);
 
-        boardsScrollPane = new ScrollPane();
+        boardsScrollPane = (ScrollPane) mainPane.getChildren().get(1);
 
-        boardsBox = new HBox();
-        boardsBox.setAlignment(Pos.CENTER);
-        boardsBox.setSpacing(30);
+        boardsBox = (HBox) boardsScrollPane.getContent();
 
         // TODO: get rid of outer for loop when we have more boards
         for (int i = 0; i < 20; i++) {
             boardNames = getBoardNames();
             for (String boardName : boardNames) {
-                boardsBox.getChildren().add(getBoardBox(boardName));
+                VBox board = getBoardBox(boardName);
+                board.setBorder(new Border(new BorderStroke(Color.BLACK,
+                                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                boardsBox.getChildren().add(board);
             }
         }
 
         boardsScrollPane.setContent(boardsBox);
-        boardsScrollPane.setPrefHeight(imHeight + 80);
 
-        mainPane.getChildren().add(boardsScrollPane);
         // TODO: if selection is for editor, add new board button
 
-        scene = new Scene(mainPane, width, height);
+        scene = new Scene(boardSelectionScreen);
     }
 
     private VBox getBoardBox(String boardName) {

@@ -1,35 +1,31 @@
 package sample.screens;
 
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import sample.ScreenManager;
 
 import java.io.IOException;
 
 public class MainMenuScreen extends Screen {
 
-    int width = 1366;
-    int height = 768;
+    AnchorPane mainMenuScreen = FXMLLoader.load(getClass().getResource("MainMenuScreen.fxml"));
 
-    public MainMenuScreen(ScreenManager screenManager) {
+    public MainMenuScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
         initializeScene();
     }
 
     private void initializeScene() {
-        GridPane buttonsGrid = new GridPane();
-        buttonsGrid.setAlignment(Pos.CENTER);
-        buttonsGrid.setVgap(15.0f);
+        VBox buttonBox = (VBox) mainMenuScreen.getChildren().get(2);
 
-        double buttonWidth = 200;
-        double buttonHeight = 50;
-
-        Button btnPlayAGame = new Button("Play a Game");
-        btnPlayAGame.setPrefSize(buttonWidth, buttonHeight);
+        Button btnPlayAGame = (Button) buttonBox.getChildren().get(0);
         btnPlayAGame.setOnAction(actionEvent -> {
             try {
                 dispatchPlayAGame();
@@ -38,33 +34,19 @@ public class MainMenuScreen extends Screen {
             }
         });
 
-        Button btnEditABoard = new Button("Edit a Board");
-        btnEditABoard.setPrefSize(buttonWidth, buttonHeight);
+        Button btnEditABoard = (Button) buttonBox.getChildren().get(1);
         btnEditABoard.setOnAction(actionEvent -> dispatchEditABoard());
 
-        Button btnViewHelp = new Button("View Help");
-        btnViewHelp.setPrefSize(buttonWidth, buttonHeight);
+        Button btnViewHelp = (Button) buttonBox.getChildren().get(2);
         btnViewHelp.setOnAction(actionEvent -> dispatchViewHelp());
 
-        Button btnViewCredits = new Button("View Credits");
-        btnViewCredits.setPrefSize(buttonWidth, buttonHeight);
+        Button btnViewCredits = (Button) buttonBox.getChildren().get(3);
         btnViewCredits.setOnAction(actionEvent -> dispatchViewCredits());
 
-        Button btnExit = new Button("Exit");
-        btnExit.setPrefSize(buttonWidth, buttonHeight);
+        Button btnExit = (Button) buttonBox.getChildren().get(4);
         btnExit.setOnAction(actionEvent -> dispatchExit());
 
-        buttonsGrid.addColumn(0,
-                btnPlayAGame,
-                btnEditABoard,
-                btnViewHelp,
-                btnViewCredits,
-                btnExit);
-
-        StackPane pane = new StackPane();
-        pane.getChildren().add(buttonsGrid);
-
-        scene = new Scene(pane, width, height);
+        scene = new Scene(mainMenuScreen);
     }
 
 
