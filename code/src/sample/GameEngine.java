@@ -694,16 +694,14 @@ public class GameEngine {
 
    public ArrayList<Integer> sellPlayerProperties() {
         ArrayList<Integer> propertyIndexes = new ArrayList<>();
-        int index = 0;
         while(currentPlayer.ownedProperties.size() > 0) {
             for(int i = 0; i < 40; i ++) {
                 if (getSquare(i).getType() == SquareType.PROPERTY) {
-                    if (getSquare(i) == currentPlayer.ownedProperties.get(index)) {
+                    if (getSquare(i) == currentPlayer.ownedProperties.get(0)) {
                         propertyIndexes.add(i);
-                        Property property = currentPlayer.ownedProperties.get(index);
+                        Property property = currentPlayer.ownedProperties.get(0);
                         property.reset();
-                        currentPlayer.ownedProperties.remove(index);
-                        index++;
+                        currentPlayer.ownedProperties.remove(0);
                         break;
                     }
                 }
@@ -722,12 +720,13 @@ public class GameEngine {
 
     }
 
-    public void bankrupt() {
-        currentPlayer.out();
-        players.remove(currentPlayer);
+    /*public void bankrupt() {
+        Player bankruptPlayer = currentPlayer;
+        currentPlayer = players.get((turn + 1) % players.size());
+        bankruptPlayer.out();
+        players.remove(bankruptPlayer);
         turn--;
-        currentPlayer = players.get((turn - 1) % players.size());
-    }
+    }*/
 
     public boolean isBankrupt() {
         return currentPlayer.isBankrupt();
@@ -772,4 +771,7 @@ public class GameEngine {
         return choices;
     }
 
+    public boolean lastPlayer() {
+        return players.size() <= 2;
+    }
 }

@@ -167,7 +167,7 @@ public class GameScreen extends Screen {
         });
 
         //end turn button
-        Label finalTurnText = turnText;
+        //Label finalTurnText = turnText;
         btnEndTurn.setOnAction(event -> {
             if(gameEngine.isBankrupt()) {
                 createBankruptDialog();
@@ -177,7 +177,8 @@ public class GameScreen extends Screen {
                     createGameOverDialog();
                 }
             }
-            finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
+            updateTurnText();
+            //finalTurnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
             getPlayerTexts();
             btnRollDice.setDisable(false);
             btnEndTurn.setDisable(true);
@@ -241,6 +242,45 @@ public class GameScreen extends Screen {
 
     //done
     private void createBankruptDialog() {
+        Dialog bankrupt = new Dialog();
+        bankrupt.setDialogPane(bankruptScreen);
+
+        VBox vbox = new VBox();
+        Text bankruptText = new Text("YOU LOST");
+
+        Node okButton = bankrupt.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button) okButton).setOnAction(event -> {
+            bankrupt.close();
+            if(gameEngine.lastPlayer()) {
+                createGameOverDialog();
+            }
+            else {
+                ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
+
+                for (int i = 0; i < indexes.size(); i++) {
+                    createAuctionOrSellDialog(indexes.get(i), true);
+                    updateSquares();
+                    getPlayerTexts();
+                }
+                gameEngine.resign();
+                gameEngine.nextTurn();
+                updateSquares();
+                getPlayerTexts();
+                updateTurnText();
+                /*if (gameEngine.checkWin()) {
+                    createGameOverDialog();
+                }*/
+                btnEndTurn.setDisable(true);
+                btnRollDice.setDisable(false);
+            }
+        });
+
+        vbox.getChildren().addAll(bankruptText);
+        bankrupt.getDialogPane().setContent(vbox);
+        bankrupt.show();
+    }
+
+    /*
         Dialog bankruptDialog = new Dialog();
         bankruptDialog.setDialogPane(bankruptScreen);
 
@@ -249,22 +289,26 @@ public class GameScreen extends Screen {
 
         Node okButton = bankruptDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
-            ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
-            getPlayerTexts();
-            for (int i = 0; i < indexes.size(); i++) {
-                createAuctionOrSellDialog(indexes.get(i), true);
-                updateSquares();
-                getPlayerTexts();
-            }
-            gameEngine.bankrupt();
-            if(gameEngine.nextTurn()) {
+            if(gameEngine.lastPlayer()) {
                 createGameOverDialog();
+            }
+            else {
+                ArrayList<Integer> indexes = gameEngine.sellPlayerProperties();
+                getPlayerTexts();
+                for (int i = 0; i < indexes.size(); i++) {
+                    createAuctionOrSellDialog(indexes.get(i), true);
+                    updateSquares();
+                    getPlayerTexts();
+                }
+                gameEngine.resign();
+                gameEngine.nextTurn();
+                updateTurnText();
             }
         });
         vbox.getChildren().addAll(bankrupt);
         bankruptDialog.getDialogPane().setContent(vbox);
         bankruptDialog.show();
-    }
+    }*/
 
     //done check
     private void createGameOverDialog() {
@@ -272,7 +316,7 @@ public class GameScreen extends Screen {
         gameOverDialog.setDialogPane(gameOverScreen);
 
         VBox vbox = new VBox();
-        Text winner = new Text(gameEngine.getWinner() + "WINS!!!!");
+        Text winner = new Text(gameEngine.getWinner() + " WINS!!!!");
 
         Node okButton = gameOverDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Go back to the main page");
@@ -485,13 +529,12 @@ public class GameScreen extends Screen {
         jailFinish.show();
     }
 
-    // todo done combo box düzeltilecek
     private void createAuctionOrSellDialog(int index, boolean isAuction) {
         Dialog auctionOrSell = new Dialog();
         auctionOrSell.setDialogPane(auctionOrSellScreen);
 
         VBox mainVBox = (VBox) auctionOrSell.getDialogPane().getContent();
-        Text header = (Text) auctionOrSell.getDialogPane().getHeader(); //todo error
+        Text header = (Text) auctionOrSell.getDialogPane().getHeader();
 
         HBox propertyBox = (HBox) mainVBox.getChildren().get(0);
         HBox playerBox = (HBox) mainVBox.getChildren().get(1);
@@ -501,52 +544,38 @@ public class GameScreen extends Screen {
         ComboBox playerSelection = (ComboBox) playerBox.getChildren().get(1);
 
         playerSelection.setItems(FXCollections.observableArrayList(gameEngine.playersInAuction()));
-
-        /*String selectedPlayer = "";
-        // Create action event
-        playerSelection.setOnAction(event1 -> {
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        selectedPlayer = (String) playerSelection.getValue();
-                    }
-                }
-        }); */
-
         TextField price = (TextField) priceBox.getChildren().get(1);
 
-        if(index < 0)
+        if(index < 0) {
             propertyName.setText("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
+        }
         else {
             propertyName.setText("Property: " + ((Property)(gameEngine.getSquare(index))).getName());
         }
 
         if(isAuction) {
-             header = new Text("Auction Property");
+             header.setText("Auction Property");
         }
         else
-            header = new Text("Sell Property");
+            header.setText("Sell Property");
 
-        propertyName.setText("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
+       // propertyName.setText("Property: " + ((Property)(gameEngine.getCurrentSquare())).getName());
 
         auctionOrSell.setResultConverter(button -> {
             if (button == ButtonType.OK) {
                 return new Pair<>((String) playerSelection.getValue(), price.getText());
             }
-                //todo return new Pair<>(playerSelection.getText(), price.getText());  PLAYER SELECTION ARTIK BİR COMBO BOX COMBO BOX LISTENER?
             return null;
         });
 
         //auction.show();
         Optional<Pair<String, String>> result = auctionOrSell.showAndWait();
         result.ifPresent(pair -> {
-            //Todo System.out.println(player.getText());
             if(isAuction) {
-                //todo gameEngine.auctionProperty(index, player.getText(), Integer.parseInt(amount.getText()));
                 gameEngine.auctionProperty(index, (String) playerSelection.getValue(), Integer.parseInt(price.getText()) );
             }
             else {
                 //selling a mortgaged property -- ask the new owner if they want to lift the mortgage
-                //todo gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
                 gameEngine.sellProperty(index, (String) playerSelection.getValue(), Integer.parseInt(price.getText()));
             }
             if(gameEngine.soldMortgaged(index)) {
@@ -565,7 +594,10 @@ public class GameScreen extends Screen {
         VBox vbox = gameEngine.getMortgageLiftingInfo(index);
 
         //cancel button
+       /* if (mortgageLifting.getDialogPane().getButtonTypes().size() < 1)
+            mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE); */
 
+        mortgageLifting.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
         Node closeButton = mortgageLifting.getDialogPane().lookupButton(ButtonType.CLOSE);
         ((Button)closeButton).setText("Lift mortgage later");
         ((Button)closeButton).setOnAction(event -> {
@@ -611,15 +643,21 @@ public class GameScreen extends Screen {
         else {
             property = (Property) (gameEngine.getSquare(index));
         }
+
+        //todo çalışmıyor
         if(property.isOwned()) {
             propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
         }
         else {
             propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
         }
+
         ArrayList<String> buttonNames = gameEngine.getPropertyButtons(index);
+
         //add cancel button
-        propertyDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE); //todo bunu koyunca x tuşu ile kapanıyor olmaması lazım
+        if (propertyDialog.getDialogPane().getButtonTypes().size() < 1)
+            propertyDialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+
         Node closeButton = propertyDialog.getDialogPane().lookupButton(ButtonType.CLOSE);
         closeButton.setDisable(true);
 
@@ -738,7 +776,7 @@ public class GameScreen extends Screen {
             vBox.getChildren().add(buttonBox);
         else
             vBox.getChildren().set(2,buttonBox);
-        propertyDialog.showAndWait();
+        propertyDialog.show();
     }
 
     //create the board on screen
@@ -796,7 +834,12 @@ public class GameScreen extends Screen {
 
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
                         Property property = (Property)(gameEngine.getSquare(pos));
-                        tile.setFill(Color.WHITESMOKE);
+                        if (property.isOwned()) {
+                            Player owner = property.getOwner();
+                            tile.setFill(owner.getColor());
+                        }
+                        else
+                            tile.setFill(Color.WHITESMOKE);
                         propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
@@ -913,9 +956,8 @@ public class GameScreen extends Screen {
                     }
 
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
-
                         Property property = (Property) gameEngine.getSquare(pos);
-                        if (property.isOwned() == true) {
+                        if (property.isOwned()) {
                             Player owner = property.getOwner();
                             tile.setFill(owner.getColor());
                         }
