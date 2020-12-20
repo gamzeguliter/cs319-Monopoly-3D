@@ -2,6 +2,9 @@ package sample.screens;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +25,7 @@ import sample.Board;
 import sample.GameEngine;
 import sample.Player;
 import sample.ScreenManager;
+import sample.squares.ColorGroup;
 import sample.squares.Property;
 import sample.squares.SquareType;
 
@@ -152,10 +156,12 @@ public class GameScreen extends Screen {
 
 
         btnRollDice.setOnAction(event -> {
-            if(gameEngine.getCurrentPlayer().isInJail()) {
+           /* if(gameEngine.getCurrentPlayer().isInJail()) {
                 jailFinishDialog();
             }
-            createDiceDialog();
+           // else {*/
+                createDiceDialog();
+          //  }
             btnEndTurn.setDisable(false);
             btnRollDice.setDisable(true);
         });
@@ -485,7 +491,7 @@ public class GameScreen extends Screen {
         auctionOrSell.setDialogPane(auctionOrSellScreen);
 
         VBox mainVBox = (VBox) auctionOrSell.getDialogPane().getContent();
-        Text header = (Text) auctionOrSell.getDialogPane().getHeader();
+        Text header = (Text) auctionOrSell.getDialogPane().getHeader(); //todo error
 
         HBox propertyBox = (HBox) mainVBox.getChildren().get(0);
         HBox playerBox = (HBox) mainVBox.getChildren().get(1);
@@ -493,6 +499,19 @@ public class GameScreen extends Screen {
 
         Text propertyName = (Text) propertyBox.getChildren().get(0);
         ComboBox playerSelection = (ComboBox) playerBox.getChildren().get(1);
+
+        playerSelection.setItems(FXCollections.observableArrayList(gameEngine.playersInAuction()));
+
+        /*String selectedPlayer = "";
+        // Create action event
+        playerSelection.setOnAction(event1 -> {
+                new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent e) {
+                        selectedPlayer = (String) playerSelection.getValue();
+                    }
+                }
+        }); */
+
         TextField price = (TextField) priceBox.getChildren().get(1);
 
         if(index < 0)
@@ -511,8 +530,9 @@ public class GameScreen extends Screen {
 
         auctionOrSell.setResultConverter(button -> {
             if (button == ButtonType.OK) {
-                //todo return new Pair<>(playerSelection.getText(), price.getText());  PLAYER SELECTION ARTIK BİR COMBO BOX COMBO BOX LISTENER?
+                return new Pair<>((String) playerSelection.getValue(), price.getText());
             }
+                //todo return new Pair<>(playerSelection.getText(), price.getText());  PLAYER SELECTION ARTIK BİR COMBO BOX COMBO BOX LISTENER?
             return null;
         });
 
@@ -522,14 +542,17 @@ public class GameScreen extends Screen {
             //Todo System.out.println(player.getText());
             if(isAuction) {
                 //todo gameEngine.auctionProperty(index, player.getText(), Integer.parseInt(amount.getText()));
+                gameEngine.auctionProperty(index, (String) playerSelection.getValue(), Integer.parseInt(price.getText()) );
             }
             else {
                 //selling a mortgaged property -- ask the new owner if they want to lift the mortgage
                 //todo gameEngine.sellProperty(index, player.getText(), Integer.parseInt(amount.getText()));
+                gameEngine.sellProperty(index, (String) playerSelection.getValue(), Integer.parseInt(price.getText()));
             }
             if(gameEngine.soldMortgaged(index)) {
                 createMortgageLiftDialog(index);
             }
+            auctionOrSell.close();
             updateSquares();
             getPlayerTexts();
         });
@@ -732,6 +755,8 @@ public class GameScreen extends Screen {
                     pos = 40 + row + col;
 
                 if (pos < 40) {
+
+                    System.out.println(pos +"----- " + gameEngine.getSquare(pos).getType());
                     // create rectangle of correct color for tile
                     StackPane stackPane = (StackPane) gridPane.getChildren().get(pos);
                     Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
@@ -739,25 +764,30 @@ public class GameScreen extends Screen {
                     Rectangle propertyRect = new Rectangle();
                     Pos propPos;
 
-                    //todo
-                    if ((pos > 1 && pos < 10) || (pos > 20 && pos < 29)) {
+                    if ((pos > 0 && pos < 10) || (pos > 20 && pos < 30)) {
                         propertyRect.setWidth(60);
                         propertyRect.setHeight(30);
                         propPos = Pos.TOP_CENTER;
                     }
-                    else if((pos > 10 && pos < 20) || (pos > 30 && pos < 29)) {
+                    else if(pos > 10 && pos < 20)  {
                         propertyRect.setWidth(30);
                         propertyRect.setHeight(60);
-                        propPos = Pos.BASELINE_LEFT;
+                        propPos = Pos.BOTTOM_LEFT;
+                    }
+                    else if(pos > 30) {
+                        propertyRect.setWidth(30);
+                        propertyRect.setHeight(60);
+                        propPos = Pos.BOTTOM_RIGHT;
                     }
                     else {
-                        propertyRect.setWidth(60);
-                        propertyRect.setHeight(60);
+                        propertyRect.setWidth(90);
+                        propertyRect.setHeight(30);
                         propPos = Pos.TOP_CENTER;
                     }
 
                     //set tile colors
                     System.out.println(gameEngine.getSquare(pos).getType());
+
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
                         Property property = (Property)(gameEngine.getSquare(pos));
                         tile.setFill(Color.WHITESMOKE);
@@ -801,13 +831,13 @@ public class GameScreen extends Screen {
                     text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        for(Image image : pawns) {
-                            ImageView view = new ImageView(image);
-                            stackPane.getChildren().add(view);
-                        }
                         if(propertyRect != null) {
                             stackPane.getChildren().add(propertyRect);
                             StackPane.setAlignment(propertyRect, propPos);
+                        }
+                        for(Image image : pawns) {
+                            ImageView view = new ImageView(image);
+                            stackPane.getChildren().add(view);
                         }
                        // stackPane.getChildren().addAll(text); //try
                     }
@@ -821,7 +851,6 @@ public class GameScreen extends Screen {
     private void updateSquares() {
         //boardPane.getChildren().clear();
         //GridPane gridPane = (GridPane) gameScreen.getChildrenUnmodifiable().get(0);
-
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -856,20 +885,24 @@ public class GameScreen extends Screen {
                     Rectangle propertyRect = new Rectangle();
                     Pos propPos;
 
-                    //todo
-                    if ((pos > 1 && pos < 10) || (pos > 20 && pos < 29)) {
+                    if ((pos > 0 && pos < 10) || (pos > 20 && pos < 30)) {
                         propertyRect.setWidth(60);
                         propertyRect.setHeight(30);
                         propPos = Pos.TOP_CENTER;
                     }
-                    else if((pos > 10 && pos < 20) || (pos > 30 && pos < 29)) {
+                    else if(pos > 10 && pos < 20)  {
                         propertyRect.setWidth(30);
                         propertyRect.setHeight(60);
-                        propPos = Pos.BASELINE_LEFT;
+                        propPos = Pos.BOTTOM_LEFT;
+                    }
+                    else if(pos > 30) {
+                        propertyRect.setWidth(30);
+                        propertyRect.setHeight(60);
+                        propPos = Pos.BOTTOM_RIGHT;
                     }
                     else {
-                        propertyRect.setWidth(60);
-                        propertyRect.setHeight(60);
+                        propertyRect.setWidth(90);
+                        propertyRect.setHeight(30);
                         propPos = Pos.TOP_CENTER;
                     }
 
@@ -929,13 +962,13 @@ public class GameScreen extends Screen {
                     text.setFont(font2); //size of the player texts
 
                     if ((row == 0) | (col == 0) | (row == 10) | (col == 10)) {
-                        for(Image image : pawns) {
-                            ImageView view = new ImageView(image);
-                            stackPane.getChildren().add(view);
-                        }
                         if(propertyRect != null) {
                             stackPane.getChildren().add(propertyRect);
                             StackPane.setAlignment(propertyRect, propPos);
+                        }
+                        for(Image image : pawns) {
+                            ImageView view = new ImageView(image);
+                            stackPane.getChildren().add(view);
                         }
                        // stackPane.getChildren().add(text);
                     }

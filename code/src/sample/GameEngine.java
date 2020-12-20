@@ -171,8 +171,9 @@ public class GameEngine {
             player.gain(joker.getMoney()); //getMoney return negative if the amount is to be reduced
         }
         if(joker.isMovementAction()) {
-            isMoved = true;
-            player.setPosition(player.getPosition() + joker.getMovement());
+            //isMoved = true;
+            player.setJailTime(3 + 2);
+            //player.setPosition(player.getPosition() + joker.getMovement());
         }
         else if(joker.isSuspended()) {
             //the player should go to jail for + 2 turns because next turn decreases it and we need to know if
@@ -733,7 +734,7 @@ public class GameEngine {
     }
 
     public String jokerText() {
-        return "You are in jail for " + currentPlayer.getjailTime() + " turns. \n" +
+        return "You are in jail. \n" +
                 "Would you like to get out of jail by paying 50 " + board.currency + " ?";
     }
 
@@ -760,4 +761,15 @@ public class GameEngine {
     public String getWinner() {
         return players.get(0).getName();
     }
+
+    public ArrayList<String> playersInAuction() {
+        ArrayList<String> choices = new ArrayList<>();
+        for(Player player : players) {
+            if(player != currentPlayer) {
+                choices.add(player.getName());
+            }
+        }
+        return choices;
+    }
+
 }
