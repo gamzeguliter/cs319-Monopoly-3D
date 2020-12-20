@@ -955,7 +955,7 @@ public class GameScreen extends Screen {
                         propertyRect = null;
                         Text text = new Text(gameManager.getJokerName(pos));
                         stackPane.getChildren().add(text);
-                        tile.setFill(rgb(203, 142, 110));
+                        tile.setFill(rgb(248, 156, 111));
                     }
 
                     else if(gameManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
@@ -970,7 +970,7 @@ public class GameScreen extends Screen {
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
                         propertyRect = null;
-                        tile.setFill(rgb(99, 142, 99));
+                        tile.setFill(rgb(109, 191, 109));
                     }
                     else {
                         propertyRect = null;

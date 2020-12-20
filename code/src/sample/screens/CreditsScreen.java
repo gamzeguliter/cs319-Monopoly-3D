@@ -25,7 +25,10 @@ public class CreditsScreen extends Screen {
     }
 
     private void initializeScene() {
-        VBox vbox = (VBox) creditsScreen.getChildren().get(1);
+        VBox vbox = (VBox) creditsScreen.getChildren().get(2);
+        VBox vbox2 = (VBox) creditsScreen.getChildren().get(1);
+        Button goBack = (Button) vbox2.getChildren().get(0); //todo go back goes back
+
         infoLabel.setAlignment(Pos.CENTER);
         vbox.getChildren().addAll(infoLabel);
         vbox.setAlignment(Pos.CENTER);

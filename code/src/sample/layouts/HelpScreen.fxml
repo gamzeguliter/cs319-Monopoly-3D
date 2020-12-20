@@ -3,6 +3,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.Button?>
 <AnchorPane prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 40;">
     <children>
         <ImageView fitHeight="788.0" fitWidth="1366.0" pickOnBounds="true" preserveRatio="true">
@@ -10,6 +11,11 @@
                 <Image url="@../../monopolybackground.jpg" />
             </image>
         </ImageView>
+        <VBox prefHeight="64.0" prefWidth="232.0">
+            <children>
+                <Button mnemonicParsing="false" text="Go Back" />
+            </children>
+        </VBox>
         <VBox layoutX="183.0" prefHeight="768.0" prefWidth="976.0" />
     </children>
 </AnchorPane>

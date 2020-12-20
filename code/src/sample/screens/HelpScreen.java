@@ -24,7 +24,10 @@ public class HelpScreen extends Screen {
     }
 
     private void initializeScene() {
-        VBox vbox = (VBox) helpScreen.getChildren().get(1);
+        VBox vbox = (VBox) helpScreen.getChildren().get(2);
+        VBox vbox2 = (VBox) helpScreen.getChildren().get(1);
+        Button goBack = (Button) vbox2.getChildren().get(0); //todo go back goes back
+
         infoLabel.setAlignment(Pos.CENTER);
         vbox.getChildren().addAll(infoLabel);
         vbox.setAlignment(Pos.CENTER);
