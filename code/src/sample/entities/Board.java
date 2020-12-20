@@ -91,7 +91,7 @@ public class Board {
 
     private Square[] getDefaultBoard(){
         Square[] squares = new Square[40];
-        squares[0] = new Start(5000);
+        squares[0] = new Start(200);
 
         ColorGroup brown = new ColorGroup("Brown",Color.BROWN);
         ColorGroup blue = new ColorGroup("Blue",Color.BLUE);

@@ -47,7 +47,6 @@ public class BoardSelectionScreen extends Screen {
         boardsBox = (HBox) boardsScrollPane.getContent();
 
         // TODO: get rid of outer for loop when we have more boards
-        for (int i = 0; i < 20; i++) {
             boardNames = getBoardNames();
             for (String boardName : boardNames) {
                 VBox board = getBoardBox(boardName);
@@ -55,7 +54,6 @@ public class BoardSelectionScreen extends Screen {
                                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                 boardsBox.getChildren().add(board);
             }
-        }
 
         boardsScrollPane.setContent(boardsBox);
 

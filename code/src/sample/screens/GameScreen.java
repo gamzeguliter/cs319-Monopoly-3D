@@ -438,7 +438,7 @@ public class GameScreen extends Screen {
     private void createJokerDialog() {
         Dialog jokerDialog = new Dialog();
         jokerDialog.setDialogPane(jokerScreen);
-
+        jokerDialog.getDialogPane().setHeader(new Text(gameManager.getJokerName(-1)));
         VBox jokerContent = gameManager.getJokerContent();
 
         Node okButton = jokerDialog.getDialogPane().lookupButton(ButtonType.OK);

@@ -140,8 +140,8 @@ public class GameManager {
     public VBox getJokerContent() {
         VBox vbox = new VBox();
         Joker joker = (Joker)getCurrentSquare();
-        Text name = new Text(joker.getName());
-        vbox.getChildren().add(name);
+        /*Text name = new Text(joker.getName());
+        vbox.getChildren().add(name);*/
         if(joker.isMoneyAction()) {
             Text money = new Text("Money: " + joker.getMoney());
             vbox.getChildren().add(money);
@@ -784,6 +784,8 @@ public class GameManager {
     }
 
     public String getJokerName(int index) {
+        if(index < 0 )
+            return ((Joker) getCurrentSquare()).getName();
         return ((Joker) getSquare(index)).getName();
     }
 }
