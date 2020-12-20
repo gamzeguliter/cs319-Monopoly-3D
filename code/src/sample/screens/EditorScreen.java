@@ -18,11 +18,11 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
-import sample.Board;
+import sample.entities.Board;
 import sample.ScreenManager;
-import sample.managers.FileManager;
+import sample.FileManager;
 import sample.squares.*;
-import sample.Editor;
+import sample.EditorManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class EditorScreen extends Screen {
     // properties
     private Scene scene;
     GridPane boardPane;
-    Editor editor;
+    EditorManager editorManager;
     int position;
     @FXML
     DialogPane jokerSquareEdit;
@@ -60,14 +60,14 @@ public class EditorScreen extends Screen {
     // constructors
     public EditorScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
-        editor = new Editor();
+        editorManager = new EditorManager();
         position = 0;
         setScene();
     }
 
     public EditorScreen(ScreenManager screenManager, Board board) throws IOException {
         super(screenManager);
-        editor = new Editor(board);
+        editorManager = new EditorManager(board);
         position = 0;
 
         playerIcons = FileManager.getPlayerIcons(board.getName(), 100, 100);
@@ -87,21 +87,21 @@ public class EditorScreen extends Screen {
 
     private void setControls() {
         Node[] squares = new Node[40];
-        Square[] squares2 = editor.board.getSquares();
+        Square[] squares2 = editorManager.board.getSquares();
         for (int i = 0; i < 40; i++) {
             GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
 
             String name = "";
-            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
-                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance())
+            if (editorManager.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
+                if(((ChanceAndCommunityChest) editorManager.getSquare(i)).isChance())
                     name = "Chance";
                 else
                     name ="Community" + "\n" + "Chest";
             }
-            if (editor.getSquare(i).getType() == SquareType.PROPERTY)
-                name = ((Property)editor.getSquare(i)).getName();
-            if (editor.getSquare(i).getType() == SquareType.JOKER)
-                name = ((Joker)editor.getSquare(i)).getName();
+            if (editorManager.getSquare(i).getType() == SquareType.PROPERTY)
+                name = ((Property) editorManager.getSquare(i)).getName();
+            if (editorManager.getSquare(i).getType() == SquareType.JOKER)
+                name = ((Joker) editorManager.getSquare(i)).getName();
 
 
             Text text = new Text(name);
@@ -117,18 +117,18 @@ public class EditorScreen extends Screen {
         VBox v = (VBox) editorScreen.getChildrenUnmodifiable().get(1);
 
         TextField boardName = (TextField) v.getChildren().get(0);
-        boardName.setText(editor.board.getName());
+        boardName.setText(editorManager.board.getName());
         HBox h = (HBox) v.getChildren().get(1);
         TextField mortgageRate = (TextField) h.getChildren().get(1);
-        mortgageRate.setText("" + editor.board.getMortgageRate());
+        mortgageRate.setText("" + editorManager.board.getMortgageRate());
 
         HBox h2 = (HBox) v.getChildren().get(2);
         TextField currency = (TextField) h2.getChildren().get(1);
-        currency.setText(editor.board.getCurrency());
+        currency.setText(editorManager.board.getCurrency());
 
         HBox h3 = (HBox) v.getChildren().get(3);
         TextField rentRate = (TextField) h3.getChildren().get(1);
-        rentRate.setText("" + editor.board.getMortgageRate());
+        rentRate.setText("" + editorManager.board.getMortgageRate());
 
         HBox buttons = (HBox) v.getChildren().get(8);
 
@@ -147,21 +147,21 @@ public class EditorScreen extends Screen {
         save.setOnAction(event -> {
 
             if (!mortgageRate.getText().isEmpty())
-                editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
+                editorManager.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
 
             if (!rentRate.getText().isEmpty())
-                editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
+                editorManager.board.setRentRate(Integer.parseInt(rentRate.getText()));
 
             if (!currency.getText().isEmpty())
-                editor.board.setCurrency(currency.getText());
+                editorManager.board.setCurrency(currency.getText());
 
             if (!boardName.getText().isEmpty())
-                editor.board.setName(boardName.getText());
+                editorManager.board.setName(boardName.getText());
 
             System.out.println("hello");
 
-            FileManager.writeBoardToFolder(editor.board);
-            FileManager.saveIconsOnBoard(playerIcons, boardIcon, editor.board.getName());
+            FileManager.writeBoardToFolder(editorManager.board);
+            FileManager.saveIconsOnBoard(playerIcons, boardIcon, editorManager.board.getName());
 
             try {
                 screenManager.changeScreen(new MainMenuScreen(screenManager));
@@ -184,16 +184,16 @@ public class EditorScreen extends Screen {
                 RadioButton chance = (RadioButton) vbox.getChildren().get(2);
                 RadioButton communityChest = (RadioButton) vbox.getChildren().get(3);
 
-                if (editor.getSquare(position).getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
-                    if (((ChanceAndCommunityChest) editor.getSquare(position)).isChance() == true)
+                if (editorManager.getSquare(position).getType() == SquareType.CHANCEANDCOMMUNITYCHEST) {
+                    if (((ChanceAndCommunityChest) editorManager.getSquare(position)).isChance() == true)
                         chance.setSelected(true);
-                    if (((ChanceAndCommunityChest) editor.getSquare(position)).isChance() == false)
+                    if (((ChanceAndCommunityChest) editorManager.getSquare(position)).isChance() == false)
                         communityChest.setSelected(true);
                 }
-                if (editor.getSquare(position).getType() == SquareType.PROPERTY) {
+                if (editorManager.getSquare(position).getType() == SquareType.PROPERTY) {
                     property.setSelected(true);
                 }
-                if (editor.getSquare(position).getType() == SquareType.JOKER) {
+                if (editorManager.getSquare(position).getType() == SquareType.JOKER) {
                     joker.setSelected(true);
                 }
                 Optional<ButtonType> result = squareTypeDialog.showAndWait();
@@ -203,21 +203,21 @@ public class EditorScreen extends Screen {
                             ColorGroup temp = ((Property) squares2[position]).getColorGroup();
                             temp.removeProperty((Property) squares2[position]);
                         }
-                        editor.createNewJoker(position, 0, 0, 0, "Joker");
+                        editorManager.createNewJoker(position, 0, 0, 0, "Joker");
 
                     }
 
                     openJokerDialog(squares);
                 } else if (result.get() == ButtonType.NEXT & property.isSelected()) {
                     if (squares2[position].getType() != SquareType.PROPERTY) {
-                        if (editor.board.getColorGroups().size() == 0) {
+                        if (editorManager.board.getColorGroups().size() == 0) {
 
                             ColorGroup temp = new ColorGroup("color group"); //might be deleted
-                            editor.createNewProperty(position, "ankara", temp, 100, 50, 80);
+                            editorManager.createNewProperty(position, "ankara", temp, 100, 50, 80);
                         } else {
-                            int x = ((int) (Math.random() * editor.board.getColorGroups().size()));
-                            ColorGroup cg = editor.board.getColorGroups().get(x);
-                            editor.createNewProperty(position, "ankara", cg, 100, 50, 80);
+                            int x = ((int) (Math.random() * editorManager.board.getColorGroups().size()));
+                            ColorGroup cg = editorManager.board.getColorGroups().get(x);
+                            editorManager.createNewProperty(position, "ankara", cg, 100, 50, 80);
                         }
                     }
                     openPropertyDialog(squares);
@@ -227,8 +227,8 @@ public class EditorScreen extends Screen {
                         ColorGroup temp = ((Property) squares2[finalPosition]).getColorGroup();
                         temp.removeProperty((Property) squares2[finalPosition]);
                     }
-                    editor.createNewChestCommunity(finalPosition, false);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition, false);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 } else if ((chance.isSelected()) && result.get() == ButtonType.NEXT && squares2[finalPosition].getType() != SquareType.CHANCEANDCOMMUNITYCHEST) {
                     // removing property from its ColorGroup's arraylist
@@ -236,20 +236,20 @@ public class EditorScreen extends Screen {
                         ColorGroup temp = ((Property) squares2[finalPosition]).getColorGroup();
                         temp.removeProperty((Property) squares2[finalPosition]);
                     }
-                    editor.createNewChestCommunity(finalPosition, true);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition, true);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 } else if ((chance.isSelected()) && result.get() == ButtonType.NEXT && squares2[finalPosition].getType() == SquareType.CHANCEANDCOMMUNITYCHEST
                         && ((ChanceAndCommunityChest) squares2[finalPosition]).isChance() == false) {
                     // removing property from its ColorGroup's arraylist
-                    editor.createNewChestCommunity(finalPosition, true);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition, true);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 } else if ((communityChest.isSelected()) && result.get() == ButtonType.NEXT && squares2[finalPosition].getType() == SquareType.CHANCEANDCOMMUNITYCHEST
                         && ((ChanceAndCommunityChest) squares2[finalPosition]).isChance() == true) {
                     // removing property from its ColorGroup's arraylist
-                    editor.createNewChestCommunity(finalPosition, false);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition, false);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 }
 
@@ -362,8 +362,8 @@ public class EditorScreen extends Screen {
         TextField propertyName = (TextField) nameBox.getChildren().get(1);
         TextField propertyPrice = (TextField) priceBox.getChildren().get(1);
         Button color = (Button) colorBox.getChildren().get(1);
-        propertyName.setText(((Property) editor.getProperty(position)).getName());
-        propertyPrice.setText(((Property) editor.getProperty(position)).getBuyingPrice() + "");
+        propertyName.setText(((Property) editorManager.getProperty(position)).getName());
+        propertyPrice.setText(((Property) editorManager.getProperty(position)).getBuyingPrice() + "");
 
         //selecting the color group
         color.setOnMouseClicked(event -> {
@@ -377,8 +377,8 @@ public class EditorScreen extends Screen {
             ComboBox combo_box = (ComboBox) vbox.getChildren().get(0);
             ArrayList<String> choices = new ArrayList<>();
 
-            ArrayList<ColorGroup> tempColorGroup = editor.board.getColorGroups();
-            for(int i =0; i < editor.board.getColorGroups().size(); i++){
+            ArrayList<ColorGroup> tempColorGroup = editorManager.board.getColorGroups();
+            for(int i = 0; i < editorManager.board.getColorGroups().size(); i++){
                 choices.add(tempColorGroup.get(i).getGroupName());
                 System.out.println(tempColorGroup.get(i).getGroupName());
             }
@@ -389,9 +389,9 @@ public class EditorScreen extends Screen {
                     new EventHandler<ActionEvent>() {
                         public void handle(ActionEvent e)
                         {
-                            ColorGroup cg = editor.getColorGroup((String)combo_box.getValue());
-                            editor.changeColorGroupForProperty(cg,position);
-                            System.out.println(((Property) editor.getSquare(position)).getColorGroup());
+                            ColorGroup cg = editorManager.getColorGroup((String)combo_box.getValue());
+                            editorManager.changeColorGroupForProperty(cg,position);
+                            System.out.println(((Property) editorManager.getSquare(position)).getColorGroup());
                             System.out.println("hi" + combo_box.getValue());
                         }
                     };
@@ -418,15 +418,15 @@ public class EditorScreen extends Screen {
                 ///  getting the user inputs for the name and the color of the color group
                 Optional<Pair<String, String>> result = addColorGroupDialog.showAndWait();
                 result.ifPresent(pair -> {
-                    for(int i = 0; i < editor.board.getColorGroups().size(); i++){
-                        System.out.println(editor.board.getColorGroups().get(i));
+                    for(int i = 0; i < editorManager.board.getColorGroups().size(); i++){
+                        System.out.println(editorManager.board.getColorGroups().get(i));
                     }
                     System.out.println("name of the color group=" + colorGroupName.getText());
                     Color c = colorPicker.getValue();
-                    editor.createColorGroupForProperty(c,colorGroupName.getText(),position );
+                    editorManager.createColorGroupForProperty(c,colorGroupName.getText(),position );
                     System.out.println("New Color's "+colorPicker.getValue()+"");
-                    for(int i = 0; i < editor.board.getColorGroups().size(); i++){
-                        System.out.println(editor.board.getColorGroups().get(i));
+                    for(int i = 0; i < editorManager.board.getColorGroups().size(); i++){
+                        System.out.println(editorManager.board.getColorGroups().get(i));
                     }
 
                 });
@@ -451,8 +451,8 @@ public class EditorScreen extends Screen {
             System.out.println("name of the property=" + propertyName.getText() + ", amount of the price=" + propertyPrice.getText());
 
             // todo ->  processing user input : color group is left, checking the corner cases for the unchanged boxes
-            editor.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
-            editor.setNameForProperty(propertyName.getText() , position);
+            editorManager.setBuyingPriceForProperty(Integer.parseInt(propertyPrice.getText()), position);
+            editorManager.setNameForProperty(propertyName.getText() , position);
         });
 
         update();
@@ -475,9 +475,9 @@ public class EditorScreen extends Screen {
         TextField actionAmount = (TextField) actionBox.getChildren().get(1);
         TextField money = (TextField) moneyBox.getChildren().get(1);
 
-        jokerSquareName.setText(((Joker)editor.getSquare(position)).getName());
-        money.setText(((Joker)editor.getSquare(position)).getMoney()+"");
-        actionAmount.setText(((Joker)editor.getSquare(position)).getMovement()+"");
+        jokerSquareName.setText(((Joker) editorManager.getSquare(position)).getName());
+        money.setText(((Joker) editorManager.getSquare(position)).getMoney()+"");
+        actionAmount.setText(((Joker) editorManager.getSquare(position)).getMovement()+"");
 
          Button btOk = (Button) jokerEditDialog.getDialogPane().lookupButton(ButtonType.OK);
         btOk.addEventFilter(
@@ -538,21 +538,21 @@ public class EditorScreen extends Screen {
                 System.out.println(
                         results[0] + " " + results[1] + " " + results[2]);
 
-                editor.setNameForJoker((String)results[0],position);
-                editor.setMoneyForJoker((Integer)results[2],position);
+                editorManager.setNameForJoker((String)results[0],position);
+                editorManager.setMoneyForJoker((Integer)results[2],position);
                 // System.out.println("name" +   ((Joker) editor.getSquare(position)).getName());
                 //  System.out.println("money"+ ((Joker) editor.getSquare(position)).getMoney());
 
             if (move.isSelected()) {
-                editor.setMovementForJoker((Integer) results[1], position);
+                editorManager.setMovementForJoker((Integer) results[1], position);
                 // System.out.println("movement" + ((Joker) editor.getSquare(position)).getMovement());
             }
             if (wait.isSelected()) {
-                editor.setJailTimeForJoker((Integer) results[1], position);
-                System.out.println("waiting time" + ((Joker) editor.getSquare(position)).getSuspendedTourNo());
+                editorManager.setJailTimeForJoker((Integer) results[1], position);
+                System.out.println("waiting time" + ((Joker) editorManager.getSquare(position)).getSuspendedTourNo());
             } else {
-                System.out.println("movement" + ((Joker) editor.getSquare(position)).getMovement());
-                System.out.println("waiting time" + ((Joker) editor.getSquare(position)).getSuspendedTourNo());
+                System.out.println("movement" + ((Joker) editorManager.getSquare(position)).getMovement());
+                System.out.println("waiting time" + ((Joker) editorManager.getSquare(position)).getSuspendedTourNo());
 
             }
 
@@ -573,7 +573,7 @@ public class EditorScreen extends Screen {
             tile.setFill(Color.DARKGOLDENROD);
         }
 
-        else if(editor.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
+        else if(editorManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
             tile.setFill(Color.LIME);
         }
         else {
@@ -588,7 +588,7 @@ public class EditorScreen extends Screen {
 
     public void update( ){
         Node [] squares = new Node[40];
-        Square[] squares2 = editor.board.getSquares();
+        Square[] squares2 = editorManager.board.getSquares();
 
 
         for (int i = 0; i < 40; i++) {
@@ -598,16 +598,16 @@ public class EditorScreen extends Screen {
 
             String name = "";
             stackPane.getChildren().remove(1);
-            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
-                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance())
+            if (editorManager.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
+                if(((ChanceAndCommunityChest) editorManager.getSquare(i)).isChance())
                     name = "Chance";
                 else
                     name ="Community" + "\n" + "Chest";
             }
-            if (editor.getSquare(i).getType() == SquareType.PROPERTY)
-                name = ((Property)editor.getSquare(i)).getName();
-            if (editor.getSquare(i).getType() == SquareType.JOKER)
-                name = ((Joker)editor.getSquare(i)).getName();
+            if (editorManager.getSquare(i).getType() == SquareType.PROPERTY)
+                name = ((Property) editorManager.getSquare(i)).getName();
+            if (editorManager.getSquare(i).getType() == SquareType.JOKER)
+                name = ((Joker) editorManager.getSquare(i)).getName();
 
 
             Text text = new Text(name);
@@ -658,16 +658,16 @@ public class EditorScreen extends Screen {
             @Override
             public void handle(ActionEvent event) {
                 if(!mortgageRate.getText().isEmpty())
-                    editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
+                    editorManager.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
                 if(!rentRate.getText().isEmpty())
-                    editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
+                    editorManager.board.setRentRate(Integer.parseInt(rentRate.getText()));
                 if(!currency.getText().isEmpty())
-                    editor.board.setCurrency(currency.getText());
+                    editorManager.board.setCurrency(currency.getText());
                 if(!boardName.getText().isEmpty())
-                    editor.board.setName(boardName.getText());
+                    editorManager.board.setName(boardName.getText());
 
-                FileManager.writeBoardToFolder(editor.board);
-                FileManager.saveIconsOnBoard(playerIcons, boardIcon, editor.board.getName());
+                FileManager.writeBoardToFolder(editorManager.board);
+                FileManager.saveIconsOnBoard(playerIcons, boardIcon, editorManager.board.getName());
             }
         });
         /// end of the right half
@@ -688,19 +688,19 @@ public class EditorScreen extends Screen {
                 public void handle(ActionEvent event) {
 
                     if (!mortgageRate.getText().isEmpty())
-                        editor.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
+                        editorManager.board.setMortgageRate(Integer.parseInt(mortgageRate.getText()));
 
                     if (!rentRate.getText().isEmpty())
-                        editor.board.setRentRate(Integer.parseInt(rentRate.getText()));
+                        editorManager.board.setRentRate(Integer.parseInt(rentRate.getText()));
 
                     if (!currency.getText().isEmpty())
-                        editor.board.setCurrency(currency.getText());
+                        editorManager.board.setCurrency(currency.getText());
 
                     if (!boardName.getText().isEmpty())
-                        editor.board.setName(boardName.getText());
+                        editorManager.board.setName(boardName.getText());
 
 
-                    FileManager.writeBoardToFolder(editor.board);
+                    FileManager.writeBoardToFolder(editorManager.board);
                     try {
                         screenManager.changeScreen(new MainMenuScreen(screenManager));
                     } catch (IOException e) {
@@ -724,16 +724,16 @@ public class EditorScreen extends Screen {
                 RadioButton chance = (RadioButton) vbox.getChildren().get(2);
                 RadioButton communityChest = (RadioButton) vbox.getChildren().get(3);
 
-                if(editor.getSquare(position).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
-                    if(((ChanceAndCommunityChest)editor.getSquare(position)).isChance() == true)
+                if(editorManager.getSquare(position).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
+                    if(((ChanceAndCommunityChest) editorManager.getSquare(position)).isChance() == true)
                         chance.setSelected(true);
-                    if(((ChanceAndCommunityChest)editor.getSquare(position)).isChance() == false)
+                    if(((ChanceAndCommunityChest) editorManager.getSquare(position)).isChance() == false)
                         communityChest.setSelected(true);
                 }
-                if(editor.getSquare(position).getType() == SquareType.PROPERTY){
+                if(editorManager.getSquare(position).getType() == SquareType.PROPERTY){
                     property.setSelected(true);
                 }
-                if(editor.getSquare(position).getType() == SquareType.JOKER){
+                if(editorManager.getSquare(position).getType() == SquareType.JOKER){
                     joker.setSelected(true);
                 }
                 Optional<ButtonType> result = squareTypeDialog.showAndWait();
@@ -745,7 +745,7 @@ public class EditorScreen extends Screen {
                             temp.removeProperty((Property) squares2[position]);
                         }
 
-                        editor.createNewJoker(position, 0, 0, 0, "Joker");
+                        editorManager.createNewJoker(position, 0, 0, 0, "Joker");
 
                     }
 
@@ -753,15 +753,15 @@ public class EditorScreen extends Screen {
                 }
                 else if (result.get() == ButtonType.NEXT & property.isSelected()){
                     if(  squares2[position].getType() != SquareType.PROPERTY){
-                    if(editor.board.getColorGroups().size() == 0){
+                    if(editorManager.board.getColorGroups().size() == 0){
 
                         ColorGroup temp = new ColorGroup("color group"); //might be deleted
-                        editor.createNewProperty(position,"ankara",temp,100,50,80);
+                        editorManager.createNewProperty(position,"ankara",temp,100,50,80);
                     }
                     else{
-                        int x = ((int) (Math.random() * editor.board.getColorGroups().size()));
-                        ColorGroup cg = editor.board.getColorGroups().get(x);
-                        editor.createNewProperty(position,"ankara",cg,100,50,80);
+                        int x = ((int) (Math.random() * editorManager.board.getColorGroups().size()));
+                        ColorGroup cg = editorManager.board.getColorGroups().get(x);
+                        editorManager.createNewProperty(position,"ankara",cg,100,50,80);
                     }}
                     openPropertyDialog(squares);
                 }
@@ -773,8 +773,8 @@ public class EditorScreen extends Screen {
                         ColorGroup temp = ((Property) squares2[finalPosition]).getColorGroup();
                         temp.removeProperty((Property)squares2[finalPosition]);
                     }
-                    editor.createNewChestCommunity(finalPosition,false);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition,false);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 }
 
@@ -786,21 +786,21 @@ public class EditorScreen extends Screen {
                         ColorGroup temp = ((Property) squares2[finalPosition]).getColorGroup();
                         temp.removeProperty((Property)squares2[finalPosition]);
                     }
-                    editor.createNewChestCommunity(finalPosition,true);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition,true);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 }
                 else if (( chance.isSelected() )&& result.get()== ButtonType.NEXT && squares2[finalPosition].getType() == SquareType.CHANCEANDCOMMUNITYCHEST
                         && ((ChanceAndCommunityChest)squares2[finalPosition]).isChance()== false) {
                     // removing property from its ColorGroup's arraylist
-                    editor.createNewChestCommunity(finalPosition,true);
-                    System.out.println(editor.getSquare(finalPosition).getType());
+                    editorManager.createNewChestCommunity(finalPosition,true);
+                    System.out.println(editorManager.getSquare(finalPosition).getType());
                     update();
                 }
                 else if (( communityChest.isSelected() )&& result.get()== ButtonType.NEXT && squares2[finalPosition].getType() == SquareType.CHANCEANDCOMMUNITYCHEST
                         && ((ChanceAndCommunityChest)squares2[finalPosition]).isChance()== true) {
                     // removing property from its ColorGroup's arraylist
-                    editor.createNewChestCommunity(finalPosition,false);
+                    editorManager.createNewChestCommunity(finalPosition,false);
                     update();
                 }
             });

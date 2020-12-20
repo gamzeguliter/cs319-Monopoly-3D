@@ -1,23 +1,23 @@
 package sample;
 import javafx.scene.paint.Color;
+import sample.entities.Board;
 import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 
-import java.awt.*;
 import java.util.ArrayList;
 
-public class Editor {
+public class EditorManager {
 
     public Board board;
     private int rentRate;
     private int mortgageRent;
     private String  currency;
 
-    public Editor(){
+    public EditorManager(){
         board = new Board();
     }
 
-    public Editor(Board board) {
+    public EditorManager(Board board) {
         this.board = board;
     }
 

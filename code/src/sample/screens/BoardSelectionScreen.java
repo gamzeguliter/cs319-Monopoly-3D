@@ -10,9 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import sample.Board;
+import sample.entities.Board;
 import sample.ScreenManager;
-import sample.managers.FileManager;
+import sample.FileManager;
 
 import java.io.File;
 import java.io.FilenameFilter;

@@ -2,8 +2,7 @@ package sample.squares;
 
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
-import sample.Player;
-import sample.squares.Property;
+import sample.entities.Player;
 
 import java.util.ArrayList;
 

@@ -3,12 +3,14 @@ package sample;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import sample.entities.Board;
 import sample.entities.Card;
+import sample.entities.Player;
 import sample.squares.*;
 
 import java.util.ArrayList;
 
-public class GameEngine {
+public class GameManager {
 
     private Board board;
     //private SpinningWheel wheel;
@@ -22,7 +24,7 @@ public class GameEngine {
     private int diceResult;
     private int currentPlayerNo;
 
-    public GameEngine() {
+    public GameManager() {
         board = new Board();
         //temporary players to test
         players = new ArrayList<Player>(); //added
@@ -40,7 +42,7 @@ public class GameEngine {
     }
 
     //constructor that takes board and players as paramaters
-    public GameEngine(Board board, ArrayList<Player> players) {
+    public GameManager(Board board, ArrayList<Player> players) {
         this.board = board;
         this.players = players;
         currentPlayerNo = players.size();
