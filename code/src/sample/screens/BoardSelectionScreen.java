@@ -71,7 +71,13 @@ public class BoardSelectionScreen extends Screen {
         ImageView boardImageView = new ImageView(boardImage);
         Label boardLabel = new Label(boardName);
         Button btnSelect = new Button("Select");
-        btnSelect.setOnAction(actionEvent -> selectBoard(mainBox));
+        btnSelect.setOnAction(actionEvent -> {
+            try {
+                selectBoard(mainBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         mainBox.getChildren().addAll(boardImageView, boardLabel, btnSelect);
 
@@ -97,7 +103,7 @@ public class BoardSelectionScreen extends Screen {
         return new ArrayList<String>(Arrays.asList(boardNames));
     }
 
-    private void selectBoard(VBox boardBox) {
+    private void selectBoard(VBox boardBox) throws IOException {
         String boardName = getBoardNameFromBoardBox(boardBox);
 
         PlayerManagerScreen playerManagerScreen = new PlayerManagerScreen(screenManager, boardName);

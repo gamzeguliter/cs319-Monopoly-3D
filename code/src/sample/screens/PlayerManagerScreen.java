@@ -1,5 +1,6 @@
 package sample.screens;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -40,7 +41,9 @@ public class PlayerManagerScreen extends Screen {
     private final ArrayList<Integer> iconChoices;
     private final ArrayList<ColorPicker> colorPickers;
 
-    PlayerManagerScreen(ScreenManager screenManager, String boardName) {
+    //AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("PlayerManagerScreen.fxml"));
+
+    PlayerManagerScreen(ScreenManager screenManager, String boardName) throws IOException {
         super(screenManager);
         this.boardName = boardName;
         playerCount = 1;
@@ -79,7 +82,7 @@ public class PlayerManagerScreen extends Screen {
         StackPane pane = new StackPane();
         pane.getChildren().add(mainBox);
 
-        scene = new Scene(pane, width, height);
+        scene = new Scene(pane,height,width);//playerManagerScreen);
     }
 
     private VBox generatePlayerBox(String playerName) {
