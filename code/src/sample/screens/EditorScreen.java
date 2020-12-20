@@ -89,9 +89,9 @@ public class EditorScreen extends Screen {
                     name ="Community" + "\n" + "Chest";
             }
             if (editor.getSquare(i).getType() == SquareType.PROPERTY)
-                name = "property";
+                name = ((Property)editor.getSquare(i)).getName();
             if (editor.getSquare(i).getType() == SquareType.JOKER)
-                name = "joker";
+                name = ((Joker)editor.getSquare(i)).getName();
 
 
             Text text = new Text(name);
@@ -158,7 +158,7 @@ public class EditorScreen extends Screen {
 
         });
 
-        for (int pos = 0; pos < 40; pos++) {
+        for (int pos = 1; pos < 40; pos++) {
             int finalPosition = pos;
             squares[pos].setOnMouseClicked(event -> {
                 position = finalPosition;
@@ -577,9 +577,10 @@ public class EditorScreen extends Screen {
                     name ="Community" + "\n" + "Chest";
             }
             if (editor.getSquare(i).getType() == SquareType.PROPERTY)
-                name = "property";
+                name = ((Property)editor.getSquare(i)).getName();
             if (editor.getSquare(i).getType() == SquareType.JOKER)
-                name = "joker";
+                name = ((Joker)editor.getSquare(i)).getName();
+
 
             Text text = new Text(name);
             Font font2 = Font.font("Source Sans Pro", 10);
@@ -678,7 +679,7 @@ public class EditorScreen extends Screen {
             });
             /// end of the right half
         }
-    for (int pos = 0; pos < 40; pos++) {
+    for (int pos = 1; pos < 40; pos++) {
             int finalPosition = pos;
             squares[pos].setOnMouseClicked(event -> {
                 position = finalPosition;
