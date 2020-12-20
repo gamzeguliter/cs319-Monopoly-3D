@@ -599,7 +599,10 @@ public class GameScreen extends Screen {
 
         propertyName.setText(gameEngine.getPropertyName(index));
 
-        vBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
+        if (vBox.getChildren().size() < 3)
+            vBox.getChildren().add(gameEngine.getPropertyContent(index));
+        else
+            vBox.getChildren().set(1,gameEngine.getPropertyContent(index));
 
         Property property;
         if(index < 0 ) {
@@ -731,7 +734,10 @@ public class GameScreen extends Screen {
                     break;
             }
         }
-        vBox.getChildren().add(buttonBox); //fazladan vbox mu ekledik
+        if (vBox.getChildren().size() < 3)
+            vBox.getChildren().add(buttonBox);
+        else
+            vBox.getChildren().set(2,buttonBox);
         propertyDialog.showAndWait();
     }
 
