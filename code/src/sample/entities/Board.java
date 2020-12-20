@@ -125,6 +125,24 @@ public class Board {
         }
         return squares;
     }
+    private Square[] getDefaultBoard(){
+        Square[] squares = new Square[40];
+        squares[0] = new Start(20);
+        ColorGroup brown = new ColorGroup("Brown");
+
+
+        squares[1] = new Property("Vine Street",colorGroups.get(0), );
+
+
+
+
+
+
+
+
+        return squares;
+
+    }
 
     private ArrayList<ColorGroup> createGroups() {
         ArrayList<ColorGroup> colors = new ArrayList<>();
