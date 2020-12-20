@@ -15,7 +15,7 @@ import java.io.IOException;
 public class HelpScreen extends Screen {
 
     private Label infoLabel;
-    AnchorPane helpScreen = FXMLLoader.load(getClass().getResource("../layouts/MainMenuScreen.fxml"));
+    AnchorPane helpScreen = FXMLLoader.load(getClass().getResource("../layouts/HelpScreen.fxml"));
 
     public HelpScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);

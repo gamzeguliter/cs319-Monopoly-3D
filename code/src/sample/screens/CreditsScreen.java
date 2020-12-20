@@ -16,7 +16,7 @@ import java.io.IOException;
 public class CreditsScreen extends Screen {
 
     private Label infoLabel;
-    AnchorPane creditsScreen = FXMLLoader.load(getClass().getResource("../layouts/MainMenuScreen.fxml"));
+    AnchorPane creditsScreen = FXMLLoader.load(getClass().getResource("../layouts/CreditsScreen.fxml"));
 
     public CreditsScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);

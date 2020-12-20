@@ -920,22 +920,22 @@ public class GameScreen extends Screen {
 
                     if ((pos > 0 && pos < 10) || (pos > 20 && pos < 30)) {
                         propertyRect.setWidth(60);
-                        propertyRect.setHeight(30);
+                        propertyRect.setHeight(20);
                         propPos = Pos.TOP_CENTER;
                     }
                     else if(pos > 10 && pos < 20)  {
-                        propertyRect.setWidth(30);
+                        propertyRect.setWidth(20);
                         propertyRect.setHeight(60);
                         propPos = Pos.CENTER_LEFT;
                     }
                     else if(pos > 30) {
-                        propertyRect.setWidth(30);
+                        propertyRect.setWidth(20);
                         propertyRect.setHeight(60);
                         propPos = Pos.CENTER_RIGHT;
                     }
                     else {
                         propertyRect.setWidth(90);
-                        propertyRect.setHeight(30);
+                        propertyRect.setHeight(20);
                         propPos = Pos.TOP_CENTER;
                     }
 
