@@ -15,8 +15,13 @@ public class ColorGroup implements JSONable {
     public ColorGroup(String groupName) {
         this.groupName = groupName;
         properties = new ArrayList<Property>();
-        // TODO: add a way to properly initialize color
-        color = Color.RED;
+        color = Color.WHITE;
+    }
+
+    public ColorGroup(String groupName, Color color) {
+        this.groupName = groupName;
+        properties = new ArrayList<Property>();
+        this.color = color;
     }
 
     public ColorGroup(JSONObject jo) {
