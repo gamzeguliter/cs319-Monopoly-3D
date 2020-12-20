@@ -189,15 +189,9 @@ when reading from file and creating square, give the rent and mortgage rate of t
     }
 
     public boolean buyProperty(Player player) {
-        if(this.isOwned() || this.getBuyingPrice() > player.getBalance()) {
-            return false;
-        }
-        else
-        {
-            setOwner(player);
-            player.buyProperty(this, buyingPrice);
-            return true;
-        }
+        setOwner(player);
+        player.buyProperty(this, buyingPrice);
+        return true;
     }
 
     public void mortgageProperty() {

@@ -196,27 +196,33 @@ public class GameEngine {
     public VBox defaultPropertyInfo(Property property) {
         VBox vbox = new VBox();
 
+        Text mortgage;
+        if(property.isMortgaged()) {
+            mortgage = new Text("THIS PROPERTY IS MORTGAGED");
+        }
+        else {
+            mortgage = new Text("Mortgage: " + property.getMortgagePrice());
+        }
+
         Text price = new Text("Price: " + property.getBuyingPrice());
 
         Text rent = new Text("Rent: " + property.getRent());
 
         Text rentWithColorGroup = new Text("Rent with color set: " + property.getRent() * 2);
 
-        Text rentOneHouse = new Text("Rent one house " + property.getRentOneHouse());
+        Text rentOneHouse = new Text("Rent one house: " + property.getRentOneHouse());
 
-        Text rentTwoHouses = new Text("Rent two houses " + property.getRentTwoHouses());
+        Text rentTwoHouses = new Text("Rent two houses: " + property.getRentTwoHouses());
 
-        Text rentThreeHouses = new Text("Rent three houses " + property.getRentThreeHouses());
+        Text rentThreeHouses = new Text("Rent three houses: " + property.getRentThreeHouses());
 
-        Text rentFourHouses = new Text("Rent four houses " + property.getRentFourHouses());
+        Text rentFourHouses = new Text("Rent four houses: " + property.getRentFourHouses());
 
-        Text rentHotel = new Text("Rent hotel " + property.getRentHotel());
+        Text rentHotel = new Text("Rent hotel: " + property.getRentHotel());
 
-        Text housePrice = new Text("House price " + property.getHousePrice());
+        Text housePrice = new Text("House price: " + property.getHousePrice());
 
-        Text hotelPrice = new Text("Hotel price " + property.getHotelPrice());
-
-        Text mortgage = new Text("Mortgage " + property.getMortgagePrice());
+        Text hotelPrice = new Text("Hotel price: " + property.getHotelPrice());
 
         vbox.getChildren().addAll(price, rent, rentWithColorGroup, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses,
                 rentHotel, housePrice, hotelPrice, mortgage);
@@ -694,16 +700,14 @@ public class GameEngine {
 
    public ArrayList<Integer> sellPlayerProperties() {
         ArrayList<Integer> propertyIndexes = new ArrayList<>();
-        int index = 0;
         while(currentPlayer.ownedProperties.size() > 0) {
             for(int i = 0; i < 40; i ++) {
                 if (getSquare(i).getType() == SquareType.PROPERTY) {
-                    if (getSquare(i) == currentPlayer.ownedProperties.get(index)) {
+                    if (getSquare(i) == currentPlayer.ownedProperties.get(0)) {
                         propertyIndexes.add(i);
-                        Property property = currentPlayer.ownedProperties.get(index);
+                        Property property = currentPlayer.ownedProperties.get(0);
                         property.reset();
-                        currentPlayer.ownedProperties.remove(index);
-                        index++;
+                        currentPlayer.ownedProperties.remove(0);
                         break;
                     }
                 }
@@ -722,12 +726,13 @@ public class GameEngine {
 
     }
 
-    public void bankrupt() {
-        currentPlayer.out();
-        players.remove(currentPlayer);
+    /*public void bankrupt() {
+        Player bankruptPlayer = currentPlayer;
+        currentPlayer = players.get((turn + 1) % players.size());
+        bankruptPlayer.out();
+        players.remove(bankruptPlayer);
         turn--;
-        currentPlayer = players.get((turn - 1) % players.size());
-    }
+    }*/
 
     public boolean isBankrupt() {
         return currentPlayer.isBankrupt();
@@ -772,4 +777,7 @@ public class GameEngine {
         return choices;
     }
 
+    public boolean lastPlayer() {
+        return players.size() <= 2;
+    }
 }

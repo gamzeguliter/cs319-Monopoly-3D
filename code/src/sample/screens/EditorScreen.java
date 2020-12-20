@@ -100,9 +100,9 @@ public class EditorScreen extends Screen {
                     name ="Community" + "\n" + "Chest";
             }
             if (editor.getSquare(i).getType() == SquareType.PROPERTY)
-                name = "property";
+                name = ((Property)editor.getSquare(i)).getName();
             if (editor.getSquare(i).getType() == SquareType.JOKER)
-                name = "joker";
+                name = ((Joker)editor.getSquare(i)).getName();
 
 
             Text text = new Text(name);
@@ -131,8 +131,10 @@ public class EditorScreen extends Screen {
         TextField rentRate = (TextField) h3.getChildren().get(1);
         rentRate.setText("" + editor.board.getMortgageRate());
 
-        Button cancel = (Button) v.getChildren().get(9);
-        Button save = (Button) v.getChildren().get(8);
+        HBox buttons = (HBox) v.getChildren().get(8);
+
+        Button cancel = (Button) buttons.getChildren().get(1);
+        Button save = (Button) buttons.getChildren().get(0);
 
         cancel.setCancelButton(true);
         cancel.setOnAction(event -> {
@@ -169,7 +171,7 @@ public class EditorScreen extends Screen {
             }
         });
 
-        for (int pos = 0; pos < 40; pos++) {
+        for (int pos = 1; pos < 40; pos++) {
             int finalPosition = pos;
             squares[pos].setOnMouseClicked(event -> {
                 position = finalPosition;
@@ -604,9 +606,10 @@ public class EditorScreen extends Screen {
                     name ="Community" + "\n" + "Chest";
             }
             if (editor.getSquare(i).getType() == SquareType.PROPERTY)
-                name = "property";
+                name = ((Property)editor.getSquare(i)).getName();
             if (editor.getSquare(i).getType() == SquareType.JOKER)
-                name = "joker";
+                name = ((Joker)editor.getSquare(i)).getName();
+
 
             Text text = new Text(name);
             Font font2 = Font.font("Source Sans Pro", 10);
@@ -707,7 +710,7 @@ public class EditorScreen extends Screen {
             });
             /// end of the right half
         }
-    for (int pos = 0; pos < 40; pos++) {
+    for (int pos = 1; pos < 40; pos++) {
             int finalPosition = pos;
             squares[pos].setOnMouseClicked(event -> {
                 position = finalPosition;
