@@ -330,6 +330,9 @@ public class GameScreen extends Screen {
 
     private void exitConfirmationDialog() {
         //todo @öykü -- cancel butonu
+        VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
+        HBox exitBox = (HBox) vBox.getChildren().get(0);
+        Button exitGameBtn = (Button) exitBox.getChildren().get(0); //todo exit button burda
         //are you sure you want to exit?
         //yes -> take to main page
     }
@@ -641,10 +644,17 @@ public class GameScreen extends Screen {
 
         //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
 
-        vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255) + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", " + (property.getColorGroup().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
+        vBox2.setStyle("-fx-background-color: rgb(" +  (property.getColorGroup().getColor().getRed() * 255)
+                + ", " + (property.getColorGroup().getColor().getGreen() * 255) + ", "
+                + (property.getColorGroup().getColor().getBlue() * 255)
+                + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 30;");
 
         if(property.isOwned()) {
-            propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb(" + (property.getOwner().getColor().getRed() * 255) + ", " + (property.getOwner().getColor().getGreen() * 255) + ", " + (property.getOwner().getColor().getBlue() * 255) + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
+            propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb("
+                    + (property.getOwner().getColor().getRed() * 255) + ", "
+                    + (property.getOwner().getColor().getGreen() * 255) + ", "
+                    + (property.getOwner().getColor().getBlue() * 255)
+                    + "); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
         }
         else {
             propertyDialog.getDialogPane().setStyle("-fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 25;");
