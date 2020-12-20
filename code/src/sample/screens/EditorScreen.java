@@ -125,7 +125,11 @@ public class EditorScreen extends Screen{
             System.out.println("hello");
 
             FileManager.writeBoardToFolder(editor.board);
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         });
 
@@ -597,7 +601,11 @@ public void update( ){
 
 
             FileManager.writeBoardToFolder(editor.board);
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     });
     /// end of the right half

@@ -221,7 +221,11 @@ public class GameScreen extends Screen {
         Node okButton = exitDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setOnAction(event -> {
             exitDialog.close();
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         vbox.getChildren().addAll(bankrupt);
         exitDialog.getDialogPane().setContent(vbox);
