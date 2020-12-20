@@ -1,7 +1,7 @@
 package sample.squares;
 
 import org.json.JSONObject;
-import sample.entities.Board;
+import sample.Board;
 
 public class SquareGenerator {
 
