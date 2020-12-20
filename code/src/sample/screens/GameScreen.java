@@ -252,6 +252,7 @@ public class GameScreen extends Screen {
         ((Button) okButton).setOnAction(event -> {
             bankrupt.close();
             if(gameEngine.lastPlayer()) {
+                gameEngine.resign();
                 createGameOverDialog();
             }
             else {
@@ -890,6 +891,8 @@ public class GameScreen extends Screen {
                         }
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
+                            view.setFitHeight(50);
+                            view.setFitWidth(50);
                             stackPane.getChildren().add(view);
                         }
                         stackPane.getChildren().addAll(text); //todo pawnlar gelince kaldır
@@ -1020,6 +1023,8 @@ public class GameScreen extends Screen {
                         }
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
+                            view.setFitHeight(50);
+                            view.setFitWidth(50);
                             stackPane.getChildren().add(view);
                         }
                        stackPane.getChildren().add(text); //todo pawnlar kaydedilince kaldır

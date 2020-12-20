@@ -424,7 +424,7 @@ public class GameEngine {
 
     public boolean nextTurn() {
         turn++;
-        currentPlayer = players.get(turn % players.size());
+        currentPlayer = players.get(Math.abs(turn) % players.size());
         playerPassedStart = false;
         if(currentPlayer.isInJail()) {
             currentPlayer.setJailTime(currentPlayer.getjailTime() - 1);
@@ -721,8 +721,8 @@ public class GameEngine {
     public void resign() {
         currentPlayer.out();
         players.remove(currentPlayer);
-        turn--;
-        currentPlayer = players.get(Math.abs(turn - 1) % players.size());
+        turn  = turn - 1;
+        currentPlayer = players.get(Math.abs(turn) % players.size());
 
     }
 

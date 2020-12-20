@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import sample.ScreenManager;
+import sample.Utils;
 import sample.managers.FileManager;
 import sample.squares.*;
 import sample.Editor;
@@ -81,29 +82,40 @@ public class EditorScreen extends Screen {
         for (int i = 0; i < 40; i++) {
             GridPane boardPane = (GridPane) editorScreen.getChildrenUnmodifiable().get(0);
 
+            String picture = "";
             String name = "";
-            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
-                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance())
-                    name = "Chance";
-                else
-                    name ="Community" + "\n" + "Chest";
-            }
+
             if (editor.getSquare(i).getType() == SquareType.PROPERTY)
                 name = ((Property)editor.getSquare(i)).getName();
             if (editor.getSquare(i).getType() == SquareType.JOKER)
                 name = ((Joker)editor.getSquare(i)).getName();
-
 
             Text text = new Text(name);
             Font font2 = Font.font("Source Sans Pro", 10);
             text.setFont(font2); //size of the player texts
             StackPane stackPane = (StackPane) boardPane.getChildren().get(i);
             stackPane.getChildren().add(text);
+
+            if (editor.getSquare(i).getType() == SquareType.CHANCEANDCOMMUNITYCHEST ){
+                if(((ChanceAndCommunityChest)editor.getSquare(i)).isChance()) {
+                    //name = "";
+                    picture += "chance";
+                }
+                else {
+                    //name = "Community" + "\n" + "Chest";
+                    picture += "chest";
+                }
+
+                Image image = new Image("icons/chest.png");
+                //FileManager.getImage
+                ImageView imageView = new ImageView(image);
+                stackPane.getChildren().add(imageView);
+            }
+
             squares[i] = stackPane.getChildren().get(0);
             fillColors(squares2, (Rectangle) squares[i], i); /// paint inside of the squares
-
-
         }
+
         VBox v = (VBox) editorScreen.getChildrenUnmodifiable().get(1);
 
         TextField boardName = (TextField) v.getChildren().get(0);
@@ -132,6 +144,22 @@ public class EditorScreen extends Screen {
                 e.printStackTrace();
             }
         });
+
+        save.addEventFilter( ActionEvent.ACTION,
+                event -> {
+                    if(boardName.getText().equalsIgnoreCase("Default board")) {
+                        System.out.println("CAN'T SAVEEEE");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error saving board");
+                        alert.setHeaderText(null);
+                        alert.setContentText("You can't save the board with the name \"Default board\"");
+                        alert.getDialogPane().setStyle(
+                                " -fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 13;"
+                        );
+                        alert.showAndWait();
+                        event.consume();
+                    }
+                });
 
         save.setOnAction(event -> {
 
@@ -625,6 +653,22 @@ public class EditorScreen extends Screen {
                 }
             }
         });
+        save.addEventFilter( ActionEvent.ACTION,
+                event -> {
+                    if(boardName.getText().equalsIgnoreCase("Default board")) {
+                        System.out.println("CAN'T SAVEEEE");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error saving board");
+                        alert.setHeaderText(null);
+                        alert.setContentText("You can't save the board with the name \"Default board\"");
+                        alert.getDialogPane().setStyle(
+                                " -fx-background-color: rgb(182, 216, 184); -fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 13;"
+                        );
+                        alert.showAndWait();
+                        event.consume();
+                }
+        });
+
         save.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
