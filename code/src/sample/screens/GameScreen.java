@@ -22,10 +22,11 @@ import sample.ScreenManager;
 import sample.squares.ChanceAndCommunityChest;
 import sample.squares.Property;
 import sample.squares.SquareType;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static javafx.scene.paint.Color.rgb;
 
 public class GameScreen extends Screen {
 
@@ -785,12 +786,12 @@ public class GameScreen extends Screen {
                     else if(pos > 10 && pos < 20)  {
                         propertyRect.setWidth(30);
                         propertyRect.setHeight(60);
-                        propPos = Pos.BOTTOM_LEFT;
+                        propPos = Pos.CENTER_LEFT;
                     }
                     else if(pos > 30) {
                         propertyRect.setWidth(30);
                         propertyRect.setHeight(60);
-                        propPos = Pos.BOTTOM_RIGHT;
+                        propPos = Pos.CENTER_RIGHT;
                     }
                     else {
                         propertyRect.setWidth(90);
@@ -812,7 +813,7 @@ public class GameScreen extends Screen {
                         propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameManager.getSquare(pos).getType() == SquareType.JOKER){
-                        tile.setFill(Color.DARKGOLDENROD);
+                        tile.setFill(Color.LIGHTCORAL);
                         Text text = new Text(gameManager.getJokerName(pos));
                         stackPane.getChildren().add(text);
                         propertyRect = null;
@@ -828,14 +829,14 @@ public class GameScreen extends Screen {
                         Image image = FileManager.getImage("src/sample/icons/" + name + ".png", 50, 50);
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
-                        tile.setFill(Color.LIME);
+                        tile.setFill(rgb(182, 216, 184));
                         propertyRect = null;
                     }
                     else { //start square
                         Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
-                        tile.setFill(Color.BLUEVIOLET);
+                        tile.setFill(Color.ALICEBLUE);
                         propertyRect = null;
                     }
 
@@ -884,12 +885,6 @@ public class GameScreen extends Screen {
 
     //updates the board tiles on screen
     private void updateSquares() {
-        //boardPane.getChildren().clear();
-        //GridPane gridPane = (GridPane) gameScreen.getChildrenUnmodifiable().get(0);
-
-        /*StackPane background = (StackPane) boardPane.getChildren().get(40);
-        ImageView boardImage = new ImageView(gameManager.boardImage());
-        background.getChildren().add(boardImage);*/
 
         for (int col = 0; col < 11; col++) {
             for (int row = 0; row < 11; row++) {
@@ -931,12 +926,12 @@ public class GameScreen extends Screen {
                     else if(pos > 10 && pos < 20)  {
                         propertyRect.setWidth(30);
                         propertyRect.setHeight(60);
-                        propPos = Pos.BOTTOM_LEFT;
+                        propPos = Pos.CENTER_LEFT;
                     }
                     else if(pos > 30) {
                         propertyRect.setWidth(30);
                         propertyRect.setHeight(60);
-                        propPos = Pos.BOTTOM_RIGHT;
+                        propPos = Pos.CENTER_RIGHT;
                     }
                     else {
                         propertyRect.setWidth(90);
@@ -960,7 +955,7 @@ public class GameScreen extends Screen {
                         propertyRect = null;
                         Text text = new Text(gameManager.getJokerName(pos));
                         stackPane.getChildren().add(text);
-                        tile.setFill(Color.DARKGOLDENROD);
+                        tile.setFill(Color.LIGHTCORAL);
                     }
 
                     else if(gameManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
@@ -975,14 +970,14 @@ public class GameScreen extends Screen {
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
                         propertyRect = null;
-                        tile.setFill(Color.LIME);
+                        tile.setFill(rgb(182, 216, 184));
                     }
                     else {
                         propertyRect = null;
                         Image image = FileManager.getImage("src/sample/icons/go.png", 90, 90);
                         ImageView imageView = new ImageView(image);
                         stackPane.getChildren().add(imageView);
-                        tile.setFill(Color.BLUEVIOLET);
+                        tile.setFill(Color.ALICEBLUE);
                     }
 
                     // find players on tile and set text

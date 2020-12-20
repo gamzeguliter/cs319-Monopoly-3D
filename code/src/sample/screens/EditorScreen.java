@@ -71,7 +71,10 @@ public class EditorScreen extends Screen {
         position = 0;
 
         playerIcons = FileManager.getPlayerIcons(board.getName(), 100, 100);
-        boardIcon = FileManager.getBoardIcon(board.getName());
+        boardIcon = FileManager.getImage("/boards/" + board.getName() + "/board_icon.png", 575, 575);
+        if (boardIcon == null) {
+            boardIcon = FileManager.generateWhiteImage(575, 575);
+        }
 
 
         setScene();

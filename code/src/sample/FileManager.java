@@ -160,7 +160,7 @@ public class FileManager {
 
     // helper methods
 
-    private static Image generateWhiteImage(int width, int height) {
+    public static Image generateWhiteImage(int width, int height) {
         WritableImage img = new WritableImage(width, height);
         PixelWriter pw = img.getPixelWriter();
 

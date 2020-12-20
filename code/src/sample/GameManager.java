@@ -14,16 +14,12 @@ import java.util.ArrayList;
 public class GameManager {
 
     private Board board;
-    //private SpinningWheel wheel;
     private ArrayList<Player> players;
-    //filemanager ?
     private int turn;
     private Player currentPlayer;
-    private ArrayList<ColorGroup> colorGroups;
     Card drawnCard;
     boolean playerPassedStart;
     private int diceResult;
-    private int currentPlayerNo;
 
     public GameManager() {
         board = new Board();
@@ -33,10 +29,8 @@ public class GameManager {
         players.add(new Player("player2", Color.TURQUOISE, 1000));
         players.add(new Player("player3", Color.MAROON, 1000));
         players.add(new Player("player4", Color.SILVER, 1000));
-        currentPlayerNo = players.size();
         turn = 0;
         currentPlayer = players.get(0);
-        colorGroups = board.getColorGroups();
         drawnCard = null;
         playerPassedStart = false;
         diceResult = 0;
@@ -46,10 +40,8 @@ public class GameManager {
     public GameManager(Board board, ArrayList<Player> players) {
         this.board = board;
         this.players = players;
-        currentPlayerNo = players.size();
         turn = 0;
         currentPlayer = players.get(0);
-        colorGroups = board.getColorGroups();
         drawnCard = null;
         playerPassedStart = false;
         diceResult = 0;
@@ -784,7 +776,11 @@ public class GameManager {
     }
 
     public Image boardImage() {
-        return FileManager.getBoardIcon(board.getName());
+        Image boardIcon = FileManager.getImage("/boards/" + board.getName() + "/board_icon.png", 575, 575);
+        if (boardIcon == null) {
+            boardIcon = FileManager.generateWhiteImage(575, 575);
+        }
+        return boardIcon;
     }
 
     public String getJokerName(int index) {
