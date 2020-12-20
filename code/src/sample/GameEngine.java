@@ -196,27 +196,33 @@ public class GameEngine {
     public VBox defaultPropertyInfo(Property property) {
         VBox vbox = new VBox();
 
+        Text mortgage;
+        if(property.isMortgaged()) {
+            mortgage = new Text("THIS PROPERTY IS MORTGAGED");
+        }
+        else {
+            mortgage = new Text("Mortgage: " + property.getMortgagePrice());
+        }
+
         Text price = new Text("Price: " + property.getBuyingPrice());
 
         Text rent = new Text("Rent: " + property.getRent());
 
         Text rentWithColorGroup = new Text("Rent with color set: " + property.getRent() * 2);
 
-        Text rentOneHouse = new Text("Rent one house " + property.getRentOneHouse());
+        Text rentOneHouse = new Text("Rent one house: " + property.getRentOneHouse());
 
-        Text rentTwoHouses = new Text("Rent two houses " + property.getRentTwoHouses());
+        Text rentTwoHouses = new Text("Rent two houses: " + property.getRentTwoHouses());
 
-        Text rentThreeHouses = new Text("Rent three houses " + property.getRentThreeHouses());
+        Text rentThreeHouses = new Text("Rent three houses: " + property.getRentThreeHouses());
 
-        Text rentFourHouses = new Text("Rent four houses " + property.getRentFourHouses());
+        Text rentFourHouses = new Text("Rent four houses: " + property.getRentFourHouses());
 
-        Text rentHotel = new Text("Rent hotel " + property.getRentHotel());
+        Text rentHotel = new Text("Rent hotel: " + property.getRentHotel());
 
-        Text housePrice = new Text("House price " + property.getHousePrice());
+        Text housePrice = new Text("House price: " + property.getHousePrice());
 
-        Text hotelPrice = new Text("Hotel price " + property.getHotelPrice());
-
-        Text mortgage = new Text("Mortgage " + property.getMortgagePrice());
+        Text hotelPrice = new Text("Hotel price: " + property.getHotelPrice());
 
         vbox.getChildren().addAll(price, rent, rentWithColorGroup, rentOneHouse, rentTwoHouses, rentThreeHouses, rentFourHouses,
                 rentHotel, housePrice, hotelPrice, mortgage);

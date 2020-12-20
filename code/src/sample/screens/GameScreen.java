@@ -644,12 +644,16 @@ public class GameScreen extends Screen {
             property = (Property) (gameEngine.getSquare(index));
         }
 
-        //todo çalışmıyor
+        //todo @öykü if owned --> arka plan owner, property isminin arkası color group olacak
+        vBox2.setBackground(new Background(new BackgroundFill(property.getColorGroup().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+        //propertyDialog.setDialogPane(new Background(new BackgroundFill(property.getColorGroup().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
         if(property.isOwned()) {
             propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
+            //propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(property.getOwner().getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
         }
         else {
-            propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
+            //vBox2.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            //propertyDialog.getDialogPane().setBackground(new Background(new BackgroundFill(Color.rgb(182, 216, 184), CornerRadii.EMPTY, Insets.EMPTY)));
         }
 
         ArrayList<String> buttonNames = gameEngine.getPropertyButtons(index);
@@ -888,7 +892,7 @@ public class GameScreen extends Screen {
                             ImageView view = new ImageView(image);
                             stackPane.getChildren().add(view);
                         }
-                       // stackPane.getChildren().addAll(text); //try
+                        stackPane.getChildren().addAll(text); //todo pawnlar gelince kaldır
                     }
                 }
             }
@@ -1018,7 +1022,7 @@ public class GameScreen extends Screen {
                             ImageView view = new ImageView(image);
                             stackPane.getChildren().add(view);
                         }
-                       // stackPane.getChildren().add(text);
+                       stackPane.getChildren().add(text); //todo pawnlar kaydedilince kaldır
                     }
                 }
             }
