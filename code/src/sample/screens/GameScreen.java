@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -56,6 +57,7 @@ public class GameScreen extends Screen {
     DialogPane resignScreen = FXMLLoader.load(getClass().getResource("resignScreen.fxml"));
     DialogPane gameOverScreen = FXMLLoader.load(getClass().getResource("gameOverScreen.fxml"));
     DialogPane bankruptScreen = FXMLLoader.load(getClass().getResource("bankruptScreen.fxml"));
+    DialogPane exitScreen = FXMLLoader.load(getClass().getResource("exitScreen.fxml"));
 
     // constructors
     public GameScreen(ScreenManager screenManager) throws IOException {
@@ -81,7 +83,6 @@ public class GameScreen extends Screen {
         return t;
     }
 
-    //todo değişecek
     private void getPlayerTexts() {
         VBox vBox = (VBox) gameScreen.getChildrenUnmodifiable().get(1);
         VBox vBox2 = (VBox) vBox.getChildren().get(2);
@@ -120,42 +121,12 @@ public class GameScreen extends Screen {
         }
     }
 
-    /*
 
-    //değişecek
-    //todo bu method direk getPlayers ile almasa daha iyi olur
-    private void updatePlayerTexts(VBox vBox) {
-        HBox player1 = (HBox) vBox.getChildren().get(0);
-        HBox player2 = (HBox) vBox.getChildren().get(1);
-        HBox player3 = (HBox) vBox.getChildren().get(2);
-        HBox player4 = (HBox) vBox.getChildren().get(3);
-
-        ArrayList<HBox> playerBoxes = new ArrayList<HBox>();
-        playerBoxes.add(player1);
-        playerBoxes.add(player2);
-        playerBoxes.add(player3);
-        playerBoxes.add(player4);
-
-        int count = 0;
-        for (Player player : gameEngine.getPlayers()) {
-            HBox currentBox = playerBoxes.get(count);
-            VBox infoBox = (VBox) currentBox.getChildren().get(0);
-
-            Label playerLabel = (Label) infoBox.getChildren().get(0);
-            Label moneyLabel = (Label) infoBox.getChildren().get(1);
-
-            playerLabel.setText("Player" + (count + 1) + ": " + player.getName());
-            moneyLabel.setText("Money: " + player.getBalance());
-            count++;
-        }
-    }
-     */
 
     private void updateTurnText() {
         turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName());
     }
 
-    //done kontrol edelim
     private void setScene() {
         scene = new Scene(gameScreen);
 
@@ -179,13 +150,13 @@ public class GameScreen extends Screen {
         //initialize end turn as disabled
         btnEndTurn.setDisable(true);
 
-        //todo tekrar check buraya
+
         btnRollDice.setOnAction(event -> {
             if(gameEngine.getCurrentPlayer().isInJail()) {
                 jailFinishDialog();
             }
             createDiceDialog();
-            btnEndTurn.setDisable(false); //todo eğer oyunda tekrar hareket varsa hareket pop-upından sonra disable kaldır
+            btnEndTurn.setDisable(false);
             btnRollDice.setDisable(true);
         });
 
@@ -211,8 +182,10 @@ public class GameScreen extends Screen {
             createResignDialog();
         });
 
-        // turn text
-        //turnText.setText("Player Turn: " + gameEngine.getCurrentPlayer().getName()); //changed
+        //exit game button
+        exitGameBtn.setOnAction(actionEvent -> {
+            createExitDialog();
+        });
 
     }
 
@@ -238,6 +211,27 @@ public class GameScreen extends Screen {
         updateSquares();
         getPlayerTexts();
     }
+
+    private void createExitDialog() {
+        Dialog exitDialog = new Dialog();
+        exitDialog.setDialogPane(exitScreen);
+
+        VBox vbox = new VBox();
+        Text bankrupt = new Text("Are you sure you want to exit the game?");
+        Node okButton = exitDialog.getDialogPane().lookupButton(ButtonType.OK);
+        ((Button)okButton).setOnAction(event -> {
+            exitDialog.close();
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        vbox.getChildren().addAll(bankrupt);
+        exitDialog.getDialogPane().setContent(vbox);
+        exitDialog.show();
+    }
+
 
     //done
     private void createBankruptDialog() {
@@ -278,7 +272,11 @@ public class GameScreen extends Screen {
         ((Button)okButton).setText("Go back to the main page");
         ((Button)okButton).setOnAction(event -> {
             gameOverDialog.close();
-            screenManager.changeScreen(new MainMenuScreen(screenManager));
+            try {
+                screenManager.changeScreen(new MainMenuScreen(screenManager));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         vbox.getChildren().addAll(winner);
         gameOverDialog.getDialogPane().setContent(vbox);
@@ -435,21 +433,7 @@ public class GameScreen extends Screen {
         Dialog jokerDialog = new Dialog();
         jokerDialog.setDialogPane(jokerScreen);
 
-        VBox vBox = (VBox) jokerDialog.getDialogPane().getContent();
-
         VBox jokerContent = gameEngine.getJokerContent();
-        String jokerName = gameEngine.getJokerName();
-
-        System.out.println(jokerDialog.getDialogPane().getChildren());
-        System.out.println(jokerDialog.getDialogPane());
-        System.out.println(jokerDialog.getDialogPane().getChildren().get(0));
-
-        Text header = (Text) jokerDialog.getDialogPane().getChildren().get(0);
-
-        vBox.getChildren().add(jokerContent);
-
-        header.setText(jokerName);
-        jokerDialog.getDialogPane().getChildren().get(1);
 
         Node okButton = jokerDialog.getDialogPane().lookupButton(ButtonType.OK);
         ((Button)okButton).setText("Do");
@@ -470,7 +454,7 @@ public class GameScreen extends Screen {
                 getPlayerTexts();
             }
         });
-
+        jokerDialog.getDialogPane().setContent(jokerContent);
         jokerDialog.showAndWait();
     }
 
@@ -529,7 +513,6 @@ public class GameScreen extends Screen {
             if (button == ButtonType.OK) {
                 //todo return new Pair<>(playerSelection.getText(), price.getText());  PLAYER SELECTION ARTIK BİR COMBO BOX COMBO BOX LISTENER?
             }
-
             return null;
         });
 
@@ -587,23 +570,13 @@ public class GameScreen extends Screen {
         Dialog propertyDialog = new Dialog();
         propertyDialog.setDialogPane(propertyScreen);
 
-        VBox mainVBox = (VBox) propertyDialog.getDialogPane().getContent();
+        VBox vBox = (VBox) propertyDialog.getDialogPane().getContent();
+        VBox vBox2 = (VBox) vBox.getChildren().get(0);
+        Text propertyName = (Text) vBox2.getChildren().get(0);
 
-        VBox deneme = (VBox) propertyDialog.getDialogPane().getContent();
-        System.out.println(deneme.getChildren());
+        propertyName.setText(gameEngine.getPropertyName(index));
 
-        System.out.println(propertyDialog.getDialogPane());
-        System.out.println(propertyDialog.getDialogPane().getChildren());
-        System.out.println(propertyDialog.getDialogPane().getContent());
-
-
-        Text header = (Text) propertyDialog.getDialogPane().getChildren();
-        VBox propertyBox = (VBox) mainVBox.getChildren().get(0);
-        VBox buttonBox = (VBox) mainVBox.getChildren().get(1);
-
-        propertyBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
-
-        header.setText(gameEngine.getPropertyName(index));
+        vBox.getChildren().add(gameEngine.getPropertyContent(index)); //fazladan vbox mu ekledik
 
         Property property;
         if(index < 0 ) {
@@ -626,6 +599,7 @@ public class GameScreen extends Screen {
 
         //dialog.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> event.consume());
 
+        VBox buttonBox = new VBox();
         for(String buttonName: buttonNames) {
             switch(buttonName) {
                 case "cancel":
@@ -734,6 +708,7 @@ public class GameScreen extends Screen {
                     break;
             }
         }
+        vBox.getChildren().add(buttonBox); //fazladan vbox mu ekledik
         propertyDialog.showAndWait();
     }
 
@@ -761,20 +736,44 @@ public class GameScreen extends Screen {
                     StackPane stackPane = (StackPane) gridPane.getChildren().get(pos);
                     Rectangle tile = (Rectangle) stackPane.getChildren().get(0);
 
+                    Rectangle propertyRect = new Rectangle();
+                    Pos propPos;
+
+                    //todo
+                    if ((pos > 1 && pos < 10) || (pos > 20 && pos < 29)) {
+                        propertyRect.setWidth(60);
+                        propertyRect.setHeight(30);
+                        propPos = Pos.TOP_CENTER;
+                    }
+                    else if((pos > 10 && pos < 20) || (pos > 30 && pos < 29)) {
+                        propertyRect.setWidth(30);
+                        propertyRect.setHeight(60);
+                        propPos = Pos.BASELINE_LEFT;
+                    }
+                    else {
+                        propertyRect.setWidth(60);
+                        propertyRect.setHeight(60);
+                        propPos = Pos.TOP_CENTER;
+                    }
+
                     //set tile colors
                     System.out.println(gameEngine.getSquare(pos).getType());
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
                         Property property = (Property)(gameEngine.getSquare(pos));
-                        tile.setFill(property.getColorGroup().getColor());
+                        tile.setFill(Color.WHITESMOKE);
+                        propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
                         tile.setFill(Color.DARKGOLDENROD);
+                        propertyRect = null;
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
                         tile.setFill(Color.LIME);
+                        propertyRect = null;
                     }
                     else { //start square
                         tile.setFill(Color.BLUEVIOLET);
+                        propertyRect = null;
                     }
 
                     // find players on tile and set text
@@ -805,6 +804,10 @@ public class GameScreen extends Screen {
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
                             stackPane.getChildren().add(view);
+                        }
+                        if(propertyRect != null) {
+                            stackPane.getChildren().add(propertyRect);
+                            StackPane.setAlignment(propertyRect, propPos);
                         }
                        // stackPane.getChildren().addAll(text); //try
                     }
@@ -850,23 +853,48 @@ public class GameScreen extends Screen {
                     });
 
                     //determine square colors
+                    Rectangle propertyRect = new Rectangle();
+                    Pos propPos;
+
+                    //todo
+                    if ((pos > 1 && pos < 10) || (pos > 20 && pos < 29)) {
+                        propertyRect.setWidth(60);
+                        propertyRect.setHeight(30);
+                        propPos = Pos.TOP_CENTER;
+                    }
+                    else if((pos > 10 && pos < 20) || (pos > 30 && pos < 29)) {
+                        propertyRect.setWidth(30);
+                        propertyRect.setHeight(60);
+                        propPos = Pos.BASELINE_LEFT;
+                    }
+                    else {
+                        propertyRect.setWidth(60);
+                        propertyRect.setHeight(60);
+                        propPos = Pos.TOP_CENTER;
+                    }
+
                     if (gameEngine.getSquare(pos).getType() == SquareType.PROPERTY) {
+
                         Property property = (Property) gameEngine.getSquare(pos);
                         if (property.isOwned() == true) {
                             Player owner = property.getOwner();
                             tile.setFill(owner.getColor());
                         }
                         else
-                            tile.setFill(property.getColorGroup().getColor());
+                            tile.setFill(Color.WHITESMOKE);
+                        propertyRect.setFill(property.getColorGroup().getColor());
                     }
                     else if(gameEngine.getSquare(pos).getType() == SquareType.JOKER){
+                        propertyRect = null;
                         tile.setFill(Color.DARKGOLDENROD);
                     }
 
                     else if(gameEngine.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
+                        propertyRect = null;
                         tile.setFill(Color.LIME);
                     }
                     else {
+                        propertyRect = null;
                         tile.setFill(Color.BLUEVIOLET);
                     }
 
@@ -904,6 +932,10 @@ public class GameScreen extends Screen {
                         for(Image image : pawns) {
                             ImageView view = new ImageView(image);
                             stackPane.getChildren().add(view);
+                        }
+                        if(propertyRect != null) {
+                            stackPane.getChildren().add(propertyRect);
+                            StackPane.setAlignment(propertyRect, propPos);
                         }
                        // stackPane.getChildren().add(text);
                     }
