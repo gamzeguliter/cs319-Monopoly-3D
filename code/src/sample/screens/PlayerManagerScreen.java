@@ -41,7 +41,7 @@ public class PlayerManagerScreen extends Screen {
     private final ArrayList<Integer> iconChoices;
     private final ArrayList<ColorPicker> colorPickers;
 
-    AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("PlayerManagerScreen.fxml"));
+    AnchorPane playerManagerScreen = FXMLLoader.load(getClass().getResource("../layouts/PlayerManagerScreen.fxml"));
 
     PlayerManagerScreen(ScreenManager screenManager, String boardName) throws IOException {
         super(screenManager);
@@ -99,7 +99,7 @@ public class PlayerManagerScreen extends Screen {
 
         iconBox.setAlignment(Pos.CENTER);
         iconBox.setSpacing(10f);
-        Image iconImage = Utils.getImage("boards/" + boardName + "/icons/" + iconChoices.get(playerCount-1) + ".png", 100, 100);
+        Image iconImage = FileManager.getImage("boards/" + boardName + "/icons/" + iconChoices.get(playerCount-1) + ".png", 100, 100);
         ImageView iconView = new ImageView(iconImage);
         iconViews.add(iconView);
 
@@ -146,7 +146,7 @@ public class PlayerManagerScreen extends Screen {
 
     private void changeToNextIcon(int playerNo) {
         iconChoices.set(playerNo-1, (iconChoices.get(playerNo-1) + 1) % 4);
-        iconViews.get(playerNo-1).setImage(Utils.getImage("boards/" + boardName + "/icons/"  + iconChoices.get(playerNo-1) + ".png", 100, 100));
+        iconViews.get(playerNo-1).setImage(FileManager.getImage("boards/" + boardName + "/icons/"  + iconChoices.get(playerNo-1) + ".png", 100, 100));
     }
 
     @Override
@@ -170,8 +170,8 @@ public class PlayerManagerScreen extends Screen {
         }
 
         ArrayList<Image> icons = new ArrayList<>();
-        for (int iconNo : iconChoices) {
-            icons.add(Utils.getImage("boards/" + boardName + "/icons/"  + iconNo + ".png", 60, 60));
+        for (ImageView imageView : iconViews) {
+            icons.add(imageView.getImage());
         }
 
         ArrayList<Player> players = playerManager.generatePlayers(

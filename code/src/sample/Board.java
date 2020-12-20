@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.scene.paint.Color;
+import sample.entities.Card;
+import sample.entities.CardDeck;
 import sample.squares.ChanceAndCommunityChest;
 import sample.squares.*;
 

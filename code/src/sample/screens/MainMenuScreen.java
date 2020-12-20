@@ -2,12 +2,9 @@ package sample.screens;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import sample.ScreenManager;
 
@@ -15,7 +12,7 @@ import java.io.IOException;
 
 public class MainMenuScreen extends Screen {
 
-    AnchorPane mainMenuScreen = FXMLLoader.load(getClass().getResource("MainMenuScreen.fxml"));
+    AnchorPane mainMenuScreen = FXMLLoader.load(getClass().getResource("../layouts/MainMenuScreen.fxml"));
 
     public MainMenuScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
@@ -35,7 +32,13 @@ public class MainMenuScreen extends Screen {
         });
 
         Button btnEditABoard = (Button) buttonBox.getChildren().get(1);
-        btnEditABoard.setOnAction(actionEvent -> dispatchEditABoard());
+        btnEditABoard.setOnAction(actionEvent -> {
+            try {
+                dispatchEditABoard();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Button btnViewHelp = (Button) buttonBox.getChildren().get(2);
         btnViewHelp.setOnAction(actionEvent -> dispatchViewHelp());
@@ -58,17 +61,11 @@ public class MainMenuScreen extends Screen {
     private void dispatchPlayAGame() throws IOException {
 
         //screenManager.changeScreen(new BoardSelectionScreen(screenManager));
-        screenManager.changeScreen(new BoardSelectionScreen(screenManager));
+        screenManager.changeScreen(new BoardSelectionScreen(screenManager, "play"));
     }
 
-    private void dispatchEditABoard() {
-        Screen nextScreen;
-        try {
-            nextScreen = new EditorScreen(screenManager);
-            screenManager.changeScreen(nextScreen);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void dispatchEditABoard() throws IOException {
+        screenManager.changeScreen(new BoardSelectionScreen(screenManager, "edit"));
     }
 
     private void dispatchViewHelp() {

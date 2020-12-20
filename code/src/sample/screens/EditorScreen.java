@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,25 +18,23 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sample.Board;
 import sample.ScreenManager;
 import sample.Utils;
 import sample.managers.FileManager;
 import sample.squares.*;
 import sample.Editor;
-import sample.GameEngine;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class EditorScreen extends Screen {
     // properties
     private Scene scene;
     GridPane boardPane;
     Editor editor;
-    GameEngine gameEngine;
     int position;
     @FXML
     DialogPane jokerSquareEdit;
@@ -50,21 +47,34 @@ public class EditorScreen extends Screen {
     @FXML
     DialogPane addColorGroup;
 
+    ArrayList<Image> playerIcons;
+    Image boardIcon;
+
     Font font = Font.font("Source Sans Pro", 20);
-    Parent editorScreen = FXMLLoader.load(getClass().getResource("EditorScreen.fxml"));
-    DialogPane propertyEditDP = FXMLLoader.load(getClass().getResource("propertyEditScreen.fxml"));
-    DialogPane addColorGroupDP = FXMLLoader.load(getClass().getResource("addColorGroup.fxml"));
-    DialogPane selectColorGroupDP = FXMLLoader.load(getClass().getResource("selectColorGroup.fxml"));
-    DialogPane jokerEditDP = FXMLLoader.load(getClass().getResource("jokerEditScreen.fxml"));
-    DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("toggleSquareType.fxml"));
+    Parent editorScreen = FXMLLoader.load(getClass().getResource("../layouts/EditorScreen.fxml"));
+    DialogPane propertyEditDP = FXMLLoader.load(getClass().getResource("../layouts/propertyEditScreen.fxml"));
+    DialogPane addColorGroupDP = FXMLLoader.load(getClass().getResource("../layouts/addColorGroup.fxml"));
+    DialogPane selectColorGroupDP = FXMLLoader.load(getClass().getResource("../layouts/selectColorGroup.fxml"));
+    DialogPane jokerEditDP = FXMLLoader.load(getClass().getResource("../layouts/jokerEditScreen.fxml"));
+    DialogPane toggleSquareTypeDP = FXMLLoader.load(getClass().getResource("../layouts/toggleSquareType.fxml"));
 
     // constructors
     public EditorScreen(ScreenManager screenManager) throws IOException {
         super(screenManager);
         editor = new Editor();
         position = 0;
+        setScene();
+    }
 
-        gameEngine = new GameEngine();
+    public EditorScreen(ScreenManager screenManager, Board board) throws IOException {
+        super(screenManager);
+        editor = new Editor(board);
+        position = 0;
+
+        playerIcons = FileManager.getPlayerIcons(board.getName(), 100, 100);
+        boardIcon = FileManager.getBoardIcon(board.getName());
+
+
         setScene();
     }
 
@@ -119,6 +129,7 @@ public class EditorScreen extends Screen {
         VBox v = (VBox) editorScreen.getChildrenUnmodifiable().get(1);
 
         TextField boardName = (TextField) v.getChildren().get(0);
+        boardName.setText(editor.board.getName());
         HBox h = (HBox) v.getChildren().get(1);
         TextField mortgageRate = (TextField) h.getChildren().get(1);
         mortgageRate.setText("" + editor.board.getMortgageRate());
@@ -178,12 +189,13 @@ public class EditorScreen extends Screen {
             System.out.println("hello");
 
             FileManager.writeBoardToFolder(editor.board);
+            FileManager.saveIconsOnBoard(playerIcons, boardIcon, editor.board.getName());
+
             try {
                 screenManager.changeScreen(new MainMenuScreen(screenManager));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         });
 
         for (int pos = 1; pos < 40; pos++) {
@@ -287,30 +299,38 @@ public class EditorScreen extends Screen {
 
         //todo resimleri image olarak alabilirsiniz
         ImageView pawnImage1 = (ImageView) pawnBox1.getChildren().get(0);
+        if (playerIcons.size() > 0)
+            pawnImage1.setImage(playerIcons.get(0));
         Button upload1 = (Button) pawnBox1.getChildren().get(1);
         upload1.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(scene.getWindow());
             if (file != null) {
                 String path = file.toURI().toASCIIString();
-                Image image = new Image(path); //todo buradan
+                Image image = new Image(path);
+                playerIcons.set(0, image);
                 pawnImage1.setImage(image);
             }
         });
 
         ImageView pawnImage2 = (ImageView) pawnBox2.getChildren().get(0);
+        if (playerIcons.size() > 1)
+            pawnImage2.setImage(playerIcons.get(1));
         Button upload2 = (Button) pawnBox2.getChildren().get(1);
         upload2.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(scene.getWindow());
             if (file != null) {
                 String path = file.toURI().toASCIIString();
-                Image image = new Image(path); //todo buradan
+                Image image = new Image(path);
+                playerIcons.set(1, image);
                 pawnImage2.setImage(image);
             }
         });
 
         ImageView pawnImage3 = (ImageView) pawnBox3.getChildren().get(0);
+        if (playerIcons.size() > 2)
+            pawnImage3.setImage(playerIcons.get(2));
         Button upload3 = (Button) pawnBox3.getChildren().get(1);
         upload3.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -318,18 +338,22 @@ public class EditorScreen extends Screen {
             if (file != null) {
                 String path = file.toURI().toASCIIString();
                 Image image = new Image(path); //todo buradan
+                playerIcons.set(2, image);
                 pawnImage3.setImage(image);
             }
         });
 
         ImageView pawnImage4 = (ImageView) pawnBox4.getChildren().get(0);
+        if (playerIcons.size() > 3)
+            pawnImage4.setImage(playerIcons.get(3));
         Button upload4 = (Button) pawnBox4.getChildren().get(1);
         upload4.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(scene.getWindow());
             if (file != null) {
                 String path = file.toURI().toASCIIString();
-                Image image = new Image(path); //todo buradan
+                Image image = new Image(path);
+                playerIcons.set(3, image);
                 pawnImage4.setImage(image);
             }
         });
@@ -337,12 +361,15 @@ public class EditorScreen extends Screen {
         HBox hBox2 = (HBox) vBox1.getChildren().get(7);
 
         Button uploadBoard = (Button) hBox2.getChildren().get(0);
+        if (boardIcon != null)
+            background.setImage(boardIcon);
         uploadBoard.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(scene.getWindow());
             if (file != null) {
                 String path = file.toURI().toASCIIString();
-                Image image = new Image(path); //todo buradan
+                Image image = new Image(path);
+                boardIcon = image;
                 background.setImage(image);
             }
         });
@@ -586,6 +613,7 @@ public class EditorScreen extends Screen {
     public Scene getScene() {
         return scene;
     }
+
     public void update( ){
         Node [] squares = new Node[40];
         Square[] squares2 = editor.board.getSquares();
@@ -636,9 +664,10 @@ public class EditorScreen extends Screen {
     HBox h3 = (HBox)v.getChildren().get(3);
     TextField rentRate =(TextField) h3.getChildren().get(1);
 
+    HBox buttons = (HBox) v.getChildren().get(8);
 
-    Button cancel  = (Button) v.getChildren().get(9);
-    Button save    = (Button) v.getChildren().get(8);
+    Button cancel  = (Button) buttons.getChildren().get(1);
+    Button save    = (Button) buttons.getChildren().get(0);
     cancel.setCancelButton(true);
 
         TextField boardName = (TextField) v.getChildren().get(0);
@@ -680,7 +709,9 @@ public class EditorScreen extends Screen {
                     editor.board.setCurrency(currency.getText());
                 if(!boardName.getText().isEmpty())
                     editor.board.setName(boardName.getText());
+
                 FileManager.writeBoardToFolder(editor.board);
+                FileManager.saveIconsOnBoard(playerIcons, boardIcon, editor.board.getName());
             }
         });
         /// end of the right half
