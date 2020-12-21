@@ -12,6 +12,10 @@ public class ScreenManager extends Application {
     Screen screen;
     Stage stage;
 
+    private static ScreenManager instance = new ScreenManager();
+
+    public static ScreenManager getInstance() { return instance; }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         screen = new MainMenuScreen(this);
@@ -21,10 +25,13 @@ public class ScreenManager extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        // generates default board so that it always exists
-        FileManager.writeBoardToFolder(new Board());
+    public void launchWithArgs(String[] args) {
         launch(args);
+    }
+
+    public void launchWithoutArgs() {
+        String[] args = new String[0];
+        launchWithArgs(args);
     }
 
     public void changeScreen(Screen nextScreen) {

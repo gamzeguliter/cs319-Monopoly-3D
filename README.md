@@ -10,6 +10,9 @@ Elif Gamze Güliter - 21802870
 
 REPORTS:  
 
+[FINAL REPORT](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/iteration%202%20reports/3D_Final_Iteration_2.pdf)  
+
+
 [PROJECT ANALYSIS REPORT(2nd iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/iteration%202%20reports/Iteration%202%20Analysis%20Report.pdf)  
 [PROJECT DESIGN REPORT(2nd iteration)](https://github.com/gamzeguliter/cs319-Monopoly-3D/blob/master/iteration%202%20reports/Iteration%202%20Design%20Report.pdf)  
 
