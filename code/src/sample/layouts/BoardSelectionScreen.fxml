@@ -15,9 +15,9 @@
       <VBox alignment="CENTER" layoutY="218.0" maxWidth="1400.0" minWidth="1400.0" prefHeight="271.0" prefWidth="1400.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font: 'Source Sans Pro'; -fx-font-family: 'Source Sans Pro'; -fx-font-size: 60;" text="Select a Board" />
-            <ScrollPane maxWidth="1406.0" prefHeight="193.0" prefWidth="1406.0">
+            <ScrollPane maxWidth="1406.0" prefHeight="193.0" prefWidth="1406.0" style="-fx-background: rgb(182, 216, 184);;">
                <content>
-                  <HBox prefHeight="165.0" prefWidth="189.0" spacing="30.0" style="-fx-background-color: rgb(203, 227, 199);"/>
+                  <HBox prefHeight="165.0" prefWidth="189.0" spacing="30.0" style="-fx-background-color: rgb(182, 216, 184);;" />
                </content></ScrollPane>
          </children>
       </VBox>
