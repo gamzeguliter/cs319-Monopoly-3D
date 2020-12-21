@@ -133,22 +133,22 @@ public class Board {
         squares[21] = new Property("Mugla",colorGroups.get(7),680,80,50);
         squares[22] = new ChanceAndCommunityChest(true);
         squares[23] = new Property("Hatay",colorGroups.get(7),688,80,50);
-        squares[24] = new Property("Agrı",colorGroups.get(7),678,80,50);
+        squares[24] = new Property("Agrİ",colorGroups.get(7),678,80,50);
         squares[25] = new Joker(0,-15,2,"Opps");
         squares[26] = new Property("Artvin",colorGroups.get(3),578,80,50);
         squares[27] = new Property("Sivas",colorGroups.get(3),590,80,50);
         squares[28] = new Joker(-2,-15,0,"Go Back");
         squares[29] = new Property("Antep",colorGroups.get(3),730,80,50);
         squares[30] = new Joker(0,0,2,"Jail");
-        squares[31] = new Property("Bartın",colorGroups.get(2),500,80,50);
+        squares[31] = new Property("Bartin",colorGroups.get(2),500,80,50);
         squares[32] = new Property("Mus",colorGroups.get(2),510,80,50);
         squares[33] = new ChanceAndCommunityChest(false);
-        squares[34] = new Property("Igdır",colorGroups.get(2),530,80,50);
+        squares[34] = new Property("Igdir",colorGroups.get(2),530,80,50);
         squares[35] = new Joker(0,20,2,"Weird");
         squares[36] = new ChanceAndCommunityChest(true);
-        squares[37] = new Property("Mersın",colorGroups.get(1),730,80,50);
+        squares[37] = new Property("Mersin",colorGroups.get(1),730,80,50);
         squares[38] = new Joker(0,30,0,"Super");
-        squares[39] = new Property("Aydın",colorGroups.get(1),724,80,50);
+        squares[39] = new Property("Aydin",colorGroups.get(1),724,80,50);
 
         return squares;
 

@@ -468,6 +468,16 @@ public class EditorScreen extends Screen {
                     }
 
                 });
+                // can be deleted
+
+                ArrayList<ColorGroup> tempColorGroup2 = EditorScreen.this.editorManager.board.getColorGroups();
+
+                for(int i = 0; i < EditorScreen.this.editorManager.board.getColorGroups().size(); i++){
+                    choices.add(tempColorGroup2.get(i).getGroupName());
+                    System.out.println(tempColorGroup2.get(i).getGroupName());
+                }
+               combo_box.setItems(FXCollections.observableArrayList(choices));
+                /// can be deleted
 
             });
             selectColorDialog.show();
