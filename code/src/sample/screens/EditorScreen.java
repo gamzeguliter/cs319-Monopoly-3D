@@ -148,7 +148,7 @@ public class EditorScreen extends Screen {
 
         HBox h3 = (HBox) v.getChildren().get(3);
         TextField rentRate = (TextField) h3.getChildren().get(1);
-        rentRate.setText("" + EditorScreen.this.editorManager.board.getMortgageRate());
+        rentRate.setText("" + EditorScreen.this.editorManager.board.getRentRate());
 
         HBox buttons = (HBox) v.getChildren().get(8);
 
@@ -617,11 +617,11 @@ public class EditorScreen extends Screen {
             tile.setFill(((Property)squares[pos]).getColorGroup().getColor());
         }
         else if(squares[pos].getType() == SquareType.JOKER){
-            tile.setFill(rgb(203, 142, 110));
+            tile.setFill(rgb(248, 195, 165));
         }
 
         else if(EditorScreen.this.editorManager.getSquare(pos).getType() == SquareType.CHANCEANDCOMMUNITYCHEST){
-            tile.setFill(rgb(99, 142, 99));
+            tile.setFill(rgb(180, 208, 246));
         }
         else {
             tile.setFill(Color.ALICEBLUE);
