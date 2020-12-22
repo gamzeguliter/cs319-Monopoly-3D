@@ -196,10 +196,10 @@ public class EditorScreen extends Screen {
             if (!boardName.getText().isEmpty())
                 EditorScreen.this.editorManager.board.setName(boardName.getText());
 
-            System.out.println("hello");
-
-            FileManager.writeBoardToFolder(EditorScreen.this.editorManager.board);
-            FileManager.saveIconsOnBoard(playerIcons, boardIcon, EditorScreen.this.editorManager.board.getName());
+            System.out.println("before write board");
+            FileManager.writeBoardToFolder(editorManager.board);
+            System.out.println("after write board");
+            FileManager.saveIconsOnBoard(playerIcons, boardIcon, editorManager.board.getName());
 
             try {
                 screenManager.changeScreen(new MainMenuScreen(screenManager));
@@ -745,8 +745,8 @@ public class EditorScreen extends Screen {
                 if(!boardName.getText().isEmpty())
                     EditorScreen.this.editorManager.board.setName(boardName.getText());
 
-                FileManager.writeBoardToFolder(EditorScreen.this.editorManager.board);
-                FileManager.saveIconsOnBoard(playerIcons, boardIcon, EditorScreen.this.editorManager.board.getName());
+                FileManager.writeBoardToFolder(editorManager.board);
+                FileManager.saveIconsOnBoard(playerIcons, boardIcon, editorManager.board.getName());
             }
         });
         /// end of the right half
@@ -780,6 +780,7 @@ public class EditorScreen extends Screen {
 
 
                     FileManager.writeBoardToFolder(EditorScreen.this.editorManager.board);
+                    FileManager.saveIconsOnBoard(playerIcons, boardIcon, editorManager.board.getName());
                     try {
                         screenManager.changeScreen(new MainMenuScreen(screenManager));
                     } catch (IOException e) {
