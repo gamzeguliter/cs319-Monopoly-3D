@@ -148,7 +148,7 @@ public class EditorScreen extends Screen {
 
         HBox h3 = (HBox) v.getChildren().get(3);
         TextField rentRate = (TextField) h3.getChildren().get(1);
-        rentRate.setText("" + EditorScreen.this.editorManager.board.getMortgageRate());
+        rentRate.setText("" + EditorScreen.this.editorManager.board.getRentRate());
 
         HBox buttons = (HBox) v.getChildren().get(8);
 

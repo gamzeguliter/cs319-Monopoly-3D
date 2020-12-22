@@ -144,18 +144,30 @@ public class GameManager {
     public VBox getJokerContent() {
         VBox vbox = new VBox();
         Joker joker = (Joker)getCurrentSquare();
-        /*Text name = new Text(joker.getName());
-        vbox.getChildren().add(name);*/
         if(joker.isMoneyAction()) {
-            Text money = new Text("Money: " + joker.getMoney());
+            Text money;
+            if(joker.getMoney() < 0) {
+                money = new Text("Pay " + Math.abs(joker.getMoney()) + " " + board.currency);
+
+            }
+            else {
+                money = new Text("Collect " + joker.getMoney() + " " + board.currency);
+            }
             vbox.getChildren().add(money);
         }
         if(joker.isMovementAction()) {
-            Text movement = new Text("Movement: " + joker.getMovement());
+            Text movement;
+            if(joker.getMovement() < 0) {
+                movement = new Text("Go " + joker.getMovement() + " squares back.");
+
+            }
+            else {
+                movement = new Text("Go " + joker.getMovement() + " squares forward.");
+            }
             vbox.getChildren().add(movement);
         }
         else if(joker.isSuspended()) {
-            Text jail = new Text("Jail: " + joker.getSuspendedTourNo());
+            Text jail = new Text("Go to jail for " + joker.getSuspendedTourNo() + " turns.");
             vbox.getChildren().add(jail);
         }
         return vbox;
